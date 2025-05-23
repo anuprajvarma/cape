@@ -1,14 +1,23 @@
+import Link from "next/link";
 import React from "react";
 
 const Header = () => {
   return (
-    <div className="w-full py-2 px-4 text-black border-b border-black">
-      <div className="w-full flex justify-between font-medium items-center">
-        <p className="font-bold cursor-pointer">Cape</p>
+    <div className="w-full p-4 text-black flex justify-center">
+      <div className="w-[70rem] flex justify-between font-medium items-center">
+        <Link href="/" className="font-bold cursor-pointer">
+          Cape
+        </Link>
         <div className="flex gap-12">
-          <p className="cursor-pointer">Courses</p>
-          <p className="cursor-pointer">Bookmark</p>
-          <p className="cursor-pointer">Dashboard</p>
+          <Link href="/courses" className="cursor-pointer">
+            Courses
+          </Link>
+          <Link href="/bookmark" className="cursor-pointer">
+            Bookmark
+          </Link>
+          <Link href="/dashboard" className="cursor-pointer">
+            Dashboard
+          </Link>
         </div>
         <div>
           <div className="flex gap-4">
