@@ -6,9 +6,14 @@ import React from "react";
 
 const Header = () => {
   const path = usePathname();
+  console.log(`path ${path}`);
   return (
     <div className="w-full z-20 p-4 text-black flex justify-center">
-      <div className="w-[70rem] flex justify-between font-medium items-center">
+      <div
+        className={`${
+          path === "/course/1" ? "w-full" : "w-[70rem]"
+        } flex justify-between font-medium items-center`}
+      >
         <Link href="/" className="font-bold cursor-pointer text-2xl">
           Cape
         </Link>
