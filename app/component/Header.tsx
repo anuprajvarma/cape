@@ -3,9 +3,9 @@ import React from "react";
 
 const Header = () => {
   return (
-    <div className="w-full p-4 text-black flex justify-center">
+    <div className="w-full z-20 p-4 text-black flex justify-center">
       <div className="w-[70rem] flex justify-between font-medium items-center">
-        <Link href="/" className="font-bold cursor-pointer">
+        <Link href="/" className="font-bold cursor-pointer text-2xl">
           Cape
         </Link>
         <div className="flex gap-12">

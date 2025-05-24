@@ -8,7 +8,7 @@ import Link from "next/link";
 
 const NavBar = () => {
   return (
-    <div className="w-full py-2 px-4 text-black border-t border-slaty fixed bottom-0 flex justify-center">
+    <div className="w-full py-2 px-4 text-black border-t border-slaty flex justify-center z-20">
       <div className="w-[70rem] flex justify-between">
         <div className="flex flex-col gap-1">
           <p>Contact Me</p>
