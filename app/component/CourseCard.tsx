@@ -1,4 +1,6 @@
 import React from "react";
+import { IoPlayCircleOutline } from "react-icons/io5";
+import { IoBookmarkOutline } from "react-icons/io5";
 
 const CourseCard = () => {
   return (
@@ -18,15 +20,17 @@ const CourseCard = () => {
           <div className="flex justify-between">
             <div className="flex gap-2">
               <p>image</p>
-              <p>username</p>
+              <p>Alok Yadav</p>
             </div>
             <p>chapter 17</p>
           </div>
-          <div className="flex justify-between">
-            <button>Enroll Now</button>
-            <div className="flex gap-2">
-              <p>play icon</p>
-              <p>bookmark icon</p>
+          <div className="flex justify-between pt-1">
+            <button className="py-[2px] px-3 border border-slaty rounded-md">
+              Enroll
+            </button>
+            <div className="flex gap-2 text-xl items-end">
+              <IoPlayCircleOutline />
+              <IoBookmarkOutline />
             </div>
           </div>
         </div>

@@ -12,7 +12,7 @@ const Courses = () => {
             <input
               type="text"
               placeholder="Search your favourite plalist"
-              className="w-[20rem] py-2 px-4 outline-none rounded-l-full bg-lightYellow text-slaty"
+              className="w-[20rem] py-2 px-4 outline-none rounded-l-full bg-lightYellow text-slaty placeholder-slaty"
             />
             <button className="border-l p-3 h-full border-slaty">
               <IoSearch className="text-xl" />

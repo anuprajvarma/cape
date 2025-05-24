@@ -4,10 +4,10 @@ import React from "react";
 import { IoBookmarkOutline } from "react-icons/io5";
 import { AiOutlineDelete } from "react-icons/ai";
 import { IoPlayCircleOutline } from "react-icons/io5";
-import { CircularProgressbar } from "react-circular-progressbar";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 
-const percentage = 66;
+const percentage = 5;
 
 const EnrolledCard = () => {
   return (
@@ -52,6 +52,13 @@ const EnrolledCard = () => {
         <CircularProgressbar
           value={percentage}
           text={`${percentage}%`}
+          styles={buildStyles({
+            strokeLinecap: "butt",
+            textSize: "20px",
+            pathColor: "#BF2F1F",
+            textColor: "#4A4844",
+            trailColor: "#d6d6d6",
+          })}
           className="h-[5rem]"
         />
         <p className="text-xl">Progress</p>

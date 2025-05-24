@@ -1,7 +1,11 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React from "react";
 
 const Header = () => {
+  const path = usePathname();
   return (
     <div className="w-full z-20 p-4 text-black flex justify-center">
       <div className="w-[70rem] flex justify-between font-medium items-center">
@@ -9,13 +13,28 @@ const Header = () => {
           Cape
         </Link>
         <div className="flex gap-12">
-          <Link href="/courses" className="cursor-pointer">
+          <Link
+            href="/courses"
+            className={`cursor-pointer ${
+              path === "/courses" ? "text-darkRed" : ""
+            }`}
+          >
             Courses
           </Link>
-          <Link href="/bookmark" className="cursor-pointer">
+          <Link
+            href="/bookmark"
+            className={`cursor-pointer ${
+              path === "/bookmark" ? "text-darkRed" : ""
+            }`}
+          >
             Bookmark
           </Link>
-          <Link href="/dashboard" className="cursor-pointer">
+          <Link
+            href="/dashboard"
+            className={`cursor-pointer ${
+              path === "/dashboard" ? "text-darkRed" : ""
+            }`}
+          >
             Dashboard
           </Link>
         </div>
