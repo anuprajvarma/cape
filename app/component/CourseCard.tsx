@@ -1,28 +1,60 @@
+import Image from "next/image";
 import React from "react";
 import { IoPlayCircleOutline } from "react-icons/io5";
 import { IoBookmarkOutline } from "react-icons/io5";
 
-const CourseCard = () => {
+interface CourseCardType {
+  title: string;
+  channelTitle: string;
+  thumbnails: string;
+  lenth: number;
+  channelThumb: string;
+}
+
+const CourseCard = ({
+  title,
+  channelTitle,
+  thumbnails,
+  lenth,
+  channelThumb,
+}: CourseCardType) => {
+  console.log(channelThumb);
   return (
     <div>
       <div className="w-[20rem] border border-slaty rounded-lg">
-        <div className="h-[12rem] flex">
-          <iframe
-            src="https://www.youtube.com/embed/JQbjS0_ZfJ0"
-            className="rounded-lg w-full"
+        <div className="flex h-[12rem] relative">
+          <Image
+            src={thumbnails}
+            alt="playlist thumbnail"
+            quality={100}
+            sizes="80px"
+            fill
+            style={{ objectFit: "cover" }}
+            className="rounded-lg"
           />
         </div>
         <div className="p-2">
-          <p className="line-clamp-2">
-            React interview questioin beganers to advanced aldjfasfas asf as f
-            fsa a sdf as fs jasdkjf
-          </p>
-          <div className="flex justify-between">
-            <div className="flex gap-2">
-              <p>image</p>
-              <p>Alok Yadav</p>
+          <div className="flex items-center gap-1">
+            <div className="flex w-[2rem] h-[2rem] relative">
+              <Image
+                src={channelThumb}
+                alt="playlist thumbnail"
+                quality={100}
+                sizes="80px"
+                fill
+                style={{ objectFit: "cover" }}
+                className="rounded-full"
+              />
             </div>
-            <p>chapter 17</p>
+            <div className="flex flex-col w-full">
+              <p className="text-md text-slaty line-clamp-1 font-semibold">
+                {title}
+              </p>
+              <div className="flex justify-between text-sm">
+                <p>{channelTitle}</p>
+                <p>chapters {lenth}</p>
+              </div>
+            </div>
           </div>
           <div className="flex justify-between pt-1">
             <button className="py-[2px] px-3 border border-slaty rounded-md">
