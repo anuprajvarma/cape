@@ -6,14 +6,14 @@ import React from "react";
 
 const Header = () => {
   const param = useParams();
-  const id = param.id;
+  const { id, videoId } = param;
   const path = usePathname();
   console.log(`path ${path}`);
   return (
     <div className="w-full z-20 p-4 text-black flex justify-center">
       <div
         className={`${
-          path === `/course/${id}` ? "w-full" : "w-[70rem]"
+          path === `/course/${id}/${videoId}` ? "w-full" : "w-[70rem]"
         } flex justify-between font-medium items-center`}
       >
         <Link href="/" className="font-bold cursor-pointer text-2xl">

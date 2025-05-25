@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface PlaylistCardType {
   title: string;
@@ -18,11 +19,19 @@ const PlalistVideoCard = ({
   id,
   videoId,
 }: PlaylistCardType) => {
-  const playVideo = (id) => {
-    console.log(id);
+  // console.log(id);
+  const router = useRouter();
+
+  const playVideo = (id, videoId) => {
+    router.push(`/course/${id}/${videoId}`);
+    console.log(`id ${id} videoid ${videoId}`);
   };
+
   return (
-    <button className="flex gap-2 p-1 items-center" onClick={playVideo(id)}>
+    <button
+      className="flex gap-2 p-1 items-center"
+      onClick={() => playVideo(id, videoId)}
+    >
       <div className="flex w-[10rem] h-[4rem] relative">
         <Image
           src={thumbnails}

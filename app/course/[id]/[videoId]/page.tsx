@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { MdOutlineArrowBack } from "react-icons/md";
-import PlalistVideoCard from "../../component/PlalistVideoCard";
+import PlalistVideoCard from "../../../component/PlalistVideoCard";
 
 interface playlistType {
   title: string;
@@ -16,10 +16,13 @@ const Course = () => {
   const { id, videoId } = params;
   const router = useRouter();
 
+  console.log(`id ${id} videoid ${videoId}`);
+
   const [playlists, setPlaylists] = useState<playlistType[]>([]);
   const [playlistLengths, setPlaylistLengths] = useState({});
   const [channelThumbnail, setChannelThumbnail] = useState({});
   const [hasMounted, setHasMounted] = useState(false);
+  const [firstVideoId, setFirstVideoId] = useState("");
 
   const apikey = "AIzaSyDsn4O1rfKUNB9BmVrj73iyskrx26E77CY";
 
@@ -51,8 +54,13 @@ const Course = () => {
           </div>
           <div className="flex w-full h-[38rem]">
             <iframe
-              src="https://www.youtube.com/embed/JQbjS0_ZfJ0?rel=0&modestbranding=1"
+              src={`https://www.youtube.com/embed/${
+                videoId ?? firstVideoId
+              }?rel=0&modestbranding=1`}
               className="rounded-lg w-full"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              title="YouTube video player"
             />
           </div>
           <div className="flex justify-between">
@@ -91,13 +99,18 @@ const Course = () => {
           </div>
           <div className="py-2 h-[586px] flex flex-col gap-4 rounded-xl overflow-y-auto">
             {playlists?.map((data, index) => {
-              const id = data.id?.playlistId;
+              const id = data.snippet?.playlistId;
+              const videoID = data.snippet?.resourceId.videoId;
               //   const channelId = data.snippet?.channelId;
               //   const length = playlistLengths[id] || 0;
               //   const channelThumb = channelThumbnail[channelId] || "";
               // console.log(`channelthumb ${channelThumb}`);
 
-              // console.log(length);
+              //   console.log(`id ... ${id}`);
+              console.log(`index ${index}`);
+              // if (index === 0) {
+              //   setFirstVideoId(videoID);
+              // }
               if (!hasMounted) return null;
               return (
                 <PlalistVideoCard
@@ -106,7 +119,7 @@ const Course = () => {
                   thumbnails={data.snippet?.thumbnails.high.url}
                   //   lenth={length}
                   id={id}
-                  videoId={videoId}
+                  videoId={videoID}
                   //   channelThumb={channelThumb}
                   key={index}
                 />
