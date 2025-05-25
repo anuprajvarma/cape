@@ -1,17 +1,19 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useParams } from "next/navigation";
 import React from "react";
 
 const Header = () => {
+  const param = useParams();
+  const id = param.id;
   const path = usePathname();
   console.log(`path ${path}`);
   return (
     <div className="w-full z-20 p-4 text-black flex justify-center">
       <div
         className={`${
-          path === "/course/1" ? "w-full" : "w-[70rem]"
+          path === `/course/${id}` ? "w-full" : "w-[70rem]"
         } flex justify-between font-medium items-center`}
       >
         <Link href="/" className="font-bold cursor-pointer text-2xl">

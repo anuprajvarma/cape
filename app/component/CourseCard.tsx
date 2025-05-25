@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { IoPlayCircleOutline } from "react-icons/io5";
 import { IoBookmarkOutline } from "react-icons/io5";
@@ -9,6 +12,7 @@ interface CourseCardType {
   thumbnails: string;
   lenth: number;
   channelThumb: string;
+  id: string;
 }
 
 const CourseCard = ({
@@ -17,8 +21,10 @@ const CourseCard = ({
   thumbnails,
   lenth,
   channelThumb,
+  id,
 }: CourseCardType) => {
-  console.log(channelThumb);
+  const router = useRouter();
+  console.log(id);
   return (
     <div>
       <div className="w-[20rem] border border-slaty rounded-lg">
@@ -61,7 +67,9 @@ const CourseCard = ({
               Enroll
             </button>
             <div className="flex gap-2 text-xl items-end">
-              <IoPlayCircleOutline />
+              <button onClick={() => router.push(`/course/${id}`)}>
+                <IoPlayCircleOutline />
+              </button>
               <IoBookmarkOutline />
             </div>
           </div>

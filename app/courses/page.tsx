@@ -17,7 +17,7 @@ const Courses = () => {
   const [channelThumbnail, setChannelThumbnail] = useState({});
   const [hasMounted, setHasMounted] = useState(false);
 
-  const apikey = "AIzaSyDae7iuZ1KqvmBnMhzv8g6IJfgffyyYsUw";
+  const apikey = "AIzaSyDsn4O1rfKUNB9BmVrj73iyskrx26E77CY";
 
   useEffect(() => {
     setHasMounted(true);

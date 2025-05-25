@@ -96,7 +96,7 @@ const PopularCourses = () => {
           const length = playlistLengths[id] || 0;
           const channelThumb = channelThumbnail[channelId] || "";
           // console.log(`channelthumb ${channelThumb}`);
-
+          console.log(`id ... ${id}`);
           // console.log(length);
           if (!hasMounted) return null;
           return (
@@ -105,6 +105,7 @@ const PopularCourses = () => {
               channelTitle={data.snippet?.channelTitle}
               thumbnails={data.snippet?.thumbnails.high.url}
               lenth={length}
+              id={id}
               channelThumb={channelThumb}
               key={index}
             />
