@@ -5,15 +5,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { IoPlayCircleOutline } from "react-icons/io5";
 import { IoBookmarkOutline } from "react-icons/io5";
-
-interface CourseCardType {
-  title: string;
-  channelTitle: string;
-  thumbnails: string;
-  lenth: number;
-  channelThumb: string;
-  id: string;
-}
+import { CourseCardType } from "@/types";
 
 const CourseCard = ({
   title,

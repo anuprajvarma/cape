@@ -4,24 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { MdOutlineArrowBack } from "react-icons/md";
 import PlalistVideoCard from "../../../component/PlalistVideoCard";
-
-interface playlistType {
-  snippet: {
-    playlistId: string;
-    title: string;
-    channelId: string;
-    thumbnailURL: string;
-    channelTitle: string;
-    resourceId: {
-      videoId: string;
-    };
-    thumbnails: {
-      high: {
-        url: string;
-      };
-    };
-  };
-}
+import { playlistType2 } from "@/types";
 
 const Course = () => {
   const params = useParams();
@@ -30,7 +13,7 @@ const Course = () => {
 
   console.log(`id ${id} videoid ${videoId}`);
 
-  const [playlists, setPlaylists] = useState<playlistType[]>([]);
+  const [playlists, setPlaylists] = useState<playlistType2[]>([]);
   const [hasMounted, setHasMounted] = useState(false);
 
   const apikey = "AIzaSyDsn4O1rfKUNB9BmVrj73iyskrx26E77CY";

@@ -4,29 +4,10 @@ import React, { useEffect, useState } from "react";
 import { GrMicrophone } from "react-icons/gr";
 import { IoSearch } from "react-icons/io5";
 import CourseCard from "../component/CourseCard";
-
-interface playlistType {
-  id: {
-    playlistId: string;
-  };
-  snippet: {
-    title: string;
-    channelId: string;
-    thumbnailURL: string;
-    channelTitle: string;
-    resourceId: {
-      videoId: string;
-    };
-    thumbnails: {
-      high: {
-        url: string;
-      };
-    };
-  };
-}
+import { playlistType3 } from "@/types";
 
 const Courses = () => {
-  const [playlists, setPlaylists] = useState<playlistType[]>([]);
+  const [playlists, setPlaylists] = useState<playlistType3[]>([]);
   const [playlistLengths, setPlaylistLengths] = useState<
     Record<string, number>
   >({});

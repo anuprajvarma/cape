@@ -1,16 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-
-interface PlaylistCardType {
-  title: string;
-  channelTitle: string;
-  thumbnails: string;
-  // lenth: number;
-  // channelThumb: string;
-  id: string;
-  videoId: string;
-}
+import { PlaylistCardType } from "@/types";
 
 const PlalistVideoCard = ({
   title,

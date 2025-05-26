@@ -1,23 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CourseCard from "./CourseCard";
 import Link from "next/link";
-
-interface playlistType {
-  id: {
-    playlistId: string;
-  };
-  snippet: {
-    title: string;
-    channelId: string;
-    thumbnailURL: string;
-    channelTitle: string;
-    thumbnails: {
-      high: {
-        url: string;
-      };
-    };
-  };
-}
+import { playlistType } from "@/types";
 
 const PopularCourses = () => {
   const [playlists, setPlaylists] = useState<playlistType[]>([]);
