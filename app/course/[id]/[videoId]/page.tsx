@@ -6,9 +6,21 @@ import { MdOutlineArrowBack } from "react-icons/md";
 import PlalistVideoCard from "../../../component/PlalistVideoCard";
 
 interface playlistType {
-  title: string;
-  thumbnailURL: string;
-  channelTitle: string;
+  snippet: {
+    playlistId: string;
+    title: string;
+    channelId: string;
+    thumbnailURL: string;
+    channelTitle: string;
+    resourceId: {
+      videoId: string;
+    };
+    thumbnails: {
+      high: {
+        url: string;
+      };
+    };
+  };
 }
 
 const Course = () => {
@@ -19,10 +31,7 @@ const Course = () => {
   console.log(`id ${id} videoid ${videoId}`);
 
   const [playlists, setPlaylists] = useState<playlistType[]>([]);
-  const [playlistLengths, setPlaylistLengths] = useState({});
-  const [channelThumbnail, setChannelThumbnail] = useState({});
   const [hasMounted, setHasMounted] = useState(false);
-  const [firstVideoId, setFirstVideoId] = useState("");
 
   const apikey = "AIzaSyDsn4O1rfKUNB9BmVrj73iyskrx26E77CY";
 
@@ -37,10 +46,9 @@ const Course = () => {
       );
       const data = await res.json();
       setPlaylists(data.items);
-      // console.log(data.items);
     }
     playlist();
-  }, []);
+  }, [id]);
 
   return (
     <div className="w-full -z-20 p-4 border-t border-slaty flex flex-col gap-2 justify-center text-slaty">
@@ -54,9 +62,7 @@ const Course = () => {
           </div>
           <div className="flex w-full h-[38rem]">
             <iframe
-              src={`https://www.youtube.com/embed/${
-                videoId ?? firstVideoId
-              }?rel=0&modestbranding=1`}
+              src={`https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1`}
               className="rounded-lg w-full"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
@@ -101,12 +107,6 @@ const Course = () => {
             {playlists?.map((data, index) => {
               const id = data.snippet?.playlistId;
               const videoID = data.snippet?.resourceId.videoId;
-              //   const channelId = data.snippet?.channelId;
-              //   const length = playlistLengths[id] || 0;
-              //   const channelThumb = channelThumbnail[channelId] || "";
-              // console.log(`channelthumb ${channelThumb}`);
-
-              //   console.log(`id ... ${id}`);
               console.log(`index ${index}`);
               // if (index === 0) {
               //   setFirstVideoId(videoID);
@@ -125,14 +125,6 @@ const Course = () => {
                 />
               );
             })}
-            {/* <PlalistVideoCard />
-            <PlalistVideoCard />
-            <PlalistVideoCard />
-            <PlalistVideoCard />
-            <PlalistVideoCard />
-            <PlalistVideoCard />
-            <PlalistVideoCard />
-            <PlalistVideoCard /> */}
           </div>
         </div>
       </div>

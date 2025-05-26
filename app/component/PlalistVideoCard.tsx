@@ -22,7 +22,7 @@ const PlalistVideoCard = ({
   // console.log(id);
   const router = useRouter();
 
-  const playVideo = (id, videoId) => {
+  const playVideo = ({ id, videoId }: { id: string; videoId: string }) => {
     router.push(`/course/${id}/${videoId}`);
     console.log(`id ${id} videoid ${videoId}`);
   };
@@ -30,7 +30,7 @@ const PlalistVideoCard = ({
   return (
     <button
       className="flex gap-2 p-1 items-center"
-      onClick={() => playVideo(id, videoId)}
+      onClick={() => playVideo({ id, videoId })}
     >
       <div className="flex w-[10rem] h-[4rem] relative">
         <Image

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IoPlayCircleOutline } from "react-icons/io5";
 import { IoBookmarkOutline } from "react-icons/io5";
 
@@ -25,6 +25,20 @@ const CourseCard = ({
 }: CourseCardType) => {
   const router = useRouter();
   console.log(id);
+  const [firstVideoId, setFirstVideoId] = useState("");
+
+  const apikey = "AIzaSyDsn4O1rfKUNB9BmVrj73iyskrx26E77CY";
+  useEffect(() => {
+    async function playlist() {
+      const res = await fetch(
+        `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${id}&maxResults=3&key=${apikey}`
+      );
+      const data = await res.json();
+      setFirstVideoId(data.items[0].snippet?.resourceId.videoId);
+    }
+    playlist();
+  }, [id]);
+
   return (
     <div>
       <div className="w-[20rem] border border-slaty rounded-lg">
@@ -67,7 +81,9 @@ const CourseCard = ({
               Enroll
             </button>
             <div className="flex gap-2 text-xl items-end">
-              <button onClick={() => router.push(`/course/${id}`)}>
+              <button
+                onClick={() => router.push(`/course/${id}/${firstVideoId}`)}
+              >
                 <IoPlayCircleOutline />
               </button>
               <IoBookmarkOutline />

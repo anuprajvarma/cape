@@ -6,15 +6,33 @@ import { IoSearch } from "react-icons/io5";
 import CourseCard from "../component/CourseCard";
 
 interface playlistType {
-  title: string;
-  thumbnailURL: string;
-  channelTitle: string;
+  id: {
+    playlistId: string;
+  };
+  snippet: {
+    title: string;
+    channelId: string;
+    thumbnailURL: string;
+    channelTitle: string;
+    resourceId: {
+      videoId: string;
+    };
+    thumbnails: {
+      high: {
+        url: string;
+      };
+    };
+  };
 }
 
 const Courses = () => {
   const [playlists, setPlaylists] = useState<playlistType[]>([]);
-  const [playlistLengths, setPlaylistLengths] = useState({});
-  const [channelThumbnail, setChannelThumbnail] = useState({});
+  const [playlistLengths, setPlaylistLengths] = useState<
+    Record<string, number>
+  >({});
+  const [channelThumbnail, setChannelThumbnail] = useState<
+    Record<string, string>
+  >({});
   const [hasMounted, setHasMounted] = useState(false);
 
   const apikey = "AIzaSyDsn4O1rfKUNB9BmVrj73iyskrx26E77CY";
@@ -37,7 +55,7 @@ const Courses = () => {
 
   useEffect(() => {
     const fetchLengths = async () => {
-      const newLengths = {};
+      const newLengths: Record<string, number> = {};
       await Promise.all(
         playlists.map(async (item) => {
           const id = item.id?.playlistId;
@@ -62,7 +80,7 @@ const Courses = () => {
 
   useEffect(() => {
     const fetchLengths = async () => {
-      const newThumbnail = {};
+      const newThumbnail: Record<string, string> = {};
       await Promise.all(
         playlists.map(async (item) => {
           const channelId = item.snippet?.channelId;
@@ -122,6 +140,7 @@ const Courses = () => {
                 channelTitle={data.snippet?.channelTitle}
                 thumbnails={data.snippet?.thumbnails.high.url}
                 lenth={length}
+                id={id}
                 channelThumb={channelThumb}
                 key={index}
               />
