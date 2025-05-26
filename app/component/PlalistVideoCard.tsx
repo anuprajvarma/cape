@@ -32,7 +32,7 @@ const PlalistVideoCard = ({
       className="flex gap-2 p-1 items-center"
       onClick={() => playVideo({ id, videoId })}
     >
-      <div className="flex w-[10rem] h-[4rem] relative">
+      <div className="flex w-[10rem] items-start h-[4rem] relative">
         <Image
           src={thumbnails}
           alt="code"
@@ -44,7 +44,7 @@ const PlalistVideoCard = ({
         />
       </div>
       <div className="flex gap-2 justify-between w-full">
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col justify-start text-start gap-2">
           <p className="line-clamp-2 text-sm font-semibold">{title}</p>
           <p className="text-xs">{channelTitle}</p>
         </div>
