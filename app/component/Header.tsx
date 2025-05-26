@@ -8,7 +8,7 @@ const Header = () => {
   const param = useParams();
   const { id, videoId } = param;
   const path = usePathname();
-  console.log(`path ${path}`);
+  // console.log(`path ${path}`);
   return (
     <div className="w-full z-20 p-4 text-black flex justify-center">
       <div
@@ -47,9 +47,9 @@ const Header = () => {
         </div>
         <div>
           <div className="flex gap-4">
-            <button className="cursor-pointer">Login</button>
+            {/* <button className="cursor-pointer">Login</button> */}
             <button className="border border-black px-3 py-1 rounded-[6px] cursor-pointer">
-              Signup
+              Login
             </button>
           </div>
         </div>
