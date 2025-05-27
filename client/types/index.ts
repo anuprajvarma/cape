@@ -5,6 +5,7 @@ export interface CourseCardType {
   lenth: number;
   channelThumb: string;
   id: string;
+  description: string;
 }
 
 export interface PlaylistCardType {
@@ -26,6 +27,7 @@ export interface playlistType {
     channelId: string;
     thumbnailURL: string;
     channelTitle: string;
+    description: string;
     thumbnails: {
       high: {
         url: string;

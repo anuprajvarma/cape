@@ -4,6 +4,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
 const authRoute = require("./router/auth");
+const enrolledCourseRoute = require("./router/enrolledCourse");
 const dbConnection = require("./connection/dbConnection");
 
 const app = express();
@@ -23,6 +24,7 @@ dbConnection(
 );
 
 app.use("/api/auth", authRoute);
+app.use("/api/enrolledCourse", enrolledCourseRoute);
 
 app.listen(process.env.PORT, () =>
   console.log(`server is started on ${process.env.PORT}`)

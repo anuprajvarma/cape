@@ -93,6 +93,7 @@ const PopularCourses = () => {
         {playlists.map((data, index) => {
           const id = data.id?.playlistId;
           const channelId = data.snippet?.channelId;
+          const description = data.snippet?.description;
           const length = playlistLengths[id] || 0;
           const channelThumb = channelThumbnail[channelId] || "";
           // console.log(`channelthumb ${channelThumb}`);
@@ -106,6 +107,7 @@ const PopularCourses = () => {
               thumbnails={data.snippet?.thumbnails.high.url}
               lenth={length}
               id={id}
+              description={description}
               channelThumb={channelThumb as string}
               key={index}
             />

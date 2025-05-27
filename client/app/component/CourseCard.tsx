@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import { IoPlayCircleOutline } from "react-icons/io5";
 import { IoBookmarkOutline } from "react-icons/io5";
@@ -14,8 +15,10 @@ const CourseCard = ({
   lenth,
   channelThumb,
   id,
+  description,
 }: CourseCardType) => {
   const router = useRouter();
+  const session = useSession();
   console.log(id);
   const [firstVideoId, setFirstVideoId] = useState("");
 
@@ -30,6 +33,37 @@ const CourseCard = ({
     }
     playlist();
   }, [id]);
+
+  const handleEnrolled = async ({
+    title,
+    channelTitle,
+    thumbnails,
+    lenth,
+    channelThumb,
+    description,
+    id,
+  }: CourseCardType) => {
+    await fetch("http://localhost:5002/api/enrolledCourse", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        title,
+        channelTitle,
+        thumbnails,
+        lenth,
+        channelThumb,
+        id,
+        description,
+        firstVideoId,
+        email: session.data?.user?.email,
+      }),
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((data) =>
+        console.log(`enrolledCourse data ${data.enrolledkCourse}`)
+      );
+  };
 
   return (
     <div>
@@ -69,7 +103,20 @@ const CourseCard = ({
             </div>
           </div>
           <div className="flex justify-between pt-1">
-            <button className="py-[2px] px-3 border border-slaty rounded-md">
+            <button
+              onClick={() =>
+                handleEnrolled({
+                  title,
+                  channelTitle,
+                  thumbnails,
+                  lenth,
+                  channelThumb,
+                  description,
+                  id,
+                })
+              }
+              className="py-[2px] px-3 border border-slaty rounded-md"
+            >
               Enroll
             </button>
             <div className="flex gap-2 text-xl items-end">
