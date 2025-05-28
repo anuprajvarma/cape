@@ -43,6 +43,7 @@ const CourseCard = ({
     description,
     id,
   }: CourseCardType) => {
+    console.log("enrolled");
     await fetch("http://localhost:5002/api/enrolledCourse", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -54,6 +55,36 @@ const CourseCard = ({
         channelThumb,
         id,
         description,
+        firstVideoId,
+        email: session.data?.user?.email,
+      }),
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((data) =>
+        console.log(`enrolledCourse data ${data.enrolledkCourse}`)
+      );
+  };
+
+  const handleBookmark = async ({
+    title,
+    channelTitle,
+    thumbnails,
+    lenth,
+    channelThumb,
+    id,
+  }: CourseCardType) => {
+    console.log("bookmark");
+    await fetch("http://localhost:5002/api/bookmarkCourse", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        title,
+        channelTitle,
+        thumbnails,
+        lenth,
+        channelThumb,
+        id,
         firstVideoId,
         email: session.data?.user?.email,
       }),
@@ -125,7 +156,21 @@ const CourseCard = ({
               >
                 <IoPlayCircleOutline />
               </button>
-              <IoBookmarkOutline />
+              <button
+                onClick={() =>
+                  handleBookmark({
+                    title,
+                    channelTitle,
+                    thumbnails,
+                    lenth,
+                    channelThumb,
+                    description,
+                    id,
+                  })
+                }
+              >
+                <IoBookmarkOutline />
+              </button>
             </div>
           </div>
         </div>

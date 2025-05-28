@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const bookmarkCourseSchema = new mongoose.Schema({
   email: {
     required: true,
-    unique: true,
     type: String,
   },
   thumbnail: {

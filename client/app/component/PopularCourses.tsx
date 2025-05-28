@@ -6,7 +6,7 @@ import { playlistType } from "@/types";
 const PopularCourses = () => {
   const [playlists, setPlaylists] = useState<playlistType[]>([]);
   const [playlistLengths, setPlaylistLengths] = useState<
-    Record<string, number>
+    Record<string, string>
   >({});
   const [channelThumbnail, setChannelThumbnail] = useState<
     Record<string, string>
@@ -33,7 +33,7 @@ const PopularCourses = () => {
 
   useEffect(() => {
     const fetchLengths = async () => {
-      const newLengths: Record<string, number> = {};
+      const newLengths: Record<string, string> = {};
       await Promise.all(
         playlists.map(async (item) => {
           const id = item.id?.playlistId;
@@ -94,7 +94,7 @@ const PopularCourses = () => {
           const id = data.id?.playlistId;
           const channelId = data.snippet?.channelId;
           const description = data.snippet?.description;
-          const length = playlistLengths[id] || 0;
+          const length = playlistLengths[id] || "";
           const channelThumb = channelThumbnail[channelId] || "";
           // console.log(`channelthumb ${channelThumb}`);
           console.log(`id ... ${id}`);

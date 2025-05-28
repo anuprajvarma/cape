@@ -5,6 +5,7 @@ const cors = require("cors");
 
 const authRoute = require("./router/auth");
 const enrolledCourseRoute = require("./router/enrolledCourse");
+const bookmarkCourseRoute = require("./router/bookmarkCourse");
 const dbConnection = require("./connection/dbConnection");
 
 const app = express();
@@ -25,6 +26,7 @@ dbConnection(
 
 app.use("/api/auth", authRoute);
 app.use("/api/enrolledCourse", enrolledCourseRoute);
+app.use("/api/bookmarkCourse", bookmarkCourseRoute);
 
 app.listen(process.env.PORT, () =>
   console.log(`server is started on ${process.env.PORT}`)

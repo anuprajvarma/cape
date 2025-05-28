@@ -33,7 +33,7 @@ const enrolledCourseHandler = async (req, res) => {
     });
   }
 
-  console.log(`enrolledkCourse ${enrolledkCourse}`);
+  console.log(`enrolledkCourse post ${enrolledkCourse}`);
   res.json({ enrolledkCourse });
 };
 

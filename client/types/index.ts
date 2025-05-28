@@ -2,7 +2,7 @@ export interface CourseCardType {
   title: string;
   channelTitle: string;
   thumbnails: string;
-  lenth: number;
+  lenth: string;
   channelThumb: string;
   id: string;
   description: string;

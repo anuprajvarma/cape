@@ -4,6 +4,7 @@ import React from "react";
 import { IoBookmarkOutline } from "react-icons/io5";
 import { AiOutlineDelete } from "react-icons/ai";
 import { IoPlayCircleOutline } from "react-icons/io5";
+import { useRouter } from "next/navigation";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import Image from "next/image";
@@ -31,10 +32,11 @@ const EnrolledCard = ({
   playlistDescription,
   firstVideoId,
 }: bookmarkPlaylistType) => {
+  const router = useRouter();
   return (
     <div className="flex justify-between gap-8">
       <div className="flex w-[50rem] border border-slaty rounded-lg">
-        <div className="flex w-[50rem] relative">
+        <div className="flex w-[20rem] relative">
           <Image
             src={thumbnail}
             alt="playlist thumbnail"
@@ -42,10 +44,10 @@ const EnrolledCard = ({
             sizes="80px"
             fill
             style={{ objectFit: "cover" }}
-            className=""
+            className="rounded-md"
           />
         </div>
-        <div className="flex flex-col p-2 gap-2">
+        <div className="flex w-[30rem] flex-col p-2 gap-2">
           <p className="line-clamp-2 text-lg">{title}</p>
           <div className="flex justify-between text-sm">
             <div className="flex gap-2">
@@ -69,7 +71,13 @@ const EnrolledCard = ({
           <div className="flex flex-col items-end">
             <p className="line-clamp-2 text-base">{playlistDescription}</p>
             <div className="flex gap-2">
-              <IoPlayCircleOutline className="text-xl" />
+              <button
+                onClick={() =>
+                  router.push(`/course/${playlistId}/${firstVideoId}`)
+                }
+              >
+                <IoPlayCircleOutline />
+              </button>
               <AiOutlineDelete className="text-xl" />
               <IoBookmarkOutline className="text-xl" />
             </div>
