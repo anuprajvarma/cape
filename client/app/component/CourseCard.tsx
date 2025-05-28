@@ -131,28 +131,30 @@ const CourseCard = ({
         </div>
         <div className="p-2">
           <div className="flex items-center gap-1">
-            <div className="flex w-[2rem] h-[2rem] relative">
-              <Image
-                src={channelThumb}
-                alt="playlist thumbnail"
-                quality={100}
-                sizes="80px"
-                fill
-                style={{ objectFit: "cover" }}
-                className="rounded-full"
-              />
-            </div>
             <div className="flex flex-col w-full">
               <p className="text-md text-slaty line-clamp-1 font-semibold">
                 {title}
               </p>
-              <div className="flex justify-between text-sm">
-                <p>{channelTitle}</p>
+              <div className="flex justify-between text-sm items-center">
+                <div className="flex gap-2 items-center">
+                  <div className="flex w-[26px] h-[26px] relative">
+                    <Image
+                      src={channelThumb}
+                      alt="playlist thumbnail"
+                      quality={100}
+                      sizes="80px"
+                      fill
+                      style={{ objectFit: "cover" }}
+                      className="rounded-full"
+                    />
+                  </div>
+                  <p>{channelTitle}</p>
+                </div>
                 <p>chapters {lenth}</p>
               </div>
             </div>
           </div>
-          <div className="flex justify-between pt-1">
+          <div className="flex justify-between pt-2">
             <button
               onClick={() =>
                 handleEnrolled({
@@ -166,7 +168,7 @@ const CourseCard = ({
                   id,
                 })
               }
-              className="py-[2px] px-3 border border-slaty rounded-md"
+              className="py-[2px] px-3 border border-slaty rounded-md hover:bg-slaty/10 transition duration-300"
             >
               Enroll
             </button>
@@ -174,7 +176,7 @@ const CourseCard = ({
               <button
                 onClick={() => router.push(`/course/${id}/${firstVideoId}`)}
               >
-                <IoPlayCircleOutline />
+                <IoPlayCircleOutline className="text-xl hover:text-darkRed transition duration-300 w-5 h-5" />
               </button>
               {bookmark ? (
                 <button
@@ -184,13 +186,13 @@ const CourseCard = ({
                     })
                   }
                 >
-                  <AiOutlineDelete className="text-xl" />
+                  <AiOutlineDelete className="text-xl hover:text-darkRed transition duration-300 w-5 h-5" />
                 </button>
               ) : (
                 <></>
               )}
               {bookmark ? (
-                <FaBookmark />
+                <FaBookmark className="cursor-pointer" />
               ) : (
                 <button
                   onClick={() =>

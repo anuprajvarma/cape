@@ -68,9 +68,11 @@ const EnrolledCard = ({
           />
         </div>
         <div className="flex w-[30rem] flex-col p-2 gap-2">
-          <p className="line-clamp-2 text-lg">{title}</p>
+          <p className="text-md text-slaty line-clamp-1 font-semibold">
+            {title}
+          </p>
           <div className="flex justify-between text-sm">
-            <div className="flex gap-2">
+            <div className="flex gap-2 items-center justify-center">
               <div className="flex w-[2rem] h-[2rem] relative">
                 <Image
                   src={channelImage}
@@ -84,7 +86,7 @@ const EnrolledCard = ({
               </div>
               <p>{channelTitle}</p>
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-2 items-center justify-center">
               <p>chapters {chapterLenth}</p>
             </div>
           </div>
@@ -96,16 +98,16 @@ const EnrolledCard = ({
                   router.push(`/course/${playlistId}/${firstVideoId}`)
                 }
               >
-                <IoPlayCircleOutline />
+                <IoPlayCircleOutline className="text-xl hover:text-darkRed transition duration-300 w-5 h-5" />
               </button>
               <button onClick={() => handleDeletEnrolledCourse({ playlistId })}>
-                <AiOutlineDelete className="text-xl" />
+                <AiOutlineDelete className="text-xl hover:text-darkRed transition duration-300 w-5 h-5" />
               </button>
             </div>
           </div>
         </div>
       </div>
-      <div className="w-[20rem] h-[11rem] rounded-lg border border-slaty flex flex-col gap-3 justify-center items-center">
+      <div className="w-[20rem] h-[10rem] rounded-lg border border-slaty flex flex-col gap-3 justify-center items-center">
         <CircularProgressbar
           value={percentage}
           text={`${percentage}%`}

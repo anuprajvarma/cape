@@ -112,7 +112,7 @@ const Courses = () => {
             </button>
           </div>
           <button className="rounded-full p-2 items-center border border-slaty hover:bg-slaty/10 transition duration-300">
-            <GrMicrophone className="text-xl" />
+            <GrMicrophone className="text-xl hover:text-darkRed transition duration-300" />
           </button>
         </div>
         <div className="flex flex-wrap gap-16 items-center justify-start">

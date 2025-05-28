@@ -12,21 +12,21 @@ const NavBar = () => {
       <div className="w-[70rem] flex justify-between">
         <div className="flex flex-col gap-1">
           <p>Contact Me</p>
-          <div className="flex gap-2">
+          <div className="flex gap-2 ">
             <Link
               href="https://www.linkedin.com/in/anuprajvarma/"
               target="_blank"
             >
-              <PiLinkedinLogoBold className="cursor-pointer" />
+              <PiLinkedinLogoBold className="cursor-pointer hover:text-darkRed transition duration-300 w-5 h-5" />
             </Link>
             <Link href="https://github.com/anuprajvarma" target="_blank">
-              <LuGithub className="cursor-pointer" />
+              <LuGithub className="cursor-pointer hover:text-darkRed transition duration-300 w-5 h-5" />
             </Link>
             <Link href="https://www.instagram.com/_anupraj_01/" target="_blank">
-              <AiOutlineInstagram className="cursor-pointer" />
+              <AiOutlineInstagram className="cursor-pointer hover:text-darkRed transition duration-300 w-5 h-5" />
             </Link>
             <Link href="https://x.com/Anupraj_varma" target="_blank">
-              <RiTwitterXLine className="cursor-pointer" />
+              <RiTwitterXLine className="cursor-pointer hover:text-darkRed transition duration-300 w-5 h-5" />
             </Link>
           </div>
         </div>
@@ -34,7 +34,7 @@ const NavBar = () => {
           <p>Contribute</p>
           <div className="flex gap-2">
             <Link href="https://github.com/anuprajvarma/cape" target="_blank">
-              <FaGithubAlt className="cursor-pointer" />
+              <FaGithubAlt className="cursor-pointer hover:text-darkRed transition duration-300 w-5 h-5" />
             </Link>
           </div>
         </div>
