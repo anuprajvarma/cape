@@ -1,10 +1,16 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { IoPlayCircleOutline } from "react-icons/io5";
 import PopularCourses from "../component/PopularCourses";
+import Image from "next/image";
+import { FaPlayCircle } from "react-icons/fa";
 
 export const Home = () => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const handlePlay = () => {
+    setIsPlaying(true);
+  };
   return (
     <div className="w-full -z-20 py-[4rem] px-4 text-black border-t border-slaty flex justify-center">
       <div className="w-[70rem]">
@@ -32,10 +38,32 @@ export const Home = () => {
             </div>
           </div>
           <div className="w-[34rem] rounded-lg flex justify-end ">
-            <iframe
-              src="https://www.youtube.com/embed/JQbjS0_ZfJ0"
-              className="rounded-lg w-full"
-            />
+            {isPlaying ? (
+              <iframe
+                src="https://www.youtube.com/embed/JQbjS0_ZfJ0?autoplay=1"
+                className="rounded-lg w-full"
+                allow="autoplay; encrypted-media"
+                // allowFullScreen
+              />
+            ) : (
+              <div className="flex w-full items-center justify-center h-full relative z-10">
+                <Image
+                  src="/code.jpg" // Replace with your image path
+                  alt="Video Thumbnail"
+                  quality={100}
+                  sizes="80px"
+                  fill
+                  style={{ objectFit: "cover" }}
+                  className="rounded-lg"
+                />
+                <button
+                  onClick={handlePlay}
+                  className="z-20 rounded-full  p-3 hover:scale-110 transition"
+                >
+                  <FaPlayCircle className="text-white text-4xl" />
+                </button>
+              </div>
+            )}
           </div>
         </div>
         <PopularCourses />
