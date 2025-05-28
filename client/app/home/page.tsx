@@ -32,7 +32,9 @@ export const Home = () => {
                 Start
               </button>
               <div className="flex gap-2 items-center">
-                <IoPlayCircleOutline className="text-4xl cursor-pointer hover:text-darkRed transition duration-300" />
+                <button onClick={handlePlay}>
+                  <IoPlayCircleOutline className="text-4xl cursor-pointer hover:text-darkRed transition duration-300" />
+                </button>
                 <p className="font-semibold">how it&apos;s work</p>
               </div>
             </div>
