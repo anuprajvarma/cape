@@ -18,7 +18,7 @@ const Courses = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [topic, setTopic] = useState("reactjs");
 
-  const apikey = "AIzaSyDsn4O1rfKUNB9BmVrj73iyskrx26E77CY";
+  const apikey = "AIzaSyDae7iuZ1KqvmBnMhzv8g6IJfgffyyYsUw";
 
   useEffect(() => {
     setHasMounted(true);

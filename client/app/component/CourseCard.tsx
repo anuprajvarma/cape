@@ -25,7 +25,7 @@ const CourseCard = ({
   console.log(id);
   const [firstVideoId, setFirstVideoId] = useState("");
 
-  const apikey = "AIzaSyDsn4O1rfKUNB9BmVrj73iyskrx26E77CY";
+  const apikey = "AIzaSyDae7iuZ1KqvmBnMhzv8g6IJfgffyyYsUw";
   useEffect(() => {
     async function playlist() {
       const res = await fetch(

@@ -16,7 +16,7 @@ const Course = () => {
   const [playlists, setPlaylists] = useState<playlistType2[]>([]);
   const [hasMounted, setHasMounted] = useState(false);
 
-  const apikey = "AIzaSyDsn4O1rfKUNB9BmVrj73iyskrx26E77CY";
+  const apikey = "AIzaSyDae7iuZ1KqvmBnMhzv8g6IJfgffyyYsUw";
 
   useEffect(() => {
     setHasMounted(true);
