@@ -33,6 +33,10 @@ const bookmarkCourseSchema = new mongoose.Schema({
     required: true,
     type: String,
   },
+  bookmark: {
+    required: true,
+    type: Boolean,
+  },
 });
 
 const BookmarkCourse = mongoose.model("bookmarkCourse", bookmarkCourseSchema);

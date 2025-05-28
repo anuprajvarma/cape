@@ -10,6 +10,7 @@ const enrolledCourseHandler = async (req, res) => {
     id,
     description,
     firstVideoId,
+    bookmark,
     email,
   } = req.body;
   let enrolledkCourse = await EnrolledkCourse.findOne({
@@ -28,6 +29,7 @@ const enrolledCourseHandler = async (req, res) => {
       chapterLenth: lenth,
       firstVideoId: firstVideoId,
       title: title,
+      bookmark: bookmark,
       channelTitle: channelTitle,
       channelImage: channelThumb,
     });

@@ -36,6 +36,10 @@ const enrolledCourseSchema = new mongoose.Schema({
     required: true,
     type: String,
   },
+  bookmark: {
+    required: true,
+    type: Boolean,
+  },
 });
 
 const EnrolledkCourse = mongoose.model("enrolledkCourse", enrolledCourseSchema);

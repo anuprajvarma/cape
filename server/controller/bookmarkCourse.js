@@ -10,6 +10,7 @@ const bookmarCourseHandler = async (req, res) => {
     channelThumb,
     id,
     firstVideoId,
+    bookmark,
     email,
   } = req.body;
   let bookmarkCourse = await BookmarkCourse.findOne({
@@ -27,6 +28,7 @@ const bookmarCourseHandler = async (req, res) => {
       title: title,
       channelTitle: channelTitle,
       channelImage: channelThumb,
+      bookmark: bookmark,
     });
   }
 

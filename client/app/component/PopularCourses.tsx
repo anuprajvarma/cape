@@ -107,6 +107,7 @@ const PopularCourses = () => {
               thumbnails={data.snippet?.thumbnails.high.url}
               lenth={length}
               id={id}
+              bookmark={false}
               description={description}
               channelThumb={channelThumb as string}
               key={index}

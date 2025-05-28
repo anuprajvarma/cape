@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { IoBookmarkOutline } from "react-icons/io5";
 import { AiOutlineDelete } from "react-icons/ai";
 import { IoPlayCircleOutline } from "react-icons/io5";
 import { useRouter } from "next/navigation";
@@ -79,7 +78,6 @@ const EnrolledCard = ({
                 <IoPlayCircleOutline />
               </button>
               <AiOutlineDelete className="text-xl" />
-              <IoBookmarkOutline className="text-xl" />
             </div>
           </div>
         </div>

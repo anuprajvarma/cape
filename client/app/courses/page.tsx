@@ -123,6 +123,7 @@ const Courses = () => {
                 thumbnails={data.snippet?.thumbnails.high.url}
                 lenth={length}
                 id={id}
+                bookmark={false}
                 description={description}
                 channelThumb={channelThumb}
                 key={index}

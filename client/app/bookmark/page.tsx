@@ -13,6 +13,7 @@ interface bookmarkPlaylistType {
   playlistId: string;
   playlistDescription: string;
   firstVideoId: string;
+  bookmark: boolean;
 }
 
 const Bookmark = () => {
@@ -61,6 +62,7 @@ const Bookmark = () => {
                 thumbnails={data.thumbnail}
                 lenth={data.chapterLenth}
                 id={data.playlistId}
+                bookmark={data.bookmark}
                 description={data.playlistDescription}
                 channelThumb={data.channelImage}
                 key={index}

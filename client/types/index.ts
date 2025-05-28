@@ -6,6 +6,7 @@ export interface CourseCardType {
   channelThumb: string;
   id: string;
   description: string;
+  bookmark: boolean;
 }
 
 export interface PlaylistCardType {

@@ -6,6 +6,8 @@ import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import { IoPlayCircleOutline } from "react-icons/io5";
 import { IoBookmarkOutline } from "react-icons/io5";
+import { FaBookmark } from "react-icons/fa";
+import { AiOutlineDelete } from "react-icons/ai";
 import { CourseCardType } from "@/types";
 
 const CourseCard = ({
@@ -15,6 +17,7 @@ const CourseCard = ({
   lenth,
   channelThumb,
   id,
+  bookmark,
   description,
 }: CourseCardType) => {
   const router = useRouter();
@@ -56,6 +59,7 @@ const CourseCard = ({
         id,
         description,
         firstVideoId,
+        bookmark: true,
         email: session.data?.user?.email,
       }),
       credentials: "include",
@@ -85,6 +89,7 @@ const CourseCard = ({
         lenth,
         channelThumb,
         id,
+        bookmark: true,
         firstVideoId,
         email: session.data?.user?.email,
       }),
@@ -143,6 +148,7 @@ const CourseCard = ({
                   lenth,
                   channelThumb,
                   description,
+                  bookmark,
                   id,
                 })
               }
@@ -156,21 +162,27 @@ const CourseCard = ({
               >
                 <IoPlayCircleOutline />
               </button>
-              <button
-                onClick={() =>
-                  handleBookmark({
-                    title,
-                    channelTitle,
-                    thumbnails,
-                    lenth,
-                    channelThumb,
-                    description,
-                    id,
-                  })
-                }
-              >
-                <IoBookmarkOutline />
-              </button>
+              {bookmark ? <AiOutlineDelete className="text-xl" /> : <></>}
+              {bookmark ? (
+                <FaBookmark />
+              ) : (
+                <button
+                  onClick={() =>
+                    handleBookmark({
+                      title,
+                      channelTitle,
+                      thumbnails,
+                      lenth,
+                      channelThumb,
+                      description,
+                      bookmark,
+                      id,
+                    })
+                  }
+                >
+                  <IoBookmarkOutline />
+                </button>
+              )}
             </div>
           </div>
         </div>
