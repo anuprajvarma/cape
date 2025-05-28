@@ -63,6 +63,7 @@ export interface playlistType3 {
     channelId: string;
     thumbnailURL: string;
     channelTitle: string;
+    description: string;
     resourceId: {
       videoId: string;
     };

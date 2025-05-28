@@ -111,6 +111,7 @@ const Courses = () => {
           {playlists.map((data, index) => {
             const id = data.id?.playlistId;
             const channelId = data.snippet?.channelId;
+            const description = data.snippet?.description;
             const length = playlistLengths[id] || 0;
             const channelThumb = channelThumbnail[channelId] || "";
             console.log(`channelthumb ${channelThumb}`);
@@ -122,6 +123,7 @@ const Courses = () => {
                 thumbnails={data.snippet?.thumbnails.high.url}
                 lenth={length}
                 id={id}
+                description={description}
                 channelThumb={channelThumb}
                 key={index}
               />
