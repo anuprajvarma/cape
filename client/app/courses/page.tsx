@@ -99,19 +99,19 @@ const Courses = () => {
             <input
               type="text"
               placeholder="Search your favourite plalist"
-              className="w-[20rem] py-2 px-4 outline-none rounded-l-full bg-lightYellow text-slaty placeholder-slaty"
+              className="w-[20rem] py-2 px-4 outline-none rounded-l-full focus:border focus:border-black/50 transition duration-50 bg-lightYellow text-slaty placeholder-slaty"
               onChange={(e) => setSearchQuery(e.target.value)}
             />
             <button
               onClick={() => {
                 setTopic(searchQuery);
               }}
-              className="border-l p-3 h-full border-slaty"
+              className="border-l p-3 h-full hover:bg-slaty/10 rounded-r-full transition duration-300 border-slaty"
             >
               <IoSearch className="text-xl" />
             </button>
           </div>
-          <button className="rounded-full p-2 items-center border border-slaty">
+          <button className="rounded-full p-2 items-center border border-slaty hover:bg-slaty/10 transition duration-300">
             <GrMicrophone className="text-xl" />
           </button>
         </div>

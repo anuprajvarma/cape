@@ -51,7 +51,7 @@ const PopularCourses = () => {
       setPlaylistLengths(newLengths);
     };
 
-    if (playlists.length > 0) {
+    if (playlists?.length > 0) {
       fetchLengths();
     }
   }, [playlists]);
@@ -81,7 +81,7 @@ const PopularCourses = () => {
       setChannelThumbnail(newThumbnail);
     };
 
-    if (playlists.length > 0) {
+    if (playlists?.length > 0) {
       fetchLengths();
     }
   }, [playlists]);
@@ -90,7 +90,7 @@ const PopularCourses = () => {
     <div className="flex flex-col gap-6 py-10">
       <p className="text-center font-semibold text-xl">Popular Courses</p>
       <div className="flex flex-wrap gap-16 items-center justify-center">
-        {playlists.map((data, index) => {
+        {playlists?.map((data, index) => {
           const id = data.id?.playlistId;
           const channelId = data.snippet?.channelId;
           const description = data.snippet?.description;
@@ -118,7 +118,7 @@ const PopularCourses = () => {
       <div className="flex justify-center">
         <Link
           href="/courses"
-          className="border border-black px-3 py-1 rounded-[6px] cursor-pointer"
+          className="border border-black px-3 py-1 rounded-[6px] hover:bg-slaty/10 transition duration-300 cursor-pointer"
         >
           Courses
         </Link>

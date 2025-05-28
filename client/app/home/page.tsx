@@ -22,7 +22,7 @@ export const Home = () => {
               <li>Track Your Progress of playlist</li>
             </u>
             <div className="flex gap-2">
-              <button className="border border-black px-6 py-1 rounded-[6px] cursor-pointer font-semibold">
+              <button className="border border-black px-6 py-1 rounded-[6px] cursor-pointer font-semibold hover:bg-slaty/10 transition duration-300">
                 Start
               </button>
               <div className="flex gap-2 items-center">

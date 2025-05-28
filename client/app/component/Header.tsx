@@ -58,7 +58,7 @@ const Header = () => {
         <div className="flex gap-12">
           <Link
             href="/courses"
-            className={`cursor-pointer ${
+            className={`cursor-pointer hover:text-darkRed transition duration-300 ${
               path === "/courses" ? "text-darkRed" : ""
             }`}
           >
@@ -66,7 +66,7 @@ const Header = () => {
           </Link>
           <Link
             href="/bookmark"
-            className={`cursor-pointer ${
+            className={`cursor-pointer hover:text-darkRed transition duration-300 ${
               path === "/bookmark" ? "text-darkRed" : ""
             }`}
           >
@@ -74,7 +74,7 @@ const Header = () => {
           </Link>
           <Link
             href="/dashboard"
-            className={`cursor-pointer ${
+            className={`cursor-pointer hover:text-darkRed transition duration-300 ${
               path === "/dashboard" ? "text-darkRed" : ""
             }`}
           >
@@ -92,7 +92,7 @@ const Header = () => {
             ) : (
               <button
                 onClick={() => signIn("google")}
-                className="border border-black px-3 py-1 rounded-[6px] cursor-pointer"
+                className="border border-black px-3 py-1 rounded-[6px] cursor-pointer hover:bg-slaty/10 transition duration-300"
               >
                 Login
               </button>
