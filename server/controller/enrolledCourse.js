@@ -52,4 +52,19 @@ const getEnrolledCourseHandler = async (req, res) => {
   res.json({ enrolledkCourse });
 };
 
-module.exports = { enrolledCourseHandler, getEnrolledCourseHandler };
+const deleteEnrolledCourseHandler = async (req, res) => {
+  const { email, playlistId } = req.body;
+  let deleteEnrolledCourseHandler = await EnrolledkCourse.findOneAndDelete({
+    playlistId: playlistId,
+    email,
+  });
+
+  console.log(`deleteEnrolledCourseHandler ${deleteEnrolledCourseHandler}`);
+  res.json({ deleteEnrolledCourseHandler });
+};
+
+module.exports = {
+  enrolledCourseHandler,
+  getEnrolledCourseHandler,
+  deleteEnrolledCourseHandler,
+};

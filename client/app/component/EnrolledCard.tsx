@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import Image from "next/image";
+import { useSession } from "next-auth/react";
 
 const percentage = 5;
 
@@ -32,6 +33,26 @@ const EnrolledCard = ({
   firstVideoId,
 }: bookmarkPlaylistType) => {
   const router = useRouter();
+  const session = useSession();
+
+  const handleDeletEnrolledCourse = async ({
+    playlistId,
+  }: {
+    playlistId: string;
+  }) => {
+    const res = await fetch("http://localhost:5002/api/enrolledCourse/delete", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: session.data?.user?.email,
+        playlistId,
+      }),
+      credentials: "include",
+    });
+    const data = await res.json();
+    console.log(`handleDeletBookmarkCourse ${data.deleteBookmarCourseHandler}`);
+  };
+
   return (
     <div className="flex justify-between gap-8">
       <div className="flex w-[50rem] border border-slaty rounded-lg">
@@ -77,7 +98,9 @@ const EnrolledCard = ({
               >
                 <IoPlayCircleOutline />
               </button>
-              <AiOutlineDelete className="text-xl" />
+              <button onClick={() => handleDeletEnrolledCourse({ playlistId })}>
+                <AiOutlineDelete className="text-xl" />
+              </button>
             </div>
           </div>
         </div>
