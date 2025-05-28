@@ -21,8 +21,8 @@ const googleAuthHandle = async (req, res) => {
   }
 
   const token = setUser(user);
-  console.log(`token ${token}`);
-  console.log(`user ${user}`);
+  //   console.log(`token ${token}`);
+  //   console.log(`user ${user}`);
   res.cookie("uid", token, {
     httpOnly: true,
     secure: false, // true in production with HTTPS

@@ -37,4 +37,17 @@ const enrolledCourseHandler = async (req, res) => {
   res.json({ enrolledkCourse });
 };
 
-module.exports = { enrolledCourseHandler };
+const getEnrolledCourseHandler = async (req, res) => {
+  console.log("step 3");
+  const { email } = req.body;
+  let enrolledkCourse = await EnrolledkCourse.find({
+    email,
+  });
+
+  // console.log(`google call ${email}`);
+
+  console.log(`enrolledkCourse ${enrolledkCourse}`);
+  res.json({ enrolledkCourse });
+};
+
+module.exports = { enrolledCourseHandler, getEnrolledCourseHandler };

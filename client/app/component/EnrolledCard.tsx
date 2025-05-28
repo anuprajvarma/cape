@@ -6,40 +6,68 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { IoPlayCircleOutline } from "react-icons/io5";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import Image from "next/image";
 
 const percentage = 5;
 
-const EnrolledCard = () => {
+interface bookmarkPlaylistType {
+  title: string;
+  channelTitle: string;
+  thumbnail: string;
+  chapterLenth: string;
+  channelImage: string;
+  playlistId: string;
+  playlistDescription: string;
+  firstVideoId: string;
+}
+
+const EnrolledCard = ({
+  title,
+  channelTitle,
+  thumbnail,
+  chapterLenth,
+  channelImage,
+  playlistId,
+  playlistDescription,
+  firstVideoId,
+}: bookmarkPlaylistType) => {
   return (
     <div className="flex justify-between gap-8">
       <div className="flex w-[50rem] border border-slaty rounded-lg">
-        <div className="flex w-[50rem]">
-          <iframe
-            src="https://www.youtube.com/embed/JQbjS0_ZfJ0"
-            className="rounded-lg w-full"
+        <div className="flex w-[50rem] relative">
+          <Image
+            src={thumbnail}
+            alt="playlist thumbnail"
+            quality={100}
+            sizes="80px"
+            fill
+            style={{ objectFit: "cover" }}
+            className=""
           />
         </div>
         <div className="flex flex-col p-2 gap-2">
-          <p className="line-clamp-2 text-lg">
-            React interview questioin beganers to advanced aldjfasfas asf as f
-            adfjalsjfd a asfdl asfdl asdkj la sfsa as f asf s fas f sf
-            sadfasfsaf asldfj af as fas fd asdf
-          </p>
+          <p className="line-clamp-2 text-lg">{title}</p>
           <div className="flex justify-between text-sm">
             <div className="flex gap-2">
-              <p>image</p>
-              <p>Alok Yadav</p>
+              <div className="flex w-[2rem] h-[2rem] relative">
+                <Image
+                  src={channelImage}
+                  alt="playlist thumbnail"
+                  quality={100}
+                  sizes="80px"
+                  fill
+                  style={{ objectFit: "cover" }}
+                  className="rounded-full"
+                />
+              </div>
+              <p>{channelTitle}</p>
             </div>
             <div className="flex gap-2">
-              <p>chapters 17</p>
+              <p>chapters {chapterLenth}</p>
             </div>
           </div>
           <div className="flex flex-col items-end">
-            <p className="line-clamp-2 text-base">
-              React interview questioin beganers to advanced asfdjhaslkdjhls
-              adfjalsjfd a asfdl asfdl . la sfsa as f asf s fas f sf daf
-              afldjksa afdasdf as f asf asdf saf sa f asdf sdf sdf sfd
-            </p>
+            <p className="line-clamp-2 text-base">{playlistDescription}</p>
             <div className="flex gap-2">
               <IoPlayCircleOutline className="text-xl" />
               <AiOutlineDelete className="text-xl" />
