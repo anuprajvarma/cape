@@ -15,6 +15,8 @@ const Courses = () => {
     Record<string, string>
   >({});
   const [hasMounted, setHasMounted] = useState(false);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [topic, setTopic] = useState("reactjs");
 
   const apikey = "AIzaSyDsn4O1rfKUNB9BmVrj73iyskrx26E77CY";
 
@@ -25,14 +27,14 @@ const Courses = () => {
   useEffect(() => {
     async function playlist() {
       const res = await fetch(
-        `https://www.googleapis.com/youtube/v3/search?part=snippet&q=reactjs&type=playlist&key=${apikey}&maxResults=12`
+        `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${topic}&type=playlist&key=${apikey}&maxResults=12`
       );
       const data = await res.json();
       setPlaylists(data.items);
       // console.log(data.items);
     }
     playlist();
-  }, []);
+  }, [topic]);
 
   useEffect(() => {
     const fetchLengths = async () => {
@@ -54,7 +56,7 @@ const Courses = () => {
       setPlaylistLengths(newLengths);
     };
 
-    if (playlists.length > 0) {
+    if (playlists?.length > 0) {
       fetchLengths();
     }
   }, [playlists]);
@@ -84,7 +86,7 @@ const Courses = () => {
       setChannelThumbnail(newThumbnail);
     };
 
-    if (playlists.length > 0) {
+    if (playlists?.length > 0) {
       fetchLengths();
     }
   }, [playlists]);
@@ -98,8 +100,14 @@ const Courses = () => {
               type="text"
               placeholder="Search your favourite plalist"
               className="w-[20rem] py-2 px-4 outline-none rounded-l-full bg-lightYellow text-slaty placeholder-slaty"
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
-            <button className="border-l p-3 h-full border-slaty">
+            <button
+              onClick={() => {
+                setTopic(searchQuery);
+              }}
+              className="border-l p-3 h-full border-slaty"
+            >
               <IoSearch className="text-xl" />
             </button>
           </div>
@@ -108,7 +116,7 @@ const Courses = () => {
           </button>
         </div>
         <div className="flex flex-wrap gap-16 items-center justify-start">
-          {playlists.map((data, index) => {
+          {playlists?.map((data, index) => {
             const id = data.id?.playlistId;
             const channelId = data.snippet?.channelId;
             const description = data.snippet?.description;
