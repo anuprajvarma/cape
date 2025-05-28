@@ -3,14 +3,15 @@
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { usePathname, useParams } from "next/navigation";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import Image from "next/image";
 
 const Header = () => {
   const param = useParams();
   const session = useSession();
   const { id, videoId } = param;
   const path = usePathname();
-  // const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleGoogleAuthSubmit = async () => {
     await fetch("http://localhost:5002/api/auth/login", {
@@ -82,8 +83,8 @@ const Header = () => {
           </Link>
         </div>
         <div>
-          <div className="flex gap-4">
-            {/* <button className="cursor-pointer">Login</button> */}
+          {/* <div className="flex gap-4">
+            
             {session.status === "authenticated" ? (
               <div>
                 {session.data.user?.name}{" "}
@@ -97,7 +98,43 @@ const Header = () => {
                 Login
               </button>
             )}
-          </div>
+          </div> */}
+          {session.status === "authenticated" ? (
+            <div className="relative">
+              {/* Circular Image Button */}
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="w-12 h-12 rounded-full overflow-hidden border border-gray-300 focus:outline-none"
+              >
+                <Image
+                  src={session.data?.user?.image as string} // Replace with actual image path
+                  alt="Profile"
+                  width={100}
+                  height={100}
+                  className="w-full h-full object-cover"
+                />
+              </button>
+
+              {/* Toggle Div */}
+              {isOpen && (
+                <div className="absolute right-0 mt-2 border  shadow-lg bg-slaty rounded-lg hover:bg-slaty/80 transition duration-300 z-50">
+                  <button
+                    onClick={handleSignout}
+                    className="w-full text-left px-4 py-2 rounded text-lightYellow"
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <button
+              onClick={() => signIn("google")}
+              className="border border-black px-3 py-1 rounded-[6px] cursor-pointer hover:bg-slaty/10 transition duration-300"
+            >
+              Login
+            </button>
+          )}
         </div>
       </div>
     </div>
