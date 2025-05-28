@@ -70,6 +70,20 @@ const CourseCard = ({
       );
   };
 
+  const handleDeletBookmarkCourse = async ({ id }: { id: string }) => {
+    const res = await fetch("http://localhost:5002/api/bookmarkCourse/delete", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: session.data?.user?.email,
+        id,
+      }),
+      credentials: "include",
+    });
+    const data = await res.json();
+    console.log(`handleDeletBookmarkCourse ${data.deleteBookmarCourseHandler}`);
+  };
+
   const handleBookmark = async ({
     title,
     channelTitle,
@@ -162,7 +176,19 @@ const CourseCard = ({
               >
                 <IoPlayCircleOutline />
               </button>
-              {bookmark ? <AiOutlineDelete className="text-xl" /> : <></>}
+              {bookmark ? (
+                <button
+                  onClick={() =>
+                    handleDeletBookmarkCourse({
+                      id,
+                    })
+                  }
+                >
+                  <AiOutlineDelete className="text-xl" />
+                </button>
+              ) : (
+                <></>
+              )}
               {bookmark ? (
                 <FaBookmark />
               ) : (

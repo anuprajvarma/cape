@@ -47,7 +47,8 @@ const Bookmark = () => {
       setBookmarkCoursePlaylist(data.bookmarkCourse);
     };
     handleEnrolled();
-  }, [session.data?.user?.email]);
+  }, [session.data?.user]);
+
   return (
     <div className="w-full -z-20 py-[2rem] px-4 text-black border-t border-slaty flex justify-center">
       <div className="w-[70rem] flex flex-col gap-12">

@@ -49,4 +49,21 @@ const getBookmarCourseHandler = async (req, res) => {
   res.json({ bookmarkCourse });
 };
 
-module.exports = { bookmarCourseHandler, getBookmarCourseHandler };
+const deleteBookmarCourseHandler = async (req, res) => {
+  const { email, id } = req.body;
+  let deleteBookmarCourseHandler = await BookmarkCourse.findOneAndDelete({
+    playlistId: id,
+    email,
+  });
+
+  console.log(`google call ${email}`);
+
+  console.log(`deleteBookmarCourseHandler ${deleteBookmarCourseHandler}`);
+  res.json({ deleteBookmarCourseHandler });
+};
+
+module.exports = {
+  bookmarCourseHandler,
+  getBookmarCourseHandler,
+  deleteBookmarCourseHandler,
+};
