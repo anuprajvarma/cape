@@ -11,6 +11,7 @@ const enrolledCourseHandler = async (req, res) => {
     description,
     firstVideoId,
     bookmark,
+    chapterCompleted,
     email,
   } = req.body;
   let enrolledkCourse = await EnrolledkCourse.findOne({
@@ -18,7 +19,7 @@ const enrolledCourseHandler = async (req, res) => {
     email,
   });
 
-  // console.log(`google call ${email}`);
+  console.log(`chapterCompleted ${chapterCompleted}`);
 
   if (!enrolledkCourse) {
     enrolledkCourse = await EnrolledkCourse.create({
@@ -30,6 +31,8 @@ const enrolledCourseHandler = async (req, res) => {
       firstVideoId: firstVideoId,
       title: title,
       bookmark: bookmark,
+      chapterCompleted: chapterCompleted,
+      chapters: [],
       channelTitle: channelTitle,
       channelImage: channelThumb,
     });

@@ -15,6 +15,9 @@ const Course = () => {
 
   const [playlists, setPlaylists] = useState<playlistType2[]>([]);
   const [hasMounted, setHasMounted] = useState(false);
+  const [playlistLengths, setPlaylistLengths] = useState<
+    Record<string, string>
+  >({});
 
   useEffect(() => {
     setHasMounted(true);
@@ -30,6 +33,31 @@ const Course = () => {
     }
     playlist();
   }, [id]);
+
+  useEffect(() => {
+    const fetchLengths = async () => {
+      const newLengths: Record<string, string> = {};
+      await Promise.all(
+        playlists.map(async (item) => {
+          const id = item.snippet?.playlistId;
+          if (id) {
+            const lenthRes = await fetch(
+              `https://www.googleapis.com/youtube/v3/playlists?part=contentDetails&id=${id}&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}`
+            );
+
+            const data = await lenthRes.json();
+            newLengths[id] = data.items[0]?.contentDetails?.itemCount || 0;
+          }
+        })
+      );
+
+      setPlaylistLengths(newLengths);
+    };
+
+    if (playlists?.length > 0) {
+      fetchLengths();
+    }
+  }, [playlists]);
 
   return (
     <div className="w-full -z-20 p-4 border-t border-slaty flex flex-col gap-2 justify-center text-slaty">
@@ -79,8 +107,12 @@ const Course = () => {
           <div className="border-b h-[4rem] border-slaty p-2">
             <p className="font-semibold">React js Tutorial in Hindi</p>
             <div className="flex gap-2 text-sm items-center">
-              <p className="text-xs">CodeWithHarry</p>
-              <p>- 1/34</p>
+              <p className="text-xs">Completed</p>
+              <p>
+                {typeof id === "string" && playlistLengths[id] && (
+                  <p>{`0/${playlistLengths[id]}`}</p>
+                )}
+              </p>
             </div>
           </div>
           <div className="py-2 h-[586px] flex flex-col gap-4 rounded-xl overflow-y-auto">
