@@ -43,10 +43,9 @@ const Course = () => {
           </div>
           <div className="flex w-full h-[38rem]">
             <iframe
-              src={`https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1`}
+              src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
               className="rounded-lg w-full"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
+              allow="autoplay; encrypted-media"
               title="YouTube video player"
             />
           </div>
