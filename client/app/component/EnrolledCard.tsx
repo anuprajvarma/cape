@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { IoPlayCircleOutline } from "react-icons/io5";
 import { useRouter } from "next/navigation";
@@ -8,8 +8,6 @@ import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
-
-const percentage = 5;
 
 interface bookmarkPlaylistType {
   title: string;
@@ -34,6 +32,42 @@ const EnrolledCard = ({
 }: bookmarkPlaylistType) => {
   const router = useRouter();
   const session = useSession();
+  const [completedChapters, setCompletedChapters] = useState<string[]>([]);
+  const [precentage, setPrecentage] = useState<number>(0);
+
+  const actualId = Array.isArray(playlistId) ? playlistId[0] : playlistId;
+
+  useEffect(() => {
+    // console.log(
+    //   typeof id === "string" &&
+    //     playlistLengths[id] &&
+    //     (Number(completedChapters.length), Number(playlistLengths[id].length))
+    // );
+    if (actualId) {
+      const percentage =
+        (100 * completedChapters.length) / Number(chapterLenth);
+      setPrecentage(Math.round(percentage));
+    }
+    console.log(precentage);
+    const getChapterData = async () => {
+      const res = await fetch(
+        "http://localhost:5002/api/enrolledCourse/getChapterData",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: session.data?.user?.email,
+            playlistId: playlistId,
+          }),
+          credentials: "include",
+        }
+      );
+      const data = await res.json();
+      setCompletedChapters(data.getChapterData.chapters);
+      // console.log(`getChapterData ${data.getChapterData.chapters}`);
+    };
+    getChapterData();
+  }, [session.data?.user, playlistId]);
 
   const handleDeletEnrolledCourse = async ({
     playlistId,
@@ -109,8 +143,8 @@ const EnrolledCard = ({
       </div>
       <div className="w-[20rem] h-[10rem] rounded-lg border border-slaty flex flex-col gap-3 justify-center items-center">
         <CircularProgressbar
-          value={percentage}
-          text={`${percentage}%`}
+          value={precentage}
+          text={`${precentage}%`}
           styles={buildStyles({
             strokeLinecap: "butt",
             textSize: "20px",
