@@ -22,7 +22,7 @@ const CourseCard = ({
 }: CourseCardType) => {
   const router = useRouter();
   const session = useSession();
-  console.log(id);
+  // console.log(id);
   const [firstVideoId, setFirstVideoId] = useState("");
 
   const apikey = "AIzaSyDae7iuZ1KqvmBnMhzv8g6IJfgffyyYsUw";
@@ -46,7 +46,7 @@ const CourseCard = ({
     description,
     id,
   }: CourseCardType) => {
-    console.log("enrolled");
+    // console.log("enrolled");
     await fetch("http://localhost:5002/api/enrolledCourse", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -92,7 +92,7 @@ const CourseCard = ({
     channelThumb,
     id,
   }: CourseCardType) => {
-    console.log("bookmark");
+    // console.log("bookmark");
     await fetch("http://localhost:5002/api/bookmarkCourse", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -208,7 +208,7 @@ const CourseCard = ({
                     })
                   }
                 >
-                  <IoBookmarkOutline />
+                  <IoBookmarkOutline className="hover:text-darkRed" />
                 </button>
               )}
             </div>

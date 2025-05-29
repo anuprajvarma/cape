@@ -28,7 +28,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "app/course/[id]/...videoId/page.tsx",
-    "app/course/[id]/...videoId/layout.tsx"
+    "app/course/[id]/...videoId/layout.tsx",
+    "types/global.d.ts"
   ],
   "exclude": ["node_modules"]
 }

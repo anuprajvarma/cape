@@ -15,7 +15,7 @@ const PlalistVideoCard = ({
 
   const playVideo = ({ id, videoId }: { id: string; videoId: string }) => {
     router.push(`/course/${id}/${videoId}`);
-    console.log(`id ${id} videoid ${videoId}`);
+    // console.log(`id ${id} videoid ${videoId}`);
   };
 
   return (

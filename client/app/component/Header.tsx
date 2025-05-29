@@ -30,7 +30,7 @@ const Header = () => {
 
   const handleSignout = async () => {
     await signOut();
-    console.log("sing out");
+    // console.log("sing out");
     await fetch("http://localhost:5002/api/auth/signout", {
       method: "POST",
       credentials: "include",

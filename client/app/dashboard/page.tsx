@@ -29,7 +29,7 @@ const Dashboard = () => {
   useEffect(() => {
     console.log("step 1");
     const handleEnrolled = async () => {
-      console.log("step 2");
+      // console.log("step 2");
       const res = await fetch(
         "http://localhost:5002/api/enrolledCourse/getData",
         {

@@ -14,7 +14,7 @@ const googleAuthHandle = async (req, res) => {
   const { name, email, imageUrl } = req.body;
   let user = await User.findOne({ email });
 
-  // console.log(`google call ${email}`);
+  console.log(`google call ${email}`);
 
   if (!user) {
     user = await User.create({ name, email, imageUrl, provider: "google" });
