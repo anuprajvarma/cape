@@ -20,8 +20,6 @@ const Courses = () => {
 
   const [topic, setTopic] = useState("reactjs");
 
-  const apikey = "AIzaSyDae7iuZ1KqvmBnMhzv8g6IJfgffyyYsUw";
-
   useEffect(() => {
     setHasMounted(true);
   }, []);
@@ -30,7 +28,7 @@ const Courses = () => {
     async function playlist() {
       console.log(`api call for topic ${topic}`);
       const res = await fetch(
-        `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${topic}&type=playlist&key=${apikey}&maxResults=12`
+        `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${topic}&type=playlist&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&maxResults=12`
       );
       const data = await res.json();
       setPlaylists(data.items);
@@ -47,7 +45,7 @@ const Courses = () => {
           const id = item.id?.playlistId;
           if (id) {
             const lenthRes = await fetch(
-              `https://www.googleapis.com/youtube/v3/playlists?part=contentDetails&id=${id}&key=${apikey}`
+              `https://www.googleapis.com/youtube/v3/playlists?part=contentDetails&id=${id}&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}`
             );
 
             const data = await lenthRes.json();
@@ -74,7 +72,7 @@ const Courses = () => {
           if (channelId) {
             console.log(`channelid ${channelId}`);
             const ownerThumbnailRes = await fetch(
-              `https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${apikey}`
+              `https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}`
             );
 
             const thumbnailData = await ownerThumbnailRes.json();

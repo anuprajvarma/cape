@@ -25,11 +25,10 @@ const CourseCard = ({
   // console.log(id);
   const [firstVideoId, setFirstVideoId] = useState("");
 
-  const apikey = "AIzaSyDae7iuZ1KqvmBnMhzv8g6IJfgffyyYsUw";
   useEffect(() => {
     async function playlist() {
       const res = await fetch(
-        `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${id}&maxResults=3&key=${apikey}`
+        `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${id}&maxResults=3&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}`
       );
       const data = await res.json();
       setFirstVideoId(data.items[0].snippet?.resourceId.videoId);
