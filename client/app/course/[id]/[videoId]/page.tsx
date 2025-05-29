@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { MdOutlineArrowBack } from "react-icons/md";
 import PlalistVideoCard from "../../../component/PlalistVideoCard";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { playlistType2 } from "@/types";
 import { useSession } from "next-auth/react";
 
@@ -22,9 +23,24 @@ const Course = () => {
     Record<string, string>
   >({});
   const [checkBoxTrack, setCheckBoxTrack] = useState<boolean>(false);
+  const [precentage, setPrecentage] = useState<number>(0);
+
+  // Number(completedChapters.length), Number(playlistLengths[id].length);
+
+  const actualId = Array.isArray(id) ? id[0] : id;
 
   useEffect(() => {
-    console.log(`checkboxtrack ${checkBoxTrack}`);
+    // console.log(
+    //   typeof id === "string" &&
+    //     playlistLengths[id] &&
+    //     (Number(completedChapters.length), Number(playlistLengths[id].length))
+    // );
+    if (actualId && playlistLengths[actualId]) {
+      const percentage =
+        (100 * completedChapters.length) / Number(playlistLengths[actualId]);
+      setPrecentage(Math.round(percentage));
+    }
+    console.log(precentage);
     const getChapterData = async () => {
       const res = await fetch(
         "http://localhost:5002/api/enrolledCourse/getChapterData",
@@ -40,7 +56,7 @@ const Course = () => {
       );
       const data = await res.json();
       setCompletedChapters(data.getChapterData.chapters);
-      console.log(`getChapterData ${data.getChapterData.chapters}`);
+      // console.log(`getChapterData ${data.getChapterData.chapters}`);
     };
     getChapterData();
   }, [session.data?.user, id, checkBoxTrack]);
@@ -130,25 +146,39 @@ const Course = () => {
           </div>
         </div>
         <div className="w-[25rem] h-[656px] border border-slaty rounded-xl flex flex-col">
-          <div className="border-b h-[4rem] border-slaty p-2">
-            <p className="font-semibold">React js Tutorial in Hindi</p>
-            <div className="flex gap-2 text-sm items-center">
-              <p className="text-xs">Completed</p>
-              <p>
-                {typeof id === "string" && playlistLengths[id] && (
-                  <p>{`${completedChapters.length}/${playlistLengths[id]}`}</p>
-                )}
-              </p>
+          <div className="border-b h-[4rem] border-slaty p-2 flex justify-between">
+            <div>
+              <p className="font-semibold">React js Tutorial in Hindi</p>
+              <div className="flex justify-between text-sm items-center">
+                <div className="flex gap-1">
+                  <p className="text-xs ">Completed</p>
+                  <p className="text-xs">
+                    {typeof id === "string" && playlistLengths[id] && (
+                      <p>{`${completedChapters.length}/${playlistLengths[id]}`}</p>
+                    )}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="w-[3rem] h-[3rem] rounded-lg flex flex-col gap-3 justify-center items-center">
+              <CircularProgressbar
+                value={precentage}
+                text={`${precentage}%`}
+                styles={buildStyles({
+                  strokeLinecap: "butt",
+                  textSize: "30px",
+                  pathColor: "#BF2F1F",
+                  textColor: "#4A4844",
+                  trailColor: "#d6d6d6",
+                })}
+                className=""
+              />
             </div>
           </div>
           <div className="py-2 h-[586px] flex flex-col gap-4 rounded-xl overflow-y-auto">
             {playlists?.map((data, index) => {
               const id = data.snippet?.playlistId;
               const videoID = data.snippet?.resourceId.videoId;
-              // console.log(`index ${index}`);
-              // if (index === 0) {
-              //   setFirstVideoId(videoID);
-              // }
               const isChecked = completedChapters.includes(videoID);
               if (!hasMounted) return null;
               return (
