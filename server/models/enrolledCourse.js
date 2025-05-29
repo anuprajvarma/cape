@@ -40,10 +40,6 @@ const enrolledCourseSchema = new mongoose.Schema({
     required: true,
     type: Boolean,
   },
-  chapterCompleted: {
-    required: true,
-    type: Number,
-  },
   chapters: {
     required: true,
     type: [String],

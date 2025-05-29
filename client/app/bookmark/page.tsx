@@ -28,9 +28,9 @@ const Bookmark = () => {
   }, []);
 
   useEffect(() => {
-    console.log("step 1");
+    // console.log("step 1");
     const handleEnrolled = async () => {
-      console.log("step 2");
+      // console.log("step 2");
       const res = await fetch(
         "http://localhost:5002/api/bookmarkCourse/getData",
         {
@@ -43,7 +43,7 @@ const Bookmark = () => {
         }
       );
       const data = await res.json();
-      console.log(`bookmark ${data.bookmarkCourse}`);
+      // console.log(`bookmark ${data.bookmarkCourse}`);
       setBookmarkCoursePlaylist(data.bookmarkCourse);
     };
     handleEnrolled();

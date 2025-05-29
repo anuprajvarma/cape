@@ -2,27 +2,52 @@ import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { PlaylistCardType } from "@/types";
+import { useSession } from "next-auth/react";
 
 const PlalistVideoCard = ({
   title,
   thumbnails,
   channelTitle,
   id,
+  isChecked,
+  setCheckBoxTrack,
+  checkBoxTrack,
   videoId,
 }: PlaylistCardType) => {
   // console.log(id);
   const router = useRouter();
+  const session = useSession();
 
   const playVideo = ({ id, videoId }: { id: string; videoId: string }) => {
     router.push(`/course/${id}/${videoId}`);
     // console.log(`id ${id} videoid ${videoId}`);
   };
 
-  const checkBoxHandler = (e) => {
+  const checkBoxHandler = async (e: boolean) => {
+    setCheckBoxTrack(!checkBoxTrack);
     if (e === true) {
       console.log("checked");
+      await fetch("http://localhost:5002/api/enrolledCourse/addChapter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: session.data?.user?.email,
+          playlistId: id,
+          videoId,
+        }),
+        credentials: "include",
+      });
     } else {
-      console.log("unchecked");
+      await fetch("http://localhost:5002/api/enrolledCourse/removeChapter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: session.data?.user?.email,
+          playlistId: id,
+          videoId,
+        }),
+        credentials: "include",
+      });
     }
   };
 
@@ -53,6 +78,7 @@ const PlalistVideoCard = ({
       <div className="p-1">
         <input
           type="checkbox"
+          checked={isChecked}
           onChange={(e) => checkBoxHandler(e.target.checked)}
         />
       </div>

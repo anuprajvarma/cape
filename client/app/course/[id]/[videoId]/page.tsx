@@ -5,19 +5,45 @@ import { useRouter, useParams } from "next/navigation";
 import { MdOutlineArrowBack } from "react-icons/md";
 import PlalistVideoCard from "../../../component/PlalistVideoCard";
 import { playlistType2 } from "@/types";
+import { useSession } from "next-auth/react";
 
 const Course = () => {
+  const session = useSession();
   const params = useParams();
   const { id, videoId } = params;
   const router = useRouter();
 
-  console.log(`id ${id} videoid ${videoId}`);
+  // console.log(`id ${id} videoid ${videoId}`);
 
   const [playlists, setPlaylists] = useState<playlistType2[]>([]);
+  const [completedChapters, setCompletedChapters] = useState<string[]>([]);
   const [hasMounted, setHasMounted] = useState(false);
   const [playlistLengths, setPlaylistLengths] = useState<
     Record<string, string>
   >({});
+  const [checkBoxTrack, setCheckBoxTrack] = useState<boolean>(false);
+
+  useEffect(() => {
+    console.log(`checkboxtrack ${checkBoxTrack}`);
+    const getChapterData = async () => {
+      const res = await fetch(
+        "http://localhost:5002/api/enrolledCourse/getChapterData",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: session.data?.user?.email,
+            playlistId: id,
+          }),
+          credentials: "include",
+        }
+      );
+      const data = await res.json();
+      setCompletedChapters(data.getChapterData.chapters);
+      console.log(`getChapterData ${data.getChapterData.chapters}`);
+    };
+    getChapterData();
+  }, [session.data?.user, id, checkBoxTrack]);
 
   useEffect(() => {
     setHasMounted(true);
@@ -26,7 +52,7 @@ const Course = () => {
   useEffect(() => {
     async function playlist() {
       const res = await fetch(
-        `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${id}&maxResults=3&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}`
+        `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${id}&maxResults=200&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}`
       );
       const data = await res.json();
       setPlaylists(data.items);
@@ -67,7 +93,7 @@ const Course = () => {
             <button onClick={() => router.back()}>
               <MdOutlineArrowBack />
             </button>
-            <p>Video title</p>
+            <p>{session.data?.user?.email}</p>
           </div>
           <div className="flex w-full h-[38rem]">
             <iframe
@@ -110,7 +136,7 @@ const Course = () => {
               <p className="text-xs">Completed</p>
               <p>
                 {typeof id === "string" && playlistLengths[id] && (
-                  <p>{`0/${playlistLengths[id]}`}</p>
+                  <p>{`${completedChapters.length}/${playlistLengths[id]}`}</p>
                 )}
               </p>
             </div>
@@ -119,10 +145,11 @@ const Course = () => {
             {playlists?.map((data, index) => {
               const id = data.snippet?.playlistId;
               const videoID = data.snippet?.resourceId.videoId;
-              console.log(`index ${index}`);
+              // console.log(`index ${index}`);
               // if (index === 0) {
               //   setFirstVideoId(videoID);
               // }
+              const isChecked = completedChapters.includes(videoID);
               if (!hasMounted) return null;
               return (
                 <PlalistVideoCard
@@ -131,6 +158,9 @@ const Course = () => {
                   thumbnails={data.snippet?.thumbnails.high.url}
                   //   lenth={length}
                   id={id}
+                  setCheckBoxTrack={setCheckBoxTrack}
+                  checkBoxTrack={checkBoxTrack}
+                  isChecked={isChecked}
                   videoId={videoID}
                   //   channelThumb={channelThumb}
                   key={index}

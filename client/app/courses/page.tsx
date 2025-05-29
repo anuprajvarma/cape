@@ -26,7 +26,7 @@ const Courses = () => {
 
   useEffect(() => {
     async function playlist() {
-      console.log(`api call for topic ${topic}`);
+      // console.log(`api call for topic ${topic}`);
       const res = await fetch(
         `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${topic}&type=playlist&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&maxResults=12`
       );
@@ -76,9 +76,9 @@ const Courses = () => {
             );
 
             const thumbnailData = await ownerThumbnailRes.json();
-            console.log(
-              `thumbnaildata ${thumbnailData.items[0].snippet.thumbnails.high.url}`
-            );
+            // console.log(
+            //   `thumbnaildata ${thumbnailData.items[0].snippet.thumbnails.high.url}`
+            // );
             newThumbnail[channelId] =
               thumbnailData.items[0]?.snippet.thumbnails.high.url;
           }
@@ -168,7 +168,7 @@ const Courses = () => {
             const description = data.snippet?.description;
             const length = playlistLengths[id] || "0";
             const channelThumb = channelThumbnail[channelId] || "";
-            console.log(`channelthumb ${channelThumb}`);
+            // console.log(`channelthumb ${channelThumb}`);
             if (!hasMounted) return null;
             return (
               <CourseCard

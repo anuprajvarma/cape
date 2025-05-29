@@ -11,15 +11,12 @@ const enrolledCourseHandler = async (req, res) => {
     description,
     firstVideoId,
     bookmark,
-    chapterCompleted,
     email,
   } = req.body;
   let enrolledkCourse = await EnrolledkCourse.findOne({
     playlistId: id,
     email,
   });
-
-  console.log(`chapterCompleted ${chapterCompleted}`);
 
   if (!enrolledkCourse) {
     enrolledkCourse = await EnrolledkCourse.create({
@@ -31,19 +28,18 @@ const enrolledCourseHandler = async (req, res) => {
       firstVideoId: firstVideoId,
       title: title,
       bookmark: bookmark,
-      chapterCompleted: chapterCompleted,
       chapters: [],
       channelTitle: channelTitle,
       channelImage: channelThumb,
     });
   }
 
-  console.log(`enrolledkCourse post ${enrolledkCourse}`);
+  //   console.log(`enrolledkCourse post ${enrolledkCourse}`);
   res.json({ enrolledkCourse });
 };
 
 const getEnrolledCourseHandler = async (req, res) => {
-  console.log("step 3");
+  //   console.log("step 3");
   const { email } = req.body;
   let enrolledkCourse = await EnrolledkCourse.find({
     email,
@@ -51,8 +47,49 @@ const getEnrolledCourseHandler = async (req, res) => {
 
   // console.log(`google call ${email}`);
 
-  console.log(`enrolledkCourse ${enrolledkCourse}`);
+  //   console.log(`enrolledkCourse ${enrolledkCourse}`);
   res.json({ enrolledkCourse });
+};
+
+const appChapterHandler = async (req, res) => {
+  const { email, playlistId, videoId } = req.body;
+  //   console.log(email, playlistId, videoId);
+  let appChapterHandler = await EnrolledkCourse.findOneAndUpdate(
+    {
+      email,
+      playlistId,
+    },
+    { $addToSet: { chapters: videoId } }
+  );
+
+  console.log(`appChapterHandler ${appChapterHandler}`);
+  res.json({ appChapterHandler });
+};
+
+const removeChapterHandler = async (req, res) => {
+  const { email, playlistId, videoId } = req.body;
+  let removeChapterHandler = await EnrolledkCourse.findOneAndUpdate(
+    {
+      email,
+      playlistId,
+    },
+    { $pull: { chapters: videoId } }
+  );
+
+  console.log(`removeChapterHandler ${removeChapterHandler}`);
+  res.json({ removeChapterHandler });
+};
+
+const getChapterData = async (req, res) => {
+  const { email, playlistId } = req.body;
+  console.log(email, playlistId);
+  const getChapterData = await EnrolledkCourse.findOne({
+    playlistId: playlistId,
+    email,
+  });
+
+  console.log(`getChapterData ${getChapterData}`);
+  res.json({ getChapterData });
 };
 
 const deleteEnrolledCourseHandler = async (req, res) => {
@@ -70,4 +107,7 @@ module.exports = {
   enrolledCourseHandler,
   getEnrolledCourseHandler,
   deleteEnrolledCourseHandler,
+  appChapterHandler,
+  removeChapterHandler,
+  getChapterData,
 };

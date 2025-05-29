@@ -59,7 +59,6 @@ const CourseCard = ({
         description,
         firstVideoId,
         bookmark: true,
-        chapterCompleted: 0,
         email: session.data?.user?.email,
       }),
       credentials: "include",
