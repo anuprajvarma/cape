@@ -66,6 +66,7 @@ const Course = () => {
   const [notecheck, setNoteCheck] = useState<boolean>(true);
   const [gptcheck, setgptCheck] = useState<boolean>(false);
   const [easyExplaincheck, seteasyExplainCheck] = useState<boolean>(false);
+  const [discussion, setDiscussion] = useState<boolean>(false);
 
   const actualId = Array.isArray(id) ? id[0] : id;
 
@@ -140,18 +141,28 @@ const Course = () => {
     setNoteCheck(true);
     setgptCheck(false);
     seteasyExplainCheck(false);
+    setDiscussion(false);
   };
 
   const handleGPT = () => {
     setNoteCheck(false);
     setgptCheck(true);
     seteasyExplainCheck(false);
+    setDiscussion(false);
   };
 
   const handleEasyExplain = () => {
     setNoteCheck(false);
     setgptCheck(false);
     seteasyExplainCheck(true);
+    setDiscussion(false);
+  };
+
+  const handleDiscussion = () => {
+    setDiscussion(true);
+    setNoteCheck(false);
+    setgptCheck(false);
+    seteasyExplainCheck(false);
   };
 
   return (
@@ -204,6 +215,12 @@ const Course = () => {
               className="px-4 py-1 rounded-md border border-slaty "
             >
               Easy Explain
+            </button>
+            <button
+              onClick={handleDiscussion}
+              className="px-4 py-1 rounded-md border border-slaty "
+            >
+              Discussion
             </button>
           </div>
         </div>
@@ -301,6 +318,7 @@ const Course = () => {
           <></>
         )}
         {easyExplaincheck ? <div>EasyExplain</div> : <></>}
+        {discussion ? <div>discussion</div> : <></>}
       </div>
     </div>
   );
