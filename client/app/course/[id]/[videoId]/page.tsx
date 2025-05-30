@@ -8,6 +8,11 @@ import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { playlistType2 } from "@/types";
 import { useSession } from "next-auth/react";
 
+interface chatType {
+  question: string;
+  answer: string;
+}
+
 const Course = () => {
   const session = useSession();
   const params = useParams();
@@ -18,43 +23,7 @@ const Course = () => {
     []
   );
   const [input, setInput] = useState("");
-
-  const sendMessage = async () => {
-    if (!input.trim()) return;
-
-    const userMsg = { sender: "user", text: input };
-    setMessages((prev) => [...prev, userMsg]);
-
-    console.log("chal gya");
-
-    const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_HUGGINGFACE_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: "deepseek/deepseek-r1:free",
-        messages: [
-          {
-            role: "user",
-            content: input,
-          },
-        ],
-      }),
-    });
-
-    const data = await res.json();
-    const botMessage = {
-      sender: data.choices[0].message.role,
-      text: data.choices[0].message.content,
-    };
-    console.log(`api data response ${data.choices[0].message.content}`);
-
-    setMessages((prev) => [...prev, botMessage]);
-    setInput("");
-  };
-
+  const [chats, setChats] = useState<chatType[]>([]);
   const [playlists, setPlaylists] = useState<playlistType2[]>([]);
   const [completedChapters, setCompletedChapters] = useState<string[]>([]);
   const [hasMounted, setHasMounted] = useState(false);
@@ -67,6 +36,82 @@ const Course = () => {
   const [gptcheck, setgptCheck] = useState<boolean>(false);
   const [easyExplaincheck, seteasyExplainCheck] = useState<boolean>(false);
   const [discussion, setDiscussion] = useState<boolean>(false);
+
+  useEffect(() => {
+    const chat = async () => {
+      const res = await fetch("http://localhost:5002/api/chat/getData", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: session.data?.user?.email,
+          playlistId: id,
+        }),
+        credentials: "include",
+      });
+      const data = await res.json();
+      setChats(data.chatData.chats);
+    };
+
+    chat();
+  }, [gptcheck, messages, session.data?.user?.email, id]);
+
+  const sendMessage = async () => {
+    if (!input.trim()) return;
+
+    const userMsg = { sender: "user", text: input };
+    setMessages((prev) => [...prev, userMsg]);
+
+    try {
+      const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_HUGGINGFACE_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "deepseek/deepseek-r1:free",
+          messages: [
+            {
+              role: "user",
+              content: input,
+            },
+          ],
+        }),
+      });
+
+      const data = await res.json();
+
+      const botResponse = data?.choices?.[0]?.message?.content;
+      const botRole = data?.choices?.[0]?.message?.role;
+
+      if (botResponse) {
+        const botMessage = {
+          sender: botRole,
+          text: botResponse,
+        };
+        setMessages((prev) => [...prev, botMessage]);
+
+        // ✅ Only send to backend if input and botResponse are present
+        if (input.trim() && botResponse.trim()) {
+          await fetch("http://localhost:5002/api/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: session.data?.user?.email,
+              playlistId: id,
+              question: input,
+              answer: data.choices[0].message.content,
+            }),
+            credentials: "include",
+          });
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching from OpenRouter or saving to DB:", error);
+    }
+
+    setInput(""); // clear input at end
+  };
 
   const actualId = Array.isArray(id) ? id[0] : id;
 
@@ -284,18 +329,13 @@ const Course = () => {
         {gptcheck ? (
           <div className="w-full h-full">
             <div className="space-y-2 h-[75rem] border p-4 rounded overflow-y-auto">
-              {messages.map((msg, i) => (
+              {chats.map((msg, i) => (
                 <div
                   key={i}
-                  className={msg.sender === "user" ? "text-right" : "text-left"}
+                  // className={msg.sender === "user" ? "text-right" : "text-left"}
                 >
-                  <span
-                    className={`inline-block px-3 py-2 rounded ${
-                      msg.sender === "user" ? "bg-blue-200" : "bg-gray-200"
-                    }`}
-                  >
-                    {msg.text}
-                  </span>
+                  <div>{msg.question}</div>
+                  <div>{msg.answer}</div>
                 </div>
               ))}
             </div>

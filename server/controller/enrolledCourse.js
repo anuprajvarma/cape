@@ -62,7 +62,7 @@ const appChapterHandler = async (req, res) => {
     { $addToSet: { chapters: videoId } }
   );
 
-  console.log(`appChapterHandler ${appChapterHandler}`);
+  // console.log(`appChapterHandler ${appChapterHandler}`);
   res.json({ appChapterHandler });
 };
 
@@ -76,19 +76,19 @@ const removeChapterHandler = async (req, res) => {
     { $pull: { chapters: videoId } }
   );
 
-  console.log(`removeChapterHandler ${removeChapterHandler}`);
+  // console.log(`removeChapterHandler ${removeChapterHandler}`);
   res.json({ removeChapterHandler });
 };
 
 const getChapterData = async (req, res) => {
   const { email, playlistId } = req.body;
-  console.log(email, playlistId);
+  // console.log(email, playlistId);
   const getChapterData = await EnrolledkCourse.findOne({
     playlistId: playlistId,
     email,
   });
 
-  console.log(`getChapterData ${getChapterData}`);
+  // console.log(`getChapterData ${getChapterData}`);
   res.json({ getChapterData });
 };
 
@@ -99,7 +99,7 @@ const deleteEnrolledCourseHandler = async (req, res) => {
     email,
   });
 
-  console.log(`deleteEnrolledCourseHandler ${deleteEnrolledCourseHandler}`);
+  // console.log(`deleteEnrolledCourseHandler ${deleteEnrolledCourseHandler}`);
   res.json({ deleteEnrolledCourseHandler });
 };
 

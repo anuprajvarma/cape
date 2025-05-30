@@ -32,12 +32,12 @@ const bookmarCourseHandler = async (req, res) => {
     });
   }
 
-  console.log(`bookmark ${enrolledkCourse}`);
+  // console.log(`bookmark ${enrolledkCourse}`);
   res.json({ bookmarkCourse });
 };
 
 const getBookmarCourseHandler = async (req, res) => {
-  console.log("step 3");
+  // console.log("step 3");
   const { email } = req.body;
   let bookmarkCourse = await BookmarkCourse.find({
     email,
@@ -45,7 +45,7 @@ const getBookmarCourseHandler = async (req, res) => {
 
   // console.log(`google call ${email}`);
 
-  console.log(`bookmarkCourse ${bookmarkCourse}`);
+  // console.log(`bookmarkCourse ${bookmarkCourse}`);
   res.json({ bookmarkCourse });
 };
 
@@ -56,9 +56,9 @@ const deleteBookmarCourseHandler = async (req, res) => {
     email,
   });
 
-  console.log(`google call ${email}`);
+  // console.log(`google call ${email}`);
 
-  console.log(`deleteBookmarCourseHandler ${deleteBookmarCourseHandler}`);
+  // console.log(`deleteBookmarCourseHandler ${deleteBookmarCourseHandler}`);
   res.json({ deleteBookmarCourseHandler });
 };
 
