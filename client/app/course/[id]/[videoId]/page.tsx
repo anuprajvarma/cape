@@ -7,6 +7,7 @@ import PlalistVideoCard from "../../../component/PlalistVideoCard";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { playlistType2 } from "@/types";
 import { useSession } from "next-auth/react";
+// import TiptapEditor from "../../../component/Editor";
 
 interface chatType {
   question: string;
@@ -18,6 +19,8 @@ const Course = () => {
   const params = useParams();
   const { id, videoId } = params;
   const router = useRouter();
+
+  const [content, setContent] = useState("");
 
   const [messages, setMessages] = useState<{ sender: string; text: string }[]>(
     []
@@ -36,6 +39,44 @@ const Course = () => {
   const [gptcheck, setgptCheck] = useState<boolean>(false);
   const [easyExplaincheck, seteasyExplainCheck] = useState<boolean>(false);
   const [discussion, setDiscussion] = useState<boolean>(false);
+
+  useEffect(() => {
+    const chat = async () => {
+      const res = await fetch("http://localhost:5002/api/notes/getNote", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: session.data?.user?.email,
+          playlistId: id,
+          videoId,
+        }),
+        credentials: "include",
+      });
+      const data = await res.json();
+      setContent(data.noteData.content);
+    };
+
+    if (videoId) {
+      chat();
+    }
+  }, [gptcheck, session.data?.user?.email, id, videoId]);
+
+  const saveNote = async () => {
+    console.log(content);
+    const res = await fetch("http://localhost:5002/api/notes/addNote", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: session.data?.user?.email,
+        playlistId: id,
+        videoId,
+        content,
+      }),
+      credentials: "include",
+    });
+    const data = await res.json();
+    setContent(data.note.content);
+  };
 
   useEffect(() => {
     const chat = async () => {
@@ -325,7 +366,18 @@ const Course = () => {
         </div>
       </div>
       <div className="w-full h-[80rem] border border-slaty rounded-lg">
-        {notecheck ? <div>Notes</div> : <></>}
+        {notecheck ? (
+          <div>
+            <textarea
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+            />
+            {/* <TiptapEditor content={content} onChange={setContent} /> */}
+            <button onClick={saveNote}>Save</button>
+          </div>
+        ) : (
+          <></>
+        )}
         {gptcheck ? (
           <div className="w-full h-full">
             <div className="space-y-2 h-[75rem] border p-4 rounded overflow-y-auto">
