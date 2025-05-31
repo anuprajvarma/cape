@@ -48,6 +48,23 @@ const Course = () => {
   const [easyExplaincheck, seteasyExplainCheck] = useState<boolean>(false);
   const [discussion, setDiscussion] = useState<boolean>(false);
   const [checkChangeNote, setCheckChangeNote] = useState(true);
+  const [videoTitle, setVideoTitle] = useState("");
+  const [videoDescription, setVideoDescription] = useState("");
+  const [easyExplain, setEasyExplain] = useState("");
+
+  useEffect(() => {
+    async function playlist() {
+      console.log(`videoId ${videoId}`);
+      const res = await fetch(
+        `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&id=${videoId}&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}`
+      );
+      const data = await res.json();
+      setVideoTitle(data.items[0].snippet.title);
+      setVideoDescription(data.items[0].snippet.description);
+      console.log(`video detail ${data.items[0]}`);
+    }
+    playlist();
+  }, [videoId]);
 
   useEffect(() => {
     const chat = async () => {
@@ -141,6 +158,34 @@ const Course = () => {
 
     chat();
   }, [gptcheck, messages, session.data?.user?.email, id]);
+
+  const easyExplainHandler = async () => {
+    try {
+      const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_HUGGINGFACE_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "deepseek/deepseek-r1:free",
+          messages: [
+            {
+              role: "user",
+              content: `explain ${videoTitle} like 5-year-old child`,
+            },
+          ],
+        }),
+      });
+
+      const data = await res.json();
+
+      const botResponse = data?.choices?.[0]?.message?.content;
+      setEasyExplain(botResponse);
+    } catch (error) {
+      console.error("Error fetching from OpenRouter or saving to DB:", error);
+    }
+  };
 
   const sendMessage = async () => {
     if (!input.trim()) return;
@@ -316,7 +361,10 @@ const Course = () => {
             <button onClick={() => router.back()}>
               <MdOutlineArrowBack />
             </button>
-            <p>{session.data?.user?.email}</p>
+            <p>{videoTitle}</p>
+            {/* {videoInfo.map((data, index) => {
+              return <p key={index}>{data.snippet.title}</p>;
+            })} */}
           </div>
           <div className="flex w-full h-[38rem]">
             <iframe
@@ -477,7 +525,18 @@ const Course = () => {
         ) : (
           <></>
         )}
-        {easyExplaincheck ? <div>EasyExplain</div> : <></>}
+        {easyExplaincheck ? (
+          easyExplain ? (
+            <p>{easyExplain}</p>
+          ) : (
+            <div>
+              <p>want explaination like 5 year old boy</p>
+              <button onClick={easyExplainHandler}>Yes</button>
+            </div>
+          )
+        ) : (
+          <></>
+        )}
         {discussion ? (
           <div className="w-full h-full">
             <div className="space-y-2 w-full h-[40rem] border p-4 rounded overflow-y-auto">
