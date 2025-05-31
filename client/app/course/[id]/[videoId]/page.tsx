@@ -7,10 +7,17 @@ import PlalistVideoCard from "../../../component/PlalistVideoCard";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { playlistType2 } from "@/types";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 
 interface chatType {
   question: string;
   answer: string;
+}
+
+interface discussionType {
+  name: string;
+  image: string;
+  content: string;
 }
 
 const Course = () => {
@@ -20,11 +27,13 @@ const Course = () => {
   const router = useRouter();
 
   const [content, setContent] = useState("");
+  const [discussionData, setDiscussionData] = useState<discussionType[]>([]);
 
   const [messages, setMessages] = useState<{ sender: string; text: string }[]>(
     []
   );
   const [input, setInput] = useState("");
+  const [discussionContent, setDiscussionContent] = useState("");
   const [chats, setChats] = useState<chatType[]>([]);
   const [playlists, setPlaylists] = useState<playlistType2[]>([]);
   const [completedChapters, setCompletedChapters] = useState<string[]>([]);
@@ -60,6 +69,44 @@ const Course = () => {
       chat();
     }
   }, [gptcheck, session.data?.user?.email, id, videoId, checkChangeNote]);
+
+  useEffect(() => {
+    const discussion = async () => {
+      const res = await fetch("http://localhost:5002/api/discussion/getData", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          playlistId: id,
+          videoId,
+        }),
+        credentials: "include",
+      });
+      const data = await res.json();
+      setDiscussionData(data.discussionData.discussions);
+      console.log(discussionData);
+    };
+
+    if (videoId) {
+      discussion();
+    }
+  }, [gptcheck, session.data?.user?.email, id, videoId]);
+
+  const discussionHandler = async () => {
+    const res = await fetch("http://localhost:5002/api/discussion/postData", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        playlistId: id,
+        videoId,
+        content: discussionContent,
+        username: session.data?.user?.name,
+        userImageUrl: session.data?.user?.image,
+      }),
+      credentials: "include",
+    });
+    const data = await res.json();
+    setContent(data.note.content);
+  };
 
   const saveNote = async () => {
     setCheckChangeNote(!checkChangeNote);
@@ -431,7 +478,53 @@ const Course = () => {
           <></>
         )}
         {easyExplaincheck ? <div>EasyExplain</div> : <></>}
-        {discussion ? <div>discussion</div> : <></>}
+        {discussion ? (
+          <div className="w-full h-full">
+            <div className="space-y-2 w-full h-[40rem] border p-4 rounded overflow-y-auto">
+              {discussionData.map((msg, i) => (
+                <div
+                  className="flex gap-4"
+                  key={i}
+                  // className={msg.sender === "user" ? "text-right" : "text-left"}
+                >
+                  <div className="flex w-[3rem] items-start h-[3rem] relative">
+                    <Image
+                      src={msg.image}
+                      alt="code"
+                      quality={100}
+                      sizes="80px"
+                      fill
+                      style={{ objectFit: "cover" }}
+                      className="rounded-full"
+                    />
+                  </div>
+                  <div className="flex flex-col">
+                    <p className="text-slaty text-xs font-semibold">
+                      {msg.name}
+                    </p>
+                    <p className="text-sm">{msg.content}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-4 flex gap-2">
+              <input
+                value={discussionContent}
+                onChange={(e) => setDiscussionContent(e.target.value)}
+                className="flex-1 p-2 border rounded"
+                placeholder="Type a message..."
+              />
+              <button
+                onClick={discussionHandler}
+                className="px-4 py-2 bg-blue-600 text-white rounded"
+              >
+                Send
+              </button>
+            </div>
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );
