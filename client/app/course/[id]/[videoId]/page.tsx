@@ -20,7 +20,7 @@ import Linkify from "linkify-react";
 const options = {
   target: "_blank",
   rel: "noopener noreferrer",
-  className: () => "text-blue-600 underline",
+  className: () => "text-blue-600 underline prose",
 };
 
 interface chatType {
@@ -520,11 +520,14 @@ const Course = () => {
                   // className={msg.sender === "user" ? "text-right" : "text-left"}
                 >
                   <div className="flex w-full justify-end text-xl font-semibold py-4">
-                    <p className="border border-slaty px-6 py-2 rounded-md">
+                    <p className="border border-slaty px-6 py-2 rounded-3xl">
                       {msg.question}
                     </p>
                   </div>
-                  <ReactMarkdown>{msg.answer}</ReactMarkdown>
+                  <div className="p-12 w-full h-full overflow-auto prose prose-lg prose-headings:my-2 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-ul:my-0 max-w-none">
+                    <ReactMarkdown>{msg.answer}</ReactMarkdown>
+                  </div>
+                  {/* <ReactMarkdown>{msg.answer}</ReactMarkdown> */}
                 </div>
               ))}
             </div>
@@ -548,7 +551,7 @@ const Course = () => {
         )}
         {easyExplaincheck ? (
           easyExplain ? (
-            <div className="p-12 w-full h-full overflow-auto">
+            <div className="p-12 w-full h-full overflow-auto prose prose-lg prose-headings:my-0 prose-p:my-0 prose-li:my-0 prose-hr:my-6 max-w-none">
               <ReactMarkdown>{easyExplain}</ReactMarkdown>
             </div>
           ) : (
