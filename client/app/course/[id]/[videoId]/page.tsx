@@ -8,6 +8,7 @@ import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { playlistType2 } from "@/types";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import ReactMarkdown from "react-markdown";
 
 interface chatType {
   question: string;
@@ -160,6 +161,7 @@ const Course = () => {
   }, [gptcheck, messages, session.data?.user?.email, id]);
 
   const easyExplainHandler = async () => {
+    console.log("easyExplain");
     try {
       const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
         method: "POST",
@@ -342,29 +344,15 @@ const Course = () => {
     seteasyExplainCheck(false);
   };
 
-  // const handleSave = async (content: object) => {
-  //   console.log(content);
-  //   // await fetch(`http://localhost:5000/api/notes/${params.id}`, {
-  //   //   method: 'PUT',
-  //   //   headers: { 'Content-Type': 'application/json' },
-  //   //   body: JSON.stringify({ ...note, content }),
-  //   // });
-  // };
-
-  // const [note, setNote] = useState({ type: "doc", content: "hii notion" });
-
   return (
     <div className="w-full -z-20 p-4 border-t border-slaty flex flex-col gap-2 justify-center text-slaty">
       <div className="w-full flex justify-between gap-2">
         <div className="w-[63rem] flex flex-col gap-4">
           <div className="flex gap-2 text-xl">
             <button onClick={() => router.back()}>
-              <MdOutlineArrowBack />
+              <MdOutlineArrowBack className="text-2xl font-semibold" />
             </button>
-            <p>{videoTitle}</p>
-            {/* {videoInfo.map((data, index) => {
-              return <p key={index}>{data.snippet.title}</p>;
-            })} */}
+            <p className="text-lg font-semibold">{videoTitle}</p>
           </div>
           <div className="flex w-full h-[38rem]">
             <iframe
@@ -492,7 +480,7 @@ const Course = () => {
         )}
         {gptcheck ? (
           <div className="w-full h-full">
-            <div className="space-y-2 w-full h-[40rem] border p-4 rounded overflow-y-auto">
+            <div className="space-y-2 w-full h-[40rem] border p-12 rounded overflow-y-auto">
               {chats.map((msg, i) => (
                 <div
                   key={i}
@@ -503,7 +491,7 @@ const Course = () => {
                       {msg.question}
                     </p>
                   </div>
-                  <div>{msg.answer}</div>
+                  <ReactMarkdown>{msg.answer}</ReactMarkdown>
                 </div>
               ))}
             </div>
@@ -527,7 +515,9 @@ const Course = () => {
         )}
         {easyExplaincheck ? (
           easyExplain ? (
-            <p>{easyExplain}</p>
+            <div className="p-12 w-full h-full overflow-auto">
+              <ReactMarkdown>{easyExplain}</ReactMarkdown>
+            </div>
           ) : (
             <div className="w-full h-full flex flex-col justify-center items-center gap-2">
               <p className="p-2 rounded-lg border border-slaty">
