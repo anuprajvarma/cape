@@ -529,9 +529,16 @@ const Course = () => {
           easyExplain ? (
             <p>{easyExplain}</p>
           ) : (
-            <div>
-              <p>want explaination like 5 year old boy</p>
-              <button onClick={easyExplainHandler}>Yes</button>
+            <div className="w-full h-full flex flex-col justify-center items-center gap-2">
+              <p className="p-2 rounded-lg border border-slaty">
+                want explaination like 5 year old boy 😁
+              </p>
+              <button
+                className="px-4 py-1 rounded-lg hover:bg-slaty/10 transition duration-200 border border-slaty"
+                onClick={easyExplainHandler}
+              >
+                Yes
+              </button>
             </div>
           )
         ) : (
