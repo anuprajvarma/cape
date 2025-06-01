@@ -20,6 +20,7 @@ export interface PlaylistCardType {
   isChecked: boolean;
   id: string;
   videoId: string;
+  currentvideoId: string;
 }
 
 export interface playlistType {

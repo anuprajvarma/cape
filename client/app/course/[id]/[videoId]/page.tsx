@@ -466,8 +466,8 @@ const Course = () => {
           <div className="py-2 h-[586px] flex flex-col gap-4 rounded-xl overflow-y-auto">
             {playlists?.map((data, index) => {
               const id = data.snippet?.playlistId;
-              const videoID = data.snippet?.resourceId.videoId;
-              const isChecked = completedChapters.includes(videoID);
+              const videoid = data.snippet?.resourceId.videoId;
+              const isChecked = completedChapters.includes(videoid);
               if (!hasMounted) return null;
               return (
                 <PlalistVideoCard
@@ -479,7 +479,8 @@ const Course = () => {
                   setCheckBoxTrack={setCheckBoxTrack}
                   checkBoxTrack={checkBoxTrack}
                   isChecked={isChecked}
-                  videoId={videoID}
+                  videoId={videoid}
+                  currentvideoId={videoId as string}
                   //   channelThumb={channelThumb}
                   key={index}
                 />
@@ -512,19 +513,15 @@ const Course = () => {
           <div className="w-full h-full">
             <div className="space-y-2 w-full h-[40rem] border p-12 rounded overflow-y-auto">
               {chats.map((msg, i) => (
-                <div
-                  key={i}
-                  // className={msg.sender === "user" ? "text-right" : "text-left"}
-                >
+                <div key={i}>
                   <div className="flex w-full justify-end text-xl font-semibold py-4">
                     <p className="border border-slaty px-6 py-2 rounded-3xl">
                       {msg.question}
                     </p>
                   </div>
-                  <div className="p-12 w-full h-full overflow-auto prose prose-lg prose-headings:my-2 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-ul:my-0 max-w-none">
+                  <div className="p-12 w-full h-full overflow-auto prose prose-lg prose-headings:my-2 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-ul:my-0 prose-a:text-blue-600 hover:prose-a:underline max-w-none">
                     <ReactMarkdown>{msg.answer}</ReactMarkdown>
                   </div>
-                  {/* <ReactMarkdown>{msg.answer}</ReactMarkdown> */}
                 </div>
               ))}
             </div>
@@ -548,7 +545,7 @@ const Course = () => {
         )}
         {easyExplaincheck ? (
           easyExplain ? (
-            <div className="p-12 w-full h-full overflow-auto prose prose-lg prose-headings:my-0 prose-p:my-0 prose-li:my-0 prose-hr:my-6 max-w-none">
+            <div className="p-12 w-full h-full overflow-auto prose prose-lg prose-headings:my-0 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-a:text-blue-600 hover:prose-a:underline max-w-none">
               <ReactMarkdown>{easyExplain}</ReactMarkdown>
             </div>
           ) : (

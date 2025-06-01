@@ -13,6 +13,7 @@ const PlalistVideoCard = ({
   setCheckBoxTrack,
   checkBoxTrack,
   videoId,
+  currentvideoId,
 }: PlaylistCardType) => {
   // console.log(id);
   const router = useRouter();
@@ -52,9 +53,17 @@ const PlalistVideoCard = ({
   };
 
   return (
-    <div className="flex gap-2 p-1 items-center">
+    <div
+      className={`flex gap-2 p-1 items-center  ${
+        currentvideoId === videoId
+          ? "bg-slaty/70 rounded-sm"
+          : "hover:bg-slaty/40 transition duration-100"
+      }`}
+    >
       <button
-        className="flex gap-2 p-1 items-center"
+        className={`flex gap-2 p-1 items-center ${
+          currentvideoId === videoId ? "text-lightYellow" : ""
+        }`}
         onClick={() => playVideo({ id, videoId })}
       >
         <div className="flex w-[10rem] items-start h-[4rem] relative">
