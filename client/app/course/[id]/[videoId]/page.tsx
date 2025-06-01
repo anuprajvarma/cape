@@ -438,17 +438,14 @@ const Course = () => {
         </div>
         <div className="w-[25rem] h-[656px] border border-slaty rounded-xl flex flex-col">
           <div className="border-b h-[4rem] border-slaty p-2 flex justify-between">
-            <div>
-              <p className="font-semibold">React js Tutorial in Hindi</p>
-              <div className="flex justify-between text-sm items-center">
-                <div className="flex gap-1">
-                  <p className="text-xs ">Completed</p>
-                  <p className="text-xs">
-                    {typeof id === "string" && playlistLengths[id] && (
-                      <p>{`${completedChapters.length}/${playlistLengths[id]}`}</p>
-                    )}
-                  </p>
-                </div>
+            <div className="flex text-sm items-center">
+              <div className="flex gap-1 text-lg font-semibold text-slaty/90">
+                <p>Progress -</p>
+                <p>
+                  {typeof id === "string" && playlistLengths[id] && (
+                    <p>{`${completedChapters.length}/${playlistLengths[id]}`}</p>
+                  )}
+                </p>
               </div>
             </div>
             <div className="w-[3rem] h-[3rem] rounded-lg flex flex-col gap-3 justify-center items-center">
@@ -555,8 +552,8 @@ const Course = () => {
               <ReactMarkdown>{easyExplain}</ReactMarkdown>
             </div>
           ) : (
-            <div className="w-full h-full flex flex-col justify-center items-center gap-2">
-              <p className="p-2 rounded-lg border border-slaty">
+            <div className="w-full h-full flex flex-col justify-center items-center gap-4">
+              <p className="px-12 py-2 rounded-full border border-slaty">
                 want explaination like 5 year old boy 😁
               </p>
               <button
