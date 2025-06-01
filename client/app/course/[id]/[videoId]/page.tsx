@@ -9,6 +9,19 @@ import { playlistType2 } from "@/types";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import ReactMarkdown from "react-markdown";
+import {
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+} from "@headlessui/react";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import Linkify from "linkify-react";
+
+const options = {
+  target: "_blank",
+  rel: "noopener noreferrer",
+  className: () => "text-blue-600 underline",
+};
 
 interface chatType {
   question: string;
@@ -344,6 +357,11 @@ const Course = () => {
     seteasyExplainCheck(false);
   };
 
+  const lines = videoDescription
+    .split("\n")
+    .map((line) => line.trim())
+    .filter((line) => line.length > 0);
+
   return (
     <div className="w-full -z-20 p-4 border-t border-slaty flex flex-col gap-2 justify-center text-slaty">
       <div className="w-full flex justify-between gap-2">
@@ -376,6 +394,21 @@ const Course = () => {
               </button>
             </div>
           </div>
+          <Disclosure as="div" className="" defaultOpen={false}>
+            <DisclosureButton className="group flex w-full items-center justify-between">
+              <span className="text-sm">Description</span>
+              <ChevronDownIcon className="size-5 fill-slaty group-data-hover:fill-white/50 group-data-open:rotate-180" />
+            </DisclosureButton>
+            <DisclosurePanel className="mt-2 text-sm/5 text-slaty">
+              {lines.map((line, idx) => (
+                <p key={idx}>
+                  <Linkify options={options}>{line}.</Linkify>
+                </p>
+              ))}
+
+              {/* <Linkify options={options}>{videoDescription}</Linkify> */}
+            </DisclosurePanel>
+          </Disclosure>
           <div className="flex justify-between">
             <button
               onClick={handleNotes}
