@@ -54,10 +54,10 @@ const PlalistVideoCard = ({
 
   return (
     <div
-      className={`flex gap-2 p-1 items-center  ${
+      className={`flex gap-2 p-1 items-center ${
         currentvideoId === videoId
           ? "bg-slaty/70 rounded-sm"
-          : "hover:bg-slaty/40 transition duration-100"
+          : "hover:bg-slaty/70 transition duration-100 "
       }`}
     >
       <button

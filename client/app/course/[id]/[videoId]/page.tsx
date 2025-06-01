@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useRouter, useParams } from "next/navigation";
-import { MdOutlineArrowBack } from "react-icons/md";
+import { useParams } from "next/navigation";
 import PlalistVideoCard from "../../../component/PlalistVideoCard";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { playlistType2 } from "@/types";
@@ -38,7 +37,6 @@ const Course = () => {
   const session = useSession();
   const params = useParams();
   const { id, videoId } = params;
-  const router = useRouter();
 
   const [content, setContent] = useState("");
   const [discussionData, setDiscussionData] = useState<discussionType[]>([]);
@@ -366,12 +364,6 @@ const Course = () => {
     <div className="w-full -z-20 p-4 border-t border-slaty flex flex-col gap-2 justify-center text-slaty">
       <div className="w-full flex justify-between gap-2">
         <div className="w-[63rem] flex flex-col gap-4">
-          <div className="flex gap-2 text-xl">
-            <button onClick={() => router.back()}>
-              <MdOutlineArrowBack className="text-2xl font-semibold" />
-            </button>
-            <p className="text-lg font-semibold">{videoTitle}</p>
-          </div>
           <div className="flex w-full h-[38rem]">
             <iframe
               src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
@@ -379,20 +371,6 @@ const Course = () => {
               allow="autoplay; encrypted-media"
               title="YouTube video player"
             />
-          </div>
-          <div className="flex justify-between">
-            <div className="flex gap-2">
-              <input type="checkbox" />
-              <p>Mark lesson complete</p>
-            </div>
-            <div className="flex gap-2">
-              <button>
-                <MdOutlineArrowBack />
-              </button>
-              <button>
-                <MdOutlineArrowBack className="rotate-180" />
-              </button>
-            </div>
           </div>
           <Disclosure as="div" className="" defaultOpen={false}>
             <DisclosureButton className="group flex w-full items-center justify-between">
@@ -438,8 +416,9 @@ const Course = () => {
         </div>
         <div className="w-[25rem] h-[656px] border border-slaty rounded-xl flex flex-col">
           <div className="border-b h-[4rem] border-slaty p-2 flex justify-between">
-            <div className="flex text-sm items-center">
-              <div className="flex gap-1 text-lg font-semibold text-slaty/90">
+            <div className="flex flex-col text-sm">
+              <p className="font-semibold">{videoTitle}</p>
+              <div className="flex gap-1 font-medium text-slaty/90">
                 <p>Progress -</p>
                 <p>
                   {typeof id === "string" && playlistLengths[id] && (
