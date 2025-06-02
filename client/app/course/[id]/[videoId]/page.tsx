@@ -15,6 +15,7 @@ import {
 } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import Linkify from "linkify-react";
+import Editor from "@/app/component/Editor";
 
 const options = {
   target: "_blank",
@@ -38,7 +39,7 @@ const Course = () => {
   const params = useParams();
   const { id, videoId } = params;
 
-  const [content, setContent] = useState("");
+  // const [content, setContent] = useState("");
   const [discussionData, setDiscussionData] = useState<discussionType[]>([]);
 
   const [messages, setMessages] = useState<{ sender: string; text: string }[]>(
@@ -59,7 +60,7 @@ const Course = () => {
   const [gptcheck, setgptCheck] = useState<boolean>(false);
   const [easyExplaincheck, seteasyExplainCheck] = useState<boolean>(false);
   const [discussion, setDiscussion] = useState<boolean>(false);
-  const [checkChangeNote, setCheckChangeNote] = useState(true);
+  // const [checkChangeNote, setCheckChangeNote] = useState(true);
   const [videoTitle, setVideoTitle] = useState("");
   const [videoDescription, setVideoDescription] = useState("");
   const [easyExplain, setEasyExplain] = useState("");
@@ -78,26 +79,26 @@ const Course = () => {
     playlist();
   }, [videoId]);
 
-  useEffect(() => {
-    const chat = async () => {
-      const res = await fetch("http://localhost:5002/api/notes/getNote", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: session.data?.user?.email,
-          playlistId: id,
-          videoId,
-        }),
-        credentials: "include",
-      });
-      const data = await res.json();
-      setContent(data.noteData.content);
-    };
+  // useEffect(() => {
+  //   const chat = async () => {
+  //     const res = await fetch("http://localhost:5002/api/notes/getNote", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({
+  //         email: session.data?.user?.email,
+  //         playlistId: id,
+  //         videoId,
+  //       }),
+  //       credentials: "include",
+  //     });
+  //     const data = await res.json();
+  //     setContent(data.noteData.content);
+  //   };
 
-    if (videoId) {
-      chat();
-    }
-  }, [gptcheck, session.data?.user?.email, id, videoId, checkChangeNote]);
+  //   if (videoId) {
+  //     chat();
+  //   }
+  // }, [gptcheck, session.data?.user?.email, id, videoId, checkChangeNote]);
 
   useEffect(() => {
     const discussion = async () => {
@@ -121,7 +122,7 @@ const Course = () => {
   }, [gptcheck, session.data?.user?.email, id, videoId]);
 
   const discussionHandler = async () => {
-    const res = await fetch("http://localhost:5002/api/discussion/postData", {
+    await fetch("http://localhost:5002/api/discussion/postData", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -133,24 +134,8 @@ const Course = () => {
       }),
       credentials: "include",
     });
-    const data = await res.json();
-    setContent(data.note.content);
-  };
-
-  const saveNote = async () => {
-    setCheckChangeNote(!checkChangeNote);
-    const res = await fetch("http://localhost:5002/api/notes/addNote", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: session.data?.user?.email,
-        playlistId: id,
-        content,
-      }),
-      credentials: "include",
-    });
-    const data = await res.json();
-    setContent(data.note.content);
+    // const data = await res.json();
+    // setContent(data.note.content);
   };
 
   useEffect(() => {
@@ -470,20 +455,26 @@ const Course = () => {
       </div>
       <div className="w-full h-[40rem] border border-slaty rounded-lg">
         {notecheck ? (
-          <div className="p-4">
-            <textarea
-              className="outline-none rounded-lg bg-lightYellow w-full h-[35rem]"
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
+          // <div className="p-4">
+          //   <textarea
+          //     className="outline-none rounded-lg bg-lightYellow w-full h-[35rem]"
+          //     value={content}
+          //     onChange={(e) => setContent(e.target.value)}
+          //   />
+          //   <div className="w-full text-left flex justify-end">
+          //     <button
+          //       className="px-2 py-1 border border-slaty rounded-lg"
+          //       onClick={saveNote}
+          //     >
+          //       Save
+          //     </button>
+          //   </div>
+          // </div>
+          <div>
+            <Editor
+              email={session.data?.user?.email as string}
+              playlistId={id as string}
             />
-            <div className="w-full text-left flex justify-end">
-              <button
-                className="px-2 py-1 border border-slaty rounded-lg"
-                onClick={saveNote}
-              >
-                Save
-              </button>
-            </div>
           </div>
         ) : (
           <></>

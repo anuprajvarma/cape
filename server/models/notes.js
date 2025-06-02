@@ -11,7 +11,7 @@ const notesSchema = new mongoose.Schema({
   },
   content: {
     required: true,
-    type: String,
+    type: Array,
   },
 });
 

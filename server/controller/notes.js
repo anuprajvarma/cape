@@ -2,7 +2,7 @@ const Notes = require("../models/notes");
 
 const addNoteHandler = async (req, res) => {
   const { email, playlistId, content } = req.body;
-  console.log("addNote");
+  console.log(`content ${content}`);
   console.log(email, playlistId, content);
   let note = await Notes.findOneAndUpdate(
     {
