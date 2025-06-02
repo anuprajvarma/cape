@@ -470,12 +470,11 @@ const Course = () => {
           //     </button>
           //   </div>
           // </div>
-          <div>
-            <Editor
-              email={session.data?.user?.email as string}
-              playlistId={id as string}
-            />
-          </div>
+
+          <Editor
+            email={session.data?.user?.email as string}
+            playlistId={id as string}
+          />
         ) : (
           <></>
         )}
