@@ -53,7 +53,7 @@ const Header = () => {
       >
         <Link
           href="/"
-          className="font-bold cursor-pointer text-2xl flex gap-1 text-white items-center"
+          className="font-bold cursor-pointer text-2xl flex gap-2 text-white items-center"
         >
           <SiSololearn className="text-lightBlue" />
           <p>Cape</p>

@@ -387,7 +387,7 @@ const Course = () => {
           <div className="border-b h-[4rem] border-slaty p-2 flex justify-between">
             <div className="flex flex-col text-sm">
               <p className="font-semibold">{videoTitle}</p>
-              <div className="flex gap-1 font-medium text-slaty/90">
+              <div className="flex gap-2 font-medium text-slaty/90">
                 <p>Progress -</p>
                 <div>
                   {typeof id === "string" && playlistLengths[id] && (

@@ -10,7 +10,7 @@ const NavBar = () => {
   return (
     <div className="w-full py-[1rem] px-4 border-t border-lightSlaty flex justify-center z-20">
       <div className="w-[70rem] flex justify-between">
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col gap-2">
           <p className="text-white text-xl">Connect with me</p>
           <div className="flex gap-2 text-slaty/60">
             <Link
@@ -30,9 +30,10 @@ const NavBar = () => {
             </Link>
           </div>
         </div>
-        <div className="flex flex-col items-center gap-1">
+        <div className="flex flex-col items-center gap-2">
           <p className="text-white text-xl">Contribute</p>
-          <div className="flex gap-2 text-slaty/60">
+          <div className="flex gap-2 items-center text-slaty/60">
+            <p>Cape</p>
             <Link href="https://github.com/anuprajvarma/cape" target="_blank">
               <FaGithubAlt className="cursor-pointer hover:text-darkRed transition duration-300 w-5 h-5" />
             </Link>
