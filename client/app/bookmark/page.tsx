@@ -51,7 +51,7 @@ const Bookmark = () => {
 
   return (
     <div className="w-full -z-20 py-[2rem] px-4 text-black border-t border-slaty flex justify-center">
-      <div className="w-[70rem] flex flex-col gap-12">
+      <div className="w-[80rem] flex flex-col items-center gap-12">
         <div className="flex flex-wrap gap-16 items-start justify-start">
           {bookmarkCoursePlaylist?.map((data, index) => {
             if (!hasMounted) return null;
@@ -70,12 +70,6 @@ const Bookmark = () => {
               />
             );
           })}
-          {/* <CourseCard />
-          <CourseCard />
-          <CourseCard />
-          <CourseCard />
-          <CourseCard />
-          <CourseCard /> */}
         </div>
       </div>
     </div>

@@ -48,7 +48,9 @@ const Header = () => {
 
   return (
     <div className="w-full px-8 py-4 flex justify-center">
-      <div className={`w-full flex justify-between font-medium items-center`}>
+      <div
+        className={`w-[80rem] flex justify-between font-medium items-center`}
+      >
         <Link
           href="/"
           className="font-bold cursor-pointer text-2xl flex gap-1 text-white items-center"

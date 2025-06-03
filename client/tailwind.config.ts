@@ -14,6 +14,7 @@ export default {
         foreground: "var(--foreground)",
         white: "#FFFFFF",
         slaty: "#D1D5DB",
+        mediumSlaty: "#1F2937",
         lightSlaty: "#374151",
         darkBlue: "#101827",
         lightBlue: "#1A56DB",

@@ -85,41 +85,45 @@ const PopularCourses = () => {
   }, [playlists]);
 
   return (
-    <div className="flex flex-col gap-6 py-10">
-      <p className="text-center font-semibold text-xl">Popular Courses</p>
-      <div className="flex flex-wrap gap-16 items-center justify-center">
-        {playlists?.map((data, index) => {
-          const id = data.id?.playlistId;
-          const channelId = data.snippet?.channelId;
-          const description = data.snippet?.description;
-          const length = playlistLengths[id] || "";
-          const channelThumb = channelThumbnail[channelId] || "";
-          // console.log(`channelthumb ${channelThumb}`);
-          // console.log(`id ... ${id}`);
-          // console.log(length);
-          if (!hasMounted) return null;
-          return (
-            <CourseCard
-              title={data.snippet?.title}
-              channelTitle={data.snippet?.channelTitle}
-              thumbnails={data.snippet?.thumbnails.high.url}
-              lenth={length}
-              id={id}
-              bookmark={false}
-              description={description}
-              channelThumb={channelThumb as string}
-              key={index}
-            />
-          );
-        })}
-      </div>
-      <div className="flex justify-center">
-        <Link
-          href="/courses"
-          className="border border-black px-3 py-1 rounded-[6px] hover:bg-slaty/10 transition duration-300 cursor-pointer"
-        >
-          Courses
-        </Link>
+    <div className="flex flex-col gap-[4rem] pt-[5rem] w-full">
+      <p className="text-center font-semibold text-3xl text-white">
+        Popular Courses
+      </p>
+      <div className="flex flex-col gap-8">
+        <div className="flex flex-wrap gap-16 items-center justify-center">
+          {playlists?.map((data, index) => {
+            const id = data.id?.playlistId;
+            const channelId = data.snippet?.channelId;
+            const description = data.snippet?.description;
+            const length = playlistLengths[id] || "";
+            const channelThumb = channelThumbnail[channelId] || "";
+            // console.log(`channelthumb ${channelThumb}`);
+            // console.log(`id ... ${id}`);
+            // console.log(length);
+            if (!hasMounted) return null;
+            return (
+              <CourseCard
+                title={data.snippet?.title}
+                channelTitle={data.snippet?.channelTitle}
+                thumbnails={data.snippet?.thumbnails.high.url}
+                lenth={length}
+                id={id}
+                bookmark={false}
+                description={description}
+                channelThumb={channelThumb as string}
+                key={index}
+              />
+            );
+          })}
+        </div>
+        <div className="flex justify-center ">
+          <Link
+            href="/courses"
+            className="px-6 py-2 rounded-[6px] bg-lightSlaty text-slaty transition duration-300 cursor-pointer"
+          >
+            View all Courses
+          </Link>
+        </div>
       </div>
     </div>
   );

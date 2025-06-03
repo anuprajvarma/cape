@@ -115,102 +115,100 @@ const CourseCard = ({
   };
 
   return (
-    <div>
-      <div className="w-[20rem] border border-slaty rounded-lg">
-        <div className="flex h-[12rem] relative">
-          <Image
-            src={thumbnails}
-            alt="playlist thumbnail"
-            quality={100}
-            sizes="80px"
-            fill
-            style={{ objectFit: "cover" }}
-            className="rounded-lg"
-          />
-        </div>
-        <div className="p-2">
-          <div className="flex items-center gap-1">
-            <div className="flex flex-col w-full">
-              <p className="text-md text-slaty line-clamp-1 font-semibold">
-                {title}
-              </p>
-              <div className="flex justify-between text-sm items-center">
-                <div className="flex gap-2 items-center">
-                  <div className="flex w-[26px] h-[26px] relative">
-                    <Image
-                      src={channelThumb}
-                      alt="playlist thumbnail"
-                      quality={100}
-                      sizes="80px"
-                      fill
-                      style={{ objectFit: "cover" }}
-                      className="rounded-full"
-                    />
-                  </div>
-                  <p>{channelTitle}</p>
+    <div className="w-[24rem] h-[22rem] flex flex-col gap-3 bg-mediumSlaty rounded-lg">
+      <div className="flex h-[13rem] relative">
+        <Image
+          src={thumbnails}
+          alt="playlist thumbnail"
+          quality={100}
+          sizes="80px"
+          fill
+          style={{ objectFit: "cover" }}
+          className="rounded-lg"
+        />
+      </div>
+      <div className="flex flex-col gap-2 p-2">
+        <div className="flex items-center gap-1">
+          <div className="flex flex-col gap-2 w-full">
+            <p className="text-md text-slaty line-clamp-1 font-semibold">
+              {title}
+            </p>
+            <div className="flex justify-between text-sm items-center text-slaty">
+              <div className="flex gap-2 items-center">
+                <div className="flex w-[26px] h-[26px] relative">
+                  <Image
+                    src={channelThumb}
+                    alt="playlist thumbnail"
+                    quality={100}
+                    sizes="80px"
+                    fill
+                    style={{ objectFit: "cover" }}
+                    className="rounded-full"
+                  />
                 </div>
-                <p>chapters {lenth}</p>
+                <p>{channelTitle}</p>
               </div>
+              <p>chapters {lenth}</p>
             </div>
           </div>
-          <div className="flex justify-between pt-2">
+        </div>
+        <div className="flex justify-between pt-2 text-slaty">
+          <button
+            onClick={() =>
+              handleEnrolled({
+                title,
+                channelTitle,
+                thumbnails,
+                lenth,
+                channelThumb,
+                description,
+                bookmark,
+                id,
+              })
+            }
+            className="py-[4px] px-5 rounded-md bg-lightSlaty transition duration-300"
+          >
+            Enroll
+          </button>
+          <div className="flex gap-2 text-xl items-end">
             <button
-              onClick={() =>
-                handleEnrolled({
-                  title,
-                  channelTitle,
-                  thumbnails,
-                  lenth,
-                  channelThumb,
-                  description,
-                  bookmark,
-                  id,
-                })
-              }
-              className="py-[2px] px-3 border border-slaty rounded-md hover:bg-slaty/10 transition duration-300"
+              onClick={() => router.push(`/course/${id}/${firstVideoId}`)}
             >
-              Enroll
+              <IoPlayCircleOutline className="text-xl hover:text-darkRed transition duration-300 w-5 h-5" />
             </button>
-            <div className="flex gap-2 text-xl items-end">
+            {bookmark ? (
               <button
-                onClick={() => router.push(`/course/${id}/${firstVideoId}`)}
+                onClick={() =>
+                  handleDeletBookmarkCourse({
+                    id,
+                  })
+                }
               >
-                <IoPlayCircleOutline className="text-xl hover:text-darkRed transition duration-300 w-5 h-5" />
+                <AiOutlineDelete className="text-xl hover:text-darkRed transition duration-300 w-5 h-5" />
               </button>
-              {bookmark ? (
-                <button
-                  onClick={() =>
-                    handleDeletBookmarkCourse({
-                      id,
-                    })
-                  }
-                >
-                  <AiOutlineDelete className="text-xl hover:text-darkRed transition duration-300 w-5 h-5" />
-                </button>
-              ) : (
-                <></>
-              )}
-              {bookmark ? (
-                <FaBookmark className="cursor-pointer" />
-              ) : (
-                <button
-                  onClick={() =>
-                    handleBookmark({
-                      title,
-                      channelTitle,
-                      thumbnails,
-                      lenth,
-                      channelThumb,
-                      description,
-                      bookmark,
-                      id,
-                    })
-                  }
-                >
-                  <IoBookmarkOutline className="hover:text-darkRed" />
-                </button>
-              )}
-            </div>
+            ) : (
+              <></>
+            )}
+            {bookmark ? (
+              <FaBookmark className="cursor-pointer" />
+            ) : (
+              <button
+                onClick={() =>
+                  handleBookmark({
+                    title,
+                    channelTitle,
+                    thumbnails,
+                    lenth,
+                    channelThumb,
+                    description,
+                    bookmark,
+                    id,
+                  })
+                }
+              >
+                <IoBookmarkOutline className="hover:text-darkRed" />
+              </button>
+            )}
           </div>
         </div>
       </div>

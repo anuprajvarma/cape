@@ -12,34 +12,34 @@ export const Home = () => {
     setIsPlaying(true);
   };
   return (
-    <div className="w-full -z-20 py-[4rem] px-4 text-black flex justify-center">
-      <div className="w-[70rem]">
-        <div className="w-full flex justify-between gap-6">
-          <div className="w-[36rem] h-[18rem] flex flex-col gap-4">
-            <div className="font-semibold text-4xl">
-              <p>Flexible & Scalable , Your</p>
-              <p>training Flexible & Scalable you</p>
-              <p>training Flexible & Scalable you</p>
+    <div className="w-full py-[4rem] px-4 text-black flex justify-center">
+      <div className="w-[80rem]">
+        <div className="w-full flex justify-between gap-12">
+          <div className="w-[40rem] h-[18rem] flex flex-col gap-4">
+            <div className="font-semibold w-full text-white text-5xl">
+              <p>Flexible & Scalable</p>
+              <p>training Flexible Scalable</p>
+              <p>training Flexible Scalable</p>
             </div>
-            <u className="no-underline p-0 m-0 text-sm">
+            <u className="no-underline p-0 m-0 text-sm text-slaty">
               <li>Track Your Progress of playlist</li>
               <li>Track Your Progress of playlist</li>
               <li>Track Your Progress of playlist</li>
               <li>Track Your Progress of playlist</li>
             </u>
             <div className="flex gap-2">
-              <button className="border border-black px-6 py-1 rounded-[6px] cursor-pointer font-semibold hover:bg-slaty/10 transition duration-300">
-                Start
+              <button className="px-6 py-3 rounded-[6px] cursor-pointer font-semibold bg-lightBlue text-white text-md transition duration-300">
+                Get started
               </button>
-              <div className="flex gap-2 items-center">
+              <div className="flex gap-2 items-center ">
                 <button onClick={handlePlay}>
-                  <IoPlayCircleOutline className="text-4xl cursor-pointer hover:text-darkRed transition duration-300" />
+                  <IoPlayCircleOutline className="text-4xl text-lightBlue cursor-pointer hover:text-darkRed transition duration-300" />
                 </button>
-                <p className="font-semibold">how it&apos;s work</p>
+                <p className="font-semibold text-slaty">how it&apos;s work</p>
               </div>
             </div>
           </div>
-          <div className="w-[34rem] rounded-lg flex justify-end ">
+          <div className="w-[40rem] h-[22rem] rounded-lg flex justify-end ">
             {isPlaying ? (
               <iframe
                 src="https://www.youtube.com/embed/JQbjS0_ZfJ0?autoplay=1"
