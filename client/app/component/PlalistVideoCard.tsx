@@ -56,8 +56,8 @@ const PlalistVideoCard = ({
     <div
       className={`flex gap-2 p-1 items-center ${
         currentvideoId === videoId
-          ? "bg-slaty/70 rounded-sm"
-          : "hover:bg-slaty/70 transition duration-100 "
+          ? "bg-lightSlaty/70 rounded-sm"
+          : "hover:bg-lightSlaty/70 transition duration-100 "
       }`}
     >
       <button
@@ -79,8 +79,10 @@ const PlalistVideoCard = ({
         </div>
         <div className="flex gap-2 justify-between w-full">
           <div className="flex flex-col justify-start text-start gap-2">
-            <p className="line-clamp-2 text-sm font-semibold">{title}</p>
-            <p className="text-xs">{channelTitle}</p>
+            <p className="line-clamp-2 text-sm font-semibold text-white">
+              {title}
+            </p>
+            <p className="text-xs text-slaty">{channelTitle}</p>
           </div>
         </div>
       </button>

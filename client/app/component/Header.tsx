@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { usePathname } from "next/navigation";
+import { usePathname, useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { SiSololearn } from "react-icons/si";
@@ -11,6 +11,8 @@ import { FaArrowRight } from "react-icons/fa";
 const Header = () => {
   const session = useSession();
   const path = usePathname();
+  const param = useParams();
+  const { id, videoId } = param;
   const [isOpen, setIsOpen] = useState(false);
 
   const handleGoogleAuthSubmit = async () => {
@@ -49,7 +51,9 @@ const Header = () => {
   return (
     <div className="w-full px-8 py-4 flex justify-center">
       <div
-        className={`w-[80rem] flex justify-between font-medium items-center`}
+        className={`${
+          path === `/course/${id}/${videoId}` ? "w-full" : "w-[80rem]"
+        } flex justify-between font-medium items-center`}
       >
         <Link
           href="/"

@@ -60,7 +60,6 @@ const Course = () => {
   const [gptcheck, setgptCheck] = useState<boolean>(false);
   const [easyExplaincheck, seteasyExplainCheck] = useState<boolean>(false);
   const [discussion, setDiscussion] = useState<boolean>(false);
-  // const [checkChangeNote, setCheckChangeNote] = useState(true);
   const [videoTitle, setVideoTitle] = useState("");
   const [videoDescription, setVideoDescription] = useState("");
   const [easyExplain, setEasyExplain] = useState("");
@@ -73,7 +72,7 @@ const Course = () => {
       );
       const data = await res.json();
       setVideoTitle(data.items[0].snippet.title);
-      setVideoDescription(data.items[0].snippet.description);
+      setVideoDescription(data.items[0]?.snippet.description);
       console.log(`video detail ${data.items[0]}`);
     }
     playlist();
@@ -329,7 +328,7 @@ const Course = () => {
     .filter((line) => line.length > 0);
 
   return (
-    <div className="w-full -z-20 p-4 border-t border-slaty flex flex-col gap-2 justify-center text-slaty">
+    <div className="w-full -z-20 py-4 px-8 flex flex-col gap-2 justify-center text-slaty">
       <div className="w-full flex justify-between gap-2">
         <div className="w-[63rem] flex flex-col gap-4">
           <div className="flex w-full h-[38rem]">
@@ -342,8 +341,8 @@ const Course = () => {
             />
           </div>
           <Disclosure as="div" className="" defaultOpen={false}>
-            <DisclosureButton className="group flex w-full items-center justify-between">
-              <span className="text-sm">Description</span>
+            <DisclosureButton className="group flex w-full bg-mediumSlaty p-2 rounded-lg items-center text-md border border-lightSlaty justify-between">
+              <span>Description</span>
               <ChevronDownIcon className="size-5 fill-slaty group-data-hover:fill-white/50 group-data-open:rotate-180" />
             </DisclosureButton>
             <DisclosurePanel className="mt-2 text-sm/5 text-slaty">
@@ -352,43 +351,158 @@ const Course = () => {
                   <Linkify options={options}>{line}.</Linkify>
                 </p>
               ))}
-
-              {/* <Linkify options={options}>{videoDescription}</Linkify> */}
             </DisclosurePanel>
           </Disclosure>
-          <div className="flex justify-between">
-            <button
-              onClick={handleNotes}
-              className="px-4 py-1 rounded-md border border-slaty text-darkRed"
-            >
-              Notes
-            </button>
-            <button
-              onClick={handleGPT}
-              className="px-4 py-1 rounded-md border border-slaty"
-            >
-              GPT
-            </button>
-            <button
-              onClick={handleEasyExplain}
-              className="px-4 py-1 rounded-md border border-slaty "
-            >
-              Easy Explain
-            </button>
-            <button
-              onClick={handleDiscussion}
-              className="px-4 py-1 rounded-md border border-slaty "
-            >
-              Discussion
-            </button>
+          <div className="border border-lightSlaty">
+            {" "}
+            <div className="flex justify-between bg-mediumSlaty border-b border-lightSlaty px-2 py-4">
+              <button
+                onClick={handleNotes}
+                className="px-4 py-1 rounded-md bg-lightSlaty border border-lightSlaty"
+              >
+                Notes
+              </button>
+              <button
+                onClick={handleGPT}
+                className="px-4 py-1 rounded-md bg-lightSlaty border border-lightSlaty"
+              >
+                GPT
+              </button>
+              <button
+                onClick={handleEasyExplain}
+                className="px-4 py-1 rounded-md bg-lightSlaty border border-lightSlaty"
+              >
+                Easy Explain
+              </button>
+              <button
+                onClick={handleDiscussion}
+                className="px-4 py-1 rounded-md bg-lightSlaty border border-lightSlaty"
+              >
+                Discussion
+              </button>
+            </div>
+            <div className="w-full h-[40rem] bg-mediumSlaty">
+              {notecheck ? (
+                <Editor
+                  email={session.data?.user?.email as string}
+                  playlistId={id as string}
+                />
+              ) : (
+                <></>
+              )}
+              {gptcheck ? (
+                <div className="w-full h-full">
+                  <div className="space-y-2 w-full h-[40rem] p-12 rounded overflow-y-auto">
+                    {chats?.map((msg, i) => (
+                      <div key={i}>
+                        <div className="flex w-full justify-end text-xl font-semibold py-4">
+                          <p className="border border-slaty px-6 py-2 rounded-3xl">
+                            {msg.question}
+                          </p>
+                        </div>
+                        <div className="p-12 w-full h-full overflow-auto prose prose-lg prose-headings:my-2 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-ul:my-0 prose-a:text-blue-600 hover:prose-a:underline max-w-none">
+                          <ReactMarkdown>{msg.answer}</ReactMarkdown>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-4 flex gap-2">
+                    <input
+                      value={input}
+                      onChange={(e) => setInput(e.target.value)}
+                      className="flex-1 p-2 border rounded"
+                      placeholder="Type a message..."
+                    />
+                    <button
+                      onClick={sendMessage}
+                      className="px-4 py-2 bg-blue-600 text-white rounded"
+                    >
+                      Send
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <></>
+              )}
+              {easyExplaincheck ? (
+                easyExplain ? (
+                  <div className="p-12 w-full h-full overflow-auto prose prose-lg prose-headings:my-0 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-a:text-blue-600 hover:prose-a:underline max-w-none">
+                    <ReactMarkdown>{easyExplain}</ReactMarkdown>
+                  </div>
+                ) : (
+                  <div className="w-full h-full flex flex-col justify-center items-center gap-4">
+                    <p className="px-12 py-2 rounded-full border border-slaty">
+                      want explaination like 5 year old boy 😁
+                    </p>
+                    <button
+                      className="px-4 py-1 rounded-lg hover:bg-slaty/10 transition duration-200 border border-slaty"
+                      onClick={easyExplainHandler}
+                    >
+                      Yes
+                    </button>
+                  </div>
+                )
+              ) : (
+                <></>
+              )}
+              {discussion ? (
+                <div className="w-full h-full">
+                  <div className="space-y-2 w-full h-[40rem] p-4 rounded overflow-y-auto">
+                    {discussionData?.map((msg, i) => (
+                      <div
+                        className="flex gap-4"
+                        key={i}
+                        // className={msg.sender === "user" ? "text-right" : "text-left"}
+                      >
+                        <div className="flex w-[3rem] items-start h-[3rem] relative">
+                          <Image
+                            src={msg.image || "/code.jpg"}
+                            alt="code"
+                            quality={100}
+                            sizes="80px"
+                            fill
+                            style={{ objectFit: "cover" }}
+                            className="rounded-full"
+                          />
+                        </div>
+                        <div className="flex flex-col">
+                          <p className="text-slaty text-xs font-semibold">
+                            {msg.name}
+                          </p>
+                          <p className="text-sm">{msg.content}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="mt-4 flex gap-2">
+                    <input
+                      value={discussionContent}
+                      onChange={(e) => setDiscussionContent(e.target.value)}
+                      className="flex-1 p-2 border rounded"
+                      placeholder="Type a message..."
+                    />
+                    <button
+                      onClick={discussionHandler}
+                      className="px-4 py-2 bg-blue-600 text-white rounded"
+                    >
+                      Send
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <></>
+              )}
+            </div>
           </div>
         </div>
-        <div className="w-[25rem] h-[656px] border border-slaty rounded-xl flex flex-col">
-          <div className="border-b h-[4rem] border-slaty p-2 flex justify-between">
+        <div className="w-[25rem] h-[665px] border border-lightSlaty rounded-xl flex flex-col">
+          <div className="border-b border-lightSlaty h-[4rem] bg-mediumSlaty rounded-t-xl p-2 flex justify-between">
             <div className="flex flex-col text-sm">
-              <p className="font-semibold">{videoTitle}</p>
+              <p className="font-semibold text-white line-clamp-1">
+                {videoTitle}
+              </p>
               <div className="flex gap-2 font-medium text-slaty/90">
-                <p>Progress -</p>
+                <p className="text-slaty">Progress -</p>
                 <div>
                   {typeof id === "string" && playlistLengths[id] && (
                     <p>{`${completedChapters?.length}/${playlistLengths[id]}`}</p>
@@ -402,12 +516,12 @@ const Course = () => {
                 text={`${precentage}%`}
                 styles={buildStyles({
                   strokeLinecap: "butt",
-                  textSize: "30px",
-                  pathColor: "#BF2F1F",
-                  textColor: "#4A4844",
+                  textSize: "20px",
+                  pathColor: "#1A56DB",
+                  textColor: "#D1D5DB",
                   trailColor: "#d6d6d6",
                 })}
-                className=""
+                className="h-[6rem]"
               />
             </div>
           </div>
@@ -436,118 +550,6 @@ const Course = () => {
             })}
           </div>
         </div>
-      </div>
-      <div className="w-full h-[40rem] border border-slaty rounded-lg">
-        {notecheck ? (
-          <Editor
-            email={session.data?.user?.email as string}
-            playlistId={id as string}
-          />
-        ) : (
-          <></>
-        )}
-        {gptcheck ? (
-          <div className="w-full h-full">
-            <div className="space-y-2 w-full h-[40rem] border p-12 rounded overflow-y-auto">
-              {chats?.map((msg, i) => (
-                <div key={i}>
-                  <div className="flex w-full justify-end text-xl font-semibold py-4">
-                    <p className="border border-slaty px-6 py-2 rounded-3xl">
-                      {msg.question}
-                    </p>
-                  </div>
-                  <div className="p-12 w-full h-full overflow-auto prose prose-lg prose-headings:my-2 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-ul:my-0 prose-a:text-blue-600 hover:prose-a:underline max-w-none">
-                    <ReactMarkdown>{msg.answer}</ReactMarkdown>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="mt-4 flex gap-2">
-              <input
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                className="flex-1 p-2 border rounded"
-                placeholder="Type a message..."
-              />
-              <button
-                onClick={sendMessage}
-                className="px-4 py-2 bg-blue-600 text-white rounded"
-              >
-                Send
-              </button>
-            </div>
-          </div>
-        ) : (
-          <></>
-        )}
-        {easyExplaincheck ? (
-          easyExplain ? (
-            <div className="p-12 w-full h-full overflow-auto prose prose-lg prose-headings:my-0 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-a:text-blue-600 hover:prose-a:underline max-w-none">
-              <ReactMarkdown>{easyExplain}</ReactMarkdown>
-            </div>
-          ) : (
-            <div className="w-full h-full flex flex-col justify-center items-center gap-4">
-              <p className="px-12 py-2 rounded-full border border-slaty">
-                want explaination like 5 year old boy 😁
-              </p>
-              <button
-                className="px-4 py-1 rounded-lg hover:bg-slaty/10 transition duration-200 border border-slaty"
-                onClick={easyExplainHandler}
-              >
-                Yes
-              </button>
-            </div>
-          )
-        ) : (
-          <></>
-        )}
-        {discussion ? (
-          <div className="w-full h-full">
-            <div className="space-y-2 w-full h-[40rem] border p-4 rounded overflow-y-auto">
-              {discussionData?.map((msg, i) => (
-                <div
-                  className="flex gap-4"
-                  key={i}
-                  // className={msg.sender === "user" ? "text-right" : "text-left"}
-                >
-                  <div className="flex w-[3rem] items-start h-[3rem] relative">
-                    <Image
-                      src={msg.image || "/code.jpg"}
-                      alt="code"
-                      quality={100}
-                      sizes="80px"
-                      fill
-                      style={{ objectFit: "cover" }}
-                      className="rounded-full"
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <p className="text-slaty text-xs font-semibold">
-                      {msg.name}
-                    </p>
-                    <p className="text-sm">{msg.content}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="mt-4 flex gap-2">
-              <input
-                value={discussionContent}
-                onChange={(e) => setDiscussionContent(e.target.value)}
-                className="flex-1 p-2 border rounded"
-                placeholder="Type a message..."
-              />
-              <button
-                onClick={discussionHandler}
-                className="px-4 py-2 bg-blue-600 text-white rounded"
-              >
-                Send
-              </button>
-            </div>
-          </div>
-        ) : (
-          <></>
-        )}
       </div>
     </div>
   );
