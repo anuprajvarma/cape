@@ -49,31 +49,31 @@ const lightRedTheme = {
 const darkRedTheme = {
   colors: {
     editor: {
-      text: "#4A4844",
-      background: "#ffedd5",
+      text: "#D1D5DB",
+      background: "#1F2937",
     },
     menu: {
-      text: "#4A4844",
-      background: "#ffedd5",
+      text: "#D1D5DB",
+      background: "#1F2937",
     },
     tooltip: {
-      text: "#4A4844",
-      background: "#ffedd5",
+      text: "#D1D5DB",
+      background: "#1F2937",
     },
     hovered: {
-      text: "#4A4844",
-      background: "#ffedd5",
+      text: "#D1D5DB",
+      background: "#1F2937",
     },
     selected: {
-      text: "#4A4844",
-      background: "#ffedd5",
+      text: "#D1D5DB",
+      background: "#1F2937",
     },
     disabled: {
-      text: "#4A4844",
-      background: "#ffedd5",
+      text: "#D1D5DB",
+      background: "#1F2937",
     },
-    shadow: "#640000",
-    border: "#4A4844",
+    shadow: "#374151",
+    border: "#374151",
     sideMenu: "#bababa",
     highlights: darkDefaultTheme.colors!.highlights,
   },

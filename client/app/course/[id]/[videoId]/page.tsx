@@ -395,12 +395,12 @@ const Course = () => {
                   <div className="space-y-2 w-full h-[40rem] p-12 rounded overflow-y-auto">
                     {chats?.map((msg, i) => (
                       <div key={i}>
-                        <div className="flex w-full justify-end text-xl font-semibold py-4">
-                          <p className="border border-slaty px-6 py-2 rounded-3xl">
+                        <div className="flex w-full justify-end text-xl text-white py-4">
+                          <p className="border border-lightSlaty px-6 py-2 rounded-3xl">
                             {msg.question}
                           </p>
                         </div>
-                        <div className="p-12 w-full h-full overflow-auto prose prose-lg prose-headings:my-2 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-ul:my-0 prose-a:text-blue-600 hover:prose-a:underline max-w-none">
+                        <div className="prose prose-slate prose-lg w-full h-full overflow-auto max-w-none p-12 prose-headings:my-2 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-ul:my-0 hover:prose-a:underline">
                           <ReactMarkdown>{msg.answer}</ReactMarkdown>
                         </div>
                       </div>
@@ -431,11 +431,11 @@ const Course = () => {
                   </div>
                 ) : (
                   <div className="w-full h-full flex flex-col justify-center items-center gap-4">
-                    <p className="px-12 py-2 rounded-full border border-slaty">
+                    <p className="px-12 py-2 rounded-full border border-lightSlaty">
                       want explaination like 5 year old boy 😁
                     </p>
                     <button
-                      className="px-4 py-1 rounded-lg hover:bg-slaty/10 transition duration-200 border border-slaty"
+                      className="px-4 py-1 rounded-lg hover:bg-slaty/10 transition duration-200 border border-lightSlaty"
                       onClick={easyExplainHandler}
                     >
                       Yes
@@ -466,10 +466,10 @@ const Course = () => {
                           />
                         </div>
                         <div className="flex flex-col">
-                          <p className="text-slaty text-xs font-semibold">
+                          <p className="text-white text-xs font-semibold">
                             {msg.name}
                           </p>
-                          <p className="text-sm">{msg.content}</p>
+                          <p className="text-sm text-slaty">{msg.content}</p>
                         </div>
                       </div>
                     ))}

@@ -66,7 +66,7 @@ const Header = () => {
           <Link
             href="/courses"
             className={`cursor-pointer hover:text-darkRed transition duration-300 ${
-              path === "/courses" ? "text-darkRed" : ""
+              path === "/courses" ? "text-white" : ""
             }`}
           >
             Courses
@@ -74,7 +74,7 @@ const Header = () => {
           <Link
             href="/bookmark"
             className={`cursor-pointer hover:text-darkRed transition duration-300 ${
-              path === "/bookmark" ? "text-darkRed" : ""
+              path === "/bookmark" ? "text-white" : ""
             }`}
           >
             Bookmark
@@ -82,7 +82,7 @@ const Header = () => {
           <Link
             href="/dashboard"
             className={`cursor-pointer hover:text-darkRed transition duration-300 ${
-              path === "/dashboard" ? "text-darkRed" : ""
+              path === "/dashboard" ? "text-white" : ""
             }`}
           >
             Dashboard
