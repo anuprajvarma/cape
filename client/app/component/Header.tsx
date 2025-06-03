@@ -5,6 +5,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { usePathname, useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import { SiSololearn } from "react-icons/si";
 
 const Header = () => {
   const param = useParams();
@@ -53,8 +54,12 @@ const Header = () => {
           path === `/course/${id}/${videoId}` ? "w-full" : "w-[70rem]"
         } flex justify-between font-medium items-center`}
       >
-        <Link href="/" className="font-bold cursor-pointer text-2xl">
-          Cape
+        <Link
+          href="/"
+          className="font-bold cursor-pointer text-2xl flex gap-1 items-center"
+        >
+          <SiSololearn />
+          <p>Cape</p>
         </Link>
         <div className="flex gap-12">
           <Link
