@@ -2,15 +2,14 @@
 
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { usePathname, useParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { SiSololearn } from "react-icons/si";
+import { FaArrowRight } from "react-icons/fa";
 
 const Header = () => {
-  const param = useParams();
   const session = useSession();
-  const { id, videoId } = param;
   const path = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -48,20 +47,16 @@ const Header = () => {
   }, [session.status]);
 
   return (
-    <div className="w-full z-20 p-4 text-black flex justify-center">
-      <div
-        className={`${
-          path === `/course/${id}/${videoId}` ? "w-full" : "w-[70rem]"
-        } flex justify-between font-medium items-center`}
-      >
+    <div className="w-full px-8 py-4 flex justify-center">
+      <div className={`w-full flex justify-between font-medium items-center`}>
         <Link
           href="/"
-          className="font-bold cursor-pointer text-2xl flex gap-1 items-center"
+          className="font-bold cursor-pointer text-2xl flex gap-1 text-white items-center"
         >
-          <SiSololearn />
+          <SiSololearn className="text-lightBlue" />
           <p>Cape</p>
         </Link>
-        <div className="flex gap-12">
+        <div className="flex gap-12 text-slaty">
           <Link
             href="/courses"
             className={`cursor-pointer hover:text-darkRed transition duration-300 ${
@@ -93,7 +88,7 @@ const Header = () => {
               {/* Circular Image Button */}
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="w-12 h-12 rounded-full overflow-hidden border border-gray-300 focus:outline-none"
+                className="w-12 h-12 flex justify-center items-center rounded-full overflow-hidden focus:outline-none"
               >
                 <Image
                   src={session.data?.user?.image as string} // Replace with actual image path
@@ -119,9 +114,10 @@ const Header = () => {
           ) : (
             <button
               onClick={() => signIn("google")}
-              className="border border-black px-3 py-1 rounded-[6px] cursor-pointer hover:bg-slaty/10 transition duration-300"
+              className="px-5 py-[10px] flex gap-2 items-center rounded-[8px] cursor-pointer font-semibold text-sm bg-lightBlue transition duration-300"
             >
-              Login
+              <p>Sign in</p>
+              <FaArrowRight />
             </button>
           )}
         </div>

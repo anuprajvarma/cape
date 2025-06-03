@@ -12,7 +12,7 @@ export const Home = () => {
     setIsPlaying(true);
   };
   return (
-    <div className="w-full -z-20 py-[4rem] px-4 text-black border-t border-slaty flex justify-center">
+    <div className="w-full -z-20 py-[4rem] px-4 text-black flex justify-center">
       <div className="w-[70rem]">
         <div className="w-full flex justify-between gap-6">
           <div className="w-[36rem] h-[18rem] flex flex-col gap-4">
