@@ -92,7 +92,7 @@ const EnrolledCard = ({
       <div className="flex w-[50rem] border border-slaty rounded-lg">
         <div className="flex w-[20rem] relative">
           <Image
-            src={thumbnail}
+            src={thumbnail || "/code.jpg"}
             alt="playlist thumbnail"
             quality={100}
             sizes="80px"
@@ -109,7 +109,7 @@ const EnrolledCard = ({
             <div className="flex gap-2 items-center justify-center">
               <div className="flex w-[2rem] h-[2rem] relative">
                 <Image
-                  src={channelImage}
+                  src={channelImage || "/code.jpg"}
                   alt="playlist thumbnail"
                   quality={100}
                   sizes="80px"

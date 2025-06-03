@@ -93,7 +93,7 @@ const Header = () => {
                 className="w-12 h-12 flex justify-center items-center rounded-full overflow-hidden focus:outline-none"
               >
                 <Image
-                  src={session.data?.user?.image as string} // Replace with actual image path
+                  src={(session.data?.user?.image as string) || "/code.jpg"} // Replace with actual image path
                   alt="Profile"
                   width={100}
                   height={100}

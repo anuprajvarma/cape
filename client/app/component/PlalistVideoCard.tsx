@@ -68,7 +68,7 @@ const PlalistVideoCard = ({
       >
         <div className="flex w-[10rem] items-start h-[4rem] relative">
           <Image
-            src={thumbnails}
+            src={thumbnails || "/code.jpg"}
             alt="code"
             quality={100}
             sizes="80px"

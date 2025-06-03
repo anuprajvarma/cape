@@ -133,12 +133,12 @@ const Courses = () => {
     <div className="w-full -z-20 py-[2rem] px-4 text-black border-t border-slaty flex justify-center">
       <div className="w-[80rem] flex flex-col gap-12">
         <div className=" flex gap-2 items-center justify-center">
-          <div className="border border-slaty flex rounded-full">
+          <div className="border border-lightSlaty flex rounded-lg">
             <input
               type="text"
               value={searchQuery}
               placeholder="Search your favourite plalist"
-              className="w-[20rem] py-2 px-4 outline-none rounded-l-full focus:border focus:border-black/50 transition duration-50 bg-lightYellow text-slaty placeholder-slaty"
+              className="w-[30rem] py-2 px-4 outline-none rounded-l-lg focus:border bg-lightSlaty focus:border-slaty transition duration-50 bg-lightYellow text-slaty placeholder-slaty"
               onChange={(e) => setSearchQuery(e.target.value)}
             />
             <button
@@ -149,9 +149,9 @@ const Courses = () => {
                   setTopic(searchQuery);
                 }
               }}
-              className="border-l p-3 h-full hover:bg-slaty/10 rounded-r-full transition duration-300 border-slaty"
+              className="border-l p-3 h-full bg-lightSlaty rounded-r-lg transition duration-300 border-lightSlaty"
             >
-              <IoSearch className="text-xl" />
+              <IoSearch className="text-xl text-slaty" />
             </button>
           </div>
           <button

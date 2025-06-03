@@ -91,7 +91,7 @@ const Course = () => {
         credentials: "include",
       });
       const data = await res.json();
-      setDiscussionData(data.discussionData.discussions);
+      setDiscussionData(data.discussionData?.discussions);
       console.log(discussionData);
     };
 
@@ -129,7 +129,7 @@ const Course = () => {
         credentials: "include",
       });
       const data = await res.json();
-      setChats(data.chatData.chats);
+      setChats(data.chatData?.chats);
     };
 
     chat();
@@ -245,7 +245,11 @@ const Course = () => {
         }
       );
       const data = await res.json();
-      setCompletedChapters(data.getChapterData.chapters);
+      // console.log(`setcompleted data ${data.getChapterData?.chapters}`);
+      if (data.getChapterData?.chapters) {
+        console.log(`data ka lenth hai`);
+        setCompletedChapters(data.getChapterData?.chapters);
+      }
       // console.log(`getChapterData ${data.getChapterData.chapters}`);
     };
     getChapterData();
@@ -385,11 +389,11 @@ const Course = () => {
               <p className="font-semibold">{videoTitle}</p>
               <div className="flex gap-1 font-medium text-slaty/90">
                 <p>Progress -</p>
-                <p>
+                <div>
                   {typeof id === "string" && playlistLengths[id] && (
-                    <p>{`${completedChapters.length}/${playlistLengths[id]}`}</p>
+                    <p>{`${completedChapters?.length}/${playlistLengths[id]}`}</p>
                   )}
-                </p>
+                </div>
               </div>
             </div>
             <div className="w-[3rem] h-[3rem] rounded-lg flex flex-col gap-3 justify-center items-center">
@@ -411,13 +415,13 @@ const Course = () => {
             {playlists?.map((data, index) => {
               const id = data.snippet?.playlistId;
               const videoid = data.snippet?.resourceId.videoId;
-              const isChecked = completedChapters.includes(videoid);
+              const isChecked = completedChapters?.includes(videoid);
               if (!hasMounted) return null;
               return (
                 <PlalistVideoCard
                   title={data.snippet?.title}
                   channelTitle={data.snippet?.channelTitle}
-                  thumbnails={data.snippet?.thumbnails.high.url}
+                  thumbnails={data.snippet?.thumbnails.high?.url}
                   //   lenth={length}
                   id={id}
                   setCheckBoxTrack={setCheckBoxTrack}
@@ -508,7 +512,7 @@ const Course = () => {
                 >
                   <div className="flex w-[3rem] items-start h-[3rem] relative">
                     <Image
-                      src={msg.image}
+                      src={msg.image || "/code.jpg"}
                       alt="code"
                       quality={100}
                       sizes="80px"

@@ -118,7 +118,7 @@ const CourseCard = ({
     <div className="w-[24rem] h-[22rem] flex flex-col gap-3 bg-mediumSlaty rounded-lg">
       <div className="flex h-[13rem] relative">
         <Image
-          src={thumbnails}
+          src={thumbnails || "/code.jpg"}
           alt="playlist thumbnail"
           quality={100}
           sizes="80px"
@@ -137,7 +137,7 @@ const CourseCard = ({
               <div className="flex gap-2 items-center">
                 <div className="flex w-[26px] h-[26px] relative">
                   <Image
-                    src={channelThumb}
+                    src={channelThumb || "/code.jpg"}
                     alt="playlist thumbnail"
                     quality={100}
                     sizes="80px"
