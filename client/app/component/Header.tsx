@@ -103,7 +103,7 @@ const Header = () => {
 
               {/* Toggle Div */}
               {isOpen && (
-                <div className="absolute right-0 mt-2 border  shadow-lg bg-slaty rounded-lg hover:bg-slaty/80 transition duration-300 z-50">
+                <div className="absolute right-0 mt-2 border border-lightSlaty shadow-lg bg-mediumSlaty rounded-lg transition duration-300 z-50">
                   <button
                     onClick={handleSignout}
                     className="w-full text-left px-4 py-2 rounded text-lightYellow"

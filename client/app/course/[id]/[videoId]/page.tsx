@@ -449,7 +449,7 @@ const Course = () => {
         {gptcheck ? (
           <div className="w-full h-full">
             <div className="space-y-2 w-full h-[40rem] border p-12 rounded overflow-y-auto">
-              {chats.map((msg, i) => (
+              {chats?.map((msg, i) => (
                 <div key={i}>
                   <div className="flex w-full justify-end text-xl font-semibold py-4">
                     <p className="border border-slaty px-6 py-2 rounded-3xl">
@@ -504,7 +504,7 @@ const Course = () => {
         {discussion ? (
           <div className="w-full h-full">
             <div className="space-y-2 w-full h-[40rem] border p-4 rounded overflow-y-auto">
-              {discussionData.map((msg, i) => (
+              {discussionData?.map((msg, i) => (
                 <div
                   className="flex gap-4"
                   key={i}

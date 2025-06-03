@@ -133,12 +133,12 @@ const Courses = () => {
     <div className="w-full -z-20 py-[2rem] px-4 text-black border-t border-slaty flex justify-center">
       <div className="w-[80rem] flex flex-col gap-12">
         <div className=" flex gap-2 items-center justify-center">
-          <div className="border border-lightSlaty flex rounded-lg">
+          <div className="border border-slaty/30 flex rounded-xl">
             <input
               type="text"
               value={searchQuery}
               placeholder="Search your favourite plalist"
-              className="w-[30rem] py-2 px-4 outline-none rounded-l-lg focus:border bg-lightSlaty focus:border-slaty transition duration-50 bg-lightYellow text-slaty placeholder-slaty"
+              className="w-[30rem] py-2 px-4 outline-none rounded-l-xl focus:border bg-lightSlaty focus:border-slaty/30 bg-lightYellow text-slaty placeholder-slaty/50"
               onChange={(e) => setSearchQuery(e.target.value)}
             />
             <button
@@ -149,16 +149,16 @@ const Courses = () => {
                   setTopic(searchQuery);
                 }
               }}
-              className="border-l p-3 h-full bg-lightSlaty rounded-r-lg transition duration-300 border-lightSlaty"
+              className="border-l p-3 h-full bg-lightSlaty rounded-r-xl transition duration-300 border-lightSlaty"
             >
-              <IoSearch className="text-xl text-slaty" />
+              <IoSearch className="text-xl text-slaty/50" />
             </button>
           </div>
           <button
             onClick={handleVoiceSearch}
-            className="rounded-full p-2 items-center border border-slaty hover:bg-slaty/10 transition duration-300"
+            className="rounded-full p-2 items-center bg-lightSlaty border border-slaty/30 hover:bg-slaty/30 transition duration-300"
           >
-            <GrMicrophone className="text-xl hover:text-darkRed transition duration-300" />
+            <GrMicrophone className="text-xl text-slaty/50 hover:text-darkRed transition duration-300" />
           </button>
         </div>
         <div className="flex flex-wrap gap-16 items-center justify-center">

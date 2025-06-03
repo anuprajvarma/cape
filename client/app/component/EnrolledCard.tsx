@@ -63,7 +63,10 @@ const EnrolledCard = ({
         }
       );
       const data = await res.json();
-      setCompletedChapters(data.getChapterData.chapters);
+      if (data.getChapterData?.chapters) {
+        console.log(`data ka lenth hai`);
+        setCompletedChapters(data.getChapterData?.chapters);
+      }
       // console.log(`getChapterData ${data.getChapterData.chapters}`);
     };
     getChapterData();
@@ -89,8 +92,8 @@ const EnrolledCard = ({
 
   return (
     <div className="flex justify-between gap-8">
-      <div className="flex w-[50rem] border border-slaty rounded-lg">
-        <div className="flex w-[20rem] relative">
+      <div className="flex w-[52rem] min-h-[12rem] rounded-lg bg-mediumSlaty border border-lightSlaty">
+        <div className="flex w-[24rem] relative">
           <Image
             src={thumbnail || "/code.jpg"}
             alt="playlist thumbnail"
@@ -101,11 +104,11 @@ const EnrolledCard = ({
             className="rounded-md"
           />
         </div>
-        <div className="flex w-[30rem] flex-col p-2 gap-2">
-          <p className="text-md text-slaty line-clamp-1 font-semibold">
+        <div className="flex w-[32rem] flex-col p-2 gap-2">
+          <p className="text-xl text-white line-clamp-1 font-semibold">
             {title}
           </p>
-          <div className="flex justify-between text-sm">
+          <div className="flex justify-between text-md text-slaty">
             <div className="flex gap-2 items-center justify-center">
               <div className="flex w-[2rem] h-[2rem] relative">
                 <Image
@@ -124,37 +127,37 @@ const EnrolledCard = ({
               <p>chapters {chapterLenth}</p>
             </div>
           </div>
-          <div className="flex flex-col items-end">
-            <p className="line-clamp-2 text-base">{playlistDescription}</p>
+          <div className="flex flex-col gap-2 items-end text-slaty">
+            <p className="line-clamp-3 text-base">{playlistDescription}</p>
             <div className="flex gap-2">
               <button
                 onClick={() =>
                   router.push(`/course/${playlistId}/${firstVideoId}`)
                 }
               >
-                <IoPlayCircleOutline className="text-xl hover:text-darkRed transition duration-300 w-5 h-5" />
+                <IoPlayCircleOutline className="text-xl hover:text-darkRed transition duration-300 w-6 h-6" />
               </button>
               <button onClick={() => handleDeletEnrolledCourse({ playlistId })}>
-                <AiOutlineDelete className="text-xl hover:text-darkRed transition duration-300 w-5 h-5" />
+                <AiOutlineDelete className="text-xl hover:text-darkRed transition duration-300 w-6 h-6" />
               </button>
             </div>
           </div>
         </div>
       </div>
-      <div className="w-[20rem] h-[10rem] rounded-lg border border-slaty flex flex-col gap-3 justify-center items-center">
+      <div className="w-[25rem] rounded-lg border bg-mediumSlaty  border-lightSlaty flex flex-col gap-3 justify-center items-center">
         <CircularProgressbar
           value={precentage}
           text={`${precentage}%`}
           styles={buildStyles({
             strokeLinecap: "butt",
             textSize: "20px",
-            pathColor: "#BF2F1F",
-            textColor: "#4A4844",
+            pathColor: "#1A56DB",
+            textColor: "#D1D5DB",
             trailColor: "#d6d6d6",
           })}
-          className="h-[5rem]"
+          className="h-[6rem]"
         />
-        <p className="text-xl">Progress</p>
+        <p className="text-xl text-slaty">Progress</p>
       </div>
     </div>
   );
