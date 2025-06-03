@@ -11,7 +11,7 @@ const NavBar = () => {
     <div className="w-full py-2 px-4 text-black border-t border-slaty flex justify-center z-20">
       <div className="w-[70rem] flex justify-between">
         <div className="flex flex-col gap-1">
-          <p>Contact Me</p>
+          <p>Find Me</p>
           <div className="flex gap-2 ">
             <Link
               href="https://www.linkedin.com/in/anuprajvarma/"

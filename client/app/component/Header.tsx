@@ -88,22 +88,6 @@ const Header = () => {
           </Link>
         </div>
         <div>
-          {/* <div className="flex gap-4">
-            
-            {session.status === "authenticated" ? (
-              <div>
-                {session.data.user?.name}{" "}
-                <button onClick={() => handleSignout()}>logout</button>
-              </div>
-            ) : (
-              <button
-                onClick={() => signIn("google")}
-                className="border border-black px-3 py-1 rounded-[6px] cursor-pointer hover:bg-slaty/10 transition duration-300"
-              >
-                Login
-              </button>
-            )}
-          </div> */}
           {session.status === "authenticated" ? (
             <div className="relative">
               {/* Circular Image Button */}
