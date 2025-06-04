@@ -138,7 +138,7 @@ export default function Editor({
   };
 
   return (
-    <div className="h-[40rem] w-full p-12">
+    <div className="h-[40rem] w-full sm:p-12">
       <BlockNoteView
         className="h-full w-full"
         editor={editor}

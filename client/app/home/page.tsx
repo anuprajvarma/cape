@@ -48,7 +48,7 @@ export const Home = () => {
             </div>
           </div>
           <div className="w-full flex items-center pt-2 justify-center">
-            <div className="w-[25rem] sm:w-[40rem] lg:w-[52rem] h-[30rem] rounded-lg flex">
+            <div className="w-full h-[20rem] sm:w-[40rem] lg:w-[52rem] sm:h-[30rem] rounded-lg flex">
               <iframe
                 ref={iframeRef}
                 src="https://www.youtube.com/embed/JQbjS0_ZfJ0?enablejsapi=1"

@@ -328,20 +328,65 @@ const Course = () => {
     .filter((line) => line.length > 0);
 
   return (
-    <div className="w-full -z-20 py-4 px-8 flex flex-col gap-2 justify-center text-slaty">
+    <div className="w-full -z-20 py-4 px-1 sm:px-4 flex flex-col gap-2 justify-center text-slaty">
       <div className="w-full flex justify-between gap-2">
         <div className="w-[63rem] flex flex-col gap-4">
-          <div className="flex w-full h-[38rem]">
+          <div className="flex w-full h-[20rem] items-center justify-center sm:h-[38rem]">
             <iframe
               src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
-              className="rounded-lg w-full"
+              className="rounded-lg w-full h-full"
               allowFullScreen
               allow="autoplay; encrypted-media"
               title="YouTube video player"
             />
           </div>
+          <div className="flex lg:hidden justify-between">
+            <p className="font-semibold text-white line-clamp-1">
+              {videoTitle}
+            </p>
+            <div className="flex gap-2 font-medium text-slaty/90">
+              <p className="text-slaty sm:flex hidden">Progress -</p>
+              <div>
+                {typeof id === "string" && playlistLengths[id] && (
+                  <p>{`${completedChapters?.length}/${playlistLengths[id]}`}</p>
+                )}
+              </div>
+            </div>
+          </div>
+          <Disclosure as="div" className="lg:hidden" defaultOpen={false}>
+            <DisclosureButton className="group flex w-full bg-mediumSlaty p-1 sm:p-2 rounded-lg items-center text-md border border-lightSlaty justify-between">
+              <span>Playlists</span>
+              <ChevronDownIcon className="size-5 fill-slaty group-data-hover:fill-white/50 group-data-open:rotate-180" />
+            </DisclosureButton>
+            <DisclosurePanel className="mt-2 text-sm/5 text-slaty">
+              <div className="py-2 h-[586px] flex flex-col gap-4 rounded-xl overflow-y-auto">
+                {playlists?.map((data, index) => {
+                  const id = data.snippet?.playlistId;
+                  const videoid = data.snippet?.resourceId.videoId;
+                  const isChecked = completedChapters?.includes(videoid);
+                  if (!hasMounted) return null;
+                  return (
+                    <PlalistVideoCard
+                      title={data.snippet?.title}
+                      channelTitle={data.snippet?.channelTitle}
+                      thumbnails={data.snippet?.thumbnails.high?.url}
+                      //   lenth={length}
+                      id={id}
+                      setCheckBoxTrack={setCheckBoxTrack}
+                      checkBoxTrack={checkBoxTrack}
+                      isChecked={isChecked}
+                      videoId={videoid}
+                      currentvideoId={videoId as string}
+                      //   channelThumb={channelThumb}
+                      key={index}
+                    />
+                  );
+                })}
+              </div>
+            </DisclosurePanel>
+          </Disclosure>
           <Disclosure as="div" className="" defaultOpen={false}>
-            <DisclosureButton className="group flex w-full bg-mediumSlaty p-2 rounded-lg items-center text-md border border-lightSlaty justify-between">
+            <DisclosureButton className="group flex w-full bg-mediumSlaty p-1 sm:p-2 rounded-lg items-center text-md border border-lightSlaty justify-between">
               <span>Description</span>
               <ChevronDownIcon className="size-5 fill-slaty group-data-hover:fill-white/50 group-data-open:rotate-180" />
             </DisclosureButton>
@@ -358,25 +403,25 @@ const Course = () => {
             <div className="flex justify-between bg-mediumSlaty border-b border-lightSlaty px-2 py-4">
               <button
                 onClick={handleNotes}
-                className="px-4 py-1 rounded-md bg-lightSlaty border border-lightSlaty"
+                className="sm:px-4 sm:py-1 p-1 rounded-md bg-lightSlaty border border-lightSlaty"
               >
                 Notes
               </button>
               <button
                 onClick={handleGPT}
-                className="px-4 py-1 rounded-md bg-lightSlaty border border-lightSlaty"
+                className="sm:px-4 sm:py-1 p-1 rounded-md bg-lightSlaty border border-lightSlaty"
               >
                 GPT
               </button>
               <button
                 onClick={handleEasyExplain}
-                className="px-4 py-1 rounded-md bg-lightSlaty border border-lightSlaty"
+                className="sm:px-4 sm:py-1 p-1 rounded-md bg-lightSlaty border border-lightSlaty"
               >
                 Easy Explain
               </button>
               <button
                 onClick={handleDiscussion}
-                className="px-4 py-1 rounded-md bg-lightSlaty border border-lightSlaty"
+                className="sm:px-4 sm:py-1 p-1 rounded-md bg-lightSlaty border border-lightSlaty sm:flex hidden"
               >
                 Discussion
               </button>
@@ -392,15 +437,15 @@ const Course = () => {
               )}
               {gptcheck ? (
                 <div className="w-full h-full">
-                  <div className="space-y-2 w-full h-[40rem] p-12 rounded overflow-y-auto">
+                  <div className="space-y-2 w-full h-[40rem] p-1 sm:p-12 rounded overflow-y-auto">
                     {chats?.map((msg, i) => (
                       <div key={i}>
-                        <div className="flex w-full justify-end text-xl text-white py-4">
+                        <div className="flex w-full justify-end text-xl text-white py-2 sm:py-4">
                           <p className="border border-lightSlaty px-6 py-2 rounded-3xl">
                             {msg.question}
                           </p>
                         </div>
-                        <div className="prose prose-slate prose-lg w-full h-full overflow-auto max-w-none p-12 prose-headings:my-2 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-ul:my-0 hover:prose-a:underline">
+                        <div className="prose prose-slate prose-lg w-full h-full overflow-auto max-w-none p-2 sm:p-12 prose-headings:my-2 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-ul:my-0 hover:prose-a:underline">
                           <ReactMarkdown>{msg.answer}</ReactMarkdown>
                         </div>
                       </div>
@@ -426,12 +471,12 @@ const Course = () => {
               )}
               {easyExplaincheck ? (
                 easyExplain ? (
-                  <div className="p-12 w-full h-full overflow-auto prose prose-lg prose-headings:my-0 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-a:text-blue-600 hover:prose-a:underline max-w-none">
+                  <div className="sm:p-12 w-full h-full overflow-auto prose prose-lg prose-headings:my-0 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-a:text-blue-600 hover:prose-a:underline max-w-none">
                     <ReactMarkdown>{easyExplain}</ReactMarkdown>
                   </div>
                 ) : (
                   <div className="w-full h-full flex flex-col justify-center items-center gap-4">
-                    <p className="px-12 py-2 rounded-full border border-lightSlaty">
+                    <p className="sm:px-12 py-2 rounded-full border border-lightSlaty">
                       want explaination like 5 year old boy 😁
                     </p>
                     <button
@@ -495,7 +540,7 @@ const Course = () => {
             </div>
           </div>
         </div>
-        <div className="w-[25rem] h-[665px] border border-lightSlaty rounded-xl flex flex-col">
+        <div className="w-[25rem] h-[665px] border border-lightSlaty rounded-xl hidden lg:flex flex-col">
           <div className="border-b border-lightSlaty h-[4rem] bg-mediumSlaty rounded-t-xl p-2 flex justify-between">
             <div className="flex flex-col text-sm">
               <p className="font-semibold text-white line-clamp-1">

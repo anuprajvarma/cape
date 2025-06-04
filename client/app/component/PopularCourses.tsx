@@ -85,8 +85,8 @@ const PopularCourses = () => {
   }, [playlists]);
 
   return (
-    <div className="flex flex-col gap-[4rem] pt-[6rem] w-full">
-      <p className="text-center font-semibold text-4xl text-white">
+    <div className="flex flex-col gap-[2rem] sm:gap-[4rem] pt-[6rem] w-full">
+      <p className="text-center font-semibold text-2xl sm:text-4xl text-white">
         Popular Courses
       </p>
       <div className="flex flex-col gap-[5rem]">

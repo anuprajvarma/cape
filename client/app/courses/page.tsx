@@ -132,13 +132,13 @@ const Courses = () => {
   return (
     <div className="w-full -z-20 py-[2rem] px-4 text-black border-t border-slaty flex justify-center">
       <div className="w-[70rem] flex flex-col gap-12">
-        <div className=" flex gap-2 items-center justify-center">
+        <div className="flex gap-2 items-center justify-center">
           <div className="border border-slaty/30 flex rounded-xl">
             <input
               type="text"
               value={searchQuery}
               placeholder="Search your favourite plalist"
-              className="w-[20rem] sm:w-[30rem] py-2 px-4 outline-none rounded-l-xl focus:border bg-lightSlaty focus:border-slaty/30 bg-lightYellow text-slaty placeholder-slaty/50"
+              className="sm:w-[30rem] py-2 px-4 outline-none rounded-l-xl focus:border bg-lightSlaty focus:border-slaty/30 bg-lightYellow text-slaty placeholder-slaty/50"
               onChange={(e) => setSearchQuery(e.target.value)}
             />
             <button

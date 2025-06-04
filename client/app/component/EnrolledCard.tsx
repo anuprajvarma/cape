@@ -129,17 +129,29 @@ const EnrolledCard = ({
           </div>
           <div className="flex flex-col gap-2 items-end text-slaty">
             <p className="line-clamp-3 text-base">{playlistDescription}</p>
-            <div className="flex gap-2">
-              <button
-                onClick={() =>
-                  router.push(`/course/${playlistId}/${firstVideoId}`)
-                }
-              >
-                <IoPlayCircleOutline className="text-xl hover:text-darkRed transition duration-300 w-6 h-6" />
-              </button>
-              <button onClick={() => handleDeletEnrolledCourse({ playlistId })}>
-                <AiOutlineDelete className="text-xl hover:text-darkRed transition duration-300 w-6 h-6" />
-              </button>
+            <div className="flex gap-2 justify-between lg:justify-end w-full">
+              <div className=" flex lg:hidden gap-2 font-medium text-slaty/90">
+                <p className="text-slaty">Completed -</p>
+                <div>
+                  {chapterLenth && (
+                    <p>{`${completedChapters?.length}/${chapterLenth}`}</p>
+                  )}
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <button
+                  onClick={() =>
+                    router.push(`/course/${playlistId}/${firstVideoId}`)
+                  }
+                >
+                  <IoPlayCircleOutline className="text-xl hover:text-darkRed transition duration-300 w-6 h-6" />
+                </button>
+                <button
+                  onClick={() => handleDeletEnrolledCourse({ playlistId })}
+                >
+                  <AiOutlineDelete className="text-xl hover:text-darkRed transition duration-300 w-6 h-6" />
+                </button>
+              </div>
             </div>
           </div>
         </div>

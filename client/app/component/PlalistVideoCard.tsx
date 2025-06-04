@@ -54,7 +54,7 @@ const PlalistVideoCard = ({
 
   return (
     <div
-      className={`flex gap-2 p-1 items-center ${
+      className={`flex gap-2 p-1 justify-between items-center ${
         currentvideoId === videoId
           ? "bg-lightSlaty/70 rounded-sm"
           : "hover:bg-lightSlaty/70 transition duration-100 "

@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { SiSololearn } from "react-icons/si";
 import { FaArrowRight } from "react-icons/fa";
+import { IoMenu } from "react-icons/io5";
 
 const Header = () => {
   const session = useSession();
@@ -14,6 +15,7 @@ const Header = () => {
   const param = useParams();
   const { id, videoId } = param;
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenMenu, setIsOpenMenu] = useState(false);
 
   const handleGoogleAuthSubmit = async () => {
     await fetch("http://localhost:5002/api/auth/login", {
@@ -62,7 +64,7 @@ const Header = () => {
           <SiSololearn className="text-lightBlue" />
           <p>Cape</p>
         </Link>
-        <div className="flex gap-4 sm:gap-12 text-sm sm:text-md text-slaty">
+        <div className="sm:flex hidden gap-4 sm:gap-12 text-md sm:text-md text-slaty">
           <Link
             href="/courses"
             className={`cursor-pointer hover:text-darkRed transition duration-300 ${
@@ -104,6 +106,46 @@ const Header = () => {
                   className="w-full h-full object-cover"
                 />
               </button>
+              <button onClick={() => setIsOpenMenu(!isOpenMenu)}>
+                <IoMenu className="sm:hidden flex text-2xl" />
+              </button>
+
+              {isOpenMenu && (
+                <div className="absolute flex flex-col gap-2 right-0 mt-2 p-2 text-lg border border-lightSlaty shadow-lg bg-mediumSlaty rounded-lg transition duration-300 z-50">
+                  <Link
+                    href="/"
+                    className={`cursor-pointer hover:text-darkRed transition duration-300 ${
+                      path === "/" ? "text-white" : ""
+                    }`}
+                  >
+                    Home
+                  </Link>
+                  <Link
+                    href="/courses"
+                    className={`cursor-pointer hover:text-darkRed transition duration-300 ${
+                      path === "/courses" ? "text-white" : ""
+                    }`}
+                  >
+                    Courses
+                  </Link>
+                  <Link
+                    href="/bookmark"
+                    className={`cursor-pointer hover:text-darkRed transition duration-300 ${
+                      path === "/bookmark" ? "text-white" : ""
+                    }`}
+                  >
+                    Bookmark
+                  </Link>
+                  <Link
+                    href="/dashboard"
+                    className={`cursor-pointer hover:text-darkRed transition duration-300 ${
+                      path === "/dashboard" ? "text-white" : ""
+                    }`}
+                  >
+                    Dashboard
+                  </Link>
+                </div>
+              )}
 
               {/* Toggle Div */}
               {isOpen && (
