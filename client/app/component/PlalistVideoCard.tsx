@@ -15,13 +15,11 @@ const PlalistVideoCard = ({
   videoId,
   currentvideoId,
 }: PlaylistCardType) => {
-  // console.log(id);
   const router = useRouter();
   const session = useSession();
 
   const playVideo = ({ id, videoId }: { id: string; videoId: string }) => {
     router.push(`/course/${id}/${videoId}`);
-    // console.log(`id ${id} videoid ${videoId}`);
   };
 
   const checkBoxHandler = async (e: boolean) => {

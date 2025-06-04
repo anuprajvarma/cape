@@ -3,7 +3,6 @@ import { PiLinkedinLogoBold } from "react-icons/pi";
 import { LuGithub } from "react-icons/lu";
 import { AiOutlineInstagram } from "react-icons/ai";
 import { RiTwitterXLine } from "react-icons/ri";
-import { FaGithubAlt } from "react-icons/fa";
 import Link from "next/link";
 
 const NavBar = () => {
@@ -35,7 +34,7 @@ const NavBar = () => {
           <div className="flex gap-2 items-center text-slaty/60">
             <p>Cape</p>
             <Link href="https://github.com/anuprajvarma/cape" target="_blank">
-              <FaGithubAlt className="cursor-pointer hover:text-darkRed transition duration-300 w-5 h-5" />
+              <LuGithub className="cursor-pointer hover:text-darkRed transition duration-300 w-5 h-5" />
             </Link>
           </div>
         </div>
