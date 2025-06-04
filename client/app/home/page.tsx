@@ -3,6 +3,7 @@
 import React, { useRef } from "react";
 import { IoPlayCircleOutline } from "react-icons/io5";
 import PopularCourses from "../component/PopularCourses";
+import Link from "next/link";
 
 export const Home = () => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -35,15 +36,20 @@ export const Home = () => {
                 Figma.
               </p>
             </div>
-            <div className="flex gap-4">
-              <button className="px-6 py-3 rounded-[6px] cursor-pointer font-semibold bg-lightBlue text-white text-md transition duration-300">
+            <div className="flex gap-8">
+              <Link
+                href="/courses"
+                className="px-6 py-3 rounded-[6px] cursor-pointer font-semibold bg-lightBlue hover:bg-lightBlue/80 text-white text-md transition duration-300"
+              >
                 Get started
-              </button>
-              <div className="flex gap-2 items-center ">
+              </Link>
+              <div className="flex gap-2 items-center">
                 <button onClick={handlePlay}>
-                  <IoPlayCircleOutline className="text-4xl text-slaty/50 cursor-pointer hover:text-darkRed transition duration-300" />
+                  <IoPlayCircleOutline className="text-5xl text-slaty/50 hover:text-slaty/80 cursor-pointer hover:text-darkRed transition duration-300" />
                 </button>
-                <p className="font-semibold text-slaty">how it&apos;s work</p>
+                <p className="font-semibold text-xl text-white">
+                  how it&apos;s work
+                </p>
               </div>
             </div>
           </div>

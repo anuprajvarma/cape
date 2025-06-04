@@ -38,11 +38,6 @@ const EnrolledCard = ({
   const actualId = Array.isArray(playlistId) ? playlistId[0] : playlistId;
 
   useEffect(() => {
-    // console.log(
-    //   typeof id === "string" &&
-    //     playlistLengths[id] &&
-    //     (Number(completedChapters.length), Number(playlistLengths[id].length))
-    // );
     if (actualId) {
       const percentage =
         (100 * completedChapters.length) / Number(chapterLenth);
@@ -67,7 +62,6 @@ const EnrolledCard = ({
         console.log(`data ka lenth hai`);
         setCompletedChapters(data.getChapterData?.chapters);
       }
-      // console.log(`getChapterData ${data.getChapterData.chapters}`);
     };
     getChapterData();
   }, [session.data?.user, playlistId]);
@@ -108,7 +102,7 @@ const EnrolledCard = ({
           <p className="text-xl text-white line-clamp-1 font-semibold">
             {title}
           </p>
-          <div className="flex justify-between text-md text-slaty">
+          <div className="flex justify-between text-md text-slaty/80">
             <div className="flex gap-2 items-center justify-center">
               <div className="flex w-[2rem] h-[2rem] relative">
                 <Image
@@ -127,7 +121,7 @@ const EnrolledCard = ({
               <p>chapters {chapterLenth}</p>
             </div>
           </div>
-          <div className="flex flex-col gap-2 items-end text-slaty">
+          <div className="flex flex-col gap-2 items-end text-slaty/80">
             <p className="line-clamp-3 text-base">{playlistDescription}</p>
             <div className="flex gap-2 justify-between lg:justify-end w-full">
               <div className=" flex lg:hidden gap-2 font-medium text-slaty/90">
@@ -144,12 +138,12 @@ const EnrolledCard = ({
                     router.push(`/course/${playlistId}/${firstVideoId}`)
                   }
                 >
-                  <IoPlayCircleOutline className="text-xl hover:text-darkRed transition duration-300 w-6 h-6" />
+                  <IoPlayCircleOutline className="text-2xl hover:text-slaty transition duration-300 w-6 h-6" />
                 </button>
                 <button
                   onClick={() => handleDeletEnrolledCourse({ playlistId })}
                 >
-                  <AiOutlineDelete className="text-xl hover:text-darkRed transition duration-300 w-6 h-6" />
+                  <AiOutlineDelete className="text-2xl hover:text-slaty transition duration-300 w-6 h-6" />
                 </button>
               </div>
             </div>
@@ -169,7 +163,7 @@ const EnrolledCard = ({
           })}
           className="h-[6rem]"
         />
-        <p className="text-xl text-slaty">Progress</p>
+        <p className="text-xl text-slaty/80">Progress</p>
       </div>
     </div>
   );

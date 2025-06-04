@@ -34,7 +34,6 @@ const Header = () => {
 
   const handleSignout = async () => {
     await signOut();
-    // console.log("sing out");
     await fetch("http://localhost:5002/api/auth/signout", {
       method: "POST",
       credentials: "include",
@@ -64,10 +63,10 @@ const Header = () => {
           <SiSololearn className="text-lightBlue" />
           <p>Cape</p>
         </Link>
-        <div className="sm:flex hidden gap-4 sm:gap-12 text-md sm:text-md text-slaty">
+        <div className="sm:flex hidden gap-4 sm:gap-12 text-lg sm:text-md text-slaty/80">
           <Link
             href="/courses"
-            className={`cursor-pointer hover:text-darkRed transition duration-300 ${
+            className={`cursor-pointer hover:text-darkRed transition duration-300 hover:text-white ${
               path === "/courses" ? "text-white" : ""
             }`}
           >
@@ -75,7 +74,7 @@ const Header = () => {
           </Link>
           <Link
             href="/bookmark"
-            className={`cursor-pointer hover:text-darkRed transition duration-300 ${
+            className={`cursor-pointer hover:text-darkRed transition duration-300 hover:text-white ${
               path === "/bookmark" ? "text-white" : ""
             }`}
           >
@@ -83,7 +82,7 @@ const Header = () => {
           </Link>
           <Link
             href="/dashboard"
-            className={`cursor-pointer hover:text-darkRed transition duration-300 ${
+            className={`cursor-pointer hover:text-darkRed transition duration-300 hover:text-white ${
               path === "/dashboard" ? "text-white" : ""
             }`}
           >
@@ -93,13 +92,12 @@ const Header = () => {
         <div>
           {session.status === "authenticated" ? (
             <div className="relative">
-              {/* Circular Image Button */}
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="w-12 h-12 hidden sm:flex justify-center items-center rounded-full overflow-hidden focus:outline-none"
+                className="w-12 h-12 hidden sm:flex justify-center items-center rounded-full overflow-hidden focus:outline-none border border-slaty/30 transition duration-300 hover:border-slaty/50"
               >
                 <Image
-                  src={(session.data?.user?.image as string) || "/code.jpg"} // Replace with actual image path
+                  src={(session.data?.user?.image as string) || "/code.jpg"}
                   alt="Profile"
                   width={100}
                   height={100}
@@ -146,8 +144,6 @@ const Header = () => {
                   </Link>
                 </div>
               )}
-
-              {/* Toggle Div */}
               {isOpen && (
                 <div className="absolute right-0 mt-2 border border-lightSlaty shadow-lg bg-mediumSlaty rounded-lg transition duration-300 z-50">
                   <button
@@ -162,7 +158,7 @@ const Header = () => {
           ) : (
             <button
               onClick={() => signIn("google")}
-              className="px-5 py-[10px] flex gap-2 items-center rounded-[8px] cursor-pointer font-semibold text-sm bg-lightBlue transition duration-300"
+              className="px-5 py-[10px] flex gap-2 items-center rounded-[8px] cursor-pointer font-semibold text-sm bg-lightBlue hover:bg-lightBlue/80 transition duration-300"
             >
               <p>Sign in</p>
               <FaArrowRight />

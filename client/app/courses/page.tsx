@@ -138,7 +138,7 @@ const Courses = () => {
               type="text"
               value={searchQuery}
               placeholder="Search your favourite plalist"
-              className="sm:w-[30rem] py-2 px-4 outline-none rounded-l-xl focus:border bg-lightSlaty focus:border-slaty/30 bg-lightYellow text-slaty placeholder-slaty/50"
+              className="sm:w-[30rem] py-2 px-4 outline-none rounded-l-xl focus:border bg-lightSlaty focus:border-slaty/30 text-slaty placeholder-slaty/50"
               onChange={(e) => setSearchQuery(e.target.value)}
             />
             <button

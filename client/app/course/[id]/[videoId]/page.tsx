@@ -344,7 +344,7 @@ const Course = () => {
             <p className="font-semibold text-white line-clamp-1">
               {videoTitle}
             </p>
-            <div className="flex gap-2 font-medium text-slaty/90">
+            <div className="flex gap-2 font-medium text-slaty/80">
               <p className="text-slaty sm:flex hidden">Progress -</p>
               <div>
                 {typeof id === "string" && playlistLengths[id] && (
@@ -398,30 +398,30 @@ const Course = () => {
               ))}
             </DisclosurePanel>
           </Disclosure>
-          <div className="border border-lightSlaty">
+          <div className="border rounded-lg border-lightSlaty">
             {" "}
             <div className="flex justify-between bg-mediumSlaty border-b border-lightSlaty px-2 py-4">
               <button
                 onClick={handleNotes}
-                className="sm:px-4 sm:py-1 p-1 rounded-md bg-lightSlaty border border-lightSlaty"
+                className="sm:px-4 sm:py-1 p-1 rounded-md bg-lightSlaty hover:bg-slaty/20 hover:text-slaty text-slaty/80 transition duration-300 border border-lightSlaty"
               >
                 Notes
               </button>
               <button
                 onClick={handleGPT}
-                className="sm:px-4 sm:py-1 p-1 rounded-md bg-lightSlaty border border-lightSlaty"
+                className="sm:px-4 sm:py-1 p-1 rounded-md bg-lightSlaty hover:bg-slaty/20 hover:text-slaty text-slaty/80 transition duration-300 border border-lightSlaty"
               >
                 GPT
               </button>
               <button
                 onClick={handleEasyExplain}
-                className="sm:px-4 sm:py-1 p-1 rounded-md bg-lightSlaty border border-lightSlaty"
+                className="sm:px-4 sm:py-1 p-1 rounded-md bg-lightSlaty hover:bg-slaty/20 hover:text-slaty text-slaty/80 transition duration-300 border-lightSlaty"
               >
                 Easy Explain
               </button>
               <button
                 onClick={handleDiscussion}
-                className="sm:px-4 sm:py-1 p-1 rounded-md bg-lightSlaty border border-lightSlaty sm:flex hidden"
+                className="sm:px-4 sm:py-1 p-1 rounded-md bg-lightSlaty hover:bg-slaty/20 hover:text-slaty text-slaty/80 transition duration-300 border border-lightSlaty sm:flex hidden"
               >
                 Discussion
               </button>
@@ -437,7 +437,7 @@ const Course = () => {
               )}
               {gptcheck ? (
                 <div className="w-full h-full">
-                  <div className="space-y-2 w-full h-[40rem] p-1 sm:p-12 rounded overflow-y-auto">
+                  <div className="space-y-2 w-full h-[36rem] p-1 sm:p-12 rounded overflow-y-auto">
                     {chats?.map((msg, i) => (
                       <div key={i}>
                         <div className="flex w-full justify-end text-xl text-white py-2 sm:py-4">
@@ -451,16 +451,16 @@ const Course = () => {
                       </div>
                     ))}
                   </div>
-                  <div className="mt-4 flex gap-2">
+                  <div className="py-4 flex gap-2">
                     <input
                       value={input}
                       onChange={(e) => setInput(e.target.value)}
-                      className="flex-1 p-2 border rounded"
+                      className="flex-1 p-2 rounded-md bg-lightSlaty focus:outline-none border border-slaty/50 text-slaty placeholder-slaty/50"
                       placeholder="Type a message..."
                     />
                     <button
                       onClick={sendMessage}
-                      className="px-4 py-2 bg-blue-600 text-white rounded"
+                      className="px-4 py-2 bg-lightBlue hover:bg-lightBlue/80 text-white rounded"
                     >
                       Send
                     </button>
@@ -492,7 +492,7 @@ const Course = () => {
               )}
               {discussion ? (
                 <div className="w-full h-full">
-                  <div className="space-y-2 w-full h-[40rem] p-4 rounded overflow-y-auto">
+                  <div className="space-y-2 w-full h-[36rem] p-4 rounded overflow-y-auto">
                     {discussionData?.map((msg, i) => (
                       <div
                         className="flex gap-4"
@@ -523,7 +523,7 @@ const Course = () => {
                     <input
                       value={discussionContent}
                       onChange={(e) => setDiscussionContent(e.target.value)}
-                      className="flex-1 p-2 border rounded"
+                      className="flex-1 p-2 rounded-md bg-lightSlaty focus:outline-none border border-slaty/50 text-slaty placeholder-slaty/50"
                       placeholder="Type a message..."
                     />
                     <button

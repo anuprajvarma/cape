@@ -130,10 +130,10 @@ const CourseCard = ({
       <div className="flex flex-col gap-2 p-2">
         <div className="flex items-center gap-1">
           <div className="flex flex-col gap-2 w-full">
-            <p className="text-md text-slaty line-clamp-1 font-semibold">
+            <p className="text-lg text-white line-clamp-1 font-semibold">
               {title}
             </p>
-            <div className="flex justify-between text-sm items-center text-slaty">
+            <div className="flex justify-between text-sm items-center text-slaty/80">
               <div className="flex gap-2 items-center">
                 <div className="flex w-[26px] h-[26px] relative">
                   <Image
@@ -166,15 +166,15 @@ const CourseCard = ({
                 id,
               })
             }
-            className="py-[4px] px-5 rounded-md bg-lightSlaty transition duration-300"
+            className="py-[4px] px-5 rounded-md bg-lightSlaty hover:bg-slaty/20 hover:text-slaty text-slaty/80 transition duration-300"
           >
             Enroll
           </button>
-          <div className="flex gap-2 text-xl items-end">
+          <div className="flex gap-2 text-xl text-slaty/80 items-end">
             <button
               onClick={() => router.push(`/course/${id}/${firstVideoId}`)}
             >
-              <IoPlayCircleOutline className="text-xl hover:text-darkRed transition duration-300 w-5 h-5" />
+              <IoPlayCircleOutline className="text-2xl hover:text-slaty hover:text-darkRed transition duration-300" />
             </button>
             {bookmark ? (
               <button
@@ -184,13 +184,13 @@ const CourseCard = ({
                   })
                 }
               >
-                <AiOutlineDelete className="text-xl hover:text-darkRed transition duration-300 w-5 h-5" />
+                <AiOutlineDelete className="text-2xl hover:text-slaty transition duration-300" />
               </button>
             ) : (
               <></>
             )}
             {bookmark ? (
-              <FaBookmark className="cursor-pointer" />
+              <FaBookmark className="text-2xl hover:text-slaty cursor-pointer" />
             ) : (
               <button
                 onClick={() =>
@@ -206,7 +206,7 @@ const CourseCard = ({
                   })
                 }
               >
-                <IoBookmarkOutline className="hover:text-darkRed" />
+                <IoBookmarkOutline className="text-2xl hover:text-slaty hover:text-darkRed" />
               </button>
             )}
           </div>

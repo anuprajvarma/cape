@@ -116,7 +116,7 @@ const PopularCourses = () => {
         <div className="flex justify-center ">
           <Link
             href="/courses"
-            className="px-6 py-2 rounded-[6px] bg-lightSlaty text-slaty transition duration-300 cursor-pointer"
+            className="px-6 py-2 rounded-[6px] bg-lightSlaty text-slaty/80 hover:bg-slaty/20 hover:text-slaty transition duration-300 cursor-pointer"
           >
             View all Courses
           </Link>
