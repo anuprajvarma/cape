@@ -52,7 +52,7 @@ const Header = () => {
     <div className="w-full px-8 py-4 flex justify-center">
       <div
         className={`${
-          path === `/course/${id}/${videoId}` ? "w-full" : "w-[80rem]"
+          path === `/course/${id}/${videoId}` ? "w-full" : "w-[70rem]"
         } flex justify-between font-medium items-center`}
       >
         <Link

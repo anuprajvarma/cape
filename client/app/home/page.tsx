@@ -1,71 +1,62 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useRef } from "react";
 import { IoPlayCircleOutline } from "react-icons/io5";
 import PopularCourses from "../component/PopularCourses";
-import Image from "next/image";
-import { FaPlayCircle } from "react-icons/fa";
 
 export const Home = () => {
-  const [isPlaying, setIsPlaying] = useState(false);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
   const handlePlay = () => {
-    setIsPlaying(true);
+    iframeRef.current?.contentWindow?.postMessage(
+      JSON.stringify({
+        event: "command",
+        func: "playVideo",
+        args: [],
+      }),
+      "*"
+    );
   };
   return (
     <div className="w-full py-[4rem] px-4 text-black flex justify-center">
-      <div className="w-[80rem]">
-        <div className="w-full flex justify-between gap-12">
-          <div className="w-[40rem] h-[18rem] flex flex-col gap-4">
-            <div className="font-semibold w-full text-white text-5xl">
-              <p>Flexible & Scalable</p>
-              <p>training Flexible Scalable</p>
-              <p>training Flexible Scalable</p>
+      <div className="w-[70rem]">
+        <div className="w-full flex flex-col justify-between gap-12">
+          <div className="w-full h-[18rem] flex flex-col items-center gap-6">
+            <div className="font-semibold w-full text-white text-center lg:text-6xl text-5xl">
+              <p>Build websites even faster with</p>
+              <p>components on top of Tailwind CSS</p>
             </div>
-            <u className="no-underline p-0 m-0 text-sm text-slaty">
-              <li>Track Your Progress of playlist</li>
-              <li>Track Your Progress of playlist</li>
-              <li>Track Your Progress of playlist</li>
-              <li>Track Your Progress of playlist</li>
-            </u>
-            <div className="flex gap-2">
+            <div className="font-medium w-full text-slaty/50 text-center text-xl">
+              <p>
+                Start developing with an open-source library of over 600+ UI
+                components, sections, and pages
+              </p>
+              <p>
+                built with the utility classes from Tailwind CSS and designed in
+                Figma.
+              </p>
+            </div>
+            <div className="flex gap-4">
               <button className="px-6 py-3 rounded-[6px] cursor-pointer font-semibold bg-lightBlue text-white text-md transition duration-300">
                 Get started
               </button>
               <div className="flex gap-2 items-center ">
                 <button onClick={handlePlay}>
-                  <IoPlayCircleOutline className="text-4xl text-lightBlue cursor-pointer hover:text-darkRed transition duration-300" />
+                  <IoPlayCircleOutline className="text-4xl text-slaty/50 cursor-pointer hover:text-darkRed transition duration-300" />
                 </button>
                 <p className="font-semibold text-slaty">how it&apos;s work</p>
               </div>
             </div>
           </div>
-          <div className="w-[40rem] h-[22rem] rounded-lg flex justify-end ">
-            {isPlaying ? (
+          <div className="w-full flex items-center justify-center">
+            <div className="w-[52rem] h-[30rem] rounded-lg flex">
               <iframe
-                src="https://www.youtube.com/embed/JQbjS0_ZfJ0?autoplay=1"
+                ref={iframeRef}
+                src="https://www.youtube.com/embed/JQbjS0_ZfJ0?enablejsapi=1"
                 className="rounded-lg w-full"
                 allow="autoplay; encrypted-media"
-                // allowFullScreen
+                allowFullScreen
               />
-            ) : (
-              <div className="flex w-full items-center justify-center h-full relative z-10">
-                <Image
-                  src="/code.jpg" // Replace with your image path
-                  alt="Video Thumbnail"
-                  quality={100}
-                  sizes="80px"
-                  fill
-                  style={{ objectFit: "cover" }}
-                  className="rounded-lg"
-                />
-                <button
-                  onClick={handlePlay}
-                  className="z-20 rounded-full  p-3 hover:scale-110 transition"
-                >
-                  <FaPlayCircle className="text-white text-4xl" />
-                </button>
-              </div>
-            )}
+            </div>
           </div>
         </div>
         <PopularCourses />

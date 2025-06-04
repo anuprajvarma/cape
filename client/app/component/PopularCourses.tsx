@@ -85,8 +85,8 @@ const PopularCourses = () => {
   }, [playlists]);
 
   return (
-    <div className="flex flex-col gap-[3rem] pt-[6rem] w-full">
-      <p className="text-center font-semibold text-3xl text-white">
+    <div className="flex flex-col gap-[4rem] pt-[6rem] w-full">
+      <p className="text-center font-semibold text-4xl text-white">
         Popular Courses
       </p>
       <div className="flex flex-col gap-[5rem]">
@@ -97,9 +97,6 @@ const PopularCourses = () => {
             const description = data.snippet?.description;
             const length = playlistLengths[id] || "";
             const channelThumb = channelThumbnail[channelId] || "";
-            // console.log(`channelthumb ${channelThumb}`);
-            // console.log(`id ... ${id}`);
-            // console.log(length);
             if (!hasMounted) return null;
             return (
               <CourseCard

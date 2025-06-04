@@ -115,7 +115,7 @@ const CourseCard = ({
   };
 
   return (
-    <div className="w-[24rem] h-[346px] flex flex-col gap-3 bg-mediumSlaty border border-lightSlaty rounded-lg">
+    <div className="w-[20rem] h-[346px] flex flex-col gap-3 bg-mediumSlaty border border-lightSlaty rounded-lg">
       <div className="flex h-[13rem] relative">
         <Image
           src={thumbnails || "/code.jpg"}
