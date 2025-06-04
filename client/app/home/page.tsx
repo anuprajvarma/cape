@@ -21,11 +21,11 @@ export const Home = () => {
       <div className="w-[70rem]">
         <div className="w-full flex flex-col justify-between gap-12">
           <div className="w-full h-[18rem] flex flex-col items-center gap-6">
-            <div className="font-semibold w-full text-white text-center lg:text-6xl text-5xl">
+            <div className="font-semibold w-full text-white text-center text-2xl sm:text-4xl md:text-5xl lg:text-6xl">
               <p>Build websites even faster with</p>
               <p>components on top of Tailwind CSS</p>
             </div>
-            <div className="font-medium w-full text-slaty/50 text-center text-xl">
+            <div className="font-medium w-full text-slaty/50 text-center lg:text-xl">
               <p>
                 Start developing with an open-source library of over 600+ UI
                 components, sections, and pages
@@ -47,8 +47,8 @@ export const Home = () => {
               </div>
             </div>
           </div>
-          <div className="w-full flex items-center justify-center">
-            <div className="w-[52rem] h-[30rem] rounded-lg flex">
+          <div className="w-full flex items-center pt-2 justify-center">
+            <div className="w-[25rem] sm:w-[40rem] lg:w-[52rem] h-[30rem] rounded-lg flex">
               <iframe
                 ref={iframeRef}
                 src="https://www.youtube.com/embed/JQbjS0_ZfJ0?enablejsapi=1"

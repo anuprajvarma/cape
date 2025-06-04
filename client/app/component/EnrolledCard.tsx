@@ -91,9 +91,9 @@ const EnrolledCard = ({
   };
 
   return (
-    <div className="flex justify-between gap-8">
-      <div className="flex w-[52rem] min-h-[12rem] rounded-lg bg-mediumSlaty border border-lightSlaty">
-        <div className="flex w-[24rem] relative">
+    <div className="flex justify-center lg:justify-between gap-8">
+      <div className="flex flex-col sm:flex-row w-[20rem] sm:w-[37rem] md:w-[52rem] min-h-[12rem] rounded-lg bg-mediumSlaty border border-lightSlaty">
+        <div className="flex w-full sm:w-[24rem] h-[13rem] relative">
           <Image
             src={thumbnail || "/code.jpg"}
             alt="playlist thumbnail"
@@ -104,7 +104,7 @@ const EnrolledCard = ({
             className="rounded-md"
           />
         </div>
-        <div className="flex w-[32rem] flex-col p-2 gap-2">
+        <div className="flex sm:w-[32rem] flex-col p-2 gap-2">
           <p className="text-xl text-white line-clamp-1 font-semibold">
             {title}
           </p>
@@ -144,7 +144,7 @@ const EnrolledCard = ({
           </div>
         </div>
       </div>
-      <div className="w-[25rem] rounded-lg border bg-mediumSlaty  border-lightSlaty flex flex-col gap-3 justify-center items-center">
+      <div className="w-[25rem] rounded-lg border bg-mediumSlaty  border-lightSlaty hidden lg:flex flex-col gap-3 justify-center items-center">
         <CircularProgressbar
           value={precentage}
           text={`${precentage}%`}

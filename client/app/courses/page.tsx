@@ -138,7 +138,7 @@ const Courses = () => {
               type="text"
               value={searchQuery}
               placeholder="Search your favourite plalist"
-              className="w-[30rem] py-2 px-4 outline-none rounded-l-xl focus:border bg-lightSlaty focus:border-slaty/30 bg-lightYellow text-slaty placeholder-slaty/50"
+              className="w-[20rem] sm:w-[30rem] py-2 px-4 outline-none rounded-l-xl focus:border bg-lightSlaty focus:border-slaty/30 bg-lightYellow text-slaty placeholder-slaty/50"
               onChange={(e) => setSearchQuery(e.target.value)}
             />
             <button
@@ -161,14 +161,13 @@ const Courses = () => {
             <GrMicrophone className="text-xl text-slaty/50 hover:text-darkRed transition duration-300" />
           </button>
         </div>
-        <div className="flex flex-wrap gap-16 items-center justify-center">
+        <div className="flex flex-wrap gap-8 items-center justify-center">
           {playlists?.map((data, index) => {
             const id = data.id?.playlistId;
             const channelId = data.snippet?.channelId;
             const description = data.snippet?.description;
             const length = playlistLengths[id] || "0";
             const channelThumb = channelThumbnail[channelId] || "";
-            // console.log(`channelthumb ${channelThumb}`);
             if (!hasMounted) return null;
             return (
               <CourseCard

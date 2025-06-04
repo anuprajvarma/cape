@@ -49,7 +49,7 @@ const Header = () => {
   }, [session.status]);
 
   return (
-    <div className="w-full px-8 py-4 flex justify-center">
+    <div className="w-full p-4 flex justify-center">
       <div
         className={`${
           path === `/course/${id}/${videoId}` ? "w-full" : "w-[70rem]"
@@ -57,12 +57,12 @@ const Header = () => {
       >
         <Link
           href="/"
-          className="font-bold cursor-pointer text-2xl flex gap-2 text-white items-center"
+          className="font-bold cursor-pointer text-xl sm:text-2xl flex gap-2 text-white items-center"
         >
           <SiSololearn className="text-lightBlue" />
           <p>Cape</p>
         </Link>
-        <div className="flex gap-12 text-slaty">
+        <div className="flex gap-4 sm:gap-12 text-sm sm:text-md text-slaty">
           <Link
             href="/courses"
             className={`cursor-pointer hover:text-darkRed transition duration-300 ${
@@ -94,7 +94,7 @@ const Header = () => {
               {/* Circular Image Button */}
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="w-12 h-12 flex justify-center items-center rounded-full overflow-hidden focus:outline-none"
+                className="w-12 h-12 hidden sm:flex justify-center items-center rounded-full overflow-hidden focus:outline-none"
               >
                 <Image
                   src={(session.data?.user?.image as string) || "/code.jpg"} // Replace with actual image path
