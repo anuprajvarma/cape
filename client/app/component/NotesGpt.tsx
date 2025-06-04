@@ -3,17 +3,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import Editor from "./Editor";
-
-interface chatType {
-  question: string;
-  answer: string;
-}
-
-interface discussionType {
-  name: string;
-  image: string;
-  content: string;
-}
+import { chatType, discussionType } from "@/types";
 
 const NotesGpt = ({
   id,

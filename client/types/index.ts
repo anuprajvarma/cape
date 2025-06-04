@@ -9,6 +9,17 @@ export interface CourseCardType {
   bookmark: boolean;
 }
 
+export interface chatType {
+  question: string;
+  answer: string;
+}
+
+export interface discussionType {
+  name: string;
+  image: string;
+  content: string;
+}
+
 export interface PlaylistCardType {
   title: string;
   channelTitle: string;
