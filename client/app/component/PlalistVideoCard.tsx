@@ -91,7 +91,7 @@ const PlalistVideoCard = ({
         type="checkbox"
         className={`w-6 h-6 ${
           isChecked ? "accent-slaty/40" : "accent-black"
-        } rounded focus:ring-2 focus:ring-offset-2 focus:ring-slaty cursor-pointer`}
+        } rounded cursor-pointer`}
         checked={isChecked}
         onChange={(e) => checkBoxHandler(e.target.checked)}
       />
