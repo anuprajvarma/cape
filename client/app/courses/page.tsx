@@ -167,7 +167,7 @@ const Courses = () => {
             <GrMicrophone className="text-xl text-slaty/50 hover:text-darkRed transition duration-300" />
           </button>
         </div>
-        <div className="flex flex-wrap gap-8 items-center justify-center">
+        <div className="flex flex-wrap gap-8 items-center justify-center z-10">
           {playlists?.map((data, index) => {
             const id = data.id?.playlistId;
             const channelId = data.snippet?.channelId;
