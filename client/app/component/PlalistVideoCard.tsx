@@ -3,6 +3,9 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { PlaylistCardType } from "@/types";
 import { useSession } from "next-auth/react";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState, AppDispatch } from "../redux/store";
+import { setCheckBox } from "../redux/slices/checkboxSlice";
 
 const PlalistVideoCard = ({
   title,
@@ -10,20 +13,21 @@ const PlalistVideoCard = ({
   channelTitle,
   id,
   isChecked,
-  setCheckBoxTrack,
-  checkBoxTrack,
   videoId,
   currentvideoId,
 }: PlaylistCardType) => {
   const router = useRouter();
   const session = useSession();
 
+  const checkboxTrack = useSelector((state: RootState) => state.checkbox);
+  const dispatch = useDispatch<AppDispatch>();
+
   const playVideo = ({ id, videoId }: { id: string; videoId: string }) => {
     router.push(`/course/${id}/${videoId}`);
   };
 
   const checkBoxHandler = async (e: boolean) => {
-    setCheckBoxTrack(!checkBoxTrack);
+    dispatch(setCheckBox(!checkboxTrack));
     if (e === true) {
       console.log("checked");
       await fetch("http://localhost:5002/api/enrolledCourse/addChapter", {

@@ -26,8 +26,8 @@ export interface PlaylistCardType {
   thumbnails: string;
   // lenth: number;
   // channelThumb: string;
-  setCheckBoxTrack: React.Dispatch<React.SetStateAction<boolean>>;
-  checkBoxTrack: boolean;
+  // setCheckBoxTrack: React.Dispatch<React.SetStateAction<boolean>>;
+  // checkBoxTrack: boolean;
   isChecked: boolean;
   id: string;
   videoId: string;

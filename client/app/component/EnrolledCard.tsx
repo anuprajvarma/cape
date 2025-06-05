@@ -64,7 +64,14 @@ const EnrolledCard = ({
       }
     };
     getChapterData();
-  }, [session.data?.user, playlistId]);
+  }, [
+    session.data?.user,
+    playlistId,
+    actualId,
+    chapterLenth,
+    completedChapters.length,
+    precentage,
+  ]);
 
   const handleDeletEnrolledCourse = async ({
     playlistId,

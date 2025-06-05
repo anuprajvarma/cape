@@ -14,6 +14,8 @@ import {
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import Linkify from "linkify-react";
 import NotesGpt from "@/app/component/NotesGpt";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/store";
 
 const options = {
   target: "_blank",
@@ -26,13 +28,14 @@ const Course = () => {
   const params = useParams();
   const { id, videoId } = params;
 
+  const checkboxTrack = useSelector((state: RootState) => state.checkbox);
+
   const [playlists, setPlaylists] = useState<playlistType2[]>([]);
   const [completedChapters, setCompletedChapters] = useState<string[]>([]);
   const [hasMounted, setHasMounted] = useState(false);
   const [playlistLengths, setPlaylistLengths] = useState<
     Record<string, string>
   >({});
-  const [checkBoxTrack, setCheckBoxTrack] = useState<boolean>(false);
   const [precentage, setPrecentage] = useState<number>(0);
   const [videoTitle, setVideoTitle] = useState("");
   const [videoDescription, setVideoDescription] = useState("");
@@ -75,15 +78,21 @@ const Course = () => {
         }
       );
       const data = await res.json();
-      // console.log(`setcompleted data ${data.getChapterData?.chapters}`);
       if (data.getChapterData?.chapters) {
         console.log(`data ka lenth hai`);
         setCompletedChapters(data.getChapterData?.chapters);
       }
-      // console.log(`getChapterData ${data.getChapterData.chapters}`);
     };
     getChapterData();
-  }, [session.data?.user, id, checkBoxTrack]);
+  }, [
+    id,
+    playlistLengths,
+    checkboxTrack,
+    session.data?.user,
+    actualId,
+    completedChapters.length,
+    precentage,
+  ]);
 
   useEffect(() => {
     setHasMounted(true);
@@ -175,14 +184,10 @@ const Course = () => {
                       title={data.snippet?.title}
                       channelTitle={data.snippet?.channelTitle}
                       thumbnails={data.snippet?.thumbnails.high?.url}
-                      //   lenth={length}
                       id={id}
-                      setCheckBoxTrack={setCheckBoxTrack}
-                      checkBoxTrack={checkBoxTrack}
                       isChecked={isChecked}
                       videoId={videoid}
                       currentvideoId={videoId as string}
-                      //   channelThumb={channelThumb}
                       key={index}
                     />
                   );
@@ -250,14 +255,10 @@ const Course = () => {
                   title={data.snippet?.title}
                   channelTitle={data.snippet?.channelTitle}
                   thumbnails={data.snippet?.thumbnails.high?.url}
-                  //   lenth={length}
                   id={id}
-                  setCheckBoxTrack={setCheckBoxTrack}
-                  checkBoxTrack={checkBoxTrack}
                   isChecked={isChecked}
                   videoId={videoid}
                   currentvideoId={videoId as string}
-                  //   channelThumb={channelThumb}
                   key={index}
                 />
               );
