@@ -4,10 +4,15 @@ import React, { useEffect, useState, useRef } from "react";
 import { GrMicrophone } from "react-icons/gr";
 import { IoSearch } from "react-icons/io5";
 import CourseCard from "../component/CourseCard";
-import { playlistType3 } from "@/types";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState, AppDispatch } from "../redux/store";
+import { setPopularPlaylist } from "../redux/slices/playlistSlice";
+// import { playlistType } from "@/types";
 
 const Courses = () => {
-  const [playlists, setPlaylists] = useState<playlistType3[]>([]);
+  // const [playlists, setPlaylists] = useState<playlistType[]>([]);
+  const playlists = useSelector((state: RootState) => state.playlist);
+  const dispatch = useDispatch<AppDispatch>();
   const [playlistLengths, setPlaylistLengths] = useState<
     Record<string, string>
   >({});
@@ -31,11 +36,12 @@ const Courses = () => {
         `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${topic}&type=playlist&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&maxResults=12`
       );
       const data = await res.json();
-      setPlaylists(data.items);
+      dispatch(setPopularPlaylist(data.items));
+      // setPlaylists(data.items);
       // console.log(data.items);
     }
     playlist();
-  }, [topic]);
+  }, [topic, dispatch]);
 
   useEffect(() => {
     const fetchLengths = async () => {

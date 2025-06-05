@@ -70,23 +70,23 @@ export interface playlistType2 {
   };
 }
 
-export interface playlistType3 {
-  id: {
-    playlistId: string;
-  };
-  snippet: {
-    title: string;
-    channelId: string;
-    thumbnailURL: string;
-    channelTitle: string;
-    description: string;
-    resourceId: {
-      videoId: string;
-    };
-    thumbnails: {
-      high: {
-        url: string;
-      };
-    };
-  };
-}
+// export interface playlistType3 {
+//   id: {
+//     playlistId: string;
+//   };
+//   snippet: {
+//     title: string;
+//     channelId: string;
+//     thumbnailURL: string;
+//     channelTitle: string;
+//     description: string;
+//     resourceId: {
+//       videoId: string;
+//     };
+//     thumbnails: {
+//       high: {
+//         url: string;
+//       };
+//     };
+//   };
+// }
