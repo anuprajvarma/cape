@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import CourseCard from "../component/CourseCard";
 import { useSession } from "next-auth/react";
+import { handleEnrolled } from "../utils/apiCalls";
 
 interface bookmarkPlaylistType {
   title: string;
@@ -28,25 +29,12 @@ const Bookmark = () => {
   }, []);
 
   useEffect(() => {
-    // console.log("step 1");
-    const handleEnrolled = async () => {
-      // console.log("step 2");
-      const res = await fetch(
-        "http://localhost:5002/api/bookmarkCourse/getData",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email: session.data?.user?.email,
-          }),
-          credentials: "include",
-        }
-      );
-      const data = await res.json();
-      // console.log(`bookmark ${data.bookmarkCourse}`);
-      setBookmarkCoursePlaylist(data.bookmarkCourse);
+    const load = async () => {
+      const email = session.data?.user?.email as string;
+      const result = await handleEnrolled(email);
+      setBookmarkCoursePlaylist(result);
     };
-    handleEnrolled();
+    load();
   }, [session.data?.user]);
 
   return (

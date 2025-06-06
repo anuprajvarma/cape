@@ -8,6 +8,10 @@ import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
+import {
+  enrolledCourseDataFetch,
+  enrolledCourseDelete,
+} from "../utils/apiCalls";
 
 interface bookmarkPlaylistType {
   title: string;
@@ -45,22 +49,13 @@ const EnrolledCard = ({
     }
     console.log(precentage);
     const getChapterData = async () => {
-      const res = await fetch(
-        "http://localhost:5002/api/enrolledCourse/getChapterData",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email: session.data?.user?.email,
-            playlistId: playlistId,
-          }),
-          credentials: "include",
-        }
-      );
-      const data = await res.json();
-      if (data.getChapterData?.chapters) {
+      const result = await enrolledCourseDataFetch({
+        email: session.data?.user?.email ?? "",
+        playlistId,
+      });
+      if (result) {
         console.log(`data ka lenth hai`);
-        setCompletedChapters(data.getChapterData?.chapters);
+        setCompletedChapters(result);
       }
     };
     getChapterData();
@@ -78,17 +73,10 @@ const EnrolledCard = ({
   }: {
     playlistId: string;
   }) => {
-    const res = await fetch("http://localhost:5002/api/enrolledCourse/delete", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: session.data?.user?.email,
-        playlistId,
-      }),
-      credentials: "include",
+    await enrolledCourseDelete({
+      email: session.data?.user?.email ?? "",
+      playlistId,
     });
-    const data = await res.json();
-    console.log(`handleDeletBookmarkCourse ${data.deleteBookmarCourseHandler}`);
   };
 
   return (

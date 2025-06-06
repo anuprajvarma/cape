@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../redux/store";
 import { setCheckBox } from "../redux/slices/checkboxSlice";
+import { handleChapter } from "../utils/apiCalls";
 
 const PlalistVideoCard = ({
   title,
@@ -28,30 +29,12 @@ const PlalistVideoCard = ({
 
   const checkBoxHandler = async (e: boolean) => {
     dispatch(setCheckBox(!checkboxTrack));
-    if (e === true) {
-      console.log("checked");
-      await fetch("http://localhost:5002/api/enrolledCourse/addChapter", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: session.data?.user?.email,
-          playlistId: id,
-          videoId,
-        }),
-        credentials: "include",
-      });
-    } else {
-      await fetch("http://localhost:5002/api/enrolledCourse/removeChapter", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: session.data?.user?.email,
-          playlistId: id,
-          videoId,
-        }),
-        credentials: "include",
-      });
-    }
+    await handleChapter({
+      e,
+      email: session.data?.user?.email ?? "",
+      playlistId: id,
+      videoId,
+    });
   };
 
   return (

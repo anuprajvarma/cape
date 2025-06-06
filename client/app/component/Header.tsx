@@ -8,6 +8,7 @@ import Image from "next/image";
 import { SiSololearn } from "react-icons/si";
 import { FaArrowRight } from "react-icons/fa";
 import { IoMenu } from "react-icons/io5";
+import { loginFuntion, signOutFuntion } from "../utils/apiCalls";
 
 const Header = () => {
   const session = useSession();
@@ -18,29 +19,16 @@ const Header = () => {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
 
   const handleGoogleAuthSubmit = async () => {
-    await fetch("http://localhost:5002/api/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: session.data?.user?.name,
-        email: session.data?.user?.email,
-        imageUrl: session.data?.user?.image,
-      }),
-      credentials: "include",
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(`google data ${data.user}`));
+    loginFuntion({
+      name: session.data?.user?.name ?? "",
+      email: session.data?.user?.email ?? "",
+      imageUrl: session.data?.user?.image ?? "",
+    });
   };
 
   const handleSignout = async () => {
     await signOut();
-    await fetch("http://localhost:5002/api/auth/signout", {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-    });
+    await signOutFuntion();
   };
 
   useEffect(() => {

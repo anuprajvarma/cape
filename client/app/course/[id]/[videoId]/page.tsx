@@ -16,6 +16,11 @@ import Linkify from "linkify-react";
 import NotesGpt from "@/app/component/NotesGpt";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
+import {
+  fetchChapterData,
+  fetchPlayListVideos,
+  funtionForVideoDetail,
+} from "@/app/utils/apiCalls";
 
 const options = {
   target: "_blank",
@@ -42,17 +47,17 @@ const Course = () => {
 
   useEffect(() => {
     async function playlist() {
-      console.log(`videoId ${videoId}`);
-      const res = await fetch(
-        `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&id=${videoId}&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}`
-      );
-      const data = await res.json();
-      if (data.items) {
-        setVideoTitle(data.items[0].snippet.title);
-        setVideoDescription(data.items[0]?.snippet.description);
+      if (typeof videoId === "string") {
+        const result = await funtionForVideoDetail({ videoId });
+        if (result) {
+          setVideoTitle(result[0].snippet.title);
+          setVideoDescription(result[0]?.snippet.description);
+        }
       }
     }
-    playlist();
+    if (videoId) {
+      playlist();
+    }
   }, [videoId]);
 
   const actualId = Array.isArray(id) ? id[0] : id;
@@ -65,22 +70,14 @@ const Course = () => {
     }
     console.log(precentage);
     const getChapterData = async () => {
-      const res = await fetch(
-        "http://localhost:5002/api/enrolledCourse/getChapterData",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email: session.data?.user?.email,
-            playlistId: id,
-          }),
-          credentials: "include",
+      if (typeof id === "string") {
+        const result = await fetchChapterData({
+          email: session.data?.user?.email ?? "",
+          playlistId: id,
+        });
+        if (result) {
+          setCompletedChapters(result);
         }
-      );
-      const data = await res.json();
-      if (data.getChapterData?.chapters) {
-        console.log(`data ka lenth hai`);
-        setCompletedChapters(data.getChapterData?.chapters);
       }
     };
     getChapterData();
@@ -92,11 +89,10 @@ const Course = () => {
 
   useEffect(() => {
     async function playlist() {
-      const res = await fetch(
-        `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${id}&maxResults=200&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}`
-      );
-      const data = await res.json();
-      setPlaylists(data.items);
+      if (typeof id === "string") {
+        const result = await fetchPlayListVideos({ id });
+        setPlaylists(result);
+      }
     }
     playlist();
   }, [id]);

@@ -9,6 +9,7 @@ import { IoBookmarkOutline } from "react-icons/io5";
 import { FaBookmark } from "react-icons/fa";
 import { AiOutlineDelete } from "react-icons/ai";
 import { CourseCardType } from "@/types";
+import { playlist } from "../utils/apiCalls";
 
 const CourseCard = ({
   title,
@@ -26,14 +27,11 @@ const CourseCard = ({
   const [firstVideoId, setFirstVideoId] = useState("");
 
   useEffect(() => {
-    async function playlist() {
-      const res = await fetch(
-        `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${id}&maxResults=3&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}`
-      );
-      const data = await res.json();
-      setFirstVideoId(data.items[0].snippet?.resourceId.videoId);
-    }
-    playlist();
+    const load = async () => {
+      const result = await playlist(id);
+      setFirstVideoId(result);
+    };
+    load();
   }, [id]);
 
   const handleEnrolled = async ({

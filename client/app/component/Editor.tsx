@@ -10,6 +10,7 @@ import {
   Theme,
 } from "@blocknote/mantine";
 import { useEffect } from "react";
+import { editorDataFetch } from "../utils/apiCalls";
 
 const lightRedTheme = {
   colors: {
@@ -93,27 +94,15 @@ export default function Editor({
   email: string;
   playlistId: string;
 }) {
-  //   const [blocks, setBlocks] = useState<Block[] | null>(null);
-
   const editor = useCreateBlockNote();
 
-  // Fetch note on mount
   useEffect(() => {
     const fetchNote = async () => {
       try {
-        const res = await fetch("http://localhost:5002/api/notes/getNote", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, playlistId }),
-          credentials: "include",
-        });
+        const result = await editorDataFetch({ email, playlistId });
 
-        const data = await res.json();
-        console.log("Fetched content:", data.noteData?.content);
-
-        if (data.noteData?.content) {
-          //   setBlocks(data.noteData.content);
-          editor.replaceBlocks(editor.document, data.noteData.content); // ✅ correct usage
+        if (result) {
+          editor.replaceBlocks(editor.document, result);
         }
       } catch (err) {
         console.error("Fetch error:", err);
@@ -123,7 +112,6 @@ export default function Editor({
     fetchNote();
   }, [email, playlistId, editor]);
 
-  // Save note
   const saveNote = async () => {
     await fetch("http://localhost:5002/api/notes/addNote", {
       method: "POST",
@@ -131,7 +119,7 @@ export default function Editor({
       body: JSON.stringify({
         email,
         playlistId,
-        content: editor.document, // Save latest content
+        content: editor.document,
       }),
       credentials: "include",
     });

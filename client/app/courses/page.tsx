@@ -7,10 +7,9 @@ import CourseCard from "../component/CourseCard";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../redux/store";
 import { setPopularPlaylist } from "../redux/slices/playlistSlice";
-// import { playlistType } from "@/types";
+import { fetchPlaylist } from "../utils/apiCalls";
 
 const Courses = () => {
-  // const [playlists, setPlaylists] = useState<playlistType[]>([]);
   const playlists = useSelector((state: RootState) => state.playlist);
   const dispatch = useDispatch<AppDispatch>();
   const [playlistLengths, setPlaylistLengths] = useState<
@@ -30,17 +29,12 @@ const Courses = () => {
   }, []);
 
   useEffect(() => {
-    async function playlist() {
-      // console.log(`api call for topic ${topic}`);
-      const res = await fetch(
-        `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${topic}&type=playlist&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&maxResults=12`
-      );
-      const data = await res.json();
-      dispatch(setPopularPlaylist(data.items));
-      // setPlaylists(data.items);
-      // console.log(data.items);
+    async function load() {
+      const max = "12";
+      const result = await fetchPlaylist({ max, topic });
+      dispatch(setPopularPlaylist(result));
     }
-    playlist();
+    load();
   }, [topic, dispatch]);
 
   useEffect(() => {
@@ -82,9 +76,6 @@ const Courses = () => {
             );
 
             const thumbnailData = await ownerThumbnailRes.json();
-            // console.log(
-            //   `thumbnaildata ${thumbnailData.items[0].snippet.thumbnails.high.url}`
-            // );
             newThumbnail[channelId] =
               thumbnailData.items[0]?.snippet.thumbnails.high.url;
           }

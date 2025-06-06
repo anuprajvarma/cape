@@ -4,6 +4,14 @@ import React, { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import Editor from "./Editor";
 import { chatType, discussionType } from "@/types";
+import {
+  chatBotApiCall,
+  easyExplainFuntion,
+  fetchDiscussionData,
+  GPTDataFetchToMongoDB,
+  GPTDataPostToMongoDB,
+  postDiscussionData,
+} from "../utils/apiCalls";
 
 const NotesGpt = ({
   id,
@@ -31,17 +39,8 @@ const NotesGpt = ({
 
   useEffect(() => {
     const discussion = async () => {
-      const res = await fetch("http://localhost:5002/api/discussion/getData", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          playlistId: id,
-          videoId,
-        }),
-        credentials: "include",
-      });
-      const data = await res.json();
-      setDiscussionData(data.discussionData?.discussions);
+      const result = await fetchDiscussionData({ id, videoId });
+      setDiscussionData(result);
       console.log(discussionData);
     };
     if (videoId) {
@@ -51,17 +50,11 @@ const NotesGpt = ({
 
   useEffect(() => {
     const chat = async () => {
-      const res = await fetch("http://localhost:5002/api/chat/getData", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: session.data?.user?.email,
-          playlistId: id,
-        }),
-        credentials: "include",
+      const result = await GPTDataFetchToMongoDB({
+        email: session.data?.user?.email ?? "",
+        playlistId: id,
       });
-      const data = await res.json();
-      setChats(data.chatData?.chats);
+      setChats(result);
     };
 
     chat();
@@ -74,27 +67,10 @@ const NotesGpt = ({
     setMessages((prev) => [...prev, userMsg]);
 
     try {
-      const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_HUGGINGFACE_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          model: "deepseek/deepseek-r1:free",
-          messages: [
-            {
-              role: "user",
-              content: input,
-            },
-          ],
-        }),
-      });
+      const result = await chatBotApiCall({ input });
 
-      const data = await res.json();
-
-      const botResponse = data?.choices?.[0]?.message?.content;
-      const botRole = data?.choices?.[0]?.message?.role;
+      const botResponse = result?.content;
+      const botRole = result?.role;
 
       if (botResponse) {
         const botMessage = {
@@ -105,16 +81,11 @@ const NotesGpt = ({
 
         // ✅ Only send to backend if input and botResponse are present
         if (input.trim() && botResponse.trim()) {
-          await fetch("http://localhost:5002/api/chat", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              email: session.data?.user?.email,
-              playlistId: id,
-              question: input,
-              answer: data.choices[0].message.content,
-            }),
-            credentials: "include",
+          await GPTDataPostToMongoDB({
+            email: session.data?.user?.email ?? "",
+            playlistId: id,
+            question: input,
+            answer: result.content,
           });
         }
       }
@@ -126,43 +97,19 @@ const NotesGpt = ({
   };
 
   const discussionHandler = async () => {
-    await fetch("http://localhost:5002/api/discussion/postData", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        playlistId: id,
-        videoId,
-        content: discussionContent,
-        username: session.data?.user?.name,
-        userImageUrl: session.data?.user?.image,
-      }),
-      credentials: "include",
+    await postDiscussionData({
+      playlistId: id,
+      videoId,
+      content: discussionContent,
+      username: session.data?.user?.name ?? "",
+      userImageUrl: session.data?.user?.image ?? "",
     });
   };
 
   const easyExplainHandler = async () => {
-    console.log("easyExplain");
     try {
-      const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_HUGGINGFACE_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          model: "deepseek/deepseek-r1:free",
-          messages: [
-            {
-              role: "user",
-              content: `explain ${videoTitle} like 5-year-old child`,
-            },
-          ],
-        }),
-      });
-
-      const data = await res.json();
-
-      const botResponse = data?.choices?.[0]?.message?.content;
+      const result = await easyExplainFuntion({ videoTitle });
+      const botResponse = result;
       setEasyExplain(botResponse);
     } catch (error) {
       console.error("Error fetching from OpenRouter or saving to DB:", error);

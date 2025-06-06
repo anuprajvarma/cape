@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../redux/store";
 import { setPopularPlaylist } from "../redux/slices/playlistSlice";
+import { fetchPlaylist } from "../utils/apiCalls";
 
 const PopularCourses = () => {
   const playlists = useSelector((state: RootState) => state.playlist);
@@ -21,14 +22,13 @@ const PopularCourses = () => {
   }, []);
 
   useEffect(() => {
-    async function playlist() {
-      const res = await fetch(
-        `https://www.googleapis.com/youtube/v3/search?part=snippet&q=reactjs&type=playlist&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&maxResults=3`
-      );
-      const data = await res.json();
-      dispatch(setPopularPlaylist(data.items));
+    async function load() {
+      const max = "3";
+      const topic = "reactjs";
+      const result = await fetchPlaylist({ max, topic });
+      dispatch(setPopularPlaylist(result));
     }
-    playlist();
+    load();
   }, [dispatch]);
 
   useEffect(() => {
@@ -64,15 +64,10 @@ const PopularCourses = () => {
           const channelId = item.snippet?.channelId;
 
           if (channelId) {
-            // console.log(`channelid ${channelId}`);
             const ownerThumbnailRes = await fetch(
               `https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}`
             );
-
             const thumbnailData = await ownerThumbnailRes.json();
-            // console.log(
-            //   `thumbnaildata ${thumbnailData.items[0].snippet.thumbnails.high.url}`
-            // );
             newThumbnail[channelId] =
               thumbnailData.items[0]?.snippet.thumbnails.high.url;
           }
