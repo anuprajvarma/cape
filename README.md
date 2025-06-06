@@ -1,6 +1,6 @@
 <p align="center">
   <img src="./client/public/cape.png" width="60" height="60" style="vertical-align: middle;"/>
-  <span style="font-size:48px; font-weight:bold; margin-left: 10px; vertical-align: middle;">Cape</span>
+  <span style="font-size:80px; font-weight:bold; margin-left: 10px; vertical-align: middle;">Cape</span>
 </p>
 
 Cape makes learning from YouTube effortless and distraction-free. Track your progress with daily streaks, take notes using the integrated Notion editor, and get playlist-specific help with a built-in AI chatbot.
