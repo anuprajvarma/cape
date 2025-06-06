@@ -1,8 +1,23 @@
-# Cape
+<p align="center">
+  <img src="./client/public/cape.png" width="60" height="60" style="vertical-align: middle;"/>
+  <span style="font-size:48px; font-weight:bold; margin-left: 10px; vertical-align: middle;">Cape</span>
+</p>
 
 Cape makes learning from YouTube effortless and distraction-free. Track your progress with daily streaks, take notes using the integrated Notion editor, and get playlist-specific help with a built-in AI chatbot.
 
-## Tech
+## Demo
+
+[Video Link](https://player.vimeo.com/video/1091094086?h=2e3d4ca95a)
+
+## Screenshots
+
+![Course Page](./client/public/courses.png)
+
+![Dashborad Page](./client/public/dashboard.png)
+
+![Courses Page](./client/public/courses.png)
+
+## Tech Stack
 
 #### Frontend
 
@@ -16,12 +31,12 @@ Cape makes learning from YouTube effortless and distraction-free. Track your pro
 #### Backend
 
 - [Express.js](https://www.npmjs.com/package/express)
+- [Mongoose](https://mongoosejs.com/)
 - [JavaScript](https://www.javascript.com/)
+
+#### Database
+
 - [MongoDB](https://www.mongodb.com/)
-
-## Demo
-
-[Demo.webm](https://player.vimeo.com/video/1091094086?h=2e3d4ca95a)
 
 # Folder Structure
 
@@ -102,19 +117,44 @@ Cape makes learning from YouTube effortless and distraction-free. Track your pro
 |---README.md
 </code></pre>
 
-## Screenshots
+# Configuration and running the Project
 
-![Course Page](./client/public/courses.png)
+## Clone the project
 
-![Dashborad Page](./client/public/dashboard.png)
+<pre>
+    git clone `https://github.com/anuprajvarma/cape.git`
+    cd client & cd server
+</pre>
 
-![Courses Page](./client/public/courses.png)
+## client
 
-## Configuration and running the Project
+<pre>
+    npm install
 
-### Configuration
+Set Envirement Variable
 
-- Clone the repository`https://github.com/anuprajvarma/cape.git`
-- Inside the .env file write:`REACT_APP_BACKEND_URL = http://localhost:5400`
+    NEXT_PUBLIC_GOOGLE_CLIENT_ID=your_google_client_id
+    NEXT_PUBLIC_GOOGLE_CLIENT_SECRET=your_google_client_secret
+    NEXT_PUBLIC_NEXTAUTH_SECRET=random_strong_string
+    NEXT_PUBLIC_NEXTAUTH_URL=where_your_project_run || http://localhost:3000
+    NEXT_PUBLIC_YOUTUBE_API_KEY=youtube_api_key
+    NEXT_PUBLIC_HUGGINGFACE_API_KEY=deepseek_api_key
 
-### Running the Project
+run project
+
+    npm run dev    
+</pre>
+
+## server
+
+<pre>
+    npm install
+
+Set Envirement Variable
+
+    PORT=set_your_port || 5002
+
+run project
+
+    npm start    
+</pre>
