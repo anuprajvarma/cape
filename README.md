@@ -26,19 +26,80 @@ Cape makes learning from YouTube effortless and distraction-free. Track your pro
 # Folder Structure
 
 <pre><code>
-|--client
+|---client
    |
-   |--app
-      |--api
-      |--bookmark
-      |--components
-      |--course
-      |--dashboard
-      |--home
-      |--redux
-      |--utils
-   |
-|
+   |---app
+      |---api
+         |---auth
+            |---[...nextauth]
+               |---route.ts
+      |---bookmark
+         |---layout.tsx
+         |---page.tsx
+      |---components
+         |---CourseCard.tsx
+         |---Editor.tsx
+         |---EnrolledCard.tsx
+         |---Header.tsx
+         |---NavBar.tsx
+         |---NotesGpt.tsx
+         |---PlaylistVideoCard.tsx
+         |---PopularCourses.tsx
+         |---sessionProvider.tsx
+      |---course
+         |---[id]
+            |---[videoId]
+               |---layout.tsx
+               |---page.tsx
+      |---courses
+         |---layout.tsx
+         |---page.tsx
+      |---dashboard
+         |---layout.tsx
+         |---page.tsx
+      |---home
+         |---page.tsx
+      |---redux
+         |---slices
+            |---chapterHandleSlice.ts
+            |---checkboxSlice.ts
+            |---playlistSlice.ts
+         |---provider.tsx
+         |---store.ts
+      |---utils
+         |---apiCalls.ts
+   |---public
+   |---types
+|---server
+   |---connection
+      |---dbConnections.js
+   |---controller
+      |---auth.js
+      |---bookmarkCourse.js
+      |---chat.js
+      |---discussion.js
+      |---enrolledCourse.js
+      |---notes.js
+   |---middleware
+   |---models
+      |---bookmarkCourse.js
+      |---chat.js
+      |---discussion.js
+      |---enrolledCourse.js
+      |---notes.js
+      |---user.js
+   |---router
+      |---auth.js
+      |---bookmarkCourse.js
+      |---chat.js
+      |---discussion.js
+      |---enrolledCourse.js
+      |---notes.js
+   |---service
+      |---auth.js
+   |---.env
+   |---index.js
+|---README.md
 </code></pre>
 
 ## Screenshots
