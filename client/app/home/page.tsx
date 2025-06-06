@@ -27,17 +27,17 @@ export const Home = () => {
         <div className="w-full flex flex-col justify-between gap-12">
           <div className="w-full h-[18rem] flex flex-col items-center gap-6">
             <div className="font-semibold w-full text-white text-center text-2xl sm:text-4xl md:text-5xl lg:text-6xl">
-              <p>Build websites even faster with</p>
-              <p>components on top of Tailwind CSS</p>
+              <p>Distraction-free YouTube learning with</p>
+              <p>with streaks, notes, and AI help.</p>
             </div>
             <div className="font-medium w-full text-slaty/50 text-center lg:text-xl">
               <p>
-                Start developing with an open-source library of over 600+ UI
-                components, sections, and pages
+                Effortless, distraction-free YouTube learning with daily streak
+                tracking.
               </p>
               <p>
-                built with the utility classes from Tailwind CSS and designed in
-                Figma.
+                make notes with Notion and get playlist-specific help via AI
+                chatbot.
               </p>
             </div>
             <div className="flex gap-8">
