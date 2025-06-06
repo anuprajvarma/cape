@@ -18,24 +18,28 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenMenu, setIsOpenMenu] = useState(false);
 
-  const handleGoogleAuthSubmit = async () => {
-    loginFuntion({
-      name: session.data?.user?.name ?? "",
-      email: session.data?.user?.email ?? "",
-      imageUrl: session.data?.user?.image ?? "",
-    });
-  };
-
   const handleSignout = async () => {
     await signOut();
     await signOutFuntion();
   };
 
   useEffect(() => {
+    const handleGoogleAuthSubmit = async () => {
+      loginFuntion({
+        name: session.data?.user?.name ?? "",
+        email: session.data?.user?.email ?? "",
+        imageUrl: session.data?.user?.image ?? "",
+      });
+    };
     if (session.status === "authenticated") {
       handleGoogleAuthSubmit();
     }
-  }, [session.status]);
+  }, [
+    session.data?.user?.email,
+    session.data?.user?.image,
+    session.data?.user?.name,
+    session.status,
+  ]);
 
   return (
     <div className="w-full p-4 flex justify-center">

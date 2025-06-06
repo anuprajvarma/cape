@@ -63,12 +63,6 @@ const Course = () => {
   const actualId = Array.isArray(id) ? id[0] : id;
 
   useEffect(() => {
-    if (actualId && playlistLengths[actualId]) {
-      const percentage =
-        (100 * completedChapters.length) / Number(playlistLengths[actualId]);
-      setPrecentage(Math.round(percentage));
-    }
-    console.log(precentage);
     const getChapterData = async () => {
       if (typeof id === "string") {
         const result = await fetchChapterData({
@@ -82,6 +76,14 @@ const Course = () => {
     };
     getChapterData();
   }, [session.data?.user, id, checkboxTrack]);
+
+  useEffect(() => {
+    if (actualId && playlistLengths[actualId]) {
+      const percentage =
+        (100 * completedChapters.length) / Number(playlistLengths[actualId]);
+      setPrecentage(Math.round(percentage));
+    }
+  }, [actualId, playlistLengths, completedChapters.length]);
 
   useEffect(() => {
     setHasMounted(true);

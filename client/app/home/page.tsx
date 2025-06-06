@@ -9,7 +9,7 @@ const PopularCourses = dynamic(() => import("../component/PopularCourses"), {
   ssr: false,
 });
 
-export const Home = () => {
+const Home = () => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const handlePlay = () => {
     iframeRef.current?.contentWindow?.postMessage(
@@ -75,3 +75,5 @@ export const Home = () => {
     </div>
   );
 };
+
+export default Home;

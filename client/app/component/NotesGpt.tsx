@@ -47,7 +47,6 @@ const NotesGpt = ({
     const discussion = async () => {
       const result = await fetchDiscussionData({ id, videoId });
       setDiscussionData(result);
-      console.log(discussionData);
     };
     if (videoId) {
       discussion();

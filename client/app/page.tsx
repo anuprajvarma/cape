@@ -1,6 +1,6 @@
 import Header from "./component/Header";
 import NavBar from "./component/NavBar";
-import { Home } from "./home/page";
+import Home from "./home/page";
 
 export default function Page() {
   return (
@@ -11,4 +11,3 @@ export default function Page() {
     </>
   );
 }
- 

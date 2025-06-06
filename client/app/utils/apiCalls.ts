@@ -15,7 +15,7 @@ export async function fetchPlaylist({
     const data = await res.json();
     return data.items;
   } catch (error) {
-    console.error(`Error fetching playlist: ${error}`);
+    console.log(`Error fetching playlist: ${error}`);
     return [];
   }
 }
