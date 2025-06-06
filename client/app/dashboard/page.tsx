@@ -52,7 +52,7 @@ const Dashboard = () => {
   }, [session.data?.user?.email]);
 
   return (
-    <div className="w-full -z-20 py-[2rem] px-4 text-black border-t border-slaty flex justify-center">
+    <div className="w-full -z-20 py-[2rem] px-4 text-black flex justify-center">
       <div className="w-[70rem] flex flex-col gap-12">
         {enrolledCoursePlaylist.map((data, index) => {
           if (!hasMounted) return null;

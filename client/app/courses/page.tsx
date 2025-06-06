@@ -131,7 +131,7 @@ const Courses = () => {
   };
 
   return (
-    <div className="w-full -z-20 py-[2rem] px-4 text-black border-t border-slaty flex justify-center">
+    <div className="w-full -z-20 py-[2rem] px-4 text-black flex justify-center">
       <div className="w-[70rem] flex flex-col gap-12">
         <div className="flex gap-2 items-center justify-center">
           <div className="border border-slaty/30 flex rounded-xl">

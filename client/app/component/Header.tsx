@@ -80,18 +80,22 @@ const Header = () => {
         <div>
           {session.status === "authenticated" ? (
             <div className="relative">
-              <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="w-12 h-12 hidden sm:flex justify-center items-center rounded-full overflow-hidden focus:outline-none border border-slaty/30 transition duration-300 hover:border-slaty/50"
-              >
-                <Image
-                  src={(session.data?.user?.image as string) || "/code.jpg"}
-                  alt="Profile"
-                  width={100}
-                  height={100}
-                  className="w-full h-full object-cover"
-                />
-              </button>
+              <div className="flex justify-center items-center w-14 h-8">
+                <button
+                  onClick={() => setIsOpen(!isOpen)}
+                  className="hidden sm:flex items-center justify-center rounded-full overflow-hidden focus:outline-none"
+                >
+                  <Image
+                    src={(session.data?.user?.image as string) || "/code.jpg"}
+                    alt="Profile"
+                    quality={100}
+                    sizes="80px"
+                    fill
+                    style={{ objectFit: "cover" }}
+                    className="rounded-full border border-slaty/30 transition duration-300 hover:border-slaty/50"
+                  />
+                </button>
+              </div>
               <button onClick={() => setIsOpenMenu(!isOpenMenu)}>
                 <IoMenu className="sm:hidden flex text-2xl" />
               </button>
