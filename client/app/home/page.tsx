@@ -58,11 +58,11 @@ export const Home = () => {
             </div>
           </div>
           <div className="w-full flex items-center pt-2 justify-center">
-            <div className="w-full h-[20rem] sm:w-[40rem] lg:w-[52rem] sm:h-[30rem] rounded-lg flex">
+            <div className="w-full h-[20rem] sm:w-[40rem] lg:w-[50rem] sm:h-[30rem] rounded-lg flex">
               <iframe
                 title="Intro Video"
                 ref={iframeRef}
-                src="https://www.youtube.com/embed/JQbjS0_ZfJ0?enablejsapi=1"
+                src="https://www.youtube.com/embed/deDrrPWWGW0?enablejsapi=1"
                 className="rounded-lg w-full"
                 allow="autoplay; encrypted-media"
                 allowFullScreen
