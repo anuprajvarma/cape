@@ -2,7 +2,7 @@ export interface CourseCardType {
   title: string;
   channelTitle: string;
   thumbnails: string;
-  lenth: string;
+  length: string;
   channelThumb: string;
   id: string;
   description: string;
@@ -24,10 +24,6 @@ export interface PlaylistCardType {
   title: string;
   channelTitle: string;
   thumbnails: string;
-  // lenth: number;
-  // channelThumb: string;
-  // setCheckBoxTrack: React.Dispatch<React.SetStateAction<boolean>>;
-  // checkBoxTrack: boolean;
   isChecked: boolean;
   id: string;
   videoId: string;

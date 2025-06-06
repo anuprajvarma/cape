@@ -1,10 +1,16 @@
+"use client";
+
+import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
-import CourseCard from "./CourseCard";
 import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../redux/store";
 import { setPopularPlaylist } from "../redux/slices/playlistSlice";
 import { fetchPlaylist } from "../utils/apiCalls";
+
+const CourseCard = dynamic(() => import("./CourseCard"), {
+  ssr: false,
+});
 
 const PopularCourses = () => {
   const playlists = useSelector((state: RootState) => state.playlist);
@@ -100,7 +106,7 @@ const PopularCourses = () => {
                 title={data.snippet?.title}
                 channelTitle={data.snippet?.channelTitle}
                 thumbnails={data.snippet?.thumbnails.high.url}
-                lenth={length}
+                length={length}
                 id={id}
                 bookmark={false}
                 description={description}

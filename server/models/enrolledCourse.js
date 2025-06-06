@@ -16,7 +16,7 @@ const enrolledCourseSchema = new mongoose.Schema({
   playlistDescription: {
     type: String,
   },
-  chapterLenth: {
+  chapterLength: {
     required: true,
     type: Number,
   },

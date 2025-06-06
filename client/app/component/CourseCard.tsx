@@ -15,7 +15,7 @@ const CourseCard = ({
   title,
   channelTitle,
   thumbnails,
-  lenth,
+  length,
   channelThumb,
   id,
   bookmark,
@@ -38,7 +38,7 @@ const CourseCard = ({
     title,
     channelTitle,
     thumbnails,
-    lenth,
+    length,
     channelThumb,
     description,
     id,
@@ -51,7 +51,7 @@ const CourseCard = ({
         title,
         channelTitle,
         thumbnails,
-        lenth,
+        length,
         channelThumb,
         id,
         description,
@@ -85,7 +85,7 @@ const CourseCard = ({
     title,
     channelTitle,
     thumbnails,
-    lenth,
+    length,
     channelThumb,
     id,
   }: CourseCardType) => {
@@ -97,7 +97,7 @@ const CourseCard = ({
         title,
         channelTitle,
         thumbnails,
-        lenth,
+        length,
         channelThumb,
         id,
         bookmark: true,
@@ -146,7 +146,7 @@ const CourseCard = ({
                 </div>
                 <p>{channelTitle}</p>
               </div>
-              <p>chapters {lenth}</p>
+              <p>chapters {length}</p>
             </div>
           </div>
         </div>
@@ -157,7 +157,7 @@ const CourseCard = ({
                 title,
                 channelTitle,
                 thumbnails,
-                lenth,
+                length,
                 channelThumb,
                 description,
                 bookmark,
@@ -196,7 +196,7 @@ const CourseCard = ({
                     title,
                     channelTitle,
                     thumbnails,
-                    lenth,
+                    length,
                     channelThumb,
                     description,
                     bookmark,

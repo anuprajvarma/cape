@@ -13,7 +13,7 @@ const bookmarkCourseSchema = new mongoose.Schema({
     required: true,
     type: String,
   },
-  chapterLenth: {
+  chapterLength: {
     required: true,
     type: Number,
   },

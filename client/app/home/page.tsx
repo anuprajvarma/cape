@@ -1,9 +1,13 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import React, { useRef } from "react";
 import { IoPlayCircleOutline } from "react-icons/io5";
-import PopularCourses from "../component/PopularCourses";
 import Link from "next/link";
+
+const PopularCourses = dynamic(() => import("../component/PopularCourses"), {
+  ssr: false,
+});
 
 export const Home = () => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -56,6 +60,7 @@ export const Home = () => {
           <div className="w-full flex items-center pt-2 justify-center">
             <div className="w-full h-[20rem] sm:w-[40rem] lg:w-[52rem] sm:h-[30rem] rounded-lg flex">
               <iframe
+                title="Intro Video"
                 ref={iframeRef}
                 src="https://www.youtube.com/embed/JQbjS0_ZfJ0?enablejsapi=1"
                 className="rounded-lg w-full"

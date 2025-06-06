@@ -1,15 +1,19 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
-import CourseCard from "../component/CourseCard";
 import { useSession } from "next-auth/react";
 import { handleEnrolled } from "../utils/apiCalls";
+
+const CourseCard = dynamic(() => import("../component/CourseCard"), {
+  ssr: false,
+});
 
 interface bookmarkPlaylistType {
   title: string;
   channelTitle: string;
   thumbnail: string;
-  chapterLenth: string;
+  chapterLength: string;
   channelImage: string;
   playlistId: string;
   playlistDescription: string;
@@ -49,7 +53,7 @@ const Bookmark = () => {
                 title={data.title}
                 channelTitle={data.channelTitle}
                 thumbnails={data.thumbnail}
-                lenth={data.chapterLenth}
+                length={data.chapterLength}
                 id={data.playlistId}
                 bookmark={data.bookmark}
                 description={data.playlistDescription}

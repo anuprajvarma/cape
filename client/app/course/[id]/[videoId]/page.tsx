@@ -243,12 +243,10 @@ const Course = () => {
                   title={data.snippet?.title}
                   channelTitle={data.snippet?.channelTitle}
                   thumbnails={data.snippet?.thumbnails.high?.url}
-                  //   lenth={length}
                   id={id}
                   isChecked={isChecked}
                   videoId={videoid}
                   currentvideoId={videoId as string}
-                  //   channelThumb={channelThumb}
                   key={index}
                 />
               );

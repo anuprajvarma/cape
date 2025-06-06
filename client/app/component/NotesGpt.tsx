@@ -1,8 +1,10 @@
+"use client";
+
+import dynamic from "next/dynamic";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
-import Editor from "./Editor";
 import { chatType, discussionType } from "@/types";
 import {
   chatBotApiCall,
@@ -12,6 +14,10 @@ import {
   GPTDataPostToMongoDB,
   postDiscussionData,
 } from "../utils/apiCalls";
+
+const Editor = dynamic(() => import("./Editor"), {
+  ssr: false,
+});
 
 const NotesGpt = ({
   id,

@@ -1,13 +1,17 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import React, { useEffect, useState, useRef } from "react";
 import { GrMicrophone } from "react-icons/gr";
 import { IoSearch } from "react-icons/io5";
-import CourseCard from "../component/CourseCard";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../redux/store";
 import { setPopularPlaylist } from "../redux/slices/playlistSlice";
 import { fetchPlaylist } from "../utils/apiCalls";
+
+const CourseCard = dynamic(() => import("../component/CourseCard"), {
+  ssr: false,
+});
 
 const Courses = () => {
   const playlists = useSelector((state: RootState) => state.playlist);
@@ -171,7 +175,7 @@ const Courses = () => {
                 title={data.snippet?.title}
                 channelTitle={data.snippet?.channelTitle}
                 thumbnails={data.snippet?.thumbnails.high.url}
-                lenth={length}
+                length={length}
                 id={id}
                 bookmark={false}
                 description={description}

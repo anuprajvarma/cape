@@ -17,7 +17,7 @@ interface bookmarkPlaylistType {
   title: string;
   channelTitle: string;
   thumbnail: string;
-  chapterLenth: string;
+  chapterLength: string;
   channelImage: string;
   playlistId: string;
   playlistDescription: string;
@@ -28,7 +28,7 @@ const EnrolledCard = ({
   title,
   channelTitle,
   thumbnail,
-  chapterLenth,
+  chapterLength,
   channelImage,
   playlistId,
   playlistDescription,
@@ -44,7 +44,7 @@ const EnrolledCard = ({
   useEffect(() => {
     if (actualId) {
       const percentage =
-        (100 * completedChapters.length) / Number(chapterLenth);
+        (100 * completedChapters.length) / Number(chapterLength);
       setPrecentage(Math.round(percentage));
     }
     console.log(precentage);
@@ -54,7 +54,7 @@ const EnrolledCard = ({
         playlistId,
       });
       if (result) {
-        console.log(`data ka lenth hai`);
+        console.log(`data ka length hai`);
         setCompletedChapters(result);
       }
     };
@@ -63,7 +63,7 @@ const EnrolledCard = ({
     session.data?.user,
     playlistId,
     actualId,
-    chapterLenth,
+    chapterLength,
     completedChapters.length,
     precentage,
   ]);
@@ -113,7 +113,7 @@ const EnrolledCard = ({
               <p>{channelTitle}</p>
             </div>
             <div className="flex gap-2 items-center justify-center">
-              <p>chapters {chapterLenth}</p>
+              <p>chapters {chapterLength}</p>
             </div>
           </div>
           <div className="flex flex-col gap-2 items-end text-slaty/80">
@@ -122,8 +122,8 @@ const EnrolledCard = ({
               <div className=" flex lg:hidden gap-2 font-medium text-slaty/90">
                 <p className="text-slaty">Completed -</p>
                 <div>
-                  {chapterLenth && (
-                    <p>{`${completedChapters?.length}/${chapterLenth}`}</p>
+                  {chapterLength && (
+                    <p>{`${completedChapters?.length}/${chapterLength}`}</p>
                   )}
                 </div>
               </div>
