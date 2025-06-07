@@ -113,16 +113,19 @@ export default function Editor({
   }, [email, playlistId, editor]);
 
   const saveNote = async () => {
-    await fetch("http://localhost:5002/api/notes/addNote", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email,
-        playlistId,
-        content: editor.document,
-      }),
-      credentials: "include",
-    });
+    await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/notes/addNote`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          playlistId,
+          content: editor.document,
+        }),
+        credentials: "include",
+      }
+    );
   };
 
   return (

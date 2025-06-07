@@ -34,8 +34,9 @@ const Dashboard = () => {
     // console.log("step 1");
     const handleEnrolled = async () => {
       // console.log("step 2");
+      // console.log(process.env.NEXT_PUBLIC_BACKEND_BASE_URL);
       const res = await fetch(
-        "http://localhost:5002/api/enrolledCourse/getData",
+        `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/enrolledCourse/getData`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
