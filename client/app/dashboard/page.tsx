@@ -53,25 +53,31 @@ const Dashboard = () => {
   return (
     <div className="w-full -z-20 py-[2rem] px-4 text-black flex justify-center">
       <div className="w-[70rem] flex flex-col gap-12">
-        {enrolledCoursePlaylist.map((data, index) => {
-          if (!hasMounted) return null;
+        {enrolledCoursePlaylist.length > 0 ? (
+          enrolledCoursePlaylist.map((data, index) => {
+            if (!hasMounted) return null;
 
-          return (
-            <EnrolledCard
-              title={data.title}
-              channelTitle={data.channelTitle}
-              thumbnail={data.thumbnail}
-              chapterLength={data.chapterLength}
-              playlistId={data.playlistId}
-              playlistDescription={data.playlistDescription}
-              channelImage={data.channelImage}
-              firstVideoId={data.firstVideoId}
-              setGetDataCheck={setGetDataCheck}
-              getDataCheck={getDataCheck}
-              key={index}
-            />
-          );
-        })}
+            return (
+              <EnrolledCard
+                title={data.title}
+                channelTitle={data.channelTitle}
+                thumbnail={data.thumbnail}
+                chapterLength={data.chapterLength}
+                playlistId={data.playlistId}
+                playlistDescription={data.playlistDescription}
+                channelImage={data.channelImage}
+                firstVideoId={data.firstVideoId}
+                setGetDataCheck={setGetDataCheck}
+                getDataCheck={getDataCheck}
+                key={index}
+              />
+            );
+          })
+        ) : (
+          <p className="text-xl text-center text-slaty">
+            You did not enrolled any courses
+          </p>
+        )}
       </div>
     </div>
   );

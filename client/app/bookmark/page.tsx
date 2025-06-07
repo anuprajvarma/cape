@@ -46,25 +46,31 @@ const Bookmark = () => {
     <div className="w-full -z-20 py-[2rem] px-4 text-black flex justify-center">
       <div className="w-[70rem] flex flex-col items-center gap-12">
         <div className="flex flex-wrap gap-8 items-center justify-center">
-          {bookmarkCoursePlaylist?.map((data, index) => {
-            if (!hasMounted) return null;
+          {bookmarkCoursePlaylist.length > 0 ? (
+            bookmarkCoursePlaylist?.map((data, index) => {
+              if (!hasMounted) return null;
 
-            return (
-              <CourseCard
-                title={data.title}
-                channelTitle={data.channelTitle}
-                thumbnails={data.thumbnail}
-                length={data.chapterLength}
-                id={data.playlistId}
-                bookmark={data.bookmark}
-                description={data.playlistDescription}
-                channelThumb={data.channelImage}
-                getDataCheck={getDataCheck}
-                setGetDataCheck={setGetDataCheck}
-                key={index}
-              />
-            );
-          })}
+              return (
+                <CourseCard
+                  title={data.title}
+                  channelTitle={data.channelTitle}
+                  thumbnails={data.thumbnail}
+                  length={data.chapterLength}
+                  id={data.playlistId}
+                  bookmark={data.bookmark}
+                  description={data.playlistDescription}
+                  channelThumb={data.channelImage}
+                  getDataCheck={getDataCheck}
+                  setGetDataCheck={setGetDataCheck}
+                  key={index}
+                />
+              );
+            })
+          ) : (
+            <p className="text-xl text-slaty">
+              You did not bookmark any courses
+            </p>
+          )}
         </div>
       </div>
     </div>
