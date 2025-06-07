@@ -95,29 +95,33 @@ const PopularCourses = () => {
       </p>
       <div className="flex flex-col gap-[5rem]">
         <div className="flex flex-wrap gap-16 items-center justify-center">
-          {playlists?.map((data, index) => {
-            const id = data.id?.playlistId;
-            const channelId = data.snippet?.channelId;
-            const description = data.snippet?.description;
-            const length = playlistLengths[id] || "";
-            const channelThumb = channelThumbnail[channelId] || "";
-            if (!hasMounted) return null;
-            return (
-              <CourseCard
-                title={data.snippet?.title}
-                channelTitle={data.snippet?.channelTitle}
-                thumbnails={data.snippet?.thumbnails.high.url}
-                length={length}
-                id={id}
-                bookmark={false}
-                description={description}
-                channelThumb={channelThumb as string}
-                setGetDataCheck={setGetDataCheck}
-                getDataCheck={getDataCheck}
-                key={index}
-              />
-            );
-          })}
+          {playlists.length > 0 ? (
+            playlists?.map((data, index) => {
+              const id = data.id?.playlistId;
+              const channelId = data.snippet?.channelId;
+              const description = data.snippet?.description;
+              const length = playlistLengths[id] || "";
+              const channelThumb = channelThumbnail[channelId] || "";
+              if (!hasMounted) return null;
+              return (
+                <CourseCard
+                  title={data.snippet?.title}
+                  channelTitle={data.snippet?.channelTitle}
+                  thumbnails={data.snippet?.thumbnails.high.url}
+                  length={length}
+                  id={id}
+                  bookmark={false}
+                  description={description}
+                  channelThumb={channelThumb as string}
+                  setGetDataCheck={setGetDataCheck}
+                  getDataCheck={getDataCheck}
+                  key={index}
+                />
+              );
+            })
+          ) : (
+            <p className="text-xl text-slaty">Youtube API limit is exceed</p>
+          )}
         </div>
         <div className="flex justify-center ">
           <Link
