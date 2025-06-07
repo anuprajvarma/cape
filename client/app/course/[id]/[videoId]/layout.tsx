@@ -1,5 +1,6 @@
-// import type { Metadata } from "next";
-import Header from "@/app/component/Header";
+import Header from "../../../component/Header";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function RootLayout({
   children,
@@ -10,6 +11,7 @@ export default function RootLayout({
     <div>
       <Header />
       {children}
+      <ToastContainer position="top-center" autoClose={3000} />
     </div>
   );
 }

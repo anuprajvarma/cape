@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { LuGithub } from "react-icons/lu";
 import { AiOutlineInstagram } from "react-icons/ai";

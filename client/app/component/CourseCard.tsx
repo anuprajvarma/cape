@@ -11,6 +11,7 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { CourseCardType } from "@/types";
 import { playlist } from "../utils/apiCalls";
 import * as Tooltip from "@radix-ui/react-tooltip";
+import { toast } from "react-toastify";
 
 const CourseCard = ({
   title,
@@ -48,7 +49,6 @@ const CourseCard = ({
     getDataCheck,
     setGetDataCheck,
   }: CourseCardType) => {
-    setGetDataCheck(!getDataCheck);
     await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/enrolledCourse`,
       {
@@ -70,9 +70,18 @@ const CourseCard = ({
       }
     )
       .then((res) => res.json())
-      .then((data) =>
-        console.log(`enrolledCourse data ${data.enrolledkCourse}`)
-      );
+      .then((data) => {
+        if (data.isExist) {
+          toast.success("course is already exist", {
+            hideProgressBar: true,
+          });
+        } else {
+          toast.success("course is enrolled", {
+            hideProgressBar: true,
+          });
+        }
+      });
+    setGetDataCheck(!getDataCheck);
   };
 
   const handleDeletBookmarkCourse = async ({ id }: { id: string }) => {
@@ -90,7 +99,11 @@ const CourseCard = ({
       }
     );
     const data = await res.json();
-    console.log(`handleDeletBookmarkCourse ${data.deleteBookmarCourseHandler}`);
+    if (data.deleteBookmarCourseHandler) {
+      toast.success("course is unmark", {
+        hideProgressBar: true,
+      });
+    }
   };
 
   const handleBookmark = async ({
@@ -124,9 +137,17 @@ const CourseCard = ({
       }
     )
       .then((res) => res.json())
-      .then((data) =>
-        console.log(`enrolledCourse data ${data.enrolledkCourse}`)
-      );
+      .then((data) => {
+        if (data.isExist) {
+          toast.success("course is already bookmark", {
+            hideProgressBar: true,
+          });
+        } else {
+          toast.success("course is bookmark", {
+            hideProgressBar: true,
+          });
+        }
+      });
   };
 
   return (

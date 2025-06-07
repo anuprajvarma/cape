@@ -18,6 +18,10 @@ const enrolledCourseHandler = async (req, res) => {
     email,
   });
 
+  if (enrolledkCourse) {
+    res.json({ enrolledkCourse, isExist: true });
+  }
+
   if (!enrolledkCourse) {
     enrolledkCourse = await EnrolledkCourse.create({
       email: email,
@@ -34,8 +38,7 @@ const enrolledCourseHandler = async (req, res) => {
     });
   }
 
-  //   console.log(`enrolledkCourse post ${enrolledkCourse}`);
-  res.json({ enrolledkCourse });
+  res.json({ enrolledkCourse, isExist: false });
 };
 
 const getEnrolledCourseHandler = async (req, res) => {

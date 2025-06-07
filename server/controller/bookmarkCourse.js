@@ -18,6 +18,10 @@ const bookmarCourseHandler = async (req, res) => {
     email,
   });
 
+  if (bookmarkCourse) {
+    res.json({ bookmarkCourse, isExist: true });
+  }
+
   if (!bookmarkCourse) {
     bookmarkCourse = await BookmarkCourse.create({
       email: email,
@@ -32,8 +36,7 @@ const bookmarCourseHandler = async (req, res) => {
     });
   }
 
-  // console.log(`bookmark ${enrolledkCourse}`);
-  res.json({ bookmarkCourse });
+  res.json({ bookmarkCourse, isExist: false });
 };
 
 const getBookmarCourseHandler = async (req, res) => {

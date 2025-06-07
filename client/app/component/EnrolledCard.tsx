@@ -13,6 +13,7 @@ import {
   enrolledCourseDataFetch,
   enrolledCourseDelete,
 } from "../utils/apiCalls";
+import { toast } from "react-toastify";
 
 interface bookmarkPlaylistType {
   title: string;
@@ -81,6 +82,9 @@ const EnrolledCard = ({
     await enrolledCourseDelete({
       email: session.data?.user?.email ?? "",
       playlistId,
+    });
+    toast.success("course is delete", {
+      hideProgressBar: true,
     });
     setGetDataCheck(!getDataCheck);
   };
