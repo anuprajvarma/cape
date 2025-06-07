@@ -149,7 +149,10 @@ run project
 
 Set Envirement Variable
 
-    PORT=set_your_port || 5002
+    PORT=your_port || 5002
+    ORIGIN=your_origin || http://localhost:3000
+    MONGOURI=your_mongodburl
+
 
 run project
 
