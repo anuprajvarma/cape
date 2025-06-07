@@ -8,7 +8,7 @@ Cape makes learning from YouTube effortless and distraction-free. Track your pro
 
 ## Screenshots
 
-![Course Page](./client/public/courses.png)
+![Course Page](./client/public/course-page.png)
 
 ![Dashborad Page](./client/public/dashboard.png)
 
