@@ -10,6 +10,7 @@ import { FaBookmark } from "react-icons/fa";
 import { AiOutlineDelete } from "react-icons/ai";
 import { CourseCardType } from "@/types";
 import { playlist } from "../utils/apiCalls";
+import * as Tooltip from "@radix-ui/react-tooltip";
 
 const CourseCard = ({
   title,
@@ -178,43 +179,103 @@ const CourseCard = ({
             Enroll
           </button>
           <div className="flex gap-2 text-xl text-slaty/80 items-end">
-            <button
-              onClick={() => router.push(`/course/${id}/${firstVideoId}`)}
-            >
-              <IoPlayCircleOutline className="text-2xl hover:text-slaty hover:text-darkRed transition duration-300" />
-            </button>
+            <Tooltip.Provider delayDuration={0}>
+              <Tooltip.Root>
+                <Tooltip.Trigger asChild>
+                  <button
+                    onClick={() => router.push(`/course/${id}/${firstVideoId}`)}
+                  >
+                    <IoPlayCircleOutline className="text-2xl hover:text-slaty hover:text-darkRed transition duration-300" />
+                  </button>
+                </Tooltip.Trigger>
+                <Tooltip.Portal>
+                  <Tooltip.Content
+                    side="top"
+                    className="bg-lightSlaty text-slaty px-3 py-1 text-sm rounded shadow-md z-20"
+                  >
+                    Play
+                    <Tooltip.Arrow className="fill-lightSlaty" />
+                  </Tooltip.Content>
+                </Tooltip.Portal>
+              </Tooltip.Root>
+            </Tooltip.Provider>
             {bookmark ? (
-              <button
-                onClick={() =>
-                  handleDeletBookmarkCourse({
-                    id,
-                  })
-                }
-              >
-                <AiOutlineDelete className="text-2xl hover:text-slaty transition duration-300" />
-              </button>
+              <Tooltip.Provider delayDuration={0}>
+                <Tooltip.Root>
+                  <Tooltip.Trigger asChild>
+                    <button
+                      onClick={() =>
+                        handleDeletBookmarkCourse({
+                          id,
+                        })
+                      }
+                    >
+                      <AiOutlineDelete className="text-2xl hover:text-slaty transition duration-300" />
+                    </button>
+                  </Tooltip.Trigger>
+                  <Tooltip.Portal>
+                    <Tooltip.Content
+                      side="top"
+                      className="bg-lightSlaty text-slaty px-3 py-1 text-sm rounded shadow-md z-20"
+                    >
+                      Delete
+                      <Tooltip.Arrow className="fill-lightSlaty" />
+                    </Tooltip.Content>
+                  </Tooltip.Portal>
+                </Tooltip.Root>
+              </Tooltip.Provider>
             ) : (
               <></>
             )}
             {bookmark ? (
-              <FaBookmark className="text-2xl hover:text-slaty cursor-pointer" />
+              <Tooltip.Provider delayDuration={0}>
+                <Tooltip.Root>
+                  <Tooltip.Trigger asChild>
+                    <FaBookmark className="text-2xl hover:text-slaty cursor-pointer" />
+                  </Tooltip.Trigger>
+                  <Tooltip.Portal>
+                    <Tooltip.Content
+                      side="top"
+                      className="bg-lightSlaty text-slaty px-3 py-1 text-sm rounded shadow-md z-20"
+                    >
+                      Unmark
+                      <Tooltip.Arrow className="fill-lightSlaty" />
+                    </Tooltip.Content>
+                  </Tooltip.Portal>
+                </Tooltip.Root>
+              </Tooltip.Provider>
             ) : (
-              <button
-                onClick={() =>
-                  handleBookmark({
-                    title,
-                    channelTitle,
-                    thumbnails,
-                    length,
-                    channelThumb,
-                    description,
-                    bookmark,
-                    id,
-                  })
-                }
-              >
-                <IoBookmarkOutline className="text-2xl hover:text-slaty hover:text-darkRed" />
-              </button>
+              <Tooltip.Provider delayDuration={0}>
+                <Tooltip.Root>
+                  <Tooltip.Trigger asChild>
+                    <button
+                      onClick={() =>
+                        handleBookmark({
+                          title,
+                          channelTitle,
+                          thumbnails,
+                          length,
+                          channelThumb,
+                          description,
+                          bookmark,
+                          id,
+                        })
+                      }
+                    >
+                      <IoBookmarkOutline className="text-2xl hover:text-slaty hover:text-darkRed" />
+                    </button>
+                  </Tooltip.Trigger>
+                  <Tooltip.Portal>
+                    <Tooltip.Content
+                      side="top"
+                      className="bg-lightSlaty text-slaty px-3 py-1 text-sm rounded shadow-md z-20"
+                    >
+                      Bookmark
+                      <Tooltip.Arrow className="fill-lightSlaty" />
+                    </Tooltip.Content>
+                  </Tooltip.Portal>
+                </Tooltip.Root>
+              </Tooltip.Provider>
             )}
           </div>
         </div>

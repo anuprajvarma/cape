@@ -8,6 +8,7 @@ import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
+import * as Tooltip from "@radix-ui/react-tooltip";
 import {
   enrolledCourseDataFetch,
   enrolledCourseDelete,
@@ -133,18 +134,50 @@ const EnrolledCard = ({
                 </div>
               </div>
               <div className="flex gap-2">
-                <button
-                  onClick={() =>
-                    router.push(`/course/${playlistId}/${firstVideoId}`)
-                  }
-                >
-                  <IoPlayCircleOutline className="text-2xl hover:text-slaty transition duration-300 w-6 h-6" />
-                </button>
-                <button
-                  onClick={() => handleDeletEnrolledCourse({ playlistId })}
-                >
-                  <AiOutlineDelete className="text-2xl hover:text-slaty transition duration-300 w-6 h-6" />
-                </button>
+                <Tooltip.Provider delayDuration={0}>
+                  <Tooltip.Root>
+                    <Tooltip.Trigger asChild>
+                      <button
+                        onClick={() =>
+                          router.push(`/course/${playlistId}/${firstVideoId}`)
+                        }
+                      >
+                        <IoPlayCircleOutline className="text-2xl hover:text-slaty transition duration-300 w-6 h-6" />
+                      </button>
+                    </Tooltip.Trigger>
+                    <Tooltip.Portal>
+                      <Tooltip.Content
+                        side="top"
+                        className="bg-lightSlaty text-slaty px-3 py-1 text-sm rounded shadow-md z-20"
+                      >
+                        Play
+                        <Tooltip.Arrow className="fill-lightSlaty" />
+                      </Tooltip.Content>
+                    </Tooltip.Portal>
+                  </Tooltip.Root>
+                </Tooltip.Provider>
+                <Tooltip.Provider delayDuration={0}>
+                  <Tooltip.Root>
+                    <Tooltip.Trigger asChild>
+                      <button
+                        onClick={() =>
+                          handleDeletEnrolledCourse({ playlistId })
+                        }
+                      >
+                        <AiOutlineDelete className="text-2xl hover:text-slaty transition duration-300 w-6 h-6" />
+                      </button>
+                    </Tooltip.Trigger>
+                    <Tooltip.Portal>
+                      <Tooltip.Content
+                        side="top"
+                        className="bg-lightSlaty text-slaty px-3 py-1 text-sm rounded shadow-md z-20"
+                      >
+                        Delete
+                        <Tooltip.Arrow className="fill-lightSlaty" />
+                      </Tooltip.Content>
+                    </Tooltip.Portal>
+                  </Tooltip.Root>
+                </Tooltip.Provider>
               </div>
             </div>
           </div>

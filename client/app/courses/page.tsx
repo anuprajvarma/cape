@@ -6,6 +6,7 @@ import { GrMicrophone } from "react-icons/gr";
 import { IoSearch } from "react-icons/io5";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../redux/store";
+import * as Tooltip from "@radix-ui/react-tooltip";
 import { setPopularPlaylist } from "../redux/slices/playlistSlice";
 import { fetchPlaylist } from "../utils/apiCalls";
 
@@ -155,12 +156,27 @@ const Courses = () => {
               <IoSearch className="text-xl text-slaty/50" />
             </button>
           </div>
-          <button
-            onClick={handleVoiceSearch}
-            className="rounded-full p-2 items-center bg-lightSlaty border border-slaty/30 hover:bg-slaty/30 transition duration-300"
-          >
-            <GrMicrophone className="text-xl text-slaty/50 hover:text-darkRed transition duration-300" />
-          </button>
+          <Tooltip.Provider delayDuration={0}>
+            <Tooltip.Root>
+              <Tooltip.Trigger asChild>
+                <button
+                  onClick={handleVoiceSearch}
+                  className="rounded-full p-2 items-center bg-lightSlaty border border-slaty/30 hover:bg-slaty/30"
+                >
+                  <GrMicrophone className="text-xl text-slaty/50" />
+                </button>
+              </Tooltip.Trigger>
+              <Tooltip.Portal>
+                <Tooltip.Content
+                  side="top"
+                  className="bg-lightSlaty text-slaty px-3 py-2 text-sm rounded shadow-md z-20"
+                >
+                  Search with your voice
+                  <Tooltip.Arrow className="fill-lightSlaty" />
+                </Tooltip.Content>
+              </Tooltip.Portal>
+            </Tooltip.Root>
+          </Tooltip.Provider>
         </div>
         <div className="flex flex-wrap gap-8 items-center justify-center z-10">
           {playlists?.map((data, index) => {
