@@ -143,7 +143,7 @@ const CourseCard = ({
             hideProgressBar: true,
           });
         } else {
-          toast.success("course is bookmark", {
+          toast.success("course is bookmarke", {
             hideProgressBar: true,
           });
         }

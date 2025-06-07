@@ -1,13 +1,50 @@
+const YOUTUBE_API_KEY = [
+  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_1,
+  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_2,
+  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_3,
+  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_4,
+  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_5,
+  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_6,
+  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_7,
+  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_8,
+  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_9,
+  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_10,
+  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_11,
+  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_12,
+  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_13,
+  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_14,
+  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_15,
+  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_16,
+  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_17,
+  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_18,
+  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_19,
+  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_20,
+  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_21,
+  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_22,
+  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_23,
+];
+
+function getRotatedKey(): string {
+  const now = new Date();
+  const hour = now.getUTCHours(); // use UTC for consistency
+  const index = hour % YOUTUBE_API_KEY.length;
+  return YOUTUBE_API_KEY[index]!;
+}
+
+const apikey = getRotatedKey();
+
 export async function fetchPlaylist({
   max,
   topic,
+  apikey,
 }: {
   max: string;
   topic: string;
+  apikey: string;
 }) {
   try {
     const res = await fetch(
-      `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${topic}&type=playlist&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}&maxResults=${max}`
+      `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${topic}&type=playlist&key=${apikey}&maxResults=${max}`
     );
 
     if (!res.ok) throw new Error("Failed to fetch playlist");
@@ -39,7 +76,7 @@ export const handleEnrolled = async (email: string) => {
 
 export async function playlist(id: string) {
   const res = await fetch(
-    `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${id}&maxResults=3&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}`
+    `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${id}&maxResults=3&key=${apikey}`
   );
   const data = await res.json();
   return data.items[0].snippet?.resourceId.videoId;
@@ -337,7 +374,7 @@ export const funtionForVideoDetail = async ({
   videoId: string;
 }) => {
   const res = await fetch(
-    `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&id=${videoId}&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}`
+    `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&id=${videoId}&key=${apikey}`
   );
   const data = await res.json();
   return data.items;
@@ -368,7 +405,7 @@ export const fetchChapterData = async ({
 
 export const fetchPlayListVideos = async ({ id }: { id: string }) => {
   const res = await fetch(
-    `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${id}&maxResults=200&key=${process.env.NEXT_PUBLIC_YOUTUBE_API_KEY}`
+    `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${id}&maxResults=200&key=${apikey}`
   );
   const data = await res.json();
   return data.items;
