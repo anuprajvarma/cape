@@ -1,3 +1,5 @@
+import React from "react";
+
 export interface CourseCardType {
   title: string;
   channelTitle: string;
@@ -7,6 +9,8 @@ export interface CourseCardType {
   id: string;
   description: string;
   bookmark: boolean;
+  getDataCheck: boolean;
+  setGetDataCheck: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface chatType {

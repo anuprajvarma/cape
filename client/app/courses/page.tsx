@@ -26,6 +26,7 @@ const Courses = () => {
   const [hasMounted, setHasMounted] = useState(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const recognitionRef = useRef<SpeechRecognition | null>(null);
+  const [getDataCheck, setGetDataCheck] = useState<boolean>(false);
 
   const [topic, setTopic] = useState("reactjs");
 
@@ -196,6 +197,8 @@ const Courses = () => {
                 bookmark={false}
                 description={description}
                 channelThumb={channelThumb}
+                setGetDataCheck={setGetDataCheck}
+                getDataCheck={getDataCheck}
                 key={index}
               />
             );

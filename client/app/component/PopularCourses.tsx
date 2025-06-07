@@ -22,6 +22,7 @@ const PopularCourses = () => {
     Record<string, string>
   >({});
   const [hasMounted, setHasMounted] = useState(false);
+  const [getDataCheck, setGetDataCheck] = useState<boolean>(false);
 
   useEffect(() => {
     setHasMounted(true);
@@ -111,6 +112,8 @@ const PopularCourses = () => {
                 bookmark={false}
                 description={description}
                 channelThumb={channelThumb as string}
+                setGetDataCheck={setGetDataCheck}
+                getDataCheck={getDataCheck}
                 key={index}
               />
             );

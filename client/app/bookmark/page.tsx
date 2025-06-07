@@ -26,6 +26,7 @@ const Bookmark = () => {
     bookmarkPlaylistType[]
   >([]);
   const [hasMounted, setHasMounted] = useState(false);
+  const [getDataCheck, setGetDataCheck] = useState<boolean>(false);
   const session = useSession();
 
   useEffect(() => {
@@ -39,7 +40,7 @@ const Bookmark = () => {
       setBookmarkCoursePlaylist(result);
     };
     load();
-  }, [session.data?.user]);
+  }, [session.data?.user, getDataCheck]);
 
   return (
     <div className="w-full -z-20 py-[2rem] px-4 text-black flex justify-center">
@@ -58,6 +59,8 @@ const Bookmark = () => {
                 bookmark={data.bookmark}
                 description={data.playlistDescription}
                 channelThumb={data.channelImage}
+                getDataCheck={getDataCheck}
+                setGetDataCheck={setGetDataCheck}
                 key={index}
               />
             );

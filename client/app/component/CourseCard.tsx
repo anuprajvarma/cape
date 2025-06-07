@@ -21,6 +21,8 @@ const CourseCard = ({
   id,
   bookmark,
   description,
+  getDataCheck,
+  setGetDataCheck,
 }: CourseCardType) => {
   const router = useRouter();
   const session = useSession();
@@ -43,8 +45,10 @@ const CourseCard = ({
     channelThumb,
     description,
     id,
+    getDataCheck,
+    setGetDataCheck,
   }: CourseCardType) => {
-    // console.log("enrolled");
+    setGetDataCheck(!getDataCheck);
     await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/enrolledCourse`,
       {
@@ -72,6 +76,7 @@ const CourseCard = ({
   };
 
   const handleDeletBookmarkCourse = async ({ id }: { id: string }) => {
+    setGetDataCheck(!getDataCheck);
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/bookmarkCourse/delete`,
       {
@@ -95,8 +100,10 @@ const CourseCard = ({
     length,
     channelThumb,
     id,
+    getDataCheck,
+    setGetDataCheck,
   }: CourseCardType) => {
-    // console.log("bookmark");
+    setGetDataCheck(!getDataCheck);
     await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/bookmarkCourse`,
       {
@@ -172,6 +179,8 @@ const CourseCard = ({
                 description,
                 bookmark,
                 id,
+                getDataCheck,
+                setGetDataCheck,
               })
             }
             className="py-[4px] px-5 rounded-md bg-lightSlaty hover:bg-slaty/20 hover:text-slaty text-slaty/80 transition duration-300"
@@ -259,6 +268,8 @@ const CourseCard = ({
                           description,
                           bookmark,
                           id,
+                          getDataCheck,
+                          setGetDataCheck,
                         })
                       }
                     >
