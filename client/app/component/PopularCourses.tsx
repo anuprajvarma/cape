@@ -166,9 +166,7 @@ const PopularCourses = () => {
               );
             })
           ) : (
-            <p className="text-xl text-slaty">
-              Youtube API limit is exceed {apikey}
-            </p>
+            <p className="text-xl text-slaty">Youtube API limit is exceed</p>
           )}
         </div>
         <div className="flex justify-center ">
