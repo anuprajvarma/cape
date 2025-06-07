@@ -9,6 +9,7 @@ import { RootState, AppDispatch } from "../redux/store";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { setPopularPlaylist } from "../redux/slices/playlistSlice";
 import { fetchPlaylist } from "../utils/apiCalls";
+import LoginModal from "../component/LoginModal";
 
 const CourseCard = dynamic(() => import("../component/CourseCard"), {
   ssr: false,
@@ -216,6 +217,7 @@ const Courses = () => {
             </Tooltip.Root>
           </Tooltip.Provider>
         </div>
+        <LoginModal />
         <div className="flex flex-wrap gap-8 items-center justify-center z-10">
           {playlists.length > 0 ? (
             playlists?.map((data, index) => {

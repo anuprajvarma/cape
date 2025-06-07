@@ -21,6 +21,7 @@ import {
   fetchPlayListVideos,
   funtionForVideoDetail,
 } from "@/app/utils/apiCalls";
+import LoginModal from "@/app/component/LoginModal";
 
 const options = {
   target: "_blank",
@@ -167,86 +168,26 @@ const Course = () => {
     .filter((line) => line.length > 0);
 
   return (
-    <div className="w-full -z-20 py-4 px-1 sm:px-4 flex flex-col gap-2 justify-center text-slaty">
-      <div className="w-full flex justify-between gap-2">
-        <div className="w-[63rem] flex flex-col gap-4">
-          <div className="flex w-full h-[20rem] items-center justify-center sm:h-[38rem]">
-            <iframe
-              src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
-              className="rounded-lg w-full h-full"
-              allowFullScreen
-              allow="autoplay; encrypted-media"
-              title="YouTube video player"
-            />
-          </div>
-          <div className="flex lg:hidden justify-between">
-            <p className="font-semibold text-white line-clamp-1">
-              {videoTitle}
-            </p>
-            <div className="flex gap-2 font-medium text-slaty/80">
-              <p className="text-slaty sm:flex hidden">Progress -</p>
-              <div>
-                {typeof id === "string" && playlistLengths[id] && (
-                  <p>{`${completedChapters?.length}/${playlistLengths[id]}`}</p>
-                )}
-              </div>
+    <>
+      <LoginModal />
+      <div className="w-full -z-20 py-4 px-1 sm:px-4 flex flex-col gap-2 justify-center text-slaty">
+        <div className="w-full flex justify-between gap-2">
+          <div className="w-[63rem] flex flex-col gap-4">
+            <div className="flex w-full h-[20rem] items-center justify-center sm:h-[38rem]">
+              <iframe
+                src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
+                className="rounded-lg w-full h-full"
+                allowFullScreen
+                allow="autoplay; encrypted-media"
+                title="YouTube video player"
+              />
             </div>
-          </div>
-          <Disclosure as="div" className="lg:hidden" defaultOpen={false}>
-            <DisclosureButton className="group flex w-full bg-mediumSlaty p-1 sm:p-2 rounded-lg items-center text-md border border-lightSlaty justify-between">
-              <span>Playlists</span>
-              <ChevronDownIcon className="size-5 fill-slaty group-data-hover:fill-white/50 group-data-open:rotate-180" />
-            </DisclosureButton>
-            <DisclosurePanel className="mt-2 text-sm/5 text-slaty">
-              <div className="py-2 h-[586px] flex flex-col gap-4 rounded-xl overflow-y-auto">
-                {playlists?.map((data, index) => {
-                  const id = data.snippet?.playlistId;
-                  const videoid = data.snippet?.resourceId.videoId;
-                  const isChecked = completedChapters?.includes(videoid);
-                  if (!hasMounted) return null;
-                  return (
-                    <PlalistVideoCard
-                      title={data.snippet?.title}
-                      channelTitle={data.snippet?.channelTitle}
-                      thumbnails={data.snippet?.thumbnails.high?.url}
-                      id={id}
-                      isChecked={isChecked}
-                      videoId={videoid}
-                      currentvideoId={videoId as string}
-                      key={index}
-                    />
-                  );
-                })}
-              </div>
-            </DisclosurePanel>
-          </Disclosure>
-          <Disclosure as="div" className="" defaultOpen={false}>
-            <DisclosureButton className="group flex w-full bg-mediumSlaty p-1 sm:p-2 rounded-lg items-center text-md border border-lightSlaty justify-between">
-              <span>Description</span>
-              <ChevronDownIcon className="size-5 fill-slaty group-data-hover:fill-white/50 group-data-open:rotate-180" />
-            </DisclosureButton>
-            <DisclosurePanel className="mt-2 text-sm/5 text-slaty">
-              {lines.map((line, idx) => (
-                <p key={idx}>
-                  <Linkify options={options}>{line}.</Linkify>
-                </p>
-              ))}
-            </DisclosurePanel>
-          </Disclosure>
-          <NotesGpt
-            id={id as string}
-            videoId={videoId as string}
-            videoTitle={videoTitle}
-          />
-        </div>
-        <div className="w-[25rem] h-[665px] border border-lightSlaty rounded-xl hidden lg:flex flex-col">
-          <div className="border-b border-lightSlaty h-[4rem] bg-mediumSlaty rounded-t-xl p-2 flex justify-between">
-            <div className="flex flex-col text-sm">
+            <div className="flex lg:hidden justify-between">
               <p className="font-semibold text-white line-clamp-1">
                 {videoTitle}
               </p>
-              <div className="flex gap-2 font-medium text-slaty/90">
-                <p className="text-slaty">Progress -</p>
+              <div className="flex gap-2 font-medium text-slaty/80">
+                <p className="text-slaty sm:flex hidden">Progress -</p>
                 <div>
                   {typeof id === "string" && playlistLengths[id] && (
                     <p>{`${completedChapters?.length}/${playlistLengths[id]}`}</p>
@@ -254,44 +195,107 @@ const Course = () => {
                 </div>
               </div>
             </div>
-            <div className="w-[3rem] h-[3rem] rounded-lg flex flex-col gap-3 justify-center items-center">
-              <CircularProgressbar
-                value={precentage}
-                text={`${precentage}%`}
-                styles={buildStyles({
-                  strokeLinecap: "butt",
-                  textSize: "20px",
-                  pathColor: "#1A56DB",
-                  textColor: "#D1D5DB",
-                  trailColor: "#d6d6d6",
-                })}
-                className="h-[6rem]"
-              />
-            </div>
+            <Disclosure as="div" className="lg:hidden" defaultOpen={false}>
+              <DisclosureButton className="group flex w-full bg-mediumSlaty p-1 sm:p-2 rounded-lg items-center text-md border border-lightSlaty justify-between">
+                <span>Playlists</span>
+                <ChevronDownIcon className="size-5 fill-slaty group-data-hover:fill-white/50 group-data-open:rotate-180" />
+              </DisclosureButton>
+              <DisclosurePanel className="mt-2 text-sm/5 text-slaty">
+                <div className="py-2 h-[586px] flex flex-col gap-4 rounded-xl overflow-y-auto">
+                  {playlists?.map((data, index) => {
+                    const id = data.snippet?.playlistId;
+                    const videoid = data.snippet?.resourceId.videoId;
+                    const isChecked = completedChapters?.includes(videoid);
+                    if (!hasMounted) return null;
+                    return (
+                      <PlalistVideoCard
+                        title={data.snippet?.title}
+                        channelTitle={data.snippet?.channelTitle}
+                        thumbnails={data.snippet?.thumbnails.high?.url}
+                        id={id}
+                        isChecked={isChecked}
+                        videoId={videoid}
+                        currentvideoId={videoId as string}
+                        key={index}
+                      />
+                    );
+                  })}
+                </div>
+              </DisclosurePanel>
+            </Disclosure>
+            <Disclosure as="div" className="" defaultOpen={false}>
+              <DisclosureButton className="group flex w-full bg-mediumSlaty p-1 sm:p-2 rounded-lg items-center text-md border border-lightSlaty justify-between">
+                <span>Description</span>
+                <ChevronDownIcon className="size-5 fill-slaty group-data-hover:fill-white/50 group-data-open:rotate-180" />
+              </DisclosureButton>
+              <DisclosurePanel className="mt-2 text-sm/5 text-slaty">
+                {lines.map((line, idx) => (
+                  <p key={idx}>
+                    <Linkify options={options}>{line}.</Linkify>
+                  </p>
+                ))}
+              </DisclosurePanel>
+            </Disclosure>
+            <NotesGpt
+              id={id as string}
+              videoId={videoId as string}
+              videoTitle={videoTitle}
+            />
           </div>
-          <div className="py-2 h-[586px] flex flex-col gap-4 rounded-xl overflow-y-auto">
-            {playlists?.map((data, index) => {
-              const id = data.snippet?.playlistId;
-              const videoid = data.snippet?.resourceId.videoId;
-              const isChecked = completedChapters?.includes(videoid);
-              if (!hasMounted) return null;
-              return (
-                <PlalistVideoCard
-                  title={data.snippet?.title}
-                  channelTitle={data.snippet?.channelTitle}
-                  thumbnails={data.snippet?.thumbnails.high?.url}
-                  id={id}
-                  isChecked={isChecked}
-                  videoId={videoid}
-                  currentvideoId={videoId as string}
-                  key={index}
+          <div className="w-[25rem] h-[665px] border border-lightSlaty rounded-xl hidden lg:flex flex-col">
+            <div className="border-b border-lightSlaty h-[4rem] bg-mediumSlaty rounded-t-xl p-2 flex justify-between">
+              <div className="flex flex-col text-sm">
+                <p className="font-semibold text-white line-clamp-1">
+                  {videoTitle}
+                </p>
+                <div className="flex gap-2 font-medium text-slaty/90">
+                  <p className="text-slaty">Progress -</p>
+                  <div>
+                    {typeof id === "string" && playlistLengths[id] && (
+                      <p>{`${completedChapters?.length}/${playlistLengths[id]}`}</p>
+                    )}
+                  </div>
+                </div>
+              </div>
+              <div className="w-[3rem] h-[3rem] rounded-lg flex flex-col gap-3 justify-center items-center">
+                <CircularProgressbar
+                  value={precentage}
+                  text={`${precentage}%`}
+                  styles={buildStyles({
+                    strokeLinecap: "butt",
+                    textSize: "20px",
+                    pathColor: "#1A56DB",
+                    textColor: "#D1D5DB",
+                    trailColor: "#d6d6d6",
+                  })}
+                  className="h-[6rem]"
                 />
-              );
-            })}
+              </div>
+            </div>
+            <div className="py-2 h-[586px] flex flex-col gap-4 rounded-xl overflow-y-auto">
+              {playlists?.map((data, index) => {
+                const id = data.snippet?.playlistId;
+                const videoid = data.snippet?.resourceId.videoId;
+                const isChecked = completedChapters?.includes(videoid);
+                if (!hasMounted) return null;
+                return (
+                  <PlalistVideoCard
+                    title={data.snippet?.title}
+                    channelTitle={data.snippet?.channelTitle}
+                    thumbnails={data.snippet?.thumbnails.high?.url}
+                    id={id}
+                    isChecked={isChecked}
+                    videoId={videoid}
+                    currentvideoId={videoId as string}
+                    key={index}
+                  />
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

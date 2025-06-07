@@ -6,6 +6,8 @@ import dynamic from "next/dynamic";
 import React, { useRef } from "react";
 import { IoPlayCircleOutline } from "react-icons/io5";
 import Link from "next/link";
+import LoginModal from "./component/LoginModal";
+// import LoginModal from "./component/LoginModal";
 
 const PopularCourses = dynamic(() => import("./component/PopularCourses"), {
   ssr: false,
@@ -27,6 +29,7 @@ export default function Page() {
   return (
     <>
       <Header />
+      <LoginModal />
       <div className="w-full py-[4rem] px-4 text-black flex justify-center">
         <div className="w-[70rem]">
           <div className="w-full flex flex-col justify-between gap-12">
