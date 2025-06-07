@@ -31,7 +31,9 @@ app.use("/api/bookmarkCourse", bookmarkCourseRoute);
 app.use("/api/chat", chat);
 app.use("/api/notes", notes);
 app.use("/api/discussion", discussionRoute);
-app.get("/test", () => console.log("hey from server"));
+app.get("/test", (req, res) => {
+  console.log("hey from server"), res.send("Backend is working 🚀");
+});
 
 app.listen(process.env.PORT, () =>
   console.log(`server is started on ${process.env.PORT}`)
