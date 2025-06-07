@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { IoPlayCircleOutline } from "react-icons/io5";
 import Link from "next/link";
 
@@ -21,6 +21,18 @@ const Home = () => {
       "*"
     );
   };
+
+  useEffect(() => {
+    async function call() {
+      await fetch(`${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/test`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
+    }
+    call();
+  }, []);
+
   return (
     <div className="w-full py-[4rem] px-4 text-black flex justify-center">
       <div className="w-[70rem]">
