@@ -22,6 +22,8 @@ interface bookmarkPlaylistType {
   playlistId: string;
   playlistDescription: string;
   firstVideoId: string;
+  setGetDataCheck: React.Dispatch<React.SetStateAction<boolean>>;
+  getDataCheck: boolean;
 }
 
 const EnrolledCard = ({
@@ -33,6 +35,8 @@ const EnrolledCard = ({
   playlistId,
   playlistDescription,
   firstVideoId,
+  setGetDataCheck,
+  getDataCheck,
 }: bookmarkPlaylistType) => {
   const router = useRouter();
   const session = useSession();
@@ -77,6 +81,7 @@ const EnrolledCard = ({
       email: session.data?.user?.email ?? "",
       playlistId,
     });
+    setGetDataCheck(!getDataCheck);
   };
 
   return (

@@ -1,8 +1,8 @@
 import React from "react";
-import { PiLinkedinLogoBold } from "react-icons/pi";
 import { LuGithub } from "react-icons/lu";
 import { AiOutlineInstagram } from "react-icons/ai";
 import { RiTwitterXLine } from "react-icons/ri";
+import { CiLinkedin } from "react-icons/ci";
 import Link from "next/link";
 
 const NavBar = () => {
@@ -16,16 +16,16 @@ const NavBar = () => {
               href="https://www.linkedin.com/in/anuprajvarma/"
               target="_blank"
             >
-              <PiLinkedinLogoBold className="cursor-pointer hover:text-darkRed transition duration-300 w-5 h-5" />
+              <CiLinkedin className="cursor-pointer w-5 h-5 hover:text-slaty transition duration-300" />
             </Link>
             <Link href="https://github.com/anuprajvarma" target="_blank">
-              <LuGithub className="cursor-pointer hover:text-darkRed transition duration-300 w-5 h-5" />
+              <LuGithub className="cursor-pointer w-5 h-5 hover:text-slaty transition duration-300" />
             </Link>
             <Link href="https://www.instagram.com/_anupraj_01/" target="_blank">
-              <AiOutlineInstagram className="cursor-pointer hover:text-darkRed transition duration-300 w-5 h-5" />
+              <AiOutlineInstagram className="cursor-pointer hover:text-slaty transition duration-300 w-5 h-5" />
             </Link>
             <Link href="https://x.com/Anupraj_varma" target="_blank">
-              <RiTwitterXLine className="cursor-pointer hover:text-darkRed transition duration-300 w-5 h-5" />
+              <RiTwitterXLine className="cursor-pointer hover:text-slaty transition duration-300 w-5 h-5" />
             </Link>
           </div>
         </div>
@@ -34,7 +34,7 @@ const NavBar = () => {
           <div className="flex gap-2 items-center text-slaty/60">
             <p>Cape</p>
             <Link href="https://github.com/anuprajvarma/cape" target="_blank">
-              <LuGithub className="cursor-pointer hover:text-darkRed transition duration-300 w-5 h-5" />
+              <LuGithub className="cursor-pointer hover:text-slaty transition duration-300 w-5 h-5" />
             </Link>
           </div>
         </div>

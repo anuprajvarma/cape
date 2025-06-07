@@ -24,6 +24,7 @@ const Dashboard = () => {
     bookmarkPlaylistType[]
   >([]);
   const [hasMounted, setHasMounted] = useState(false);
+  const [getDataCheck, setGetDataCheck] = useState<boolean>(false);
   const session = useSession();
 
   useEffect(() => {
@@ -31,10 +32,7 @@ const Dashboard = () => {
   }, []);
 
   useEffect(() => {
-    // console.log("step 1");
     const handleEnrolled = async () => {
-      // console.log("step 2");
-      // console.log(process.env.NEXT_PUBLIC_BACKEND_BASE_URL);
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/enrolledCourse/getData`,
         {
@@ -50,7 +48,7 @@ const Dashboard = () => {
       setenrolledCoursePlaylist(data.enrolledkCourse);
     };
     handleEnrolled();
-  }, [session.data?.user?.email]);
+  }, [session.data?.user?.email, getDataCheck]);
 
   return (
     <div className="w-full -z-20 py-[2rem] px-4 text-black flex justify-center">
@@ -68,6 +66,8 @@ const Dashboard = () => {
               playlistDescription={data.playlistDescription}
               channelImage={data.channelImage}
               firstVideoId={data.firstVideoId}
+              setGetDataCheck={setGetDataCheck}
+              getDataCheck={getDataCheck}
               key={index}
             />
           );
