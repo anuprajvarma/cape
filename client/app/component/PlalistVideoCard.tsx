@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../redux/store";
 import { setCheckBox } from "../redux/slices/checkboxSlice";
 import { handleChapter } from "../utils/apiCalls";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import { setIsOpen } from "../redux/slices/LoginModalSlice";
 
 const PlalistVideoCard = ({
@@ -31,15 +31,6 @@ const PlalistVideoCard = ({
 
   const checkBoxHandler = async (e: boolean) => {
     if (session.status === "authenticated") {
-      if (e) {
-        toast.success("chapter is complete", {
-          hideProgressBar: true,
-        });
-      } else {
-        toast.success("chapter is Incomplete", {
-          hideProgressBar: true,
-        });
-      }
       await handleChapter({
         e,
         email: session.data?.user?.email ?? "",

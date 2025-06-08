@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+
 const YOUTUBE_API_KEY = [
   process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_1,
   process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_2,
@@ -338,7 +340,7 @@ export const handleChapter = async ({
   videoId: string;
 }) => {
   if (e === true) {
-    await fetch(
+    const res = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/enrolledCourse/addChapter`,
       {
         method: "POST",
@@ -351,8 +353,18 @@ export const handleChapter = async ({
         credentials: "include",
       }
     );
+    const data = await res.json();
+    if (data.appChapterHandler) {
+      toast.success("chapter is complete", {
+        hideProgressBar: true,
+      });
+    } else {
+      toast.error("you need enrolled in course", {
+        hideProgressBar: true,
+      });
+    }
   } else {
-    await fetch(
+    const res = await fetch(
       `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/enrolledCourse/removeChapter`,
       {
         method: "POST",
@@ -365,6 +377,16 @@ export const handleChapter = async ({
         credentials: "include",
       }
     );
+    const data = await res.json();
+    if (data.removeChapterHandler) {
+      toast.success("chapter is Incomplete", {
+        hideProgressBar: true,
+      });
+    } else {
+      toast.error("you need enrolled in course", {
+        hideProgressBar: true,
+      });
+    }
   }
 };
 
