@@ -21,14 +21,14 @@ export default function LoginModal() {
         __demoMode
       >
         <div className="fixed inset-0 z-10 w-screen overflow-y-auto flex justify-center items-center">
-          <div className="flex flex-col gap-4 items-center justify-center p-4 bg-mediumSlaty  border border-lightSlaty w-[20rem] h-[10rem] rounded-lg">
+          <div className="flex flex-col gap-4 items-center justify-center p-4 bg-mediumSlaty  border border-lightSlaty w-[25rem] h-[15rem] rounded-lg">
             <button
               onClick={() => dispatch(setIsOpen(false))}
               className="w-full flex justify-end"
             >
               <FaXmark />
             </button>
-            <DialogPanel transition className="flex flex-col gap-4">
+            <DialogPanel transition className="flex h-full flex-col gap-4">
               <DialogTitle
                 as="h3"
                 className="flex items-center justify-center text-xl font-semibold text-white"

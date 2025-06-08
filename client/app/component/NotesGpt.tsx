@@ -14,6 +14,9 @@ import {
   GPTDataPostToMongoDB,
   postDiscussionData,
 } from "../utils/apiCalls";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../redux/store";
+import { setIsOpen } from "../redux/slices/LoginModalSlice";
 
 const Editor = dynamic(() => import("./Editor"), {
   ssr: false,
@@ -29,6 +32,7 @@ const NotesGpt = ({
   videoTitle: string;
 }) => {
   const session = useSession();
+  const dispatch = useDispatch<AppDispatch>();
 
   const [discussionData, setDiscussionData] = useState<discussionType[]>([]);
   const [chats, setChats] = useState<chatType[]>([]);
@@ -66,49 +70,56 @@ const NotesGpt = ({
   }, [gptcheck, messages, session.data?.user?.email, id]);
 
   const sendMessage = async () => {
-    if (!input.trim()) return;
+    if (session.status === "authenticated") {
+      if (!input.trim()) return;
 
-    const userMsg = { sender: "user", text: input };
-    setMessages((prev) => [...prev, userMsg]);
+      const userMsg = { sender: "user", text: input };
+      setMessages((prev) => [...prev, userMsg]);
 
-    try {
-      const result = await chatBotApiCall({ input });
+      try {
+        const result = await chatBotApiCall({ input });
 
-      const botResponse = result?.content;
-      const botRole = result?.role;
+        const botResponse = result?.content;
+        const botRole = result?.role;
 
-      if (botResponse) {
-        const botMessage = {
-          sender: botRole,
-          text: botResponse,
-        };
-        setMessages((prev) => [...prev, botMessage]);
+        if (botResponse) {
+          const botMessage = {
+            sender: botRole,
+            text: botResponse,
+          };
+          setMessages((prev) => [...prev, botMessage]);
 
-        // ✅ Only send to backend if input and botResponse are present
-        if (input.trim() && botResponse.trim()) {
-          await GPTDataPostToMongoDB({
-            email: session.data?.user?.email ?? "",
-            playlistId: id,
-            question: input,
-            answer: result.content,
-          });
+          // ✅ Only send to backend if input and botResponse are present
+          if (input.trim() && botResponse.trim()) {
+            await GPTDataPostToMongoDB({
+              email: session.data?.user?.email ?? "",
+              playlistId: id,
+              question: input,
+              answer: result.content,
+            });
+          }
         }
+      } catch (error) {
+        console.error("Error fetching from OpenRouter or saving to DB:", error);
       }
-    } catch (error) {
-      console.error("Error fetching from OpenRouter or saving to DB:", error);
+      setInput("");
+    } else {
+      dispatch(setIsOpen(true));
     }
-
-    setInput(""); // clear input at end
   };
 
   const discussionHandler = async () => {
-    await postDiscussionData({
-      playlistId: id,
-      videoId,
-      content: discussionContent,
-      username: session.data?.user?.name ?? "",
-      userImageUrl: session.data?.user?.image ?? "",
-    });
+    if (session.status === "authenticated") {
+      await postDiscussionData({
+        playlistId: id,
+        videoId,
+        content: discussionContent,
+        username: session.data?.user?.name ?? "",
+        userImageUrl: session.data?.user?.image ?? "",
+      });
+    } else {
+      dispatch(setIsOpen(true));
+    }
   };
 
   const easyExplainHandler = async () => {

@@ -11,6 +11,7 @@ import {
 } from "@blocknote/mantine";
 import { useEffect } from "react";
 import { editorDataFetch } from "../utils/apiCalls";
+import { useSession } from "next-auth/react";
 
 const lightRedTheme = {
   colors: {
@@ -95,6 +96,7 @@ export default function Editor({
   playlistId: string;
 }) {
   const editor = useCreateBlockNote();
+  const session = useSession();
 
   useEffect(() => {
     const fetchNote = async () => {
@@ -130,12 +132,18 @@ export default function Editor({
 
   return (
     <div className="h-[40rem] w-full sm:p-12">
-      <BlockNoteView
-        className="h-full w-full"
-        editor={editor}
-        theme={redTheme}
-        onChange={saveNote}
-      />
+      {session.status === "authenticated" ? (
+        <BlockNoteView
+          className="h-full w-full"
+          editor={editor}
+          theme={redTheme}
+          onChange={saveNote}
+        />
+      ) : (
+        <p className="w-full text-center">
+          After SignIn you can use notes editor
+        </p>
+      )}
     </div>
   );
 }
