@@ -19,7 +19,7 @@ const enrolledCourseHandler = async (req, res) => {
   });
 
   if (enrolledkCourse) {
-    console.log(`find course enrolledcourse ${enrolledkCourse}`);
+    // console.log(`find course enrolledcourse ${enrolledkCourse}`);
     res.json({ enrolledkCourse, isExist: true });
   }
 
@@ -37,7 +37,7 @@ const enrolledCourseHandler = async (req, res) => {
       channelTitle: channelTitle,
       channelImage: channelThumb,
     });
-    console.log(`create course enrolledcourse ${enrolledkCourse}`);
+    // console.log(`create course enrolledcourse ${enrolledkCourse}`);
     res.json({ enrolledkCourse, isExist: false });
   }
 };
