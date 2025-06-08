@@ -77,10 +77,12 @@ const CourseCard = ({
         .then((res) => res.json())
         .then((data) => {
           if (data.isExist) {
+            // console.log(data.isExist);
             toast.success("course is already exist", {
               hideProgressBar: true,
             });
           } else {
+            // console.log(data.isExist);
             toast.success("course is enrolled", {
               hideProgressBar: true,
             });
