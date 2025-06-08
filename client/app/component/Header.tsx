@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { usePathname, useParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { SiSololearn } from "react-icons/si";
 import { FaArrowRight } from "react-icons/fa";
@@ -17,6 +17,30 @@ const Header = () => {
   const { id, videoId } = param;
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenMenu, setIsOpenMenu] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  // Function you want to call on outside click
+  const handleOutsideClick = () => {
+    setIsOpen(false); // or any other logic
+    console.log("Clicked outside!");
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target as Node)
+      ) {
+        handleOutsideClick();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleSignout = async () => {
     await signOut();
@@ -86,6 +110,7 @@ const Header = () => {
             <div className="relative">
               <div className="flex justify-center items-center w-14 h-8">
                 <button
+                  ref={buttonRef}
                   onClick={() => setIsOpen(!isOpen)}
                   className="hidden sm:flex items-center justify-center rounded-full overflow-hidden focus:outline-none"
                 >

@@ -72,7 +72,7 @@ const Courses = () => {
 
   useEffect(() => {
     async function load() {
-      const max = "12";
+      const max = "50";
       if (apikey) {
         const result = await fetchPlaylist({ max, topic, apikey });
         dispatch(setPopularPlaylist(result));
@@ -132,6 +132,32 @@ const Courses = () => {
       fetchLengths();
     }
   }, [playlists]);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Enter") {
+        myFunction();
+      }
+
+      if (event.key === "Escape") {
+        console.log("Escape key pressed!");
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [searchQuery]);
+
+  const myFunction = () => {
+    console.log("funtion run");
+    if (searchQuery === "") {
+      console.log(`hee ${searchQuery}`);
+      setTopic(topic);
+    } else {
+      console.log(`hey ${searchQuery}`);
+      setTopic(searchQuery);
+    }
+  };
 
   const handleAutoSearch = (q: string) => {
     setTopic(q);
