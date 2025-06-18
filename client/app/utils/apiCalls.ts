@@ -268,6 +268,7 @@ export const chatBotApiCall = async ({ input }: { input: string }) => {
     },
     body: JSON.stringify({
       model: "deepseek/deepseek-r1:free",
+      stream: true,
       messages: [
         {
           role: "user",
