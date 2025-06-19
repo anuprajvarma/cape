@@ -8,6 +8,7 @@ import { IoPlayCircleOutline } from "react-icons/io5";
 import { IoBookmarkOutline } from "react-icons/io5";
 import { FaBookmark } from "react-icons/fa";
 import { AiOutlineDelete } from "react-icons/ai";
+import { IoMdShareAlt } from "react-icons/io";
 import { CourseCardType } from "@/types";
 import { playlist } from "../utils/apiCalls";
 import * as Tooltip from "@radix-ui/react-tooltip";
@@ -15,6 +16,8 @@ import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../redux/store";
 import { setIsOpen } from "../redux/slices/LoginModalSlice";
+import { setCourseLinkModal } from "../redux/slices/CourseLinkModal";
+import { setCourseLink } from "../redux/slices/CourseLink";
 
 const CourseCard = ({
   title,
@@ -326,6 +329,33 @@ const CourseCard = ({
                   </Tooltip.Root>
                 </Tooltip.Provider>
               )}
+              <Tooltip.Provider delayDuration={0}>
+                <Tooltip.Root>
+                  <Tooltip.Trigger asChild>
+                    <button
+                      onClick={() => {
+                        dispatch(setCourseLinkModal(true));
+                        dispatch(
+                          setCourseLink(
+                            `https://cape-lyart.vercel.app/course/${id}/${firstVideoId}`
+                          )
+                        );
+                      }}
+                    >
+                      <IoMdShareAlt className="text-2xl hover:text-slaty transition duration-300 w-6 h-6" />
+                    </button>
+                  </Tooltip.Trigger>
+                  <Tooltip.Portal>
+                    <Tooltip.Content
+                      side="top"
+                      className="bg-lightSlaty text-slaty px-3 py-1 text-sm rounded shadow-md z-20"
+                    >
+                      Share
+                      <Tooltip.Arrow className="fill-lightSlaty" />
+                    </Tooltip.Content>
+                  </Tooltip.Portal>
+                </Tooltip.Root>
+              </Tooltip.Provider>
             </div>
           </div>
         </div>

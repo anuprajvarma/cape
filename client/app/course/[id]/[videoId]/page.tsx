@@ -6,6 +6,12 @@ import PlalistVideoCard from "../../../component/PlalistVideoCard";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { playlistType2 } from "@/types";
 import { useSession } from "next-auth/react";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../../redux/store";
+import { setCourseLinkModal } from "../../../redux/slices/CourseLinkModal";
+import { setCourseLink } from "../../../redux/slices/CourseLink";
+import * as Tooltip from "@radix-ui/react-tooltip";
+import { IoMdShareAlt } from "react-icons/io";
 import {
   Disclosure,
   DisclosureButton,
@@ -22,6 +28,7 @@ import {
   funtionForVideoDetail,
 } from "@/app/utils/apiCalls";
 import LoginModal from "@/app/component/LoginModal";
+import CourseLinkModal from "@/app/component/CourseLinkModal";
 
 const options = {
   target: "_blank",
@@ -70,6 +77,7 @@ const Course = () => {
   const { id, videoId } = params;
 
   const checkboxTrack = useSelector((state: RootState) => state.checkbox);
+  const dispatch = useDispatch<AppDispatch>();
 
   const [playlists, setPlaylists] = useState<playlistType2[]>([]);
   const [completedChapters, setCompletedChapters] = useState<string[]>([]);
@@ -169,6 +177,7 @@ const Course = () => {
 
   return (
     <>
+      <CourseLinkModal />
       <LoginModal />
       <div className="w-full -z-20 py-4 px-1 sm:px-4 flex flex-col gap-2 justify-center text-slaty">
         <div className="w-full flex justify-between gap-2">
@@ -223,8 +232,40 @@ const Course = () => {
                 </div>
               </DisclosurePanel>
             </Disclosure>
+            <div className="flex gap-2 justify-between bg-mediumSlaty border-lightSlaty p-1 sm:p-2 rounded-lg">
+              <p className="text-lg font-semibold text-white line-clamp-1">
+                {videoTitle}
+              </p>
+              <Tooltip.Provider delayDuration={0}>
+                <Tooltip.Root>
+                  <Tooltip.Trigger asChild>
+                    <button
+                      onClick={() => {
+                        dispatch(setCourseLinkModal(true));
+                        dispatch(
+                          setCourseLink(
+                            `https://cape-lyart.vercel.app/course/${id}/${videoId}`
+                          )
+                        );
+                      }}
+                    >
+                      <IoMdShareAlt className="text-2xl hover:text-slaty transition duration-300 w-7 h-7" />
+                    </button>
+                  </Tooltip.Trigger>
+                  <Tooltip.Portal>
+                    <Tooltip.Content
+                      side="top"
+                      className="bg-lightSlaty text-slaty px-3 py-1 text-sm rounded shadow-md z-20"
+                    >
+                      Share
+                      <Tooltip.Arrow className="fill-lightSlaty" />
+                    </Tooltip.Content>
+                  </Tooltip.Portal>
+                </Tooltip.Root>
+              </Tooltip.Provider>
+            </div>
             <Disclosure as="div" className="" defaultOpen={false}>
-              <DisclosureButton className="group flex w-full bg-mediumSlaty p-1 sm:p-2 rounded-lg items-center text-md border border-lightSlaty justify-between">
+              <DisclosureButton className="group flex w-full items-center text-md justify-between bg-mediumSlaty border-lightSlaty p-1 sm:p-2 rounded-lg">
                 <span>Description</span>
                 <ChevronDownIcon className="size-5 fill-slaty group-data-hover:fill-white/50 group-data-open:rotate-180" />
               </DisclosureButton>
@@ -243,12 +284,12 @@ const Course = () => {
             />
           </div>
           <div className="w-[25rem] h-[665px] border border-lightSlaty rounded-xl hidden lg:flex flex-col">
-            <div className="border-b border-lightSlaty h-[4rem] bg-mediumSlaty rounded-t-xl p-2 flex justify-between">
+            <div className="border-b border-lightSlaty h-[3rem] bg-mediumSlaty rounded-t-xl p-2 flex justify-between items-center">
               <div className="flex flex-col text-sm">
-                <p className="font-semibold text-white line-clamp-1">
+                {/* <p className="font-semibold text-white line-clamp-1">
                   {videoTitle}
-                </p>
-                <div className="flex gap-2 font-medium text-slaty/90">
+                </p> */}
+                <div className="flex gap-2 font-semibold text-base text-slaty/90">
                   <p className="text-slaty">Progress -</p>
                   <div>
                     {typeof id === "string" && playlistLengths[id] && (
@@ -257,18 +298,18 @@ const Course = () => {
                   </div>
                 </div>
               </div>
-              <div className="w-[3rem] h-[3rem] rounded-lg flex flex-col gap-3 justify-center items-center">
+              <div className="w-[3rem] h-[2.5rem] rounded-lg flex flex-col gap-3 justify-center items-center">
                 <CircularProgressbar
                   value={precentage}
                   text={`${precentage}%`}
                   styles={buildStyles({
                     strokeLinecap: "butt",
-                    textSize: "20px",
+                    textSize: "25px",
                     pathColor: "#1A56DB",
                     textColor: "#D1D5DB",
                     trailColor: "#d6d6d6",
                   })}
-                  className="h-[6rem]"
+                  className="h-[3rem]"
                 />
               </div>
             </div>

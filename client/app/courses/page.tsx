@@ -10,6 +10,7 @@ import * as Tooltip from "@radix-ui/react-tooltip";
 import { setPopularPlaylist } from "../redux/slices/playlistSlice";
 import { fetchPlaylist } from "../utils/apiCalls";
 import LoginModal from "../component/LoginModal";
+import CourseLinkModal from "../component/CourseLinkModal";
 
 const CourseCard = dynamic(() => import("../component/CourseCard"), {
   ssr: false,
@@ -197,84 +198,87 @@ const Courses = () => {
   };
 
   return (
-    <div className="w-full -z-20 py-[2rem] px-4 text-black flex justify-center">
-      <div className="w-[70rem] flex flex-col gap-12">
-        <div className="flex gap-2 items-center justify-center">
-          <div className="border border-slaty/30 flex rounded-xl">
-            <input
-              type="text"
-              value={searchQuery}
-              placeholder="Search your favourite plalist"
-              className="sm:w-[30rem] py-2 px-4 outline-none rounded-l-xl focus:border bg-lightSlaty focus:border-slaty/30 text-slaty placeholder-slaty/50"
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <button
-              onClick={() => {
-                if (searchQuery === "") {
-                  setTopic(topic);
-                } else {
-                  setTopic(searchQuery);
-                }
-              }}
-              className="border-l p-3 h-full bg-lightSlaty rounded-r-xl transition duration-300 border-lightSlaty"
-            >
-              <IoSearch className="text-xl text-slaty/50" />
-            </button>
+    <>
+      <CourseLinkModal />
+      <div className="w-full -z-20 py-[2rem] px-4 text-black flex justify-center">
+        <div className="w-[70rem] flex flex-col gap-12">
+          <div className="flex gap-2 items-center justify-center">
+            <div className="border border-slaty/30 flex rounded-xl">
+              <input
+                type="text"
+                value={searchQuery}
+                placeholder="Search your favourite plalist"
+                className="sm:w-[30rem] py-2 px-4 outline-none rounded-l-xl focus:border bg-lightSlaty focus:border-slaty/30 text-slaty placeholder-slaty/50"
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <button
+                onClick={() => {
+                  if (searchQuery === "") {
+                    setTopic(topic);
+                  } else {
+                    setTopic(searchQuery);
+                  }
+                }}
+                className="border-l p-3 h-full bg-lightSlaty rounded-r-xl transition duration-300 border-lightSlaty"
+              >
+                <IoSearch className="text-xl text-slaty/50" />
+              </button>
+            </div>
+            <Tooltip.Provider delayDuration={0}>
+              <Tooltip.Root>
+                <Tooltip.Trigger asChild>
+                  <button
+                    onClick={handleVoiceSearch}
+                    className="rounded-full p-2 items-center bg-lightSlaty border border-slaty/30 hover:bg-slaty/30"
+                  >
+                    <GrMicrophone className="text-xl text-slaty/50" />
+                  </button>
+                </Tooltip.Trigger>
+                <Tooltip.Portal>
+                  <Tooltip.Content
+                    side="top"
+                    className="bg-lightSlaty text-slaty px-3 py-2 text-sm rounded shadow-md z-20"
+                  >
+                    Search with your voice
+                    <Tooltip.Arrow className="fill-lightSlaty" />
+                  </Tooltip.Content>
+                </Tooltip.Portal>
+              </Tooltip.Root>
+            </Tooltip.Provider>
           </div>
-          <Tooltip.Provider delayDuration={0}>
-            <Tooltip.Root>
-              <Tooltip.Trigger asChild>
-                <button
-                  onClick={handleVoiceSearch}
-                  className="rounded-full p-2 items-center bg-lightSlaty border border-slaty/30 hover:bg-slaty/30"
-                >
-                  <GrMicrophone className="text-xl text-slaty/50" />
-                </button>
-              </Tooltip.Trigger>
-              <Tooltip.Portal>
-                <Tooltip.Content
-                  side="top"
-                  className="bg-lightSlaty text-slaty px-3 py-2 text-sm rounded shadow-md z-20"
-                >
-                  Search with your voice
-                  <Tooltip.Arrow className="fill-lightSlaty" />
-                </Tooltip.Content>
-              </Tooltip.Portal>
-            </Tooltip.Root>
-          </Tooltip.Provider>
-        </div>
-        <LoginModal />
-        <div className="flex flex-wrap gap-8 items-center justify-center z-10">
-          {playlists.length > 0 ? (
-            playlists?.map((data, index) => {
-              const id = data.id?.playlistId;
-              const channelId = data.snippet?.channelId;
-              const description = data.snippet?.description;
-              const length = playlistLengths[id] || "0";
-              const channelThumb = channelThumbnail[channelId] || "";
-              if (!hasMounted) return null;
-              return (
-                <CourseCard
-                  title={data.snippet?.title}
-                  channelTitle={data.snippet?.channelTitle}
-                  thumbnails={data.snippet?.thumbnails.high.url}
-                  length={length}
-                  id={id}
-                  bookmark={false}
-                  description={description}
-                  channelThumb={channelThumb}
-                  setGetDataCheck={setGetDataCheck}
-                  getDataCheck={getDataCheck}
-                  key={index}
-                />
-              );
-            })
-          ) : (
-            <p className="text-xl text-slaty">Youtube API limit is exceed</p>
-          )}
+          <LoginModal />
+          <div className="flex flex-wrap gap-8 items-center justify-center z-10">
+            {playlists.length > 0 ? (
+              playlists?.map((data, index) => {
+                const id = data.id?.playlistId;
+                const channelId = data.snippet?.channelId;
+                const description = data.snippet?.description;
+                const length = playlistLengths[id] || "0";
+                const channelThumb = channelThumbnail[channelId] || "";
+                if (!hasMounted) return null;
+                return (
+                  <CourseCard
+                    title={data.snippet?.title}
+                    channelTitle={data.snippet?.channelTitle}
+                    thumbnails={data.snippet?.thumbnails.high.url}
+                    length={length}
+                    id={id}
+                    bookmark={false}
+                    description={description}
+                    channelThumb={channelThumb}
+                    setGetDataCheck={setGetDataCheck}
+                    getDataCheck={getDataCheck}
+                    key={index}
+                  />
+                );
+              })
+            ) : (
+              <p className="text-xl text-slaty">Youtube API limit is exceed</p>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
