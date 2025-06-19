@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
+import CourseLinkModal from "../component/CourseLinkModal";
 
 const EnrolledCard = dynamic(() => import("../component/EnrolledCard"), {
   ssr: false,
@@ -51,35 +52,38 @@ const Dashboard = () => {
   }, [session.data?.user?.email, getDataCheck]);
 
   return (
-    <div className="w-full -z-20 py-[2rem] px-4 text-black flex justify-center">
-      <div className="w-[70rem] flex flex-col gap-12">
-        {enrolledCoursePlaylist.length > 0 ? (
-          enrolledCoursePlaylist.map((data, index) => {
-            if (!hasMounted) return null;
+    <>
+      <CourseLinkModal />
+      <div className="w-full -z-20 py-[2rem] px-4 text-black flex justify-center">
+        <div className="w-[70rem] flex flex-col gap-12">
+          {enrolledCoursePlaylist.length > 0 ? (
+            enrolledCoursePlaylist.map((data, index) => {
+              if (!hasMounted) return null;
 
-            return (
-              <EnrolledCard
-                title={data.title}
-                channelTitle={data.channelTitle}
-                thumbnail={data.thumbnail}
-                chapterLength={data.chapterLength}
-                playlistId={data.playlistId}
-                playlistDescription={data.playlistDescription}
-                channelImage={data.channelImage}
-                firstVideoId={data.firstVideoId}
-                setGetDataCheck={setGetDataCheck}
-                getDataCheck={getDataCheck}
-                key={index}
-              />
-            );
-          })
-        ) : (
-          <p className="text-xl text-center text-slaty">
-            You did not enrolled any courses
-          </p>
-        )}
+              return (
+                <EnrolledCard
+                  title={data.title}
+                  channelTitle={data.channelTitle}
+                  thumbnail={data.thumbnail}
+                  chapterLength={data.chapterLength}
+                  playlistId={data.playlistId}
+                  playlistDescription={data.playlistDescription}
+                  channelImage={data.channelImage}
+                  firstVideoId={data.firstVideoId}
+                  setGetDataCheck={setGetDataCheck}
+                  getDataCheck={getDataCheck}
+                  key={index}
+                />
+              );
+            })
+          ) : (
+            <p className="text-xl text-center text-slaty">
+              You did not enrolled any courses
+            </p>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

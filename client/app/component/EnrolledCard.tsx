@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { IoPlayCircleOutline } from "react-icons/io5";
+import { IoMdShareAlt } from "react-icons/io";
 import { useRouter } from "next/navigation";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
@@ -14,6 +15,10 @@ import {
   enrolledCourseDelete,
 } from "../utils/apiCalls";
 import { toast } from "react-toastify";
+import { AppDispatch } from "../redux/store";
+import { useDispatch } from "react-redux";
+import { setCourseLinkModal } from "../redux/slices/CourseLinkModal";
+import { setCourseLink } from "../redux/slices/CourseLink";
 
 interface bookmarkPlaylistType {
   title: string;
@@ -44,6 +49,7 @@ const EnrolledCard = ({
   const session = useSession();
   const [completedChapters, setCompletedChapters] = useState<string[]>([]);
   const [precentage, setPrecentage] = useState<number>(0);
+  const dispatch = useDispatch<AppDispatch>();
 
   const actualId = Array.isArray(playlistId) ? playlistId[0] : playlistId;
 
@@ -177,6 +183,33 @@ const EnrolledCard = ({
                         className="bg-lightSlaty text-slaty px-3 py-1 text-sm rounded shadow-md z-20"
                       >
                         Delete
+                        <Tooltip.Arrow className="fill-lightSlaty" />
+                      </Tooltip.Content>
+                    </Tooltip.Portal>
+                  </Tooltip.Root>
+                </Tooltip.Provider>
+                <Tooltip.Provider delayDuration={0}>
+                  <Tooltip.Root>
+                    <Tooltip.Trigger asChild>
+                      <button
+                        onClick={() => {
+                          dispatch(setCourseLinkModal(true));
+                          dispatch(
+                            setCourseLink(
+                              `https://cape-lyart.vercel.app/course/${playlistId}/${firstVideoId}`
+                            )
+                          );
+                        }}
+                      >
+                        <IoMdShareAlt className="text-2xl hover:text-slaty transition duration-300 w-6 h-6" />
+                      </button>
+                    </Tooltip.Trigger>
+                    <Tooltip.Portal>
+                      <Tooltip.Content
+                        side="top"
+                        className="bg-lightSlaty text-slaty px-3 py-1 text-sm rounded shadow-md z-20"
+                      >
+                        Share
                         <Tooltip.Arrow className="fill-lightSlaty" />
                       </Tooltip.Content>
                     </Tooltip.Portal>

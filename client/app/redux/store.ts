@@ -3,6 +3,8 @@ import playlistReducer from "./slices/playlistSlice";
 import checkboxSlice from "./slices/checkboxSlice";
 import chapterHandleSlice from "./slices/chapterHandleSlice";
 import LoginModalSlice from "./slices/LoginModalSlice";
+import CourseLinkModalSlice from "./slices/CourseLinkModal";
+import CourseLink from "./slices/CourseLink";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +12,8 @@ export const store = configureStore({
     checkbox: checkboxSlice,
     chapters: chapterHandleSlice,
     checkModal: LoginModalSlice,
+    CourseLinkModal: CourseLinkModalSlice,
+    CourseLink: CourseLink,
   },
 });
 
