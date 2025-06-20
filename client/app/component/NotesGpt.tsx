@@ -223,24 +223,21 @@ const NotesGpt = ({
             <div className="sm:p-12 w-full h-full overflow-auto prose prose-lg prose-headings:my-0 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-a:text-blue-600 hover:prose-a:underline max-w-none">
               {/* <p className="text-red-600">{easyExplain.length}</p> */}
               {quizz.map((quizz, index) => (
-                <>
-                  <div
-                    key={index}
-                    className="text-white flex gap-2 font-semibold text-xl"
-                  >
+                <div key={index} className="py-2 flex flex-col gap-2">
+                  <div className="text-white flex gap-2 font-semibold text-xl">
                     <p>{quizz.question}</p>
                   </div>
                   <div>
                     {/* {quizz.options.length} */}
-                    <ul className="list-disc pl-6">
+                    <div className="list-disc pl-6">
                       {quizz.options.map((option, idx) => (
-                        <li key={idx} className="text-slaty">
+                        <p key={idx} className="text-slaty">
                           {option}
-                        </li>
+                        </p>
                       ))}
-                    </ul>
+                    </div>
                   </div>
-                </>
+                </div>
               ))}
             </div>
           ) : (
