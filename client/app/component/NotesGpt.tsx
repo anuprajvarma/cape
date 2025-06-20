@@ -220,8 +220,10 @@ const NotesGpt = ({
         )}
         {quizzcheck ? (
           quizz.length > 0 ? (
-            <div className="sm:p-12 w-full h-full overflow-auto prose prose-lg prose-headings:my-0 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-a:text-blue-600 hover:prose-a:underline max-w-none">
-              {/* <p className="text-red-600">{easyExplain.length}</p> */}
+            <div className="sm:px-12 sm:py-2 w-full h-full overflow-auto prose prose-lg prose-headings:my-0 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-a:text-blue-600 hover:prose-a:underline max-w-none">
+              <div className="wfull flex justify-end">
+                <p className="text-white text-center bg-lightSlaty rounded-lg w-[10rem] px-2 py-1">{`Completed - 1/${quizz.length}`}</p>
+              </div>
               {quizz.map((quizz, index) => (
                 <div key={index} className="py-2 flex flex-col gap-2">
                   <div className="text-white flex gap-2 font-semibold text-xl">
