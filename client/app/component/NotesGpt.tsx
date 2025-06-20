@@ -2,17 +2,17 @@
 
 import dynamic from "next/dynamic";
 import { useSession } from "next-auth/react";
-import Image from "next/image";
+// import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
-import { chatType, discussionType } from "@/types";
+import { chatType } from "@/types";
 import {
   chatBotApiCall,
   easyExplainFuntion,
-  fetchDiscussionData,
+  // fetchDiscussionData,
   GPTDataFetchToMongoDB,
   GPTDataPostToMongoDB,
-  postDiscussionData,
+  // postDiscussionData,
 } from "../utils/apiCalls";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../redux/store";
@@ -24,7 +24,7 @@ const Editor = dynamic(() => import("./Editor"), {
 
 const NotesGpt = ({
   id,
-  videoId,
+  // videoId,
   videoTitle,
 }: {
   id: string;
@@ -35,28 +35,28 @@ const NotesGpt = ({
   const dispatch = useDispatch<AppDispatch>();
   // const [fetchData, setFetchData] = useState(true);
 
-  const [discussionData, setDiscussionData] = useState<discussionType[]>([]);
+  // const [discussionData, setDiscussionData] = useState<discussionType[]>([]);
   const [chats, setChats] = useState<chatType[]>([]);
   const [easyExplaincheck, seteasyExplainCheck] = useState<boolean>(false);
-  const [discussion, setDiscussion] = useState<boolean>(false);
+  // const [discussion, setDiscussion] = useState<boolean>(false);
   const [easyExplain, setEasyExplain] = useState("");
   const [notecheck, setNoteCheck] = useState<boolean>(true);
   const [input, setInput] = useState("");
-  const [discussionContent, setDiscussionContent] = useState("");
+  // const [discussionContent, setDiscussionContent] = useState("");
   const [messages, setMessages] = useState<{ sender: string; text: string }[]>(
     []
   );
   const [gptcheck, setgptCheck] = useState<boolean>(false);
 
-  useEffect(() => {
-    const discussion = async () => {
-      const result = await fetchDiscussionData({ id, videoId });
-      setDiscussionData(result);
-    };
-    if (videoId) {
-      discussion();
-    }
-  }, [gptcheck, session.data?.user?.email, id, videoId]);
+  // useEffect(() => {
+  //   const discussion = async () => {
+  //     const result = await fetchDiscussionData({ id, videoId });
+  //     setDiscussionData(result);
+  //   };
+  //   if (videoId) {
+  //     discussion();
+  //   }
+  // }, [gptcheck, session.data?.user?.email, id, videoId]);
 
   useEffect(() => {
     const chat = async () => {
@@ -109,19 +109,19 @@ const NotesGpt = ({
     }
   };
 
-  const discussionHandler = async () => {
-    if (session.status === "authenticated") {
-      await postDiscussionData({
-        playlistId: id,
-        videoId,
-        content: discussionContent,
-        username: session.data?.user?.name ?? "",
-        userImageUrl: session.data?.user?.image ?? "",
-      });
-    } else {
-      dispatch(setIsOpen(true));
-    }
-  };
+  // const discussionHandler = async () => {
+  //   if (session.status === "authenticated") {
+  //     await postDiscussionData({
+  //       playlistId: id,
+  //       videoId,
+  //       content: discussionContent,
+  //       username: session.data?.user?.name ?? "",
+  //       userImageUrl: session.data?.user?.image ?? "",
+  //     });
+  //   } else {
+  //     dispatch(setIsOpen(true));
+  //   }
+  // };
 
   const easyExplainHandler = async () => {
     try {
@@ -137,29 +137,29 @@ const NotesGpt = ({
     setNoteCheck(true);
     setgptCheck(false);
     seteasyExplainCheck(false);
-    setDiscussion(false);
+    // setDiscussion(false);
   };
 
   const handleGPT = () => {
     setNoteCheck(false);
     setgptCheck(true);
     seteasyExplainCheck(false);
-    setDiscussion(false);
+    // setDiscussion(false);
   };
 
   const handleEasyExplain = () => {
     setNoteCheck(false);
     setgptCheck(false);
     seteasyExplainCheck(true);
-    setDiscussion(false);
+    // setDiscussion(false);
   };
 
-  const handleDiscussion = () => {
-    setDiscussion(true);
-    setNoteCheck(false);
-    setgptCheck(false);
-    seteasyExplainCheck(false);
-  };
+  // const handleDiscussion = () => {
+  //   setDiscussion(true);
+  //   setNoteCheck(false);
+  //   setgptCheck(false);
+  //   seteasyExplainCheck(false);
+  // };
   return (
     <div className="border rounded-lg border-lightSlaty">
       {" "}
@@ -180,14 +180,14 @@ const NotesGpt = ({
           onClick={handleEasyExplain}
           className="sm:px-4 sm:py-1 p-1 rounded-md bg-lightSlaty hover:bg-slaty/20 hover:text-slaty text-slaty/80 transition duration-300 border-lightSlaty"
         >
-          Easy Explain
+          Quizzes
         </button>
-        <button
+        {/* <button
           onClick={handleDiscussion}
           className="sm:px-4 sm:py-1 p-1 rounded-md bg-lightSlaty hover:bg-slaty/20 hover:text-slaty text-slaty/80 transition duration-300 border border-lightSlaty sm:flex hidden"
         >
           Discussion
-        </button>
+        </button> */}
       </div>
       <div className="w-full h-[40rem] bg-mediumSlaty">
         {notecheck ? (
@@ -253,7 +253,7 @@ const NotesGpt = ({
         ) : (
           <></>
         )}
-        {discussion ? (
+        {/* {discussion ? (
           <div className="w-full h-full">
             <div className="space-y-2 w-full h-[36rem] p-4 rounded overflow-y-auto">
               {discussionData?.map((msg, i) => (
@@ -299,7 +299,7 @@ const NotesGpt = ({
           </div>
         ) : (
           <></>
-        )}
+        )} */}
       </div>
     </div>
   );
