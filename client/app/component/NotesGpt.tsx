@@ -21,6 +21,12 @@ const Editor = dynamic(() => import("./Editor"), {
   ssr: false,
 });
 
+interface QuizzType {
+  question: string;
+  options: string[];
+  answer: string;
+}
+
 const NotesGpt = ({
   id,
   // videoId,
@@ -35,7 +41,7 @@ const NotesGpt = ({
   // const [fetchData, setFetchData] = useState(true);
   const [chats, setChats] = useState<chatType[]>([]);
   const [easyExplaincheck, seteasyExplainCheck] = useState<boolean>(false);
-  const [easyExplain, setEasyExplain] = useState("");
+  const [easyExplain, setEasyExplain] = useState<QuizzType[]>([]);
   const [notecheck, setNoteCheck] = useState<boolean>(true);
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<{ sender: string; text: string }[]>(
@@ -107,8 +113,7 @@ const NotesGpt = ({
   const easyExplainHandler = async () => {
     try {
       const result = await easyExplainFuntion({ videoTitle });
-      const botResponse = result;
-      setEasyExplain(botResponse);
+      setEasyExplain(result);
     } catch (error) {
       console.error("Error fetching from OpenRouter or saving to DB:", error);
     }
@@ -132,6 +137,7 @@ const NotesGpt = ({
     setNoteCheck(false);
     setgptCheck(false);
     seteasyExplainCheck(true);
+    console.log("easyExplainCheck", easyExplaincheck);
     // setDiscussion(false);
   };
 
@@ -214,20 +220,41 @@ const NotesGpt = ({
           <></>
         )}
         {easyExplaincheck ? (
-          easyExplain ? (
+          easyExplain.length > 0 ? (
             <div className="sm:p-12 w-full h-full overflow-auto prose prose-lg prose-headings:my-0 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-a:text-blue-600 hover:prose-a:underline max-w-none">
-              <ReactMarkdown>{easyExplain}</ReactMarkdown>
+              {/* <p className="text-red-600">{easyExplain.length}</p> */}
+              {easyExplain.map((quizz, index) => (
+                <>
+                  <div
+                    key={index}
+                    className="text-white flex gap-2 font-semibold text-xl"
+                  >
+                    <p>{`${index + 1}.`}</p>
+                    <p>{quizz.question}</p>
+                  </div>
+                  <div>
+                    {/* {quizz.options.length} */}
+                    <ul className="list-disc pl-6">
+                      {quizz.options.map((option, idx) => (
+                        <li key={idx} className="text-slaty">
+                          {option}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </>
+              ))}
             </div>
           ) : (
             <div className="w-full h-full flex flex-col justify-center items-center gap-4">
               <p className="sm:px-12 py-2 rounded-full border border-lightSlaty">
-                want explaination like 5 year old boy 😁
+                Test your knowledge with quizzes based on the video content.
               </p>
               <button
                 className="px-4 py-1 rounded-lg hover:bg-slaty/10 transition duration-200 border border-lightSlaty"
                 onClick={easyExplainHandler}
               >
-                Yes
+                Click me
               </button>
             </div>
           )

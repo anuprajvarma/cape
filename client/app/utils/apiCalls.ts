@@ -26,6 +26,43 @@ const YOUTUBE_API_KEY = [
   process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_23,
 ];
 
+function parseQuizHtml(html: string) {
+  const lines = html
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean);
+  const quiz = [];
+
+  let question = "";
+  let options: string[] = [];
+  let answer = "";
+
+  for (const line of lines) {
+    if (line.startsWith("<h1>")) {
+      if (question) {
+        quiz.push({ question, options, answer });
+        options = [];
+        answer = "";
+      }
+      question = line.replace(/<\/?h1>/g, "").trim();
+    } else if (line.startsWith("<p>")) {
+      options.push(line.replace(/<\/?p>/g, "").trim());
+    } else if (line.startsWith("<h2>")) {
+      answer = line
+        .replace(/<\/?h2>/g, "")
+        .replace(/^Answer:\s*/i, "")
+        .trim();
+    }
+  }
+
+  // Push the last one
+  if (question) {
+    quiz.push({ question, options, answer });
+  }
+
+  return quiz;
+}
+
 function getRotatedKey(): string {
   const now = new Date();
   const hour = now.getUTCHours(); // use UTC for consistency
@@ -249,14 +286,24 @@ export const easyExplainFuntion = async ({
       messages: [
         {
           role: "user",
-          content: `explain ${videoTitle} like 5-year-old child`,
+          content: `Generate 10 multiple-choice quiz questions for beginners learning ${videoTitle}.
+Format the response strictly in HTML:
+- Use <h1> for each question
+- Use <p> for each option (A, B, C, D)
+- Use <h2> to show the correct answer (with both option letter and explanation)
+Do not include any extra text, only HTML.
+`,
         },
       ],
     }),
   });
 
   const data = await res.json();
-  return data?.choices?.[0]?.message?.content;
+  console.log("res", data);
+  console.log("data", data?.choices?.[0]?.message?.content);
+  const quizArray = parseQuizHtml(data?.choices?.[0]?.message?.content);
+  console.log("quiz", quizArray);
+  return quizArray;
 };
 
 export const chatBotApiCall = async ({ input }: { input: string }) => {
