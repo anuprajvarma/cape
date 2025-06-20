@@ -4,7 +4,13 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import PlalistVideoCard from "../../../component/PlalistVideoCard";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-import { playlistType2 } from "@/types";
+import { playlistType2, discussionType } from "@/types";
+import { setIsOpen } from "../../../redux/slices/LoginModalSlice";
+import {
+  fetchDiscussionData,
+  postDiscussionData,
+} from "../../../utils/apiCalls";
+import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../redux/store";
@@ -79,6 +85,9 @@ const Course = () => {
   const checkboxTrack = useSelector((state: RootState) => state.checkbox);
   const dispatch = useDispatch<AppDispatch>();
 
+  const [discussionData, setDiscussionData] = useState<discussionType[]>([]);
+  // const [discussion, setDiscussion] = useState<boolean>(false);
+  const [discussionContent, setDiscussionContent] = useState("");
   const [playlists, setPlaylists] = useState<playlistType2[]>([]);
   const [completedChapters, setCompletedChapters] = useState<string[]>([]);
   const [hasMounted, setHasMounted] = useState(false);
@@ -88,6 +97,18 @@ const Course = () => {
   const [precentage, setPrecentage] = useState<number>(0);
   const [videoTitle, setVideoTitle] = useState("");
   const [videoDescription, setVideoDescription] = useState("");
+
+  useEffect(() => {
+    const discussion = async () => {
+      if (typeof id === "string" && typeof videoId === "string") {
+        const result = await fetchDiscussionData({ id, videoId });
+        setDiscussionData(result);
+      }
+    };
+    if (videoId) {
+      discussion();
+    }
+  }, [session.data?.user?.email, id, videoId]);
 
   useEffect(() => {
     async function playlist() {
@@ -169,6 +190,20 @@ const Course = () => {
       fetchLengths();
     }
   }, [playlists]);
+
+  const discussionHandler = async () => {
+    if (session.status === "authenticated") {
+      await postDiscussionData({
+        playlistId: id as string,
+        videoId: videoId as string,
+        content: discussionContent,
+        username: session.data?.user?.name ?? "",
+        userImageUrl: session.data?.user?.image ?? "",
+      });
+    } else {
+      dispatch(setIsOpen(true));
+    }
+  };
 
   const lines = videoDescription
     .split("\n")
@@ -283,55 +318,109 @@ const Course = () => {
               videoTitle={videoTitle}
             />
           </div>
-          <div className="w-[25rem] h-[665px] border border-lightSlaty rounded-xl hidden lg:flex flex-col">
-            <div className="border-b border-lightSlaty h-[3rem] bg-mediumSlaty rounded-t-xl p-2 flex justify-between items-center">
-              <div className="flex flex-col text-sm">
-                {/* <p className="font-semibold text-white line-clamp-1">
+          <div className="flex flex-col gap-5">
+            <div className="w-[25rem] h-[665px] border border-lightSlaty rounded-xl hidden lg:flex flex-col">
+              <div className="border-b border-lightSlaty h-[3rem] bg-mediumSlaty rounded-t-xl p-2 flex justify-between items-center">
+                <div className="flex flex-col text-sm">
+                  {/* <p className="font-semibold text-white line-clamp-1">
                   {videoTitle}
                 </p> */}
-                <div className="flex gap-2 font-semibold text-base text-slaty/90">
-                  <p className="text-slaty">Progress -</p>
-                  <div>
-                    {typeof id === "string" && playlistLengths[id] && (
-                      <p>{`${completedChapters?.length}/${playlistLengths[id]}`}</p>
-                    )}
+                  <div className="flex gap-2 font-semibold text-base text-slaty/90">
+                    <p className="text-slaty">Progress -</p>
+                    <div>
+                      {typeof id === "string" && playlistLengths[id] && (
+                        <p>{`${completedChapters?.length}/${playlistLengths[id]}`}</p>
+                      )}
+                    </div>
                   </div>
                 </div>
+                <div className="w-[3rem] h-[2.5rem] rounded-lg flex flex-col gap-3 justify-center items-center">
+                  <CircularProgressbar
+                    value={precentage}
+                    text={`${precentage}%`}
+                    styles={buildStyles({
+                      strokeLinecap: "butt",
+                      textSize: "25px",
+                      pathColor: "#1A56DB",
+                      textColor: "#D1D5DB",
+                      trailColor: "#d6d6d6",
+                    })}
+                    className="h-[3rem]"
+                  />
+                </div>
               </div>
-              <div className="w-[3rem] h-[2.5rem] rounded-lg flex flex-col gap-3 justify-center items-center">
-                <CircularProgressbar
-                  value={precentage}
-                  text={`${precentage}%`}
-                  styles={buildStyles({
-                    strokeLinecap: "butt",
-                    textSize: "25px",
-                    pathColor: "#1A56DB",
-                    textColor: "#D1D5DB",
-                    trailColor: "#d6d6d6",
-                  })}
-                  className="h-[3rem]"
-                />
+              <div className="py-2 h-[586px] flex flex-col gap-4 rounded-xl overflow-y-auto">
+                {playlists?.map((data, index) => {
+                  const id = data.snippet?.playlistId;
+                  const videoid = data.snippet?.resourceId.videoId;
+                  const isChecked = completedChapters?.includes(videoid);
+                  if (!hasMounted) return null;
+                  return (
+                    <PlalistVideoCard
+                      title={data.snippet?.title}
+                      channelTitle={data.snippet?.channelTitle}
+                      thumbnails={data.snippet?.thumbnails.high?.url}
+                      id={id}
+                      isChecked={isChecked}
+                      videoId={videoid}
+                      currentvideoId={videoId as string}
+                      key={index}
+                    />
+                  );
+                })}
               </div>
             </div>
-            <div className="py-2 h-[586px] flex flex-col gap-4 rounded-xl overflow-y-auto">
-              {playlists?.map((data, index) => {
-                const id = data.snippet?.playlistId;
-                const videoid = data.snippet?.resourceId.videoId;
-                const isChecked = completedChapters?.includes(videoid);
-                if (!hasMounted) return null;
-                return (
-                  <PlalistVideoCard
-                    title={data.snippet?.title}
-                    channelTitle={data.snippet?.channelTitle}
-                    thumbnails={data.snippet?.thumbnails.high?.url}
-                    id={id}
-                    isChecked={isChecked}
-                    videoId={videoid}
-                    currentvideoId={videoId as string}
-                    key={index}
-                  />
-                );
-              })}
+            <div>
+              {discussionData ? (
+                <div className="w-full h-[47.7rem] border border-lightSlaty rounded-xl ">
+                  <div className="w-full items-center text-center font-semibold py-4 justify-center bg-mediumSlaty rounded-t-xl">
+                    Discussion
+                  </div>
+                  <div className="space-y-2 w-full h-[40rem] p-4 rounded overflow-y-auto">
+                    {discussionData?.map((msg, i) => (
+                      <div
+                        className="flex gap-4"
+                        key={i}
+                        // className={msg.sender === "user" ? "text-right" : "text-left"}
+                      >
+                        <div className="flex w-[3rem] items-start h-[3rem] relative">
+                          <Image
+                            src={msg.image || "/code.jpg"}
+                            alt="code"
+                            quality={100}
+                            sizes="80px"
+                            fill
+                            style={{ objectFit: "cover" }}
+                            className="rounded-full"
+                          />
+                        </div>
+                        <div className="flex flex-col">
+                          <p className="text-white text-xs font-semibold">
+                            {msg.name}
+                          </p>
+                          <p className="text-sm text-slaty">{msg.content}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex gap-2 p-4">
+                    <input
+                      value={discussionContent}
+                      onChange={(e) => setDiscussionContent(e.target.value)}
+                      className="flex-1 p-2 rounded-md bg-lightSlaty focus:outline-none border border-slaty/50 text-slaty placeholder-slaty/50"
+                      placeholder="Type a message..."
+                    />
+                    <button
+                      onClick={discussionHandler}
+                      className="px-2 bg-blue-600 text-white rounded"
+                    >
+                      Send
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div>alkjflsjd</div>
+              )}
             </div>
           </div>
         </div>

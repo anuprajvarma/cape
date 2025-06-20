@@ -2,7 +2,6 @@
 
 import dynamic from "next/dynamic";
 import { useSession } from "next-auth/react";
-// import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { chatType } from "@/types";
@@ -34,15 +33,11 @@ const NotesGpt = ({
   const session = useSession();
   const dispatch = useDispatch<AppDispatch>();
   // const [fetchData, setFetchData] = useState(true);
-
-  // const [discussionData, setDiscussionData] = useState<discussionType[]>([]);
   const [chats, setChats] = useState<chatType[]>([]);
   const [easyExplaincheck, seteasyExplainCheck] = useState<boolean>(false);
-  // const [discussion, setDiscussion] = useState<boolean>(false);
   const [easyExplain, setEasyExplain] = useState("");
   const [notecheck, setNoteCheck] = useState<boolean>(true);
   const [input, setInput] = useState("");
-  // const [discussionContent, setDiscussionContent] = useState("");
   const [messages, setMessages] = useState<{ sender: string; text: string }[]>(
     []
   );
@@ -108,20 +103,6 @@ const NotesGpt = ({
       dispatch(setIsOpen(true));
     }
   };
-
-  // const discussionHandler = async () => {
-  //   if (session.status === "authenticated") {
-  //     await postDiscussionData({
-  //       playlistId: id,
-  //       videoId,
-  //       content: discussionContent,
-  //       username: session.data?.user?.name ?? "",
-  //       userImageUrl: session.data?.user?.image ?? "",
-  //     });
-  //   } else {
-  //     dispatch(setIsOpen(true));
-  //   }
-  // };
 
   const easyExplainHandler = async () => {
     try {
@@ -253,53 +234,6 @@ const NotesGpt = ({
         ) : (
           <></>
         )}
-        {/* {discussion ? (
-          <div className="w-full h-full">
-            <div className="space-y-2 w-full h-[36rem] p-4 rounded overflow-y-auto">
-              {discussionData?.map((msg, i) => (
-                <div
-                  className="flex gap-4"
-                  key={i}
-                  // className={msg.sender === "user" ? "text-right" : "text-left"}
-                >
-                  <div className="flex w-[3rem] items-start h-[3rem] relative">
-                    <Image
-                      src={msg.image || "/code.jpg"}
-                      alt="code"
-                      quality={100}
-                      sizes="80px"
-                      fill
-                      style={{ objectFit: "cover" }}
-                      className="rounded-full"
-                    />
-                  </div>
-                  <div className="flex flex-col">
-                    <p className="text-white text-xs font-semibold">
-                      {msg.name}
-                    </p>
-                    <p className="text-sm text-slaty">{msg.content}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="mt-4 flex gap-2">
-              <input
-                value={discussionContent}
-                onChange={(e) => setDiscussionContent(e.target.value)}
-                className="flex-1 p-2 rounded-md bg-lightSlaty focus:outline-none border border-slaty/50 text-slaty placeholder-slaty/50"
-                placeholder="Type a message..."
-              />
-              <button
-                onClick={discussionHandler}
-                className="px-4 py-2 bg-blue-600 text-white rounded"
-              >
-                Send
-              </button>
-            </div>
-          </div>
-        ) : (
-          <></>
-        )} */}
       </div>
     </div>
   );
