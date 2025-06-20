@@ -40,8 +40,8 @@ const NotesGpt = ({
   const dispatch = useDispatch<AppDispatch>();
   // const [fetchData, setFetchData] = useState(true);
   const [chats, setChats] = useState<chatType[]>([]);
-  const [easyExplaincheck, seteasyExplainCheck] = useState<boolean>(false);
-  const [easyExplain, setEasyExplain] = useState<QuizzType[]>([]);
+  const [quizzcheck, setQuizzCheck] = useState<boolean>(false);
+  const [quizz, setQuizz] = useState<QuizzType[]>([]);
   const [notecheck, setNoteCheck] = useState<boolean>(true);
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<{ sender: string; text: string }[]>(
@@ -110,10 +110,10 @@ const NotesGpt = ({
     }
   };
 
-  const easyExplainHandler = async () => {
+  const quizzHandler = async () => {
     try {
       const result = await easyExplainFuntion({ videoTitle });
-      setEasyExplain(result);
+      setQuizz(result);
     } catch (error) {
       console.error("Error fetching from OpenRouter or saving to DB:", error);
     }
@@ -122,22 +122,21 @@ const NotesGpt = ({
   const handleNotes = () => {
     setNoteCheck(true);
     setgptCheck(false);
-    seteasyExplainCheck(false);
+    setQuizzCheck(false);
     // setDiscussion(false);
   };
 
   const handleGPT = () => {
     setNoteCheck(false);
     setgptCheck(true);
-    seteasyExplainCheck(false);
+    setQuizzCheck(false);
     // setDiscussion(false);
   };
 
   const handleEasyExplain = () => {
     setNoteCheck(false);
     setgptCheck(false);
-    seteasyExplainCheck(true);
-    console.log("easyExplainCheck", easyExplaincheck);
+    setQuizzCheck(true);
     // setDiscussion(false);
   };
 
@@ -219,11 +218,11 @@ const NotesGpt = ({
         ) : (
           <></>
         )}
-        {easyExplaincheck ? (
-          easyExplain.length > 0 ? (
+        {quizzcheck ? (
+          quizz.length > 0 ? (
             <div className="sm:p-12 w-full h-full overflow-auto prose prose-lg prose-headings:my-0 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-a:text-blue-600 hover:prose-a:underline max-w-none">
               {/* <p className="text-red-600">{easyExplain.length}</p> */}
-              {easyExplain.map((quizz, index) => (
+              {quizz.map((quizz, index) => (
                 <>
                   <div
                     key={index}
@@ -251,7 +250,7 @@ const NotesGpt = ({
               </p>
               <button
                 className="px-4 py-1 rounded-lg hover:bg-slaty/10 transition duration-200 border border-lightSlaty"
-                onClick={easyExplainHandler}
+                onClick={quizzHandler}
               >
                 Click me
               </button>
