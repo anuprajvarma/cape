@@ -229,7 +229,6 @@ const NotesGpt = ({
                     key={index}
                     className="text-white flex gap-2 font-semibold text-xl"
                   >
-                    <p>{`${index + 1}.`}</p>
                     <p>{quizz.question}</p>
                   </div>
                   <div>
