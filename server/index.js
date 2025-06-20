@@ -8,6 +8,7 @@ const enrolledCourseRoute = require("./router/enrolledCourse");
 const bookmarkCourseRoute = require("./router/bookmarkCourse");
 const chat = require("./router/chat");
 const notes = require("./router/notes");
+const searchRoute = require("./router/search");
 const discussionRoute = require("./router/discussion");
 const dbConnection = require("./connection/dbConnection");
 
@@ -31,6 +32,7 @@ app.use("/api/bookmarkCourse", bookmarkCourseRoute);
 app.use("/api/chat", chat);
 app.use("/api/notes", notes);
 app.use("/api/discussion", discussionRoute);
+app.use("/api/searchs", searchRoute);
 
 app.listen(process.env.PORT, () =>
   console.log(`server is started on ${process.env.PORT}`)

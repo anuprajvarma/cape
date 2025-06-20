@@ -61,11 +61,31 @@ const Courses = () => {
     Record<string, string>
   >({});
   const [hasMounted, setHasMounted] = useState(false);
+  const [suggestionsArray, setSuggestionsArray] = useState<string[]>([]);
+  const [filteredSuggestions, setFilteredSuggestions] = useState<string[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const [getDataCheck, setGetDataCheck] = useState<boolean>(false);
 
   const [topic, setTopic] = useState("reactjs");
+
+  useEffect(() => {
+    const handleSearchData = async () => {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/searchs/getData`,
+        {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+        }
+      );
+      const data = await res.json();
+      console.log(`data.search ${data.searchData[0].title}`);
+      setSuggestionsArray(data.searchData[0].title);
+    };
+    handleSearchData();
+  }, []);
 
   useEffect(() => {
     setHasMounted(true);
@@ -149,6 +169,26 @@ const Courses = () => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [searchQuery]);
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchQuery(value);
+
+    if (value.length > 0) {
+      const filtered = suggestionsArray.filter((suggestion) =>
+        suggestion.toLowerCase().includes(value.toLowerCase())
+      );
+      setFilteredSuggestions(filtered);
+      setShowSuggestions(true);
+    } else {
+      setShowSuggestions(false);
+    }
+  };
+
+  const handleSelect = (value: string) => {
+    setSearchQuery(value);
+    setShowSuggestions(false);
+  };
+
   const myFunction = () => {
     console.log("funtion run");
     if (searchQuery === "") {
@@ -200,54 +240,86 @@ const Courses = () => {
   return (
     <>
       <CourseLinkModal />
-      <div className="w-full -z-20 py-[2rem] px-4 text-black flex justify-center">
+      <div className="w-full py-[2rem] px-4 text-black flex justify-center">
         <div className="w-[70rem] flex flex-col gap-12">
-          <div className="flex gap-2 items-center justify-center">
-            <div className="border border-slaty/30 flex rounded-xl">
-              <input
-                type="text"
-                value={searchQuery}
-                placeholder="Search your favourite plalist"
-                className="sm:w-[30rem] py-2 px-4 outline-none rounded-l-xl focus:border bg-lightSlaty focus:border-slaty/30 text-slaty placeholder-slaty/50"
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              <button
-                onClick={() => {
-                  if (searchQuery === "") {
-                    setTopic(topic);
-                  } else {
-                    setTopic(searchQuery);
-                  }
-                }}
-                className="border-l p-3 h-full bg-lightSlaty rounded-r-xl transition duration-300 border-lightSlaty"
-              >
-                <IoSearch className="text-xl text-slaty/50" />
-              </button>
+          <div>
+            <div className="flex gap-2 items-center justify-center">
+              <div className="flex rounded-xl h-[3rem]">
+                <div className="flex h-full flex-col">
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    placeholder="Search your favourite plalist"
+                    className="sm:w-[30rem] h-full py-6 px-4 outline-none rounded-l-xl focus:border bg-lightSlaty focus:border-slaty/30 text-slaty placeholder-slaty/50"
+                    onChange={handleChange}
+                  />
+                  {showSuggestions && filteredSuggestions.length > 0 && (
+                    <ul className="flex flex-col z-50 justify-center items-center mt-1 w-full">
+                      <div className="w-[30rem] bg-lightSlaty rounded-xl">
+                        {filteredSuggestions.map((suggestion, index) => (
+                          <li
+                            key={index}
+                            onClick={() => handleSelect(suggestion)}
+                            className="p-2 text-slaty cursor-pointer"
+                          >
+                            {suggestion}
+                          </li>
+                        ))}
+                      </div>
+                    </ul>
+                  )}
+                </div>
+                <button
+                  onClick={async () => {
+                    if (searchQuery === "") {
+                      setTopic(topic);
+                    } else {
+                      setTopic(searchQuery);
+                    }
+                    const res = await fetch(
+                      `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/searchs`,
+                      {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                          title: searchQuery,
+                        }),
+                        credentials: "include",
+                      }
+                    );
+                    const data = await res.json();
+                    console.log(data.search);
+                  }}
+                  className="border-l px-3 py-3 h-full bg-lightSlaty rounded-r-xl transition duration-300 border-lightSlaty"
+                >
+                  <IoSearch className="text-xl text-slaty/50" />
+                </button>
+              </div>
+              <Tooltip.Provider delayDuration={0}>
+                <Tooltip.Root>
+                  <Tooltip.Trigger asChild>
+                    <button
+                      onClick={handleVoiceSearch}
+                      className="rounded-full p-2 h-[2.5rem] items-center bg-lightSlaty border border-slaty/30 hover:bg-slaty/30"
+                    >
+                      <GrMicrophone className="text-xl text-slaty/50" />
+                    </button>
+                  </Tooltip.Trigger>
+                  <Tooltip.Portal>
+                    <Tooltip.Content
+                      side="top"
+                      className="bg-lightSlaty text-slaty px-3 py-2 text-sm rounded shadow-md z-20"
+                    >
+                      Search with your voice
+                      <Tooltip.Arrow className="fill-lightSlaty" />
+                    </Tooltip.Content>
+                  </Tooltip.Portal>
+                </Tooltip.Root>
+              </Tooltip.Provider>
             </div>
-            <Tooltip.Provider delayDuration={0}>
-              <Tooltip.Root>
-                <Tooltip.Trigger asChild>
-                  <button
-                    onClick={handleVoiceSearch}
-                    className="rounded-full p-2 items-center bg-lightSlaty border border-slaty/30 hover:bg-slaty/30"
-                  >
-                    <GrMicrophone className="text-xl text-slaty/50" />
-                  </button>
-                </Tooltip.Trigger>
-                <Tooltip.Portal>
-                  <Tooltip.Content
-                    side="top"
-                    className="bg-lightSlaty text-slaty px-3 py-2 text-sm rounded shadow-md z-20"
-                  >
-                    Search with your voice
-                    <Tooltip.Arrow className="fill-lightSlaty" />
-                  </Tooltip.Content>
-                </Tooltip.Portal>
-              </Tooltip.Root>
-            </Tooltip.Provider>
           </div>
           <LoginModal />
-          <div className="flex flex-wrap gap-8 items-center justify-center z-10">
+          <div className="flex flex-wrap gap-8 items-center justify-center -z-10">
             {playlists.length > 0 ? (
               playlists?.map((data, index) => {
                 const id = data.id?.playlistId;
