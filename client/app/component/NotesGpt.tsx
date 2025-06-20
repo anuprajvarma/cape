@@ -8,10 +8,8 @@ import { chatType } from "@/types";
 import {
   chatBotApiCall,
   easyExplainFuntion,
-  // fetchDiscussionData,
   GPTDataFetchToMongoDB,
   GPTDataPostToMongoDB,
-  // postDiscussionData,
 } from "../utils/apiCalls";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../redux/store";
@@ -29,7 +27,6 @@ interface QuizzType {
 
 const NotesGpt = ({
   id,
-  // videoId,
   videoTitle,
 }: {
   id: string;
@@ -48,16 +45,6 @@ const NotesGpt = ({
     []
   );
   const [gptcheck, setgptCheck] = useState<boolean>(false);
-
-  // useEffect(() => {
-  //   const discussion = async () => {
-  //     const result = await fetchDiscussionData({ id, videoId });
-  //     setDiscussionData(result);
-  //   };
-  //   if (videoId) {
-  //     discussion();
-  //   }
-  // }, [gptcheck, session.data?.user?.email, id, videoId]);
 
   useEffect(() => {
     const chat = async () => {
@@ -123,29 +110,19 @@ const NotesGpt = ({
     setNoteCheck(true);
     setgptCheck(false);
     setQuizzCheck(false);
-    // setDiscussion(false);
   };
 
   const handleGPT = () => {
     setNoteCheck(false);
     setgptCheck(true);
     setQuizzCheck(false);
-    // setDiscussion(false);
   };
 
   const handleEasyExplain = () => {
     setNoteCheck(false);
     setgptCheck(false);
     setQuizzCheck(true);
-    // setDiscussion(false);
   };
-
-  // const handleDiscussion = () => {
-  //   setDiscussion(true);
-  //   setNoteCheck(false);
-  //   setgptCheck(false);
-  //   seteasyExplainCheck(false);
-  // };
   return (
     <div className="border rounded-lg border-lightSlaty">
       {" "}
@@ -168,12 +145,6 @@ const NotesGpt = ({
         >
           Quizzes
         </button>
-        {/* <button
-          onClick={handleDiscussion}
-          className="sm:px-4 sm:py-1 p-1 rounded-md bg-lightSlaty hover:bg-slaty/20 hover:text-slaty text-slaty/80 transition duration-300 border border-lightSlaty sm:flex hidden"
-        >
-          Discussion
-        </button> */}
       </div>
       <div className="w-full h-[40rem] bg-mediumSlaty">
         {notecheck ? (

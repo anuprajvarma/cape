@@ -86,7 +86,6 @@ const Course = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const [discussionData, setDiscussionData] = useState<discussionType[]>([]);
-  // const [discussion, setDiscussion] = useState<boolean>(false);
   const [discussionContent, setDiscussionContent] = useState("");
   const [playlists, setPlaylists] = useState<playlistType2[]>([]);
   const [completedChapters, setCompletedChapters] = useState<string[]>([]);
@@ -226,7 +225,7 @@ const Course = () => {
                 title="YouTube video player"
               />
             </div>
-            <div className="flex lg:hidden justify-between">
+            {/* <div className="flex lg:hidden justify-between">
               <p className="font-semibold text-white line-clamp-1">
                 {videoTitle}
               </p>
@@ -238,6 +237,47 @@ const Course = () => {
                   )}
                 </div>
               </div>
+            </div> */}
+            <div className="flex gap-2 justify-between bg-mediumSlaty border-lightSlaty p-1 sm:p-2 rounded-lg">
+              <p className="text-lg font-semibold text-white line-clamp-1">
+                {videoTitle}
+              </p>
+              <Tooltip.Provider delayDuration={0}>
+                <Tooltip.Root>
+                  <Tooltip.Trigger asChild>
+                    <button
+                      className="flex gap-8 items-center"
+                      onClick={() => {
+                        dispatch(setCourseLinkModal(true));
+                        dispatch(
+                          setCourseLink(
+                            `https://cape-lyart.vercel.app/course/${id}/${videoId}`
+                          )
+                        );
+                      }}
+                    >
+                      <div className="flex lg:hidden gap-2 font-medium text-slaty/80">
+                        <p className="text-slaty sm:flex hidden">Progress -</p>
+                        <div>
+                          {typeof id === "string" && playlistLengths[id] && (
+                            <p>{`${completedChapters?.length}/${playlistLengths[id]}`}</p>
+                          )}
+                        </div>
+                      </div>
+                      <IoMdShareAlt className="text-2xl hover:text-slaty transition duration-300 w-7 h-7" />
+                    </button>
+                  </Tooltip.Trigger>
+                  <Tooltip.Portal>
+                    <Tooltip.Content
+                      side="top"
+                      className="bg-lightSlaty text-slaty px-3 py-1 text-sm rounded shadow-md z-20"
+                    >
+                      Share
+                      <Tooltip.Arrow className="fill-lightSlaty" />
+                    </Tooltip.Content>
+                  </Tooltip.Portal>
+                </Tooltip.Root>
+              </Tooltip.Provider>
             </div>
             <Disclosure as="div" className="lg:hidden" defaultOpen={false}>
               <DisclosureButton className="group flex w-full bg-mediumSlaty p-1 sm:p-2 rounded-lg items-center text-md border border-lightSlaty justify-between">
@@ -267,38 +307,6 @@ const Course = () => {
                 </div>
               </DisclosurePanel>
             </Disclosure>
-            <div className="flex gap-2 justify-between bg-mediumSlaty border-lightSlaty p-1 sm:p-2 rounded-lg">
-              <p className="text-lg font-semibold text-white line-clamp-1">
-                {videoTitle}
-              </p>
-              <Tooltip.Provider delayDuration={0}>
-                <Tooltip.Root>
-                  <Tooltip.Trigger asChild>
-                    <button
-                      onClick={() => {
-                        dispatch(setCourseLinkModal(true));
-                        dispatch(
-                          setCourseLink(
-                            `https://cape-lyart.vercel.app/course/${id}/${videoId}`
-                          )
-                        );
-                      }}
-                    >
-                      <IoMdShareAlt className="text-2xl hover:text-slaty transition duration-300 w-7 h-7" />
-                    </button>
-                  </Tooltip.Trigger>
-                  <Tooltip.Portal>
-                    <Tooltip.Content
-                      side="top"
-                      className="bg-lightSlaty text-slaty px-3 py-1 text-sm rounded shadow-md z-20"
-                    >
-                      Share
-                      <Tooltip.Arrow className="fill-lightSlaty" />
-                    </Tooltip.Content>
-                  </Tooltip.Portal>
-                </Tooltip.Root>
-              </Tooltip.Provider>
-            </div>
             <Disclosure as="div" className="" defaultOpen={false}>
               <DisclosureButton className="group flex w-full items-center text-md justify-between bg-mediumSlaty border-lightSlaty p-1 sm:p-2 rounded-lg">
                 <span>Description</span>
@@ -322,9 +330,6 @@ const Course = () => {
             <div className="w-[25rem] h-[665px] border border-lightSlaty rounded-xl hidden lg:flex flex-col">
               <div className="border-b border-lightSlaty h-[3rem] bg-mediumSlaty rounded-t-xl p-2 flex justify-between items-center">
                 <div className="flex flex-col text-sm">
-                  {/* <p className="font-semibold text-white line-clamp-1">
-                  {videoTitle}
-                </p> */}
                   <div className="flex gap-2 font-semibold text-base text-slaty/90">
                     <p className="text-slaty">Progress -</p>
                     <div>
@@ -372,7 +377,7 @@ const Course = () => {
             </div>
             <div>
               {discussionData ? (
-                <div className="w-full h-[47.7rem] border border-lightSlaty rounded-xl ">
+                <div className="w-full h-[47.7rem] border border-lightSlaty rounded-xl lg:flex lg:flex-col hidden">
                   <div className="w-full items-center text-center font-semibold py-4 justify-center bg-mediumSlaty rounded-t-xl">
                     Discussion
                   </div>
@@ -419,7 +424,7 @@ const Course = () => {
                   </div>
                 </div>
               ) : (
-                <div>alkjflsjd</div>
+                <div>Empty</div>
               )}
             </div>
           </div>
