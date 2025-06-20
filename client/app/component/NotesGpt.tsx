@@ -33,7 +33,7 @@ const NotesGpt = ({
 }) => {
   const session = useSession();
   const dispatch = useDispatch<AppDispatch>();
-  const [fetchData, setFetchData] = useState(true);
+  // const [fetchData, setFetchData] = useState(true);
 
   const [discussionData, setDiscussionData] = useState<discussionType[]>([]);
   const [chats, setChats] = useState<chatType[]>([]);
@@ -80,82 +80,26 @@ const NotesGpt = ({
       try {
         const result = await chatBotApiCall({ input });
 
-        if (!result) throw new Error("No response body");
+        const botResponse = result?.content;
+        const botRole = result?.role;
 
-        if (result) {
-          setFetchData(false);
-        }
+        if (botResponse) {
+          const botMessage = {
+            sender: botRole,
+            text: botResponse,
+          };
+          setMessages((prev) => [...prev, botMessage]);
 
-        const reader = result.getReader();
-        const decoder = new TextDecoder("utf-8");
-
-        setMessages((prev) => [...prev, { sender: "bot", text: "" }]);
-
-        while (true) {
-          const { value, done } = await reader.read();
-          if (done) break;
-
-          const chunk = decoder.decode(value, { stream: true });
-
-          const lines = chunk
-            .split("\n")
-            .filter((line) => line.trim().startsWith("data:"));
-
-          console.log("Stream completed");
-
-          for (const line of lines) {
-            const jsonStr = line.replace(/^data:\s*/, "");
-
-            if (jsonStr === "[DONE]") {
-              setFetchData(false);
-              return;
-            }
-
-            try {
-              let botResponse = "";
-              const parsed = JSON.parse(jsonStr);
-
-              // delta = parsed.result?.content;
-              botResponse = parsed.result?.content;
-
-              console.log("Parsed chunk:", parsed);
-              if (botResponse) {
-                botResponse += botResponse;
-                setMessages((prev) => {
-                  const updated = [...prev];
-                  const lastIndex = updated.length - 1;
-                  updated[lastIndex] = {
-                    ...updated[lastIndex],
-                    text: botResponse,
-                  };
-                  return updated;
-                });
-              }
-              if (input.trim() && botResponse.trim()) {
-                await GPTDataPostToMongoDB({
-                  email: session.data?.user?.email ?? "",
-                  playlistId: id,
-                  question: input,
-                  answer: result.content,
-                });
-              }
-            } catch (err) {
-              console.error("Error parsing chunk:", err);
-            }
+          // ✅ Only send to backend if input and botResponse are present
+          if (input.trim() && botResponse.trim()) {
+            await GPTDataPostToMongoDB({
+              email: session.data?.user?.email ?? "",
+              playlistId: id,
+              question: input,
+              answer: result.content,
+            });
           }
         }
-
-        // const botResponse = result?.content;
-        // const botRole = result?.role;
-
-        // if (botResponse) {
-        //   const botMessage = {
-        //     sender: botRole,
-        //     text: botResponse,
-        //   };
-        //   setMessages((prev) => [...prev, botMessage]);
-
-        // ✅ Only send to backend if input and botResponse are present
       } catch (error) {
         console.error("Error fetching from OpenRouter or saving to DB:", error);
       }
@@ -264,13 +208,9 @@ const NotesGpt = ({
                       {msg.question}
                     </p>
                   </div>
-                  {fetchData ? (
-                    <div className="prose prose-slate prose-lg w-full h-full overflow-auto max-w-none p-2 sm:p-12 prose-headings:my-2 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-ul:my-0 hover:prose-a:underline">
-                      <ReactMarkdown>{msg.answer}</ReactMarkdown>
-                    </div>
-                  ) : (
-                    <p>searching...</p>
-                  )}
+                  <div className="prose prose-slate prose-lg w-full h-full overflow-auto max-w-none p-2 sm:p-12 prose-headings:my-2 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-ul:my-0 hover:prose-a:underline">
+                    <ReactMarkdown>{msg.answer}</ReactMarkdown>
+                  </div>
                 </div>
               ))}
             </div>

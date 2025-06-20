@@ -260,6 +260,7 @@ export const easyExplainFuntion = async ({
 };
 
 export const chatBotApiCall = async ({ input }: { input: string }) => {
+  console.log("input", input);
   const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
     method: "POST",
     headers: {
@@ -268,7 +269,7 @@ export const chatBotApiCall = async ({ input }: { input: string }) => {
     },
     body: JSON.stringify({
       model: "deepseek/deepseek-r1:free",
-      stream: true,
+      stream: false,
       messages: [
         {
           role: "user",
@@ -279,6 +280,7 @@ export const chatBotApiCall = async ({ input }: { input: string }) => {
   });
 
   const data = await res.json();
+  console.log("data", data);
   return data?.choices?.[0]?.message;
 };
 
