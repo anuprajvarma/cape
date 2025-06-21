@@ -11,6 +11,7 @@ const notes = require("./router/notes");
 const searchRoute = require("./router/search");
 const discussionRoute = require("./router/discussion");
 const quizzRoute = require("./router/quizz");
+const scoreRoute = require("./router/score");
 const dbConnection = require("./connection/dbConnection");
 
 const app = express();
@@ -35,6 +36,7 @@ app.use("/api/notes", notes);
 app.use("/api/discussion", discussionRoute);
 app.use("/api/searchs", searchRoute);
 app.use("/api/quizz", quizzRoute);
+app.use("/api/score", scoreRoute);
 
 app.listen(process.env.PORT, () =>
   console.log(`server is started on ${process.env.PORT}`)

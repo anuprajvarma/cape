@@ -87,6 +87,29 @@ const NotesGpt = ({
     chat();
   }, [gptcheck, messages, session.data?.user?.email, id]);
 
+  useEffect(() => {
+    const fetchScore = async () => {
+      await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/score/addUserScore`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            playlistId: id,
+            videoId,
+            score: Score,
+            email: session.data?.user?.email ?? "",
+          }),
+          credentials: "include",
+        }
+      );
+    };
+
+    if (Completed === 10) {
+      fetchScore();
+    }
+  }, [Completed, id, videoId, session.data?.user?.email, Score]);
+
   const sendMessage = async () => {
     if (session.status === "authenticated") {
       if (!input.trim()) return;
