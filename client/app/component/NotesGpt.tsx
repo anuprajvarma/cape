@@ -49,7 +49,8 @@ const NotesGpt = ({
   const [gptcheck, setgptCheck] = useState<boolean>(false);
   const [chooseOption, setChooseOption] = useState<string[]>([]);
   const [Completed, setCompleted] = useState<number>(0);
-  const [Score, setScore] = useState<number>(0);
+  const [countedScore, setCountedScore] = useState<number>(0);
+  const [DbScore, setDbScore] = useState<string>("");
 
   useEffect(() => {
     const chat = async () => {
@@ -68,8 +69,8 @@ const NotesGpt = ({
         }
       );
       const data = await res.json();
-      console.log("Quizzes data fetch:", data.quizzData[0].quizz);
-      setQuizz(data.quizzData[0].quizz);
+      console.log("Quizzes data fetch:", data.quizzData[0]?.quizz);
+      setQuizz(data.quizzData[0]?.quizz);
     };
 
     chat();
@@ -88,7 +89,7 @@ const NotesGpt = ({
   }, [gptcheck, messages, session.data?.user?.email, id]);
 
   useEffect(() => {
-    const fetchScore = async () => {
+    const addScore = async () => {
       await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/score/addUserScore`,
         {
@@ -97,7 +98,7 @@ const NotesGpt = ({
           body: JSON.stringify({
             playlistId: id,
             videoId,
-            score: Score,
+            score: countedScore,
             email: session.data?.user?.email ?? "",
           }),
           credentials: "include",
@@ -106,9 +107,37 @@ const NotesGpt = ({
     };
 
     if (Completed === 10) {
-      fetchScore();
+      addScore();
     }
-  }, [Completed, id, videoId, session.data?.user?.email, Score]);
+  }, [Completed, id, videoId, session.data?.user?.email, countedScore]);
+
+  useEffect(() => {
+    const fetchUserScore = async () => {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/score/getUserScore`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            playlistId: id,
+            videoId,
+            email: session.data?.user?.email ?? "",
+          }),
+          credentials: "include",
+        }
+      );
+      const data = await res.json();
+      console.log("User score :", data.userScore?.score);
+      if (data.userScore?.score !== undefined) {
+        setDbScore(data.userScore?.score);
+      }
+      // setDbScore(data.userScore.score);
+    };
+
+    if (Completed === 10 || Completed === 0) {
+      fetchUserScore();
+    }
+  }, [Completed, id, videoId, session.data?.user?.email]);
 
   const sendMessage = async () => {
     if (session.status === "authenticated") {
@@ -164,7 +193,7 @@ const NotesGpt = ({
       setChooseOption((prev) => [...prev, selectedOption]);
       setQuestion((prev) => [...prev, question]);
       if (selectedOption.slice(0, 2) === correctAnswer.slice(0, 2)) {
-        setScore((prev) => prev + 1);
+        setCountedScore((prev) => prev + 1);
         console.log(questions);
         console.log("Correct Answer!");
       } else {
@@ -282,21 +311,21 @@ const NotesGpt = ({
           <></>
         )}
         {quizzcheck ? (
-          quizz.length > 0 ? (
-            Completed === 10 ? (
+          quizz?.length > 0 ? (
+            Completed === 10 || DbScore !== "" ? (
               <div className="w-full h-full flex flex-col justify-center items-center">
-                <p className="sm:px-12 py-2">
-                  Congratulations! You have completed the quiz.
+                <p className="sm:px-12 py-2 text-xl">
+                  Congratulations! You have completed the test
                 </p>
                 <div className="flex gap-2 text-2xl">
                   <p>Score -</p>
-                  <p>{`${Score}/10`}</p>
+                  <p>{`${DbScore ? DbScore : countedScore}/10`}</p>
                 </div>
               </div>
             ) : (
               <div className="sm:px-12 sm:py-2 w-full h-full prose prose-lg prose-headings:my-0 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-a:text-blue-600 hover:prose-a:underline max-w-none overflow-auto scrollbar-hide">
                 <div className="flex justify-end hover:text-slaty text-slaty/80 cursor-pointer transition duration-300">
-                  <p className="text-sm text-center bg-lightSlaty rounded-lg px-4 py-2">{`Progress - ${Completed}/${quizz.length}`}</p>
+                  <p className="text-sm text-center bg-lightSlaty rounded-lg px-4 py-2">{`Progress - ${Completed}/${quizz.length} `}</p>
                 </div>
                 {quizz.map((quizz, index) => (
                   <div key={index} className="py-2 flex flex-col gap-2">

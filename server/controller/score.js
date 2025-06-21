@@ -23,14 +23,15 @@ const addUserScoreHandler = async (req, res) => {
   }
 };
 
-// const getQuizzDataHandler = async (req, res) => {
-//   const { videoId, playlistId } = req.body;
-//   const quizzData = await Quizz.find({
-//     videoId: videoId,
-//     playlistId: playlistId,
-//   });
-//   console.log(`quizzData ${quizzData}`);
-//   res.json({ quizzData });
-// };
+const getUserScoreHandler = async (req, res) => {
+  const { videoId, playlistId, email } = req.body;
+  const userScore = await UserScore.findOne({
+    videoId: videoId,
+    playlistId: playlistId,
+    email: email,
+  });
+  console.log(`userScore ${userScore}`);
+  res.json({ userScore });
+};
 
-module.exports = { addUserScoreHandler };
+module.exports = { addUserScoreHandler, getUserScoreHandler };

@@ -1,12 +1,12 @@
 const express = require("express");
 const {
   addUserScoreHandler,
-  //   getUserScoreHandler,
+  getUserScoreHandler,
 } = require("../controller/score");
 
 const router = express.Router();
 
 router.post("/addUserScore", addUserScoreHandler);
-// router.post("/getUserScore", getUserScoreHandler);
+router.post("/getUserScore", getUserScoreHandler);
 
 module.exports = router;
