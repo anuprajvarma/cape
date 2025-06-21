@@ -254,7 +254,7 @@ const Courses = () => {
                     onChange={handleChange}
                   />
                   {showSuggestions && filteredSuggestions.length > 0 && (
-                    <ul className="flex flex-col z-50 justify-center items-center mt-1 w-full">
+                    <ul className="flex flex-col z-30 justify-center items-center mt-1 w-full">
                       <div className="w-[30rem] bg-lightSlaty rounded-xl">
                         {filteredSuggestions.map((suggestion, index) => (
                           <li
@@ -319,7 +319,7 @@ const Courses = () => {
             </div>
           </div>
           <LoginModal />
-          <div className="flex flex-wrap gap-8 items-center justify-center -z-10">
+          <div className="flex flex-wrap gap-8 items-center justify-center z-20">
             {playlists.length > 0 ? (
               playlists?.map((data, index) => {
                 const id = data.id?.playlistId;

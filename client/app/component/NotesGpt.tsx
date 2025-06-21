@@ -42,6 +42,7 @@ const NotesGpt = ({
   const [quizz, setQuizz] = useState<QuizzType[]>([]);
   const [notecheck, setNoteCheck] = useState<boolean>(true);
   const [input, setInput] = useState("");
+  const [question, setQuestion] = useState<string[]>([]);
   const [messages, setMessages] = useState<{ sender: string; text: string }[]>(
     []
   );
@@ -122,7 +123,7 @@ const NotesGpt = ({
     }
   };
 
-  const checkAnswer = (option: string, answer: string) => {
+  const checkAnswer = (option: string, answer: string, question: string) => {
     console.log(
       `Selected Option: ${option} | Correct Answer: ${answer
         .split(" ")
@@ -131,6 +132,7 @@ const NotesGpt = ({
     );
     const selectedOption = option;
     const correctAnswer = answer.split(" ").slice(2).join(" ");
+    setQuestion([...question, question]);
     if (selectedOption.slice(0, 2) === correctAnswer.slice(0, 2)) {
       console.log("Correct Answer!");
     } else {
@@ -260,7 +262,9 @@ const NotesGpt = ({
                     <div className="list-disc pl-6 flex flex-col gap-2">
                       {quizz.options.map((option, idx) => (
                         <button
-                          onClick={() => checkAnswer(option, quizz.answer)}
+                          onClick={() =>
+                            checkAnswer(option, quizz.answer, quizz.question)
+                          }
                           key={idx}
                           className="text-slaty text-start rounded-lg border border-lightSlaty hover:bg-lightSlaty px-8 py-2 transition duration-300"
                         >
