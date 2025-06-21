@@ -97,6 +97,22 @@ const NotesGpt = ({
     }
   };
 
+  const checkAnswer = (option: string, answer: string) => {
+    console.log(
+      `Selected Option: ${option} | Correct Answer: ${answer
+        .split(" ")
+        .slice(2)
+        .join(" ")}`
+    );
+    const selectedOption = option;
+    const correctAnswer = answer.split(" ").slice(2).join(" ");
+    if (selectedOption.slice(0, 2) === correctAnswer.slice(0, 2)) {
+      console.log("Correct Answer!");
+    } else {
+      console.log("Wrong Answer! Try again.");
+    }
+  };
+
   const quizzHandler = async () => {
     try {
       const result = await easyExplainFuntion({ videoTitle });
@@ -201,12 +217,15 @@ const NotesGpt = ({
                     <p>{quizz.question}</p>
                   </div>
                   <div>
-                    {/* {quizz.options.length} */}
-                    <div className="list-disc pl-6">
+                    <div className="list-disc pl-6 flex flex-col gap-2">
                       {quizz.options.map((option, idx) => (
-                        <p key={idx} className="text-slaty">
-                          {option}
-                        </p>
+                        <button
+                          onClick={() => checkAnswer(option, quizz.answer)}
+                          key={idx}
+                          className="text-slaty text-start rounded-lg border border-lightSlaty hover:bg-lightSlaty px-8 py-2 transition duration-300"
+                        >
+                          {option.split(" ").slice(1).join(" ")}
+                        </button>
                       ))}
                     </div>
                   </div>
