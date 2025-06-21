@@ -42,11 +42,14 @@ const NotesGpt = ({
   const [quizz, setQuizz] = useState<QuizzType[]>([]);
   const [notecheck, setNoteCheck] = useState<boolean>(true);
   const [input, setInput] = useState("");
-  const [question, setQuestion] = useState<string[]>([]);
+  const [questions, setQuestion] = useState<string[]>([]);
   const [messages, setMessages] = useState<{ sender: string; text: string }[]>(
     []
   );
   const [gptcheck, setgptCheck] = useState<boolean>(false);
+  const [chooseOption, setChooseOption] = useState<string[]>([]);
+  const [Completed, setCompleted] = useState<number>(0);
+  const [Score, setScore] = useState<number>(0);
 
   useEffect(() => {
     const chat = async () => {
@@ -128,15 +131,23 @@ const NotesGpt = ({
       `Selected Option: ${option} | Correct Answer: ${answer
         .split(" ")
         .slice(2)
-        .join(" ")}`
+        .join(" ")} | Question: ${question}`
     );
     const selectedOption = option;
     const correctAnswer = answer.split(" ").slice(2).join(" ");
-    setQuestion([...question, question]);
-    if (selectedOption.slice(0, 2) === correctAnswer.slice(0, 2)) {
-      console.log("Correct Answer!");
-    } else {
-      console.log("Wrong Answer! Try again.");
+    const isQuestionExists = questions.includes(question);
+    if (!isQuestionExists) {
+      setCompleted((prev) => prev + 1);
+      setChooseOption((prev) => [...prev, selectedOption]);
+      setQuestion((prev) => [...prev, question]);
+      if (selectedOption.slice(0, 2) === correctAnswer.slice(0, 2)) {
+        setScore((prev) => prev + 1);
+        console.log(questions);
+        console.log("Correct Answer!");
+      } else {
+        console.log(questions);
+        console.log("Wrong Answer! Try again.");
+      }
     }
   };
 
@@ -249,33 +260,57 @@ const NotesGpt = ({
         )}
         {quizzcheck ? (
           quizz.length > 0 ? (
-            <div className="sm:px-12 sm:py-2 w-full h-full prose prose-lg prose-headings:my-0 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-a:text-blue-600 hover:prose-a:underline max-w-none overflow-auto scrollbar-hide">
-              <div className="flex justify-end hover:text-slaty text-slaty/80 cursor-pointer transition duration-300">
-                <p className="text-sm text-center bg-lightSlaty rounded-lg px-4 py-2">{`Progress - 1/${quizz.length}`}</p>
+            Completed === 10 ? (
+              <div className="w-full h-full flex flex-col justify-center items-center">
+                <p className="sm:px-12 py-2">
+                  Congratulations! You have completed the quiz.
+                </p>
+                <div className="flex gap-2 text-2xl">
+                  <p>Score -</p>
+                  <p>{`${Score}/10`}</p>
+                </div>
               </div>
-              {quizz.map((quizz, index) => (
-                <div key={index} className="py-2 flex flex-col gap-2">
-                  <div className="text-white flex gap-2 font-semibold text-xl">
-                    <p>{quizz.question}</p>
-                  </div>
-                  <div>
-                    <div className="list-disc pl-6 flex flex-col gap-2">
-                      {quizz.options.map((option, idx) => (
-                        <button
-                          onClick={() =>
-                            checkAnswer(option, quizz.answer, quizz.question)
-                          }
-                          key={idx}
-                          className="hover:text-slaty text-slaty/80 text-start rounded-lg border border-lightSlaty hover:bg-lightSlaty px-8 py-2 transition duration-300"
-                        >
-                          {option.split(" ").slice(1).join(" ")}
-                        </button>
-                      ))}
+            ) : (
+              <div className="sm:px-12 sm:py-2 w-full h-full prose prose-lg prose-headings:my-0 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-a:text-blue-600 hover:prose-a:underline max-w-none overflow-auto scrollbar-hide">
+                <div className="flex justify-end hover:text-slaty text-slaty/80 cursor-pointer transition duration-300">
+                  <p className="text-sm text-center bg-lightSlaty rounded-lg px-4 py-2">{`Progress - ${Completed}/${quizz.length}`}</p>
+                </div>
+                {quizz.map((quizz, index) => (
+                  <div key={index} className="py-2 flex flex-col gap-2">
+                    <div className="text-white flex gap-2 font-semibold text-xl">
+                      <p>{quizz.question}</p>
+                    </div>
+                    <div>
+                      <div className="list-disc pl-6 flex flex-col gap-2">
+                        {quizz.options.map((option, idx) => (
+                          <button
+                            onClick={() =>
+                              checkAnswer(option, quizz.answer, quizz.question)
+                            }
+                            key={idx}
+                            className={`hover:text-slaty flex gap-4 text-slaty/80 text-start rounded-lg border border-lightSlaty hover:bg-lightSlaty px-8 py-2 transition duration-300 ${
+                              chooseOption.includes(option)
+                                ? "bg-lightSlaty text-slaty"
+                                : ""
+                            }`}
+                          >
+                            <input
+                              type="radio"
+                              name={option}
+                              id={option}
+                              value={option.split(" ").slice(1).join(" ")}
+                              checked={chooseOption.includes(option)}
+                            />
+                            <p>{option.split(" ").slice(1).join(" ")}</p>
+                            {/* <p>{chooseOption.includes(option) + "a"}</p> */}
+                          </button>
+                        ))}
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )
           ) : (
             <div className="w-full h-full flex flex-col justify-center items-center gap-4">
               <p className="sm:px-12 py-2 rounded-full border border-lightSlaty">
