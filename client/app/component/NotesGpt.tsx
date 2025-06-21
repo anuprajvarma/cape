@@ -70,7 +70,7 @@ const NotesGpt = ({
     };
 
     chat();
-  }, []);
+  }, [id, videoId]);
 
   useEffect(() => {
     const chat = async () => {
@@ -250,8 +250,8 @@ const NotesGpt = ({
         {quizzcheck ? (
           quizz.length > 0 ? (
             <div className="sm:px-12 sm:py-2 w-full h-full prose prose-lg prose-headings:my-0 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-a:text-blue-600 hover:prose-a:underline max-w-none overflow-auto scrollbar-hide">
-              <div className="wfull flex justify-end">
-                <p className="text-white text-center bg-lightSlaty rounded-lg w-[10rem] px-2 py-1">{`Completed - 1/${quizz.length}`}</p>
+              <div className="flex justify-end hover:text-slaty text-slaty/80 cursor-pointer transition duration-300">
+                <p className="text-sm text-center bg-lightSlaty rounded-lg px-4 py-2">{`Progress - 1/${quizz.length}`}</p>
               </div>
               {quizz.map((quizz, index) => (
                 <div key={index} className="py-2 flex flex-col gap-2">
@@ -266,7 +266,7 @@ const NotesGpt = ({
                             checkAnswer(option, quizz.answer, quizz.question)
                           }
                           key={idx}
-                          className="text-slaty text-start rounded-lg border border-lightSlaty hover:bg-lightSlaty px-8 py-2 transition duration-300"
+                          className="hover:text-slaty text-slaty/80 text-start rounded-lg border border-lightSlaty hover:bg-lightSlaty px-8 py-2 transition duration-300"
                         >
                           {option.split(" ").slice(1).join(" ")}
                         </button>
@@ -282,7 +282,7 @@ const NotesGpt = ({
                 Test your knowledge with quizzes based on the video content.
               </p>
               <button
-                className="px-4 py-1 rounded-lg hover:bg-slaty/10 transition duration-200 border border-lightSlaty"
+                className="px-4 py-1 rounded-lg hover:bg-slaty/10 transition duration-300 border border-lightSlaty"
                 onClick={quizzHandler}
               >
                 Click me
