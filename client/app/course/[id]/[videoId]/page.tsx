@@ -424,7 +424,16 @@ const Course = () => {
                   </div>
                 </div>
               ) : (
-                <div>Empty</div>
+                <div className="w-full h-[47.7rem] border border-lightSlaty rounded-xl lg:flex lg:flex-col hidden">
+                  <div className="w-full items-center text-center font-semibold py-4 justify-center bg-mediumSlaty rounded-t-xl">
+                    Discussion
+                  </div>
+                  <div className="w-full h-[40rem] flex items-center justify-center p-4">
+                    <p className="text-slaty text-center">
+                      No discussion available yet.
+                    </p>
+                  </div>
+                </div>
               )}
             </div>
           </div>
