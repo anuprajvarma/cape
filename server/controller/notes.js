@@ -2,8 +2,8 @@ const Notes = require("../models/notes");
 
 const addNoteHandler = async (req, res) => {
   const { email, playlistId, content } = req.body;
-  console.log(`content ${content}`);
-  console.log(email, playlistId, content);
+  // console.log(`content ${content}`);
+  // console.log(email, playlistId, content);
   let note = await Notes.findOneAndUpdate(
     {
       email,
@@ -20,15 +20,15 @@ const addNoteHandler = async (req, res) => {
     });
   }
 
-  console.log(`note ${note}`);
+  // console.log(`note ${note}`);
 
   res.json({ note });
 };
 
 const getNoteHandler = async (req, res) => {
-  console.log("getnote");
+  // console.log("getnote");
   const { email, playlistId } = req.body;
-  console.log(email, playlistId);
+  // console.log(email, playlistId);
   const noteData = await Notes.findOne({
     playlistId,
     email,

@@ -1,7 +1,7 @@
 const BookmarkCourse = require("../models/bookmarkCourse");
 
 const bookmarCourseHandler = async (req, res) => {
-  console.log("bookmark");
+  // console.log("bookmark");
   const {
     title,
     channelTitle,

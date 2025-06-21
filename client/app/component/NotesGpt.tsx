@@ -27,6 +27,7 @@ interface QuizzType {
 
 const NotesGpt = ({
   id,
+  videoId,
   videoTitle,
 }: {
   id: string;
@@ -45,6 +46,30 @@ const NotesGpt = ({
     []
   );
   const [gptcheck, setgptCheck] = useState<boolean>(false);
+
+  useEffect(() => {
+    const chat = async () => {
+      // const result = await easyExplainFuntion({ videoTitle });
+      // setQuizz(result);
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/quizz/getQiuzzData`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            playlistId: id,
+            videoId,
+          }),
+          credentials: "include",
+        }
+      );
+      const data = await res.json();
+      console.log("Quizzes data fetch:", data.quizzData[0].quizz);
+      setQuizz(data.quizzData[0].quizz);
+    };
+
+    chat();
+  }, []);
 
   useEffect(() => {
     const chat = async () => {
@@ -117,6 +142,21 @@ const NotesGpt = ({
     try {
       const result = await easyExplainFuntion({ videoTitle });
       setQuizz(result);
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/quizz/addQiuzzes`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            playlistId: id,
+            videoId,
+            quizz: result,
+          }),
+          credentials: "include",
+        }
+      );
+      const data = await res.json();
+      console.log("Quizzes saved to database:", data);
     } catch (error) {
       console.error("Error fetching from OpenRouter or saving to DB:", error);
     }
@@ -207,7 +247,7 @@ const NotesGpt = ({
         )}
         {quizzcheck ? (
           quizz.length > 0 ? (
-            <div className="sm:px-12 sm:py-2 w-full h-full overflow-auto prose prose-lg prose-headings:my-0 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-a:text-blue-600 hover:prose-a:underline max-w-none">
+            <div className="sm:px-12 sm:py-2 w-full h-full prose prose-lg prose-headings:my-0 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-a:text-blue-600 hover:prose-a:underline max-w-none overflow-auto scrollbar-hide">
               <div className="wfull flex justify-end">
                 <p className="text-white text-center bg-lightSlaty rounded-lg w-[10rem] px-2 py-1">{`Completed - 1/${quizz.length}`}</p>
               </div>
