@@ -27,6 +27,7 @@ const Bookmark = () => {
     bookmarkPlaylistType[]
   >([]);
   const [hasMounted, setHasMounted] = useState(false);
+  const [checkDataExist, setCheckDataExist] = useState<boolean>(false);
   const [getDataCheck, setGetDataCheck] = useState<boolean>(false);
   const session = useSession();
 
@@ -39,8 +40,15 @@ const Bookmark = () => {
       const email = session.data?.user?.email as string;
       const result = await handleEnrolled(email);
       setBookmarkCoursePlaylist(result);
+      if (result.length > 0) {
+        setCheckDataExist(false);
+      } else {
+        setCheckDataExist(true);
+      }
     };
-    load();
+    if (session.data?.user !== undefined) {
+      load();
+    }
   }, [session.data?.user, getDataCheck]);
 
   return (
@@ -69,10 +77,12 @@ const Bookmark = () => {
                   />
                 );
               })
-            ) : (
+            ) : checkDataExist ? (
               <p className="text-xl text-slaty">
                 You did not bookmark any courses
               </p>
+            ) : (
+              <p className="text-xl text-center text-slaty">Loading...</p>
             )}
           </div>
         </div>

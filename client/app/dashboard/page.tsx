@@ -26,6 +26,7 @@ const Dashboard = () => {
   >([]);
   const [hasMounted, setHasMounted] = useState(false);
   const [getDataCheck, setGetDataCheck] = useState<boolean>(false);
+  const [checkDataExist, setCheckDataExist] = useState<boolean>(false);
   const session = useSession();
 
   useEffect(() => {
@@ -34,6 +35,9 @@ const Dashboard = () => {
 
   useEffect(() => {
     const handleEnrolled = async () => {
+      console.log(
+        `handleEnrolled called for email: ${session.data?.user?.email}`
+      );
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/enrolledCourse/getData`,
         {
@@ -47,8 +51,15 @@ const Dashboard = () => {
       );
       const data = await res.json();
       setenrolledCoursePlaylist(data.enrolledkCourse);
+      if (data.enrolledkCourse.length > 0) {
+        setCheckDataExist(false);
+      } else {
+        setCheckDataExist(true);
+      }
     };
-    handleEnrolled();
+    if (session.data?.user?.email != undefined) {
+      handleEnrolled();
+    }
   }, [session.data?.user?.email, getDataCheck]);
 
   return (
@@ -76,10 +87,12 @@ const Dashboard = () => {
                 />
               );
             })
-          ) : (
+          ) : checkDataExist ? (
             <p className="text-xl text-center text-slaty">
               You did not enrolled any courses
             </p>
+          ) : (
+            <p className="text-xl text-center text-slaty">Loading...</p>
           )}
         </div>
       </div>

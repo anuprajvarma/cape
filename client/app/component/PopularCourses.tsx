@@ -58,6 +58,7 @@ const PopularCourses = () => {
   >({});
   const [hasMounted, setHasMounted] = useState(false);
   const [getDataCheck, setGetDataCheck] = useState<boolean>(false);
+  const [checkDataExist, setCheckDataExist] = useState<boolean>(false);
 
   function getRotatedKey(): number {
     const now = new Date();
@@ -79,6 +80,11 @@ const PopularCourses = () => {
       if (apikey) {
         const result = await fetchPlaylist({ max, topic, apikey });
         dispatch(setPopularPlaylist(result));
+        if (result.length > 0) {
+          setCheckDataExist(false);
+        } else {
+          setCheckDataExist(true);
+        }
       }
     }
     load();
@@ -165,8 +171,10 @@ const PopularCourses = () => {
                 />
               );
             })
-          ) : (
+          ) : checkDataExist ? (
             <p className="text-xl text-slaty">Youtube API limit is exceed</p>
+          ) : (
+            <p className="text-xl text-center text-slaty">Loading...</p>
           )}
         </div>
         <div className="flex justify-center ">

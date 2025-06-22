@@ -59,14 +59,14 @@ const EnrolledCard = ({
         (100 * completedChapters.length) / Number(chapterLength);
       setPrecentage(Math.round(percentage));
     }
-    console.log(precentage);
+    // console.log(precentage);
     const getChapterData = async () => {
       const result = await enrolledCourseDataFetch({
         email: session.data?.user?.email ?? "",
         playlistId,
       });
       if (result) {
-        console.log(`data ka length hai`);
+        // console.log(`data ka length hai`);
         setCompletedChapters(result);
       }
     };

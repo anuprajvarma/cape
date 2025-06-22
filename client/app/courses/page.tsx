@@ -61,6 +61,7 @@ const Courses = () => {
     Record<string, string>
   >({});
   const [hasMounted, setHasMounted] = useState(false);
+  const [checkDataExist, setCheckDataExist] = useState<boolean>(false);
   const [suggestionsArray, setSuggestionsArray] = useState<string[]>([]);
   const [filteredSuggestions, setFilteredSuggestions] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -81,7 +82,7 @@ const Courses = () => {
         }
       );
       const data = await res.json();
-      console.log(`data.search ${data.searchData[0].title}`);
+      // console.log(`data.search ${data.searchData[0].title}`);
       setSuggestionsArray(data.searchData[0].title);
     };
     handleSearchData();
@@ -97,6 +98,11 @@ const Courses = () => {
       if (apikey) {
         const result = await fetchPlaylist({ max, topic, apikey });
         dispatch(setPopularPlaylist(result));
+        if (result.length > 0) {
+          setCheckDataExist(false);
+        } else {
+          setCheckDataExist(true);
+        }
       }
     }
     load();
@@ -135,7 +141,7 @@ const Courses = () => {
           const channelId = item.snippet?.channelId;
 
           if (channelId) {
-            console.log(`channelid ${channelId}`);
+            // console.log(`channelid ${channelId}`);
             const ownerThumbnailRes = await fetch(
               `https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${apikey}`
             );
@@ -190,12 +196,12 @@ const Courses = () => {
   };
 
   const myFunction = () => {
-    console.log("funtion run");
+    // console.log("funtion run");
     if (searchQuery === "") {
-      console.log(`hee ${searchQuery}`);
+      // console.log(`hee ${searchQuery}`);
       setTopic(topic);
     } else {
-      console.log(`hey ${searchQuery}`);
+      // console.log(`hey ${searchQuery}`);
       setTopic(searchQuery);
     }
   };
@@ -344,8 +350,10 @@ const Courses = () => {
                   />
                 );
               })
-            ) : (
+            ) : checkDataExist ? (
               <p className="text-xl text-slaty">Youtube API limit is exceed</p>
+            ) : (
+              <p className="text-xl text-center text-slaty">Loading...</p>
             )}
           </div>
         </div>
