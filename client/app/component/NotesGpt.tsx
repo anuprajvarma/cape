@@ -267,7 +267,7 @@ const NotesGpt = ({
           Quizzes
         </button>
       </div>
-      <div className="w-full h-[40rem] bg-mediumSlaty">
+      <div className="w-full h-[40rem]">
         {notecheck ? (
           <Editor
             email={session.data?.user?.email as string}
@@ -317,7 +317,7 @@ const NotesGpt = ({
                 <p className="sm:px-12 py-2 text-xl">
                   Congratulations! You have completed the test
                 </p>
-                <div className="flex gap-2 text-2xl">
+                <div className="flex gap-2 text-xl font-semibold">
                   <p>Score -</p>
                   <p>{`${DbScore ? DbScore : countedScore}/10`}</p>
                 </div>

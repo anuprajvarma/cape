@@ -17,7 +17,7 @@ const lightRedTheme = {
   colors: {
     editor: {
       text: "#222222",
-      background: "#ffedd5",
+      background: "#101827",
     },
     menu: {
       text: "#ffffff",
@@ -52,7 +52,7 @@ const darkRedTheme = {
   colors: {
     editor: {
       text: "#D1D5DB",
-      background: "#1F2937",
+      background: "#101827",
     },
     menu: {
       text: "#D1D5DB",
