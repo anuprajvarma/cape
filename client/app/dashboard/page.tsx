@@ -65,7 +65,7 @@ const Dashboard = () => {
   return (
     <>
       <CourseLinkModal />
-      <div className="w-full -z-20 py-[2rem] px-4 text-black flex justify-center">
+      <div className="w-full -z-20 py-[2rem] px-4 text-black flex justify-center mt-16">
         <div className="w-[70rem] flex flex-col gap-12">
           {enrolledCoursePlaylist.length > 0 ? (
             enrolledCoursePlaylist.map((data, index) => {

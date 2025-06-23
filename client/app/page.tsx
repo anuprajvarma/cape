@@ -30,7 +30,7 @@ export default function Page() {
     <>
       <Header />
       <LoginModal />
-      <div className="w-full py-[4rem] px-4 text-black flex justify-center">
+      <div className="w-full py-[4rem] px-4 text-black flex justify-center mt-12">
         <div className="w-[70rem]">
           <div className="w-full flex flex-col justify-between gap-12">
             <div className="w-full h-[18rem] flex flex-col items-center gap-6">

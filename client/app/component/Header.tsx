@@ -66,7 +66,7 @@ const Header = () => {
   ]);
 
   return (
-    <div className="w-full p-4 flex justify-center">
+    <div className="w-full p-4 flex justify-center fixed top-0 z-30 shadow bg-[#101827]/80 backdrop-blur">
       <div
         className={`${
           path === `/course/${id}/${videoId}` ? "w-full" : "w-[70rem]"
@@ -108,7 +108,7 @@ const Header = () => {
         <div>
           {session.status === "authenticated" ? (
             <div className="relative">
-              <div className="flex justify-center items-center w-14 h-8">
+              <div className="flex justify-center items-center w-11 h-5">
                 <button
                   ref={buttonRef}
                   onClick={() => setIsOpen(!isOpen)}
@@ -118,7 +118,7 @@ const Header = () => {
                     src={(session.data?.user?.image as string) || "/code.jpg"}
                     alt="Profile"
                     quality={100}
-                    sizes="80px"
+                    sizes="60px"
                     fill
                     style={{ objectFit: "cover" }}
                     className="rounded-full border border-slaty/30 transition duration-300 hover:border-slaty/50"

@@ -246,7 +246,7 @@ const Courses = () => {
   return (
     <>
       <CourseLinkModal />
-      <div className="w-full py-[2rem] px-4 text-black flex justify-center">
+      <div className="w-full py-[2rem] px-4 text-black flex justify-center mt-16">
         <div className="w-[70rem] flex flex-col gap-12">
           <div>
             <div className="flex gap-2 items-center justify-center">
