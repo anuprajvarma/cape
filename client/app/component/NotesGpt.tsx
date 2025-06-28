@@ -250,19 +250,27 @@ const NotesGpt = ({
       <div className="flex justify-between bg-mediumSlaty border-b border-lightSlaty px-2 py-4">
         <button
           onClick={handleNotes}
-          className="sm:px-4 sm:py-1 p-1 rounded-md bg-lightSlaty hover:bg-slaty/20 hover:text-slaty text-slaty/80 transition duration-300 border border-lightSlaty"
+          className={`sm:px-4 sm:py-1 p-1 rounded-md  hover:bg-slaty/20 hover:text-white transition duration-300 border border-lightSlaty ${
+            notecheck ? "bg-slaty/20 text-white" : "text-slaty/80 bg-lightSlaty"
+          }`}
         >
           Notes
         </button>
         <button
           onClick={handleGPT}
-          className="sm:px-4 sm:py-1 p-1 rounded-md bg-lightSlaty hover:bg-slaty/20 hover:text-slaty text-slaty/80 transition duration-300 border border-lightSlaty"
+          className={`sm:px-4 sm:py-1 p-1 rounded-md  hover:bg-slaty/20 hover:text-white transition duration-300 border border-lightSlaty ${
+            gptcheck ? "bg-slaty/20 text-white" : "text-slaty/80 bg-lightSlaty"
+          }`}
         >
           GPT
         </button>
         <button
           onClick={handleEasyExplain}
-          className="sm:px-4 sm:py-1 p-1 rounded-md bg-lightSlaty hover:bg-slaty/20 hover:text-slaty text-slaty/80 transition duration-300 border-lightSlaty"
+          className={`sm:px-4 sm:py-1 p-1 rounded-md  hover:bg-slaty/20 hover:text-white transition duration-300 border border-lightSlaty ${
+            quizzcheck
+              ? "bg-slaty/20 text-white"
+              : "text-slaty/80 bg-lightSlaty"
+          }`}
         >
           Quizzes
         </button>

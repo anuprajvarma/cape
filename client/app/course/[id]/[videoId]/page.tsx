@@ -311,11 +311,11 @@ const Course = () => {
               </DisclosurePanel>
             </Disclosure>
             <Disclosure as="div" className="" defaultOpen={false}>
-              <DisclosureButton className="group flex w-full items-center text-md justify-between bg-mediumSlaty border-lightSlaty p-1 sm:p-2 rounded-lg">
+              <DisclosureButton className="group flex w-full items-center text-md justify-between px-1 sm:px-2 rounded-lg">
                 <span>Description</span>
                 <ChevronDownIcon className="size-5 fill-slaty group-data-hover:fill-white/50 group-data-open:rotate-180" />
               </DisclosureButton>
-              <DisclosurePanel className="mt-2 text-sm/5 text-slaty">
+              <DisclosurePanel className="mt-2 text-sm/5 text-slaty px-1 sm:px-2">
                 {lines.map((line, idx) => (
                   <p key={idx}>
                     <Linkify options={options}>{line}.</Linkify>
