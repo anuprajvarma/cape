@@ -96,6 +96,7 @@ const Course = () => {
   const [precentage, setPrecentage] = useState<number>(0);
   const [videoTitle, setVideoTitle] = useState("");
   const [videoDescription, setVideoDescription] = useState("");
+  const [commentStateUpdate, setCommentStateUpdate] = useState(false);
 
   useEffect(() => {
     const discussion = async () => {
@@ -107,7 +108,7 @@ const Course = () => {
     if (videoId) {
       discussion();
     }
-  }, [session.data?.user?.email, id, videoId]);
+  }, [session.data?.user?.email, id, videoId, commentStateUpdate]);
 
   useEffect(() => {
     async function playlist() {
@@ -199,6 +200,8 @@ const Course = () => {
         username: session.data?.user?.name ?? "",
         userImageUrl: session.data?.user?.image ?? "",
       });
+      setCommentStateUpdate(!commentStateUpdate);
+      setDiscussionContent("");
     } else {
       dispatch(setIsOpen(true));
     }
@@ -432,6 +435,20 @@ const Course = () => {
                     <p className="text-slaty text-center">
                       No discussion available yet.
                     </p>
+                  </div>
+                  <div className="flex gap-2 p-4">
+                    <input
+                      value={discussionContent}
+                      onChange={(e) => setDiscussionContent(e.target.value)}
+                      className="flex-1 p-2 rounded-md bg-lightSlaty focus:outline-none border border-slaty/50 text-slaty placeholder-slaty/50"
+                      placeholder="Type a message..."
+                    />
+                    <button
+                      onClick={discussionHandler}
+                      className="px-2 bg-blue-600 text-white rounded"
+                    >
+                      Send
+                    </button>
                   </div>
                 </div>
               )}
