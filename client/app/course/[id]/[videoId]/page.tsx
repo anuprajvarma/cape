@@ -304,6 +304,7 @@ const Course = () => {
                         videoId={videoid}
                         currentvideoId={videoId as string}
                         key={index}
+                        index={index}
                       />
                     );
                   })}
@@ -373,6 +374,7 @@ const Course = () => {
                       videoId={videoid}
                       currentvideoId={videoId as string}
                       key={index}
+                      index={index}
                     />
                   );
                 })}

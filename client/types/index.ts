@@ -32,6 +32,7 @@ export interface PlaylistCardType {
   id: string;
   videoId: string;
   currentvideoId: string;
+  index: number;
 }
 
 export interface playlistType {

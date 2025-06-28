@@ -8,6 +8,7 @@ import { RootState, AppDispatch } from "../redux/store";
 import { setCheckBox } from "../redux/slices/checkboxSlice";
 import { handleChapter } from "../utils/apiCalls";
 // import { toast } from "react-toastify";
+import { IoPlay } from "react-icons/io5";
 import { setIsOpen } from "../redux/slices/LoginModalSlice";
 
 const PlalistVideoCard = ({
@@ -18,6 +19,7 @@ const PlalistVideoCard = ({
   isChecked,
   videoId,
   currentvideoId,
+  index,
 }: PlaylistCardType) => {
   const router = useRouter();
   const session = useSession();
@@ -57,6 +59,9 @@ const PlalistVideoCard = ({
         }`}
         onClick={() => playVideo({ id, videoId })}
       >
+        <div className="w-6">
+          {currentvideoId === videoId ? <IoPlay /> : <p>{index + 1}</p>}
+        </div>
         <div className="flex w-[10rem] items-start h-[4rem] relative">
           <Image
             src={thumbnails || "/code.jpg"}
