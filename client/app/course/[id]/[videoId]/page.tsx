@@ -213,7 +213,7 @@ const Course = () => {
     <>
       <CourseLinkModal />
       <LoginModal />
-      <div className="w-full -z-20 py-4 px-1 sm:px-4 flex flex-col gap-2 justify-center text-slaty">
+      <div className="w-full -z-20 py-4 px-1 sm:px-4 flex flex-col gap-2 justify-center text-slaty mt-16">
         <div className="w-full flex justify-between gap-2">
           <div className="w-[63rem] flex flex-col gap-4">
             <div className="flex w-full h-[20rem] items-center justify-center sm:h-[38rem]">
