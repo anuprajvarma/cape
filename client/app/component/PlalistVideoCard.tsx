@@ -87,7 +87,7 @@ const PlalistVideoCard = ({
         <input
           type="checkbox"
           className={`w-5 h-5 ${
-            isChecked ? "accent-slaty/40" : "accent-black"
+            isChecked ? "accent-blue-600" : "accent-black"
           } rounded cursor-pointer`}
           checked={isChecked}
           onChange={(e) => checkBoxHandler(e.target.checked)}
