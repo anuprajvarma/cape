@@ -358,7 +358,7 @@ const Course = () => {
                   />
                 </div>
               </div>
-              <div className="py-2 h-[586px] flex flex-col gap-4 rounded-xl overflow-y-auto">
+              <div className="py-2 flex flex-col gap-4 rounded-xl overflow-y-auto">
                 {playlists?.map((data, index) => {
                   const id = data.snippet?.playlistId;
                   const videoid = data.snippet?.resourceId.videoId;

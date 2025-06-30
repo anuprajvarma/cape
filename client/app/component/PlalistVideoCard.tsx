@@ -47,7 +47,7 @@ const PlalistVideoCard = ({
 
   return (
     <div
-      className={`flex gap-2 p-1 justify-between items-center ${
+      className={`flex gap-2 pr-2 justify-between items-center ${
         currentvideoId === videoId
           ? "bg-lightSlaty/70 rounded-sm"
           : "hover:bg-lightSlaty/70 transition duration-100 "
@@ -83,14 +83,16 @@ const PlalistVideoCard = ({
         </div>
       </button>
 
-      <input
-        type="checkbox"
-        className={`w-6 h-6 ${
-          isChecked ? "accent-slaty/40" : "accent-black"
-        } rounded cursor-pointer`}
-        checked={isChecked}
-        onChange={(e) => checkBoxHandler(e.target.checked)}
-      />
+      <div>
+        <input
+          type="checkbox"
+          className={`w-5 h-5 ${
+            isChecked ? "accent-slaty/40" : "accent-black"
+          } rounded cursor-pointer`}
+          checked={isChecked}
+          onChange={(e) => checkBoxHandler(e.target.checked)}
+        />
+      </div>
     </div>
   );
 };
