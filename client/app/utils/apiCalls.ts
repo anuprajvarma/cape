@@ -286,7 +286,7 @@ export const easyExplainFuntion = async ({
       messages: [
         {
           role: "user",
-          content: `Generate 10 multiple-choice quiz questions for beginners learning in english ${videoTitle}.
+          content: `Generate 10 multiple-choice quiz questions for beginners learning only in english ${videoTitle}.
 Format the response strictly in HTML:
 - Use <h1> for each question
 - Use <p> for each option (A, B, C, D)
