@@ -40,7 +40,28 @@ const discussionGetDataHandler = async (req, res) => {
   res.json({ discussionData });
 };
 
+const discussionDeleteHandler = async (req, res) => {
+  const { playlistId, videoId, name, content } = req.body;
+  console.log(playlistId, videoId, name, content);
+  const deleteDiscussion = await Discussion.findOneAndUpdate(
+    {
+      playlistId,
+      videoId,
+    },
+    {
+      $pull: {
+        discussions: {
+          name,
+          content,
+        },
+      },
+    }
+  );
+  res.json({ deleteDiscussion });
+};
+
 module.exports = {
   discussoinHandler,
   discussionGetDataHandler,
+  discussionDeleteHandler,
 };

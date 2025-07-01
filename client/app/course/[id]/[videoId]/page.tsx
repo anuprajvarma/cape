@@ -6,6 +6,8 @@ import PlalistVideoCard from "../../../component/PlalistVideoCard";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { playlistType2, discussionType } from "@/types";
 import { setIsOpen } from "../../../redux/slices/LoginModalSlice";
+import { AiOutlineDelete } from "react-icons/ai";
+import { toast } from "react-toastify";
 import {
   fetchDiscussionData,
   postDiscussionData,
@@ -190,6 +192,41 @@ const Course = () => {
       fetchLengths();
     }
   }, [playlists]);
+
+  const DeteleDiscussion = async ({
+    playlistId,
+    videoId,
+    name,
+    content,
+  }: {
+    playlistId: string;
+    videoId: string;
+    name: string;
+    content: string;
+  }) => {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/discussion/delete`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          playlistId,
+          videoId,
+          name,
+          content,
+        }),
+        credentials: "include",
+      }
+    );
+    const data = await res.json();
+    console.log(data.deleteDiscussion);
+    if (data.deleteDiscussion) {
+      toast.success("comment is delete", {
+        hideProgressBar: true,
+      });
+    }
+    setCommentStateUpdate(!commentStateUpdate);
+  };
 
   const discussionHandler = async () => {
     if (session.status === "authenticated") {
@@ -393,7 +430,7 @@ const Course = () => {
                         key={i}
                         // className={msg.sender === "user" ? "text-right" : "text-left"}
                       >
-                        <div className="flex w-[3rem] items-start h-[3rem] relative">
+                        <div className="flex w-[4rem] items-start h-[3rem] relative">
                           <Image
                             src={msg.image || "/code.jpg"}
                             alt="code"
@@ -404,11 +441,40 @@ const Course = () => {
                             className="rounded-full"
                           />
                         </div>
-                        <div className="flex flex-col">
+                        <div className="flex flex-col w-full">
                           <p className="text-white text-xs font-semibold">
                             {msg.name}
                           </p>
                           <p className="text-sm text-slaty">{msg.content}</p>
+                        </div>
+                        <div className="flex w-[3rem] items-center justify-center">
+                          <Tooltip.Provider delayDuration={0}>
+                            <Tooltip.Root>
+                              <Tooltip.Trigger asChild>
+                                <button
+                                  onClick={() =>
+                                    DeteleDiscussion({
+                                      playlistId: id as string,
+                                      videoId: videoId as string,
+                                      name: msg.name,
+                                      content: msg.content,
+                                    })
+                                  }
+                                >
+                                  <AiOutlineDelete className="text-xl hover:text-white transition duration-300" />
+                                </button>
+                              </Tooltip.Trigger>
+                              <Tooltip.Portal>
+                                <Tooltip.Content
+                                  side="top"
+                                  className="bg-lightSlaty text-white px-2 py-1 text-xs rounded shadow-md z-20"
+                                >
+                                  Delete
+                                  <Tooltip.Arrow className="fill-lightSlaty" />
+                                </Tooltip.Content>
+                              </Tooltip.Portal>
+                            </Tooltip.Root>
+                          </Tooltip.Provider>
                         </div>
                       </div>
                     ))}
