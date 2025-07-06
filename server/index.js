@@ -38,6 +38,10 @@ app.use("/api/searchs", searchRoute);
 app.use("/api/quizz", quizzRoute);
 app.use("/api/score", scoreRoute);
 
+app.get("/", (req, res) => {
+  res.send("Welcome to the backend of the course app");
+});
+
 app.listen(process.env.PORT, () =>
   console.log(`server is started on ${process.env.PORT}`)
 );
