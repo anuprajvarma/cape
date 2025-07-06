@@ -91,8 +91,12 @@ const Dashboard = () => {
             <p className="text-xl text-center text-slaty">
               You did not enrolled any courses
             </p>
-          ) : (
+          ) : session.data?.user ? (
             <p className="text-xl text-center text-slaty">Loading...</p>
+          ) : (
+            <p className="text-xl text-center text-slaty">
+              Sign in and add bookmark courses
+            </p>
           )}
         </div>
       </div>
