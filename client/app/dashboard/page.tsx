@@ -95,7 +95,7 @@ const Dashboard = () => {
             <p className="text-xl text-center text-slaty">Loading...</p>
           ) : (
             <p className="text-xl text-center text-slaty">
-              Sign in and add bookmark courses
+              Sign in and add enrolled in courses
             </p>
           )}
         </div>
