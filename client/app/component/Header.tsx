@@ -19,11 +19,10 @@ const Header = () => {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
-  // Function you want to call on outside click
-  const handleOutsideClick = () => {
-    setIsOpen(false); // or any other logic
-    console.log("Clicked outside!");
-  };
+  // const handleOutsideClick = () => {
+  //   setIsOpen(false); // or any other logic
+  //   console.log("Clicked outside!");
+  // };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -31,7 +30,7 @@ const Header = () => {
         buttonRef.current &&
         !buttonRef.current.contains(event.target as Node)
       ) {
-        handleOutsideClick();
+        // handleOutsideClick();
       }
     };
 
@@ -66,7 +65,7 @@ const Header = () => {
   ]);
 
   return (
-    <div className="w-full p-4 flex justify-center fixed top-0 z-30 shadow bg-[#101827]/80 backdrop-blur">
+    <div className="w-full p-4 flex justify-center fixed top-0 shadow bg-[#101827]/80 backdrop-blur z-50">
       <div
         className={`${
           path === `/course/${id}/${videoId}` ? "w-full" : "w-[70rem]"
@@ -130,7 +129,7 @@ const Header = () => {
               </button>
 
               {isOpenMenu && (
-                <div className="absolute flex flex-col gap-2 right-0 mt-2 p-2 text-lg border border-lightSlaty shadow-lg bg-mediumSlaty rounded-lg transition duration-300 z-50">
+                <div className="absolute flex flex-col gap-2 right-0 mt-2 p-2 text-lg border border-lightSlaty shadow-lg bg-mediumSlaty rounded-lg transition duration-300">
                   <Link
                     href="/"
                     className={`cursor-pointer hover:text-darkRed transition duration-300 ${
@@ -166,7 +165,7 @@ const Header = () => {
                 </div>
               )}
               {isOpen && (
-                <div className="absolute right-0 mt-2 border border-lightSlaty shadow-lg bg-mediumSlaty rounded-lg transition duration-300 z-50">
+                <div className="absolute right-0 mt-2 border border-lightSlaty shadow-lg bg-mediumSlaty rounded-lg transition duration-300">
                   <button
                     onClick={handleSignout}
                     className="w-full text-left px-4 py-2 rounded text-lightYellow"
