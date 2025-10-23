@@ -10,6 +10,8 @@ import {
   PointerSensor,
   closestCenter,
   DragEndEvent,
+  TouchSensor,
+  MouseSensor,
 } from "@dnd-kit/core";
 import {
   arrayMove,
@@ -85,23 +87,66 @@ const Dashboard: React.FC = () => {
   const { data: session } = useSession();
 
   // initialize drag sensors
+
   const sensors = useSensors(
+    useSensor(MouseSensor, {
+      activationConstraint: {
+        distance: 5, // Start dragging after moving 5px
+      },
+    }),
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 200, // Wait 200ms before activating
+        tolerance: 5, // or small movement tolerance
+      },
+    }),
     useSensor(PointerSensor, {
-      activationConstraint: { distance: 5 },
+      activationConstraint: {
+        distance: 5,
+      },
     })
   );
-
   // handle drag end
-  const handleDragEnd = (event: DragEndEvent) => {
+  const handleDragEnd = async (event: DragEndEvent) => {
     const { active, over } = event;
     if (!over || active.id === over.id) return;
+
+    console.log(active.id + " " + over.id);
 
     setEnrolledCoursePlaylist((items) => {
       const oldIndex = items.findIndex((item) => item.playlistId === active.id);
       const newIndex = items.findIndex((item) => item.playlistId === over.id);
-      return arrayMove(items, oldIndex, newIndex);
+      console.log(oldIndex + " " + newIndex);
+      const updatedItems = arrayMove(items, oldIndex, newIndex);
+
+      // ✅ Immediately send update to backend
+      updatePlaylistOrder(updatedItems);
+
+      return updatedItems;
     });
   };
+
+  async function updatePlaylistOrder(updatedItems: BookmarkPlaylistType[]) {
+    console.log(updatedItems);
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/enrolledCourse/updateOrder`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: session?.user?.email,
+            newOrder: updatedItems.map((p) => p.playlistId),
+          }),
+        }
+      );
+
+      if (!res.ok) throw new Error("Failed to update order");
+      console.log("✅ Order updated successfully");
+    } catch (err) {
+      console.error("❌ Error updating order:", err);
+    }
+  }
 
   useEffect(() => {
     setHasMounted(true);
@@ -127,7 +172,11 @@ const Dashboard: React.FC = () => {
       const data = await res.json();
       const enrolled = data.enrolledkCourse ?? [];
 
-      setEnrolledCoursePlaylist(enrolled);
+      const sortedEnrolled = [...enrolled].sort(
+        (a, b) => a.indexOrder - b.indexOrder
+      );
+
+      setEnrolledCoursePlaylist(sortedEnrolled);
       setCheckDataExist(enrolled.length === 0);
     };
 

@@ -347,6 +347,7 @@ const Courses = () => {
                     setGetDataCheck={setGetDataCheck}
                     getDataCheck={getDataCheck}
                     key={index}
+                    indexOrder={index}
                   />
                 );
               })

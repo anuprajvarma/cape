@@ -10,6 +10,7 @@ export interface CourseCardType {
   description: string;
   bookmark: boolean;
   getDataCheck: boolean;
+  indexOrder: number;
   setGetDataCheck: React.Dispatch<React.SetStateAction<boolean>>;
 }
 

@@ -11,6 +11,7 @@ const enrolledCourseHandler = async (req, res) => {
     description,
     firstVideoId,
     bookmark,
+    indexOrder,
     email,
   } = req.body;
   let enrolledkCourse = await EnrolledkCourse.findOne({
@@ -35,6 +36,7 @@ const enrolledCourseHandler = async (req, res) => {
       bookmark: bookmark,
       chapters: [],
       channelTitle: channelTitle,
+      indexOrder: indexOrder,
       channelImage: channelThumb,
     });
     // console.log(`create course enrolledcourse ${enrolledkCourse}`);
@@ -107,6 +109,33 @@ const deleteEnrolledCourseHandler = async (req, res) => {
   res.json({ deleteEnrolledCourseHandler });
 };
 
+const updateOrderHandler = async (req, res) => {
+  try {
+    const { email, newOrder } = req.body;
+    // newOrder = array of playlistIds in the new order
+
+    console.log(newOrder);
+
+    for (const [index, playlistId] of newOrder.entries()) {
+      const res = await EnrolledkCourse.findOneAndUpdate(
+        { email, playlistId },
+        { indexOrder: index },
+        { new: true } // ✅ return updated document
+      );
+      if (!res) {
+        console.log("❌ No document found for:", email, playlistId);
+      } else {
+        console.log(`✅ Updated ${playlistId} to index ${index}`);
+      }
+    }
+
+    res.status(200).json({ message: "Order updated successfully" });
+  } catch (error) {
+    console.error("Error updating order:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
 module.exports = {
   enrolledCourseHandler,
   getEnrolledCourseHandler,
@@ -114,4 +143,5 @@ module.exports = {
   appChapterHandler,
   removeChapterHandler,
   getChapterData,
+  updateOrderHandler,
 };

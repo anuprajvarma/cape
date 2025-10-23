@@ -30,6 +30,7 @@ const CourseCard = ({
   description,
   getDataCheck,
   setGetDataCheck,
+  indexOrder,
 }: CourseCardType) => {
   const router = useRouter();
   const session = useSession();
@@ -55,6 +56,7 @@ const CourseCard = ({
     id,
     getDataCheck,
     setGetDataCheck,
+    indexOrder,
   }: CourseCardType) => {
     if (session.status === "authenticated") {
       await fetch(
@@ -72,6 +74,7 @@ const CourseCard = ({
             description,
             firstVideoId,
             bookmark: true,
+            indexOrder: indexOrder,
             email: session.data?.user?.email,
           }),
           credentials: "include",
@@ -219,6 +222,7 @@ const CourseCard = ({
                   bookmark,
                   id,
                   getDataCheck,
+                  indexOrder,
                   setGetDataCheck,
                 })
               }
@@ -310,6 +314,7 @@ const CourseCard = ({
                             bookmark,
                             id,
                             getDataCheck,
+                            indexOrder,
                             setGetDataCheck,
                           })
                         }
