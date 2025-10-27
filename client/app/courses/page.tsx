@@ -73,17 +73,21 @@ const Courses = () => {
 
   useEffect(() => {
     const handleSearchData = async () => {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/searchs/getData`,
-        {
-          method: "GET",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-        }
-      );
-      const data = await res.json();
-      // console.log(`data.search ${data.searchData[0].title}`);
-      setSuggestionsArray(data.searchData[0].title);
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/searchs/getData`,
+          {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+          }
+        );
+        const data = await res.json();
+        // console.log(`data.search ${data.searchData[0].title}`);
+        setSuggestionsArray(data.searchData[0].title);
+      } catch (error) {
+        console.log(error);
+      }
     };
     handleSearchData();
   }, []);
