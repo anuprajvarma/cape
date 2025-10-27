@@ -66,8 +66,8 @@ const PopularCourses = () => {
     return hour;
   }
 
-  const hour = getRotatedKey();
-  console.log(`hour ${hour}`);
+  getRotatedKey();
+  // console.log(`hour ${hour}`);
 
   useEffect(() => {
     setHasMounted(true);

@@ -97,20 +97,25 @@ export async function fetchPlaylist({
 }
 
 export const handleEnrolled = async (email: string) => {
-  // console.log("step 2");
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/bookmarkCourse/getData`,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email,
-      }),
-      credentials: "include",
-    }
-  );
-  const data = await res.json();
-  return data.bookmarkCourse;
+  try {
+    // console.log("step 2");
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/bookmarkCourse/getData`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+        }),
+        credentials: "include",
+      }
+    );
+    const data = await res.json();
+    return data.bookmarkCourse;
+  } catch (error) {
+    console.log(error);
+    return;
+  }
 };
 
 export async function playlist(id: string) {
@@ -205,16 +210,25 @@ export async function loginFuntion({
   email: string;
   imageUrl: string;
 }) {
-  await fetch(`${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/auth/login`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      name,
-      email,
-      imageUrl,
-    }),
-    credentials: "include",
-  });
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/auth/login`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          email,
+          imageUrl,
+        }),
+        credentials: "include",
+      }
+    );
+    return res;
+  } catch (error) {
+    console.log(error);
+    return;
+  }
 }
 
 export const fetchDiscussionData = async ({

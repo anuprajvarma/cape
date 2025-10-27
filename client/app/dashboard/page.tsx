@@ -83,6 +83,7 @@ const Dashboard: React.FC = () => {
   >([]);
   const [hasMounted, setHasMounted] = useState(false);
   const [getDataCheck, setGetDataCheck] = useState(false);
+  const [dataLoading, setDataLoading] = useState<boolean>(false);
   const [checkDataExist, setCheckDataExist] = useState(false);
   const { data: session } = useSession();
 
@@ -156,28 +157,32 @@ const Dashboard: React.FC = () => {
   useEffect(() => {
     const handleEnrolled = async () => {
       if (!session?.user?.email) return;
+      setDataLoading(true);
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/enrolledCourse/getData`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email: session.user.email }),
+            credentials: "include",
+          }
+        );
 
-      console.log(`Fetching enrolled data for: ${session.user.email}`);
+        const data = await res.json();
 
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/enrolledCourse/getData`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: session.user.email }),
-          credentials: "include",
-        }
-      );
+        const enrolled = data.enrolledkCourse ?? [];
 
-      const data = await res.json();
-      const enrolled = data.enrolledkCourse ?? [];
+        const sortedEnrolled = [...enrolled].sort(
+          (a, b) => a.indexOrder - b.indexOrder
+        );
 
-      const sortedEnrolled = [...enrolled].sort(
-        (a, b) => a.indexOrder - b.indexOrder
-      );
-
-      setEnrolledCoursePlaylist(sortedEnrolled);
-      setCheckDataExist(enrolled.length === 0);
+        setEnrolledCoursePlaylist(sortedEnrolled);
+        setCheckDataExist(enrolled.length === 0);
+      } catch (error) {
+        setDataLoading(false);
+        console.log(error);
+      }
     };
 
     handleEnrolled();
@@ -213,7 +218,7 @@ const Dashboard: React.FC = () => {
                 <p className="text-xl text-center text-slaty">
                   You have not enrolled in any courses.
                 </p>
-              ) : session?.user ? (
+              ) : dataLoading ? (
                 <p className="text-xl text-center text-slaty">Loading...</p>
               ) : (
                 <p className="text-xl text-center text-slaty">

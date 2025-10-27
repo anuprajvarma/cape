@@ -28,7 +28,7 @@ const googleAuthHandle = async (req, res) => {
     secure: false, // true in production with HTTPS
     sameSite: "lax", // or "none" with secure: true if cross-site
   });
-  res.json({ user, redirectTo: "/" });
+  res.json(user);
 };
 
 module.exports = { googleAuthHandle, handleSignout };

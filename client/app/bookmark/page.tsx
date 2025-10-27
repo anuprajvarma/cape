@@ -29,6 +29,7 @@ const Bookmark = () => {
   const [hasMounted, setHasMounted] = useState(false);
   const [checkDataExist, setCheckDataExist] = useState<boolean>(false);
   const [getDataCheck, setGetDataCheck] = useState<boolean>(false);
+  const [dataLoading, setDataLoading] = useState<boolean>(false);
   const session = useSession();
 
   useEffect(() => {
@@ -37,14 +38,19 @@ const Bookmark = () => {
 
   useEffect(() => {
     const load = async () => {
+      setDataLoading(true);
       const email = session.data?.user?.email as string;
       const result = await handleEnrolled(email);
-      setBookmarkCoursePlaylist(result);
-      if (result.length > 0) {
-        setCheckDataExist(false);
-      } else {
-        setCheckDataExist(true);
+      console.log(`resul ${result}`);
+      if (result) {
+        setBookmarkCoursePlaylist(result);
+        if (result.length > 0) {
+          setCheckDataExist(false);
+        } else {
+          setCheckDataExist(true);
+        }
       }
+      setDataLoading(false);
     };
     if (session.data?.user !== undefined) {
       load();
@@ -82,7 +88,7 @@ const Bookmark = () => {
               <p className="text-xl text-slaty">
                 You did not bookmark any courses
               </p>
-            ) : session.data?.user ? (
+            ) : dataLoading ? (
               <p className="text-xl text-center text-slaty">Loading...</p>
             ) : (
               <p className="text-xl text-center text-slaty">

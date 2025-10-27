@@ -9,6 +9,13 @@ import { SiSololearn } from "react-icons/si";
 import { FaArrowRight } from "react-icons/fa";
 import { IoMenu } from "react-icons/io5";
 import { loginFuntion, signOutFuntion } from "../utils/apiCalls";
+import { toast } from "react-toastify";
+
+type User = {
+  name: string;
+  email: string;
+  imageUrl: string;
+};
 
 const Header = () => {
   const session = useSession();
@@ -16,6 +23,9 @@ const Header = () => {
   const param = useParams();
   const { id, videoId } = param;
   const [isOpen, setIsOpen] = useState(false);
+  const [user, setUser] = useState<User>();
+  const [loginLoading, setLoginLoading] = useState<boolean>(false);
+  const [isLogin, setIsLogin] = useState<boolean>(false);
   const [isOpenMenu, setIsOpenMenu] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -48,13 +58,27 @@ const Header = () => {
 
   useEffect(() => {
     const handleGoogleAuthSubmit = async () => {
-      loginFuntion({
+      const res = await loginFuntion({
         name: session.data?.user?.name ?? "",
         email: session.data?.user?.email ?? "",
         imageUrl: session.data?.user?.image ?? "",
       });
+      const data = await res?.json();
+      if (!data) {
+        setLoginLoading(false);
+
+        toast.error("Error while login try after sometime", {
+          hideProgressBar: true,
+        });
+        return;
+      }
+
+      setUser(data);
+      setIsLogin(true);
+      setLoginLoading(false);
     };
     if (session.status === "authenticated") {
+      setLoginLoading(true);
       handleGoogleAuthSubmit();
     }
   }, [
@@ -105,7 +129,7 @@ const Header = () => {
           </Link>
         </div>
         <div>
-          {session.status === "authenticated" ? (
+          {isLogin ? (
             <div className="relative">
               <div className="flex justify-center items-center w-11 h-5">
                 <button
@@ -114,7 +138,7 @@ const Header = () => {
                   className="hidden sm:flex items-center justify-center rounded-full overflow-hidden focus:outline-none"
                 >
                   <Image
-                    src={(session.data?.user?.image as string) || "/code.jpg"}
+                    src={(user?.imageUrl as string) || "/code.jpg"}
                     alt="Profile"
                     quality={100}
                     sizes="60px"
@@ -180,7 +204,7 @@ const Header = () => {
               onClick={() => signIn("google")}
               className="px-5 py-[10px] flex gap-2 items-center rounded-[8px] cursor-pointer font-semibold text-sm bg-lightBlue hover:bg-lightBlue/80 transition duration-300"
             >
-              <p>Sign in</p>
+              {loginLoading ? <p>Loading</p> : <p>Sign in</p>}
               <FaArrowRight />
             </button>
           )}
