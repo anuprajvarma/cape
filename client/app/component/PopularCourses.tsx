@@ -167,6 +167,7 @@ const PopularCourses = () => {
                   channelThumb={channelThumb as string}
                   setGetDataCheck={setGetDataCheck}
                   getDataCheck={getDataCheck}
+                  indexOrder={index}
                   key={index}
                 />
               );
