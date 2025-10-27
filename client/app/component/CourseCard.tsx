@@ -59,42 +59,48 @@ const CourseCard = ({
     indexOrder,
   }: CourseCardType) => {
     if (session.status === "authenticated") {
-      await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/enrolledCourse`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            title,
-            channelTitle,
-            thumbnails,
-            length,
-            channelThumb,
-            id,
-            description,
-            firstVideoId,
-            bookmark: true,
-            indexOrder: indexOrder,
-            email: session.data?.user?.email,
-          }),
-          credentials: "include",
-        }
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.isExist) {
-            // console.log(data.isExist);
-            toast.success("course is already exist", {
-              hideProgressBar: true,
-            });
-          } else {
-            // console.log(data.isExist);
-            toast.success("course is enrolled", {
-              hideProgressBar: true,
-            });
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/enrolledCourse`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              title,
+              channelTitle,
+              thumbnails,
+              length,
+              channelThumb,
+              id,
+              description,
+              firstVideoId,
+              bookmark: true,
+              indexOrder: indexOrder,
+              email: session.data?.user?.email,
+            }),
+            credentials: "include",
           }
+        );
+        const data = await res.json();
+        if (data.isExist) {
+          console.log(data);
+          toast.success("course is already exist", {
+            hideProgressBar: true,
+          });
+        } else {
+          console.log(data.isExist);
+          toast.success("course is enrolled", {
+            hideProgressBar: true,
+          });
+        }
+
+        setGetDataCheck(!getDataCheck);
+      } catch (error) {
+        console.log(error);
+        toast.error(`${error}`, {
+          hideProgressBar: true,
         });
-      setGetDataCheck(!getDataCheck);
+      }
     } else {
       dispatch(setIsOpen(true));
     }
@@ -133,38 +139,45 @@ const CourseCard = ({
     setGetDataCheck,
   }: CourseCardType) => {
     if (session.status === "authenticated") {
-      await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/bookmarkCourse`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            title,
-            channelTitle,
-            thumbnails,
-            length,
-            channelThumb,
-            id,
-            bookmark: true,
-            firstVideoId,
-            email: session.data?.user?.email,
-          }),
-          credentials: "include",
-        }
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.isExist) {
-            toast.success("course is already bookmark", {
-              hideProgressBar: true,
-            });
-          } else {
-            toast.success("course is bookmarke", {
-              hideProgressBar: true,
-            });
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/bookmarkCourse`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              title,
+              channelTitle,
+              thumbnails,
+              length,
+              channelThumb,
+              id,
+              bookmark: true,
+              firstVideoId,
+              email: session.data?.user?.email,
+            }),
+            credentials: "include",
           }
+        );
+        const data = await res.json();
+        if (data.isExist) {
+          console.log(data);
+          toast.success("course is already bookmark", {
+            hideProgressBar: true,
+          });
+        } else {
+          console.log(data.isExist);
+          toast.success("course is bookmarke", {
+            hideProgressBar: true,
+          });
+        }
+        setGetDataCheck(!getDataCheck);
+      } catch (error) {
+        console.log(error);
+        toast.error(`${error}`, {
+          hideProgressBar: true,
         });
-      setGetDataCheck(!getDataCheck);
+      }
     } else {
       dispatch(setIsOpen(true));
     }
