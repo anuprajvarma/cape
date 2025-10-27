@@ -73,6 +73,7 @@ const Bookmark = () => {
                     channelThumb={data.channelImage}
                     getDataCheck={getDataCheck}
                     setGetDataCheck={setGetDataCheck}
+                    indexOrder={index}
                     key={index}
                   />
                 );
