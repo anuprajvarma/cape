@@ -97,7 +97,7 @@ const EnrolledCard = ({
 
   return (
     <div className="flex justify-center lg:justify-between gap-8">
-      <div className="flex flex-col sm:flex-row w-[20rem] sm:w-[37rem] md:w-[52rem] min-h-[12rem] rounded-lg bg-mediumSlaty border border-lightSlaty">
+      <div className="flex flex-col sm:flex-row w-full sm:w-[37rem] md:w-[52rem] min-h-[12rem] rounded-lg bg-mediumSlaty border border-lightSlaty">
         <div className="flex w-full sm:w-[24rem] h-[13rem] relative">
           <Image
             src={thumbnail || "/code.jpg"}
