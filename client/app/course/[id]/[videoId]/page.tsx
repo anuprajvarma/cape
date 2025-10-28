@@ -255,8 +255,8 @@ const Course = () => {
       <LoginModal />
       <div className="w-full -z-20 py-4 px-1 sm:px-4 flex flex-col gap-2 justify-center text-slaty mt-16">
         <div className="w-full flex justify-between gap-2">
-          <div className="w-[63rem] flex flex-col gap-4">
-            <div className="flex w-full h-[20rem] items-center justify-center sm:h-[38rem]">
+          <div className="w-full flex flex-col gap-4">
+            <div className="flex w-full h-[20rem] items-center justify-center sm:h-[41.6rem] ">
               <iframe
                 src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
                 className="rounded-lg w-full h-full"
@@ -265,19 +265,6 @@ const Course = () => {
                 title="YouTube video player"
               />
             </div>
-            {/* <div className="flex lg:hidden justify-between">
-              <p className="font-semibold text-white line-clamp-1">
-                {videoTitle}
-              </p>
-              <div className="flex gap-2 font-medium text-slaty/80">
-                <p className="text-slaty sm:flex hidden">Progress -</p>
-                <div>
-                  {typeof id === "string" && playlistLengths[id] && (
-                    <p>{`${completedChapters?.length}/${playlistLengths[id]}`}</p>
-                  )}
-                </div>
-              </div>
-            </div> */}
             <div className="flex gap-2 justify-between bg-mediumSlaty border-lightSlaty p-1 sm:p-2 rounded-lg">
               <p className="text-lg font-semibold text-white line-clamp-1">
                 {videoTitle}
@@ -368,7 +355,7 @@ const Course = () => {
             />
           </div>
           <div className="flex flex-col gap-5">
-            <div className="w-[25rem] h-[665px] border border-lightSlaty rounded-xl hidden lg:flex flex-col">
+            <div className="w-[30rem] h-[41.6rem] border border-lightSlaty rounded-xl hidden lg:flex flex-col">
               <div className="border-b border-lightSlaty h-[3rem] bg-mediumSlaty rounded-t-xl p-2 flex justify-between items-center">
                 <div className="flex flex-col text-sm">
                   <div className="flex gap-2 font-semibold text-base text-slaty/90">
@@ -419,11 +406,11 @@ const Course = () => {
             </div>
             <div>
               {discussionData ? (
-                <div className="w-full h-[47.7rem] border border-lightSlaty rounded-xl lg:flex lg:flex-col hidden">
+                <div className="w-full h-full min-h-[50.4rem] border border-lightSlaty rounded-xl lg:flex lg:flex-col hidden">
                   <div className="w-full items-center text-center font-semibold py-4 justify-center bg-mediumSlaty rounded-t-xl">
                     Discussion
                   </div>
-                  <div className="space-y-2 w-full h-[40rem] p-4 rounded overflow-y-auto">
+                  <div className="space-y-2 w-full h-full p-4 rounded overflow-y-auto">
                     {discussionData?.map((msg, i) => (
                       <div
                         className="flex gap-4"

@@ -290,7 +290,7 @@ const NotesGpt = ({
         )}
         {gptcheck ? (
           <div className="w-full h-full">
-            <div className="space-y-2 w-full h-[36rem] p-1 sm:p-12 rounded overflow-y-auto">
+            <div className="space-y-2 w-full h-full p-1 sm:p-12 rounded overflow-y-auto">
               {chats?.map((msg, i) => (
                 <div key={i}>
                   <div className="flex w-full justify-end text-xl text-white py-2 sm:py-4">

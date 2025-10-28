@@ -131,7 +131,7 @@ export default function Editor({
   };
 
   return (
-    <div className="h-[40rem] w-full sm:p-12">
+    <div className="h-full w-full sm:p-12">
       {session.status === "authenticated" ? (
         <BlockNoteView
           className="h-full w-full"
