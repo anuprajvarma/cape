@@ -3,13 +3,14 @@
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { usePathname, useParams } from "next/navigation";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { SiSololearn } from "react-icons/si";
 import { FaArrowRight } from "react-icons/fa";
 import { IoMenu } from "react-icons/io5";
 import { loginFuntion, signOutFuntion } from "../utils/apiCalls";
 import { toast } from "react-toastify";
+import useClickOutside from "../utils/outsideClick";
 
 type User = {
   name: string;
@@ -27,29 +28,9 @@ const Header = () => {
   const [loginLoading, setLoginLoading] = useState<boolean>(false);
   const [isLogin, setIsLogin] = useState<boolean>(false);
   const [isOpenMenu, setIsOpenMenu] = useState(false);
-  const buttonRef = useRef<HTMLButtonElement>(null);
-
-  // const handleOutsideClick = () => {
-  //   setIsOpen(false); // or any other logic
-  //   console.log("Clicked outside!");
-  // };
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        buttonRef.current &&
-        !buttonRef.current.contains(event.target as Node)
-      ) {
-        // handleOutsideClick();
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  const inputRef = useClickOutside<HTMLButtonElement>(() => {
+    setIsOpen(false);
+  });
 
   const handleSignout = async () => {
     await signOut();
@@ -133,7 +114,7 @@ const Header = () => {
             <div className="relative">
               <div className="flex justify-center items-center w-11 h-5">
                 <button
-                  ref={buttonRef}
+                  ref={inputRef}
                   onClick={() => setIsOpen(!isOpen)}
                   className="hidden sm:flex items-center justify-center rounded-full overflow-hidden focus:outline-none"
                 >

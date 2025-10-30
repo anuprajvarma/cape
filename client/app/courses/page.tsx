@@ -9,6 +9,7 @@ import { fetchPlaylist } from "../utils/apiCalls";
 import LoginModal from "../component/LoginModal";
 import CourseLinkModal from "../component/CourseLinkModal";
 import { playlistType } from "@/types";
+import useClickOutside from "../utils/outsideClick";
 
 const CourseCard = dynamic(() => import("../component/CourseCard"), {
   ssr: false,
@@ -49,6 +50,8 @@ function getRotatedKey(): string {
 
 const apikey = getRotatedKey();
 
+
+
 const Courses = () => {
   const [playlists, setPopularPlaylist] = useState<playlistType[]>([]);
   const [playlistLengths, setPlaylistLengths] = useState<
@@ -65,6 +68,9 @@ const Courses = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const [getDataCheck, setGetDataCheck] = useState<boolean>(false);
+  const inputRef = useClickOutside<HTMLInputElement>(() => {
+    setShowSuggestions(false);
+  });
 
   const [topic, setTopic] = useState("reactjs");
 
@@ -256,6 +262,7 @@ const Courses = () => {
                 <div className="flex h-full flex-col">
                   <input
                     type="text"
+                    ref={inputRef}
                     value={searchQuery}
                     placeholder="Search your favourite plalist"
                     className="sm:w-[30rem] h-full py-6 px-4 outline-none rounded-l-xl focus:border bg-lightSlaty focus:border-slaty/30 text-slaty placeholder-slaty/50"
@@ -316,7 +323,7 @@ const Courses = () => {
                   <Tooltip.Portal>
                     <Tooltip.Content
                       side="top"
-                      className="bg-lightSlaty text-slaty px-3 py-2 text-sm rounded shadow-md z-20"
+                      className="bg-lightSlaty text-slaty px-3 py-2 text-sm rounded shadow-md z-50"
                     >
                       Search with your voice
                       <Tooltip.Arrow className="fill-lightSlaty" />
