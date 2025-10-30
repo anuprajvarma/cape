@@ -206,7 +206,7 @@ const NotesGpt = ({
     const quizzHandler = async () => {
       try {
         const result = await easyExplainFuntion({ videoTitle });
-        setQuizz(result);
+        setQuizz(result ?? []);
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/quizz/addQiuzzes`,
           {
