@@ -6,6 +6,7 @@ import { Providers } from "./redux/provider";
 import Toaster from "./component/Toaster";
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
+import Header from "./component/Header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,6 +35,7 @@ export default function RootLayout({
       >
         <Providers>
           <SessionProvider>
+            <Header />
             {children}
             <Toaster />
           </SessionProvider>
