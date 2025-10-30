@@ -4,13 +4,11 @@ import dynamic from "next/dynamic";
 import React, { useEffect, useState, useRef } from "react";
 import { GrMicrophone } from "react-icons/gr";
 import { IoSearch } from "react-icons/io5";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState, AppDispatch } from "../redux/store";
 import * as Tooltip from "@radix-ui/react-tooltip";
-import { setPopularPlaylist } from "../redux/slices/playlistSlice";
 import { fetchPlaylist } from "../utils/apiCalls";
 import LoginModal from "../component/LoginModal";
 import CourseLinkModal from "../component/CourseLinkModal";
+import { playlistType } from "@/types";
 
 const CourseCard = dynamic(() => import("../component/CourseCard"), {
   ssr: false,
@@ -52,8 +50,7 @@ function getRotatedKey(): string {
 const apikey = getRotatedKey();
 
 const Courses = () => {
-  const playlists = useSelector((state: RootState) => state.playlist);
-  const dispatch = useDispatch<AppDispatch>();
+  const [playlists, setPopularPlaylist] = useState<playlistType[]>([]);
   const [playlistLengths, setPlaylistLengths] = useState<
     Record<string, string>
   >({});
@@ -100,8 +97,9 @@ const Courses = () => {
     async function load() {
       const max = "50";
       if (apikey) {
+        setPopularPlaylist([]);
         const result = await fetchPlaylist({ max, topic, apikey });
-        dispatch(setPopularPlaylist(result));
+        setPopularPlaylist(result);
         if (result.length > 0) {
           setCheckDataExist(false);
         } else {
@@ -110,7 +108,7 @@ const Courses = () => {
       }
     }
     load();
-  }, [topic, dispatch]);
+  }, [topic]);
 
   useEffect(() => {
     const fetchLengths = async () => {
