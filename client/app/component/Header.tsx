@@ -139,7 +139,7 @@ const Header = () => {
 
               {isOpenMenu && (
                 <div className="fixed flex flex-col gap-2 justify-between h-screen w-6/12 right-0 -top-2 mt-2 p-4 text-lg border-l border-lightSlaty shadow-lg bg-mediumSlaty transition duration-300">
-                  <div className="flex flex-col gap-4">
+                  <div className="flex flex-col gap-8">
                     <div className="flex justify-between">
                       <button
                         className="font-semibold text-2xl"

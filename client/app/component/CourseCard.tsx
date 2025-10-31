@@ -186,14 +186,13 @@ const CourseCard = ({
   return (
     <>
       <div className="w-full sm:w-[20rem] h-[346px] flex flex-col gap-3 bg-mediumSlaty border border-lightSlaty rounded-lg">
-        <div className="flex h-[13rem] relative">
+        <div className="h-[13rem] relative">
           <Image
             src={thumbnails || "/code.jpg"}
             alt="playlist thumbnail"
             quality={100}
-            sizes="80px"
+            sizes="(max-width: 768rem) 80rem, 160rem"
             fill
-            style={{ objectFit: "cover" }}
             className="rounded-lg"
           />
         </div>
@@ -210,9 +209,8 @@ const CourseCard = ({
                       src={channelThumb || "/code.jpg"}
                       alt="playlist thumbnail"
                       quality={100}
-                      sizes="80px"
+                      sizes="(max-width: 768px) 80px, 160px"
                       fill
-                      style={{ objectFit: "cover" }}
                       className="rounded-full"
                     />
                   </div>
