@@ -8,8 +8,9 @@ import Image from "next/image";
 import { SiSololearn } from "react-icons/si";
 import { FaArrowRight } from "react-icons/fa";
 import { IoMenu } from "react-icons/io5";
-import { loginFuntion, signOutFuntion } from "../utils/apiCalls";
 import { toast } from "react-toastify";
+
+import { loginFuntion, signOutFuntion } from "../utils/apiCalls";
 import useClickOutside from "../utils/outsideClick";
 
 type User = {
@@ -28,7 +29,7 @@ const Header = () => {
   const [loginLoading, setLoginLoading] = useState<boolean>(false);
   const [isLogin, setIsLogin] = useState<boolean>(false);
   const [isOpenMenu, setIsOpenMenu] = useState(false);
-  const inputRef = useClickOutside<HTMLButtonElement>(() => {
+  const inputRef = useClickOutside<HTMLDivElement>(() => {
     setIsOpen(false);
   });
 
@@ -109,13 +110,14 @@ const Header = () => {
             Dashboard
           </Link>
         </div>
-        <div>
+        <div ref={inputRef}>
           {isLogin ? (
             <div className="relative">
               <div className="flex justify-center items-center w-11 h-5">
                 <button
-                  ref={inputRef}
-                  onClick={() => setIsOpen(!isOpen)}
+                  onClick={() => {
+                    setIsOpen(!isOpen);
+                  }}
                   className="hidden sm:flex items-center justify-center rounded-full overflow-hidden focus:outline-none"
                 >
                   <Image
