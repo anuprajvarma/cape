@@ -60,9 +60,9 @@ const Bookmark = () => {
   return (
     <>
       <CourseLinkModal />
-      <div className="w-full -z-20 py-[2rem] px-4 text-black flex justify-center mt-16">
-        <div className="w-[70rem] flex flex-col items-center gap-12">
-          <div className="flex flex-wrap gap-8 items-center justify-center">
+      <div className="w-full h-[90vh] -z-20 py-[2rem] px-4 text-black flex justify-center mt-16">
+        <div className="w-[70rem] h-full flex flex-col items-center gap-12">
+          <div className="flex flex-wrap gap-8 h-full justify-center">
             {bookmarkCoursePlaylist.length > 0 ? (
               bookmarkCoursePlaylist?.map((data, index) => {
                 if (!hasMounted) return null;
@@ -91,9 +91,11 @@ const Bookmark = () => {
             ) : dataLoading ? (
               <p className="text-xl text-center text-slaty">Loading...</p>
             ) : (
-              <p className="text-xl text-center text-slaty">
-                Sign in and add bookmark courses
-              </p>
+              <div className="h-full w-full flex justify-center items-center">
+                <p className="text-xl text-center text-slaty">
+                  You are not Sign in
+                </p>
+              </div>
             )}
           </div>
         </div>

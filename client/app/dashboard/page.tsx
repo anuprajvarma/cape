@@ -193,8 +193,8 @@ const Dashboard: React.FC = () => {
   return (
     <>
       <CourseLinkModal />
-      <div className="w-full py-8 px-4 text-black flex justify-center mt-16">
-        <div className="w-[70rem] flex flex-col gap-12">
+      <div className="w-full h-[90vh] py-8 px-4 text-black flex justify-center mt-16">
+        <div className="w-[70rem] h-full flex flex-col gap-12">
           <DndContext
             sensors={sensors}
             collisionDetection={closestCenter}
@@ -221,9 +221,11 @@ const Dashboard: React.FC = () => {
               ) : dataLoading ? (
                 <p className="text-xl text-center text-slaty">Loading...</p>
               ) : (
-                <p className="text-xl text-center text-slaty">
-                  Sign in to see your enrolled courses.
-                </p>
+                <div className="h-full w-full flex justify-center items-center">
+                  <p className="text-xl text-center text-slaty">
+                    You are not Sign in
+                  </p>
+                </div>
               )}
             </SortableContext>
           </DndContext>

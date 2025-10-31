@@ -50,8 +50,6 @@ function getRotatedKey(): string {
 
 const apikey = getRotatedKey();
 
-
-
 const Courses = () => {
   const [playlists, setPopularPlaylist] = useState<playlistType[]>([]);
   const [playlistLengths, setPlaylistLengths] = useState<
@@ -171,6 +169,7 @@ const Courses = () => {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Enter") {
+        setShowSuggestions(false);
         myFunction();
       }
 
