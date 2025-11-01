@@ -255,21 +255,21 @@ const Courses = () => {
       <CourseLinkModal />
       <div className="w-full py-[2rem] px-4 text-black flex justify-center mt-16">
         <div className="w-[70rem] flex flex-col gap-12">
-          <div>
-            <div className="flex gap-2 items-center justify-center">
-              <div className="flex rounded-xl h-[3rem]">
-                <div className="flex h-full flex-col">
+          <div className="w-full">
+            <div className="flex gap-2 items-center justify-center w-full">
+              <div className="flex rounded-xl h-[3rem] sm:w-[33rem] w-full">
+                <div className="flex sm:w-[30rem] w-full h-full flex-col">
                   <input
                     type="text"
                     ref={inputRef}
                     value={searchQuery}
                     placeholder="Search your favourite plalist"
-                    className="sm:w-[30rem] h-full py-6 px-4 outline-none rounded-l-xl focus:border bg-lightSlaty focus:border-slaty/30 text-slaty placeholder-slaty/50"
+                    className="sm:w-[30rem] h-full w-full py-6 px-4 outline-none rounded-l-lg focus:border bg-lightSlaty focus:border-slaty/30 text-slaty placeholder-slaty/50"
                     onChange={handleChange}
                   />
                   {showSuggestions && filteredSuggestions.length > 0 && (
                     <ul className="flex flex-col z-30 justify-center items-center mt-1 w-full">
-                      <div className="w-[30rem] bg-lightSlaty rounded-xl">
+                      <div className="sm:w-[30rem] w-full bg-lightSlaty rounded-lg">
                         {filteredSuggestions.map((suggestion, index) => (
                           <li
                             key={index}
