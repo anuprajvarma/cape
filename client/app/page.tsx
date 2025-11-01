@@ -27,42 +27,43 @@ export default function Page() {
   return (
     <>
       <LoginModal />
-      <div className="w-full py-[4rem] px-4 text-black flex justify-center mt-12">
+      <div className="w-full py-[4rem] px-4 text-black flex justify-center mt-[3rem] sm:mt-[5rem]">
         <div className="w-[70rem]">
-          <div className="w-full flex flex-col justify-between gap-12">
-            <div className="w-full h-[18rem] flex flex-col items-center gap-6">
-              <div className="font-semibold w-full text-white text-center text-2xl sm:text-4xl md:text-5xl lg:text-6xl">
-                <p>Distraction-free YouTube learning with</p>
-                <p>with streaks, notes, and AI help.</p>
-              </div>
-              <div className="font-medium w-full text-slaty/50 text-center lg:text-xl">
-                <p>
-                  Effortless, distraction-free YouTube learning with daily
-                  streak tracking.
+          <div className="w-full flex flex-col justify-between gap-10">
+            <div className="w-full flex flex-col items-center gap-6 sm:gap-10">
+              <div className="font-semibold w-full text-white text-center sm:block hidden">
+                <p className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl">
+                  Distraction-free YouTube learning
                 </p>
-                <p>
-                  make notes with Notion and get playlist-specific help via AI
-                  chatbot.
+                <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl">
+                  with streaks, notes and AI support
                 </p>
               </div>
-              <div className="flex gap-8">
+              <p className="sm:hidden block font-semibold w-full text-white text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl">
+                Distraction-free YouTube learning with streaks, notes and AI
+                support
+              </p>
+              <div className="flex gap-3 sm:gap-8">
                 <Link
                   href="/courses"
-                  className="px-6 py-3 rounded-[6px] cursor-pointer font-semibold bg-lightBlue hover:bg-lightBlue/80 text-white text-md transition duration-300"
+                  className="px-3 py-2 text-center flex items-center sm:px-6 sm:py-3 rounded-[6px] cursor-pointer font-semibold bg-lightBlue hover:bg-lightBlue/80 text-white text-md transition duration-300"
                 >
                   Get started
                 </Link>
                 <div className="flex gap-2 items-center">
                   <button onClick={handlePlay}>
-                    <IoPlayCircleOutline className="text-5xl text-slaty/50 hover:text-slaty/80 cursor-pointer hover:text-darkRed transition duration-300" />
+                    <IoPlayCircleOutline className="text-4xl sm:text-5xl text-slaty/50 hover:text-slaty/80 cursor-pointer hover:text-darkRed transition duration-300" />
                   </button>
-                  <p className="font-semibold text-xl text-white">
+                  <p className="font-semibold text-xl text-white sm:hidden block">
+                    play
+                  </p>
+                  <p className="font-semibold text-xl text-white sm:block hidden">
                     how it&apos;s work
                   </p>
                 </div>
               </div>
             </div>
-            <div className="w-full flex items-center pt-2 justify-center">
+            <div className="w-full flex items-center justify-center">
               <div className="w-full h-[20rem] sm:w-[40rem] lg:w-[50rem] sm:h-[30rem] rounded-lg flex">
                 <iframe
                   title="Intro Video"

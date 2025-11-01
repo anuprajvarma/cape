@@ -141,12 +141,12 @@ const PopularCourses = () => {
   }, [playlists]);
 
   return (
-    <div className="flex flex-col gap-[2rem] sm:gap-[4rem] pt-[6rem] w-full">
+    <div className="flex flex-col gap-[2rem] sm:gap-[3rem] pt-[3rem] w-full">
       <p className="text-center font-semibold text-2xl sm:text-4xl text-white">
         Popular Courses
       </p>
-      <div className="flex flex-col gap-[5rem]">
-        <div className="flex flex-wrap gap-16 items-center justify-center">
+      <div className="flex flex-col gap-8 sm:gap-14">
+        <div className="flex flex-wrap gap-8 items-center justify-center">
           {playlists.length > 0 ? (
             playlists?.map((data, index) => {
               const id = data.id?.playlistId;
