@@ -2,12 +2,12 @@
 
 import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
+import { isMobile } from "react-device-detect";
 import { useSession } from "next-auth/react";
 import {
   DndContext,
   useSensor,
   useSensors,
-  PointerSensor,
   closestCenter,
   DragEndEvent,
   TouchSensor,
@@ -87,27 +87,16 @@ const Dashboard: React.FC = () => {
   const [checkDataExist, setCheckDataExist] = useState(false);
   const { data: session } = useSession();
 
-  // initialize drag sensors
+  const mouseSensor = useSensor(MouseSensor, {
+    activationConstraint: { distance: 5 },
+  });
 
-  const sensors = useSensors(
-    useSensor(MouseSensor, {
-      activationConstraint: {
-        distance: 5, // Start dragging after moving 5px
-      },
-    }),
-    useSensor(TouchSensor, {
-      activationConstraint: {
-        delay: 200, // Wait 200ms before activating
-        tolerance: 5, // or small movement tolerance
-      },
-    }),
-    useSensor(PointerSensor, {
-      activationConstraint: {
-        distance: 5,
-      },
-    })
-  );
-  // handle drag end
+  const touchSensor = useSensor(TouchSensor, {
+    activationConstraint: { delay: 200, tolerance: 5 },
+  });
+
+  const sensors = useSensors(isMobile ? touchSensor : mouseSensor);
+
   const handleDragEnd = async (event: DragEndEvent) => {
     const { active, over } = event;
     if (!over || active.id === over.id) return;
