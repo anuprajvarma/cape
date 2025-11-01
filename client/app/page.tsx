@@ -64,7 +64,7 @@ export default function Page() {
               </div>
             </div>
             <div className="w-full flex items-center justify-center">
-              <div className="w-full h-[20rem] sm:w-[40rem] lg:w-[50rem] sm:h-[30rem] rounded-lg flex">
+              <div className="w-full h-[20rem] lg:w-[60rem] lg:h-[35rem] sm:h-[30rem] rounded-lg flex">
                 <iframe
                   title="Intro Video"
                   ref={iframeRef}
