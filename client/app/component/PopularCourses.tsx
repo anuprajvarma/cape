@@ -38,6 +38,34 @@ const YOUTUBE_API_KEY = [
   process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_23,
 ];
 
+for (let i = 1; i <= 23; i++) {
+  console.log(`KEY ${i}:`, process.env[`NEXT_PUBLIC_YOUTUBE_API_KEY_${i}`]);
+}
+
+console.log("KEY 1:", process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_1);
+console.log("KEY 2:", process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_2);
+console.log("KEY 3:", process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_3);
+console.log("KEY 4:", process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_4);
+console.log("KEY 5:", process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_5);
+console.log("KEY 6:", process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_6);
+console.log("KEY 7:", process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_7);
+console.log("KEY 8:", process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_8);
+console.log("KEY 9:", process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_9);
+console.log("KEY 10:", process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_10);
+console.log("KEY 11:", process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_11);
+console.log("KEY 12:", process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_12);
+console.log("KEY 13:", process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_13);
+console.log("KEY 14:", process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_14);
+console.log("KEY 15:", process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_15);
+console.log("KEY 16:", process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_16);
+console.log("KEY 17:", process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_17);
+console.log("KEY 18:", process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_18);
+console.log("KEY 19:", process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_19);
+console.log("KEY 20:", process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_20);
+console.log("KEY 21:", process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_21);
+console.log("KEY 22:", process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_22);
+console.log("KEY 23:", process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_23);
+
 function getRotatedKey(): string {
   const now = new Date();
   const hour = now.getUTCHours(); // use UTC for consistency
@@ -98,13 +126,13 @@ const PopularCourses = () => {
           const id = item.id?.playlistId;
           if (id) {
             const lenthRes = await fetch(
-              `https://www.googleapis.com/youtube/v3/playlists?part=contentDetails&id=${id}&key=${apikey}`
+              `https://www.googleapis.com/youtube/v3/playlists?part=contentDetails&id=${id}&key=${apikey}`,
             );
 
             const data = await lenthRes.json();
             newLengths[id] = data.items[0]?.contentDetails?.itemCount || 0;
           }
-        })
+        }),
       );
 
       setPlaylistLengths(newLengths);
@@ -124,13 +152,13 @@ const PopularCourses = () => {
 
           if (channelId) {
             const ownerThumbnailRes = await fetch(
-              `https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${apikey}`
+              `https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${apikey}`,
             );
             const thumbnailData = await ownerThumbnailRes.json();
             newThumbnail[channelId] =
               thumbnailData.items[0]?.snippet.thumbnails.high.url;
           }
-        })
+        }),
       );
       setChannelThumbnail(newThumbnail);
     };

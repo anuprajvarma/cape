@@ -81,7 +81,7 @@ const Courses = () => {
             method: "GET",
             headers: { "Content-Type": "application/json" },
             credentials: "include",
-          }
+          },
         );
         const data = await res.json();
         // console.log(`data.search ${data.searchData[0].title}`);
@@ -90,6 +90,7 @@ const Courses = () => {
         console.log(error);
       }
     };
+    console.log("backend ur " + process.env.NEXT_PUBLIC_BACKEND_BASE_URL);
     handleSearchData();
   }, []);
 
@@ -122,13 +123,13 @@ const Courses = () => {
           const id = item.id?.playlistId;
           if (id) {
             const lenthRes = await fetch(
-              `https://www.googleapis.com/youtube/v3/playlists?part=contentDetails&id=${id}&key=${apikey}`
+              `https://www.googleapis.com/youtube/v3/playlists?part=contentDetails&id=${id}&key=${apikey}`,
             );
 
             const data = await lenthRes.json();
             newLengths[id] = data.items[0]?.contentDetails?.itemCount || 0;
           }
-        })
+        }),
       );
 
       setPlaylistLengths(newLengths);
@@ -149,14 +150,14 @@ const Courses = () => {
           if (channelId) {
             // console.log(`channelid ${channelId}`);
             const ownerThumbnailRes = await fetch(
-              `https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${apikey}`
+              `https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${apikey}`,
             );
 
             const thumbnailData = await ownerThumbnailRes.json();
             newThumbnail[channelId] =
               thumbnailData.items[0]?.snippet.thumbnails.high.url;
           }
-        })
+        }),
       );
       setChannelThumbnail(newThumbnail);
     };
@@ -188,7 +189,7 @@ const Courses = () => {
 
     if (value.length > 0) {
       const filtered = suggestionsArray.filter((suggestion) =>
-        suggestion.toLowerCase().includes(value.toLowerCase())
+        suggestion.toLowerCase().includes(value.toLowerCase()),
       );
       setFilteredSuggestions(filtered);
       setShowSuggestions(true);
@@ -299,7 +300,7 @@ const Courses = () => {
                           title: searchQuery,
                         }),
                         credentials: "include",
-                      }
+                      },
                     );
                     const data = await res.json();
                     console.log(data.search);
