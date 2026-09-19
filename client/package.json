@@ -20,7 +20,7 @@
     "@reduxjs/toolkit": "^2.8.2",
     "@tailwindcss/typography": "^0.5.16",
     "linkify-react": "^4.3.1",
-    "next": "15.1.8",
+    "next": "15.1.11",
     "next-auth": "^4.24.11",
     "react": "^19.0.0",
     "react-circular-progressbar": "^2.2.0",
