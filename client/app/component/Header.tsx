@@ -73,7 +73,7 @@ const Header = () => {
   ]);
 
   return (
-    <div className="w-full p-4 flex justify-center fixed top-0 shadow bg-[#101827]/80 backdrop-blur z-50">
+    <div className="w-full h-16 px-4 flex justify-center fixed top-0 shadow bg-[#101827]/80 backdrop-blur z-50">
       <div
         className={`${
           path === `/course/${id}/${videoId}` ? "w-full" : "w-[70rem]"

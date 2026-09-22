@@ -15,6 +15,36 @@ const CourseCard = dynamic(() => import("../component/CourseCard"), {
   ssr: false,
 });
 
+interface SpeechRecognitionEvent extends Event {
+  results: SpeechRecognitionResultList;
+}
+
+interface SpeechRecognitionErrorEvent extends Event {
+  error: string;
+}
+
+interface SpeechRecognitionInstance {
+  lang: string;
+  interimResults: boolean;
+  maxAlternatives: number;
+  start: () => void;
+  stop: () => void;
+  onresult: ((event: SpeechRecognitionEvent) => void) | null;
+  onerror: ((event: SpeechRecognitionErrorEvent) => void) | null;
+  onend: (() => void) | null;
+}
+
+interface SpeechRecognitionConstructor {
+  new (): SpeechRecognitionInstance;
+}
+
+declare global {
+  interface Window {
+    SpeechRecognition?: SpeechRecognitionConstructor;
+    webkitSpeechRecognition?: SpeechRecognitionConstructor;
+  }
+}
+
 const YOUTUBE_API_KEY = [
   process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_1,
   process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_2,
@@ -70,7 +100,7 @@ const Courses = () => {
     setShowSuggestions(false);
   });
 
-  const [topic, setTopic] = useState("reactjs");
+  const [topic, setTopic] = useState("");
 
   useEffect(() => {
     const handleSearchData = async () => {
@@ -225,57 +255,97 @@ const Courses = () => {
       window.SpeechRecognition || window.webkitSpeechRecognition;
 
     if (!SpeechRecognitionConstructor) {
-      alert("Speech recognition not supported in this browser.");
+      alert(
+        "Speech recognition is not supported in this browser. Try Google Chrome.",
+      );
       return;
     }
 
+    // Create recognition only once
     if (!recognitionRef.current) {
       const recognition = new SpeechRecognitionConstructor();
+
       recognition.lang = "en-US";
       recognition.interimResults = false;
       recognition.maxAlternatives = 1;
 
-      recognition.onresult = (event: SpeechRecognitionEvent) => {
+      recognition.onresult = (event) => {
         const transcript = event.results[0][0].transcript;
+
+        console.log("Voice result:", transcript);
+
         setSearchQuery(transcript);
+
         handleAutoSearch(transcript);
       };
 
-      recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
+      recognition.onerror = (event) => {
+        if (event.error === "network") {
+          console.log(
+            "Arc/Chromium restriction detected. Switching to fallback API...",
+          );
+          return;
+        }
         console.error("Speech recognition error:", event.error);
+      };
+
+      recognition.onend = () => {
+        console.log("Speech recognition ended");
       };
 
       recognitionRef.current = recognition;
     }
 
-    recognitionRef.current.start();
+    try {
+      recognitionRef.current.start();
+      console.log("Listening...");
+    } catch (error) {
+      console.error("Could not start speech recognition:", error);
+    }
   };
 
   return (
     <>
       <CourseLinkModal />
-      <div className="w-full py-[2rem] px-4 text-black flex justify-center mt-16">
-        <div className="w-[70rem] flex flex-col gap-12">
-          <div className="w-full">
+      <div className="w-full h-[calc(100vh-4rem)] mt-16 px-4 text-black flex justify-center">
+        <div className="w-full max-w-[70rem] h-full flex flex-col">
+          {/* SEARCH BAR - DOES NOT SCROLL */}
+          <div className="shrink-0 w-full z-20 py-4">
             <div className="flex gap-2 items-center justify-center w-full">
+              {/* Search input */}
               <div className="flex rounded-xl h-[3rem] sm:w-[33rem] w-full">
-                <div className="flex sm:w-[30rem] w-full h-full flex-col">
+                <div className="flex sm:w-[30rem] w-full h-full flex-col relative">
                   <input
                     type="text"
                     ref={inputRef}
                     value={searchQuery}
-                    placeholder="Search your favourite plalist"
-                    className="sm:w-[30rem] h-full w-full py-6 px-4 outline-none rounded-l-lg focus:border bg-lightSlaty focus:border-slaty/30 text-slaty placeholder-slaty/50"
+                    placeholder="Search your favourite playlist"
+                    className="
+              sm:w-[30rem]
+              h-full
+              w-full
+              py-6
+              px-4
+              outline-none
+              rounded-l-lg
+              focus:border
+              bg-lightSlaty
+              focus:border-slaty/30
+              text-slaty
+              placeholder-slaty/50
+            "
                     onChange={handleChange}
                   />
+
+                  {/* Suggestions */}
                   {showSuggestions && filteredSuggestions.length > 0 && (
-                    <ul className="flex flex-col z-30 justify-center items-center mt-1 w-full">
-                      <div className="sm:w-[30rem] w-full bg-lightSlaty rounded-lg">
+                    <ul className="absolute top-full left-0 z-50 mt-1 w-full">
+                      <div className="sm:w-[30rem] w-full bg-lightSlaty rounded-lg shadow-lg">
                         {filteredSuggestions.map((suggestion, index) => (
                           <li
                             key={index}
                             onClick={() => handleSelect(suggestion)}
-                            className="p-2 text-slaty cursor-pointer"
+                            className="p-2 text-slaty cursor-pointer hover:bg-slaty/10"
                           >
                             {suggestion}
                           </li>
@@ -284,6 +354,8 @@ const Courses = () => {
                     </ul>
                   )}
                 </div>
+
+                {/* Search button */}
                 <button
                   onClick={async () => {
                     if (searchQuery === "") {
@@ -291,39 +363,75 @@ const Courses = () => {
                     } else {
                       setTopic(searchQuery);
                     }
+
                     const res = await fetch(
                       `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/searchs`,
                       {
                         method: "POST",
-                        headers: { "Content-Type": "application/json" },
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
                         body: JSON.stringify({
                           title: searchQuery,
                         }),
                         credentials: "include",
                       },
                     );
+
                     const data = await res.json();
-                    console.log(data.search);
+
+                    console.log("voice data", data.search);
                   }}
-                  className="border-l px-3 py-3 h-full bg-lightSlaty rounded-r-xl transition duration-300 border-lightSlaty"
+                  className="
+            border-l
+            px-3
+            py-3
+            h-full
+            bg-lightSlaty
+            rounded-r-xl
+            transition
+            duration-300
+            border-lightSlaty
+          "
                 >
                   <IoSearch className="text-xl text-slaty/50" />
                 </button>
               </div>
+
+              {/* Voice button */}
               <Tooltip.Provider delayDuration={0}>
                 <Tooltip.Root>
                   <Tooltip.Trigger asChild>
                     <button
                       onClick={handleVoiceSearch}
-                      className="rounded-full p-2 h-[2.5rem] items-center bg-lightSlaty border border-slaty/30 hover:bg-slaty/30"
+                      className="
+                rounded-full
+                p-2
+                h-[2.5rem]
+                items-center
+                bg-lightSlaty
+                border
+                border-slaty/30
+                hover:bg-slaty/30
+              "
                     >
                       <GrMicrophone className="text-xl text-slaty/50" />
                     </button>
                   </Tooltip.Trigger>
+
                   <Tooltip.Portal>
                     <Tooltip.Content
                       side="top"
-                      className="bg-lightSlaty text-slaty px-3 py-2 text-sm rounded shadow-md z-50"
+                      className="
+                bg-lightSlaty
+                text-slaty
+                px-3
+                py-2
+                text-sm
+                rounded
+                shadow-md
+                z-50
+              "
                     >
                       Search with your voice
                       <Tooltip.Arrow className="fill-lightSlaty" />
@@ -333,38 +441,47 @@ const Courses = () => {
               </Tooltip.Provider>
             </div>
           </div>
+
           <LoginModal />
-          <div className="flex flex-wrap gap-8 items-center justify-center z-20">
-            {playlists.length > 0 ? (
-              playlists?.map((data, index) => {
-                const id = data.id?.playlistId;
-                const channelId = data.snippet?.channelId;
-                const description = data.snippet?.description;
-                const length = playlistLengths[id] || "0";
-                const channelThumb = channelThumbnail[channelId] || "";
-                if (!hasMounted) return null;
-                return (
-                  <CourseCard
-                    title={data.snippet?.title}
-                    channelTitle={data.snippet?.channelTitle}
-                    thumbnails={data.snippet?.thumbnails.high.url}
-                    length={length}
-                    id={id}
-                    bookmark={false}
-                    description={description}
-                    channelThumb={channelThumb}
-                    setGetDataCheck={setGetDataCheck}
-                    getDataCheck={getDataCheck}
-                    key={index}
-                    indexOrder={index}
-                  />
-                );
-              })
-            ) : checkDataExist ? (
-              <p className="text-xl text-slaty">Youtube API limit is exceed</p>
-            ) : (
-              <p className="text-xl text-center text-slaty">Loading...</p>
-            )}
+
+          {/* ONLY THIS PART SCROLLS */}
+          <div className="flex-1 min-h-0 overflow-y-auto py-6">
+            <div className="flex flex-wrap gap-8 items-center justify-center">
+              {playlists.length > 0 ? (
+                playlists.map((data, index) => {
+                  const id = data.id?.playlistId;
+                  const channelId = data.snippet?.channelId;
+                  const description = data.snippet?.description;
+                  const length = playlistLengths[id] || "0";
+                  const channelThumb = channelThumbnail[channelId] || "";
+
+                  if (!hasMounted) return null;
+
+                  return (
+                    <CourseCard
+                      title={data.snippet?.title}
+                      channelTitle={data.snippet?.channelTitle}
+                      thumbnails={data.snippet?.thumbnails.high.url}
+                      length={length}
+                      id={id}
+                      bookmark={false}
+                      description={description}
+                      channelThumb={channelThumb}
+                      setGetDataCheck={setGetDataCheck}
+                      getDataCheck={getDataCheck}
+                      key={index}
+                      indexOrder={index}
+                    />
+                  );
+                })
+              ) : checkDataExist ? (
+                <p className="text-xl text-slaty">
+                  Youtube API limit is exceed
+                </p>
+              ) : (
+                <p className="text-xl text-center text-slaty">Loading...</p>
+              )}
+            </div>
           </div>
         </div>
       </div>
