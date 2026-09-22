@@ -2,6 +2,8 @@
 
 import dynamic from "next/dynamic";
 import React, { useEffect, useState, useRef } from "react";
+import { Mic } from "lucide-react";
+import { motion } from "framer-motion";
 import { GrMicrophone } from "react-icons/gr";
 import { IoSearch } from "react-icons/io5";
 import * as Tooltip from "@radix-ui/react-tooltip";
@@ -95,6 +97,7 @@ const Courses = () => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const recognitionRef = useRef<SpeechRecognition | null>(null);
+  const [isRecording, setIsRecording] = useState<boolean>(false);
   const [getDataCheck, setGetDataCheck] = useState<boolean>(false);
   const inputRef = useClickOutside<HTMLInputElement>(() => {
     setShowSuggestions(false);
@@ -250,9 +253,12 @@ const Courses = () => {
 
   const handleVoiceSearch = () => {
     if (typeof window === "undefined") return;
+    console.log(window);
 
     const SpeechRecognitionConstructor =
       window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    console.log("SpeechRecognitionConstructor " + SpeechRecognitionConstructor);
 
     if (!SpeechRecognitionConstructor) {
       alert(
@@ -281,15 +287,18 @@ const Courses = () => {
 
       recognition.onerror = (event) => {
         if (event.error === "network") {
+          setIsRecording(false);
           console.log(
             "Arc/Chromium restriction detected. Switching to fallback API...",
           );
+
           return;
         }
         console.error("Speech recognition error:", event.error);
       };
 
       recognition.onend = () => {
+        setIsRecording(false);
         console.log("Speech recognition ended");
       };
 
@@ -298,7 +307,8 @@ const Courses = () => {
 
     try {
       recognitionRef.current.start();
-      console.log("Listening...");
+      setIsRecording(true);
+      console.log("Listening... " + recognitionRef);
     } catch (error) {
       console.error("Could not start speech recognition:", error);
     }
@@ -307,146 +317,240 @@ const Courses = () => {
   return (
     <>
       <CourseLinkModal />
-      <div className="w-full h-[calc(100vh-4rem)] mt-16 px-4 text-black flex justify-center">
-        <div className="w-full max-w-[70rem] h-full flex flex-col">
-          {/* SEARCH BAR - DOES NOT SCROLL */}
-          <div className="shrink-0 w-full z-20 py-4">
-            <div className="flex gap-2 items-center justify-center w-full">
-              {/* Search input */}
-              <div className="flex rounded-xl h-[3rem] sm:w-[33rem] w-full">
-                <div className="flex sm:w-[30rem] w-full h-full flex-col relative">
-                  <input
-                    type="text"
-                    ref={inputRef}
-                    value={searchQuery}
-                    placeholder="Search your favourite playlist"
+      <div className="flex justify-center w-full h-[calc(100vh-4rem)] px-4 mt-16 text-black">
+        <div className="flex flex-col w-full h-full max-w-[70rem]">
+          <div className="w-full relative">
+            <div className=" z-20 shrink-0 w-full py-4">
+              <div
+                className="
+                flex
+                items-center justify-center
+                w-full
+                gap-2
+"
+              >
+                {/* Search input */}
+                <div className="relative">
+                  <div
                     className="
-              sm:w-[30rem]
-              h-full
-              w-full
-              py-6
-              px-4
-              outline-none
-              rounded-l-lg
-              focus:border
-              bg-lightSlaty
-              focus:border-slaty/30
-              text-slaty
-              placeholder-slaty/50
-            "
-                    onChange={handleChange}
-                  />
+                  flex
+                  w-full h-[3rem]
+                  rounded-xl
+                  sm:w-[33rem]
+"
+                  >
+                    <div
+                      className="
+                    relative
+                    flex flex-col
+                    w-full h-full
+                    sm:w-[30rem]
+"
+                    >
+                      <input
+                        type="text"
+                        ref={inputRef}
+                        value={searchQuery}
+                        placeholder="Search your favourite playlist"
+                        className="w-full h-full px-4 py-6
+                      rounded-l-lg
+                      text-slaty
+                      bg-lightSlaty
+                      outline-none
+                      focus:border focus:border-slaty/30
+                      placeholder-slaty/50
+                      sm:w-[30rem]
 
-                  {/* Suggestions */}
-                  {showSuggestions && filteredSuggestions.length > 0 && (
-                    <ul className="absolute top-full left-0 z-50 mt-1 w-full">
-                      <div className="sm:w-[30rem] w-full bg-lightSlaty rounded-lg shadow-lg">
-                        {filteredSuggestions.map((suggestion, index) => (
-                          <li
-                            key={index}
-                            onClick={() => handleSelect(suggestion)}
-                            className="p-2 text-slaty cursor-pointer hover:bg-slaty/10"
+"
+                        onChange={handleChange}
+                      />
+
+                      {/* Suggestions */}
+                      {showSuggestions && filteredSuggestions.length > 0 && (
+                        <ul
+                          className="
+                        absolute
+                        top-full
+                        left-0
+                        z-50
+                        w-full
+                        mt-1
+"
+                        >
+                          <div
+                            className="
+                          w-full
+                          rounded-lg
+                          bg-lightSlaty
+                          shadow-lg
+                          sm:w-[30rem]
+"
                           >
-                            {suggestion}
-                          </li>
-                        ))}
+                            {filteredSuggestions.map((suggestion, index) => (
+                              <li
+                                key={index}
+                                onClick={() => handleSelect(suggestion)}
+                                className="
+                              p-2
+                              text-slaty
+                              hover:bg-slaty/10
+                              cursor-pointer
+"
+                              >
+                                {suggestion}
+                              </li>
+                            ))}
+                          </div>
+                        </ul>
+                      )}
+                    </div>
+
+                    {/* Search button */}
+                    <button
+                      onClick={async () => {
+                        if (searchQuery === "") {
+                          setTopic(topic);
+                        } else {
+                          setTopic(searchQuery);
+                        }
+
+                        const res = await fetch(
+                          `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/searchs`,
+                          {
+                            method: "POST",
+                            headers: {
+                              "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({
+                              title: searchQuery,
+                            }),
+                            credentials: "include",
+                          },
+                        );
+
+                        const data = await res.json();
+
+                        console.log("voice data", data.search);
+                      }}
+                      className="
+                    h-full
+                    px-3 py-3
+                    rounded-r-xl
+                    bg-lightSlaty
+                    border-l border-lightSlaty
+                    duration-300
+                    transition
+"
+                    >
+                      <IoSearch
+                        className="
+                      text-xl text-slaty/50
+"
+                      />
+                    </button>
+                  </div>
+
+                  {isRecording && (
+                    <div className="w-full h-60 flex flex-col bg-mediumSlaty border border-lightSlaty rounded-lg p-5 text-slaty absolute top-0">
+                      <h2>Listening....</h2>
+                      <div className="w-full h-full flex justify-center items-center relative">
+                        {isRecording && (
+                          <motion.div
+                            className="rounded-full bg-blue-400 opacity-75 h-20 w-20 absolute -bottom-3"
+                            animate={{
+                              scale: [0.7, 0.9, 1],
+                              opacity: [0.1, 0.2, 0.3],
+                            }}
+                            transition={{ duration: 1, repeat: Infinity }}
+                          ></motion.div>
+                        )}
+                        {/* Microphone Icon */}
+                        <Mic className="w-10 h-10 absolute bottom-2" />
                       </div>
-                    </ul>
+                    </div>
                   )}
                 </div>
 
-                {/* Search button */}
-                <button
-                  onClick={async () => {
-                    if (searchQuery === "") {
-                      setTopic(topic);
-                    } else {
-                      setTopic(searchQuery);
-                    }
+                {/* Voice button */}
+                <Tooltip.Provider delayDuration={0}>
+                  <Tooltip.Root>
+                    <Tooltip.Trigger asChild>
+                      <button
+                        onClick={handleVoiceSearch}
+                        className="
+                        items-center
+                        h-[2.5rem]
+                        p-2
+                        rounded-full
+                        bg-lightSlaty
+                        border border-slaty/30
+                        hover:bg-slaty/30
+"
+                      >
+                        <GrMicrophone
+                          className="
+                          text-xl text-slaty/50
+"
+                        />
+                      </button>
+                    </Tooltip.Trigger>
 
-                    const res = await fetch(
-                      `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/searchs`,
-                      {
-                        method: "POST",
-                        headers: {
-                          "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                          title: searchQuery,
-                        }),
-                        credentials: "include",
-                      },
-                    );
-
-                    const data = await res.json();
-
-                    console.log("voice data", data.search);
-                  }}
-                  className="
-            border-l
-            px-3
-            py-3
-            h-full
-            bg-lightSlaty
-            rounded-r-xl
-            transition
-            duration-300
-            border-lightSlaty
-          "
-                >
-                  <IoSearch className="text-xl text-slaty/50" />
-                </button>
+                    <Tooltip.Portal>
+                      <Tooltip.Content
+                        side="top"
+                        className="
+                        z-50
+                        px-3 py-2
+                        rounded
+                        text-slaty text-sm
+                        bg-lightSlaty
+                        shadow-md
+"
+                      >
+                        Search with your voice
+                        <Tooltip.Arrow
+                          className="
+                          fill-lightSlaty
+"
+                        />
+                      </Tooltip.Content>
+                    </Tooltip.Portal>
+                  </Tooltip.Root>
+                </Tooltip.Provider>
               </div>
-
-              {/* Voice button */}
-              <Tooltip.Provider delayDuration={0}>
-                <Tooltip.Root>
-                  <Tooltip.Trigger asChild>
-                    <button
-                      onClick={handleVoiceSearch}
-                      className="
-                rounded-full
-                p-2
-                h-[2.5rem]
-                items-center
-                bg-lightSlaty
-                border
-                border-slaty/30
-                hover:bg-slaty/30
-              "
-                    >
-                      <GrMicrophone className="text-xl text-slaty/50" />
-                    </button>
-                  </Tooltip.Trigger>
-
-                  <Tooltip.Portal>
-                    <Tooltip.Content
-                      side="top"
-                      className="
-                bg-lightSlaty
-                text-slaty
-                px-3
-                py-2
-                text-sm
-                rounded
-                shadow-md
-                z-50
-              "
-                    >
-                      Search with your voice
-                      <Tooltip.Arrow className="fill-lightSlaty" />
-                    </Tooltip.Content>
-                  </Tooltip.Portal>
-                </Tooltip.Root>
-              </Tooltip.Provider>
             </div>
+            {
+              // <div className="w-[33rem] h-full flex absolute top-0 z-50">
+              //   <div className="w-full h-60 flex flex-col gap-3 bg-mediumSlaty border border-lightSlaty rounded-lg p-5 text-slaty">
+              //     {isRecording && (
+              //       <motion.span
+              //         className="absolute inset-0 rounded-full bg-blue-400 opacity-75"
+              //         animate={{ scale: [1, 1.4, 1], opacity: [0.7, 0, 0.7] }}
+              //         transition={{ duration: 1.5, repeat: Infinity }}
+              //       />
+              //     )}
+              //     {/* Microphone Icon */}
+              //     <Mic className="relative z-50 w-6 h-6" />
+              //   </div>
+              // </div>
+            }
           </div>
 
           <LoginModal />
 
           {/* ONLY THIS PART SCROLLS */}
-          <div className="flex-1 min-h-0 overflow-y-auto py-6">
-            <div className="flex flex-wrap gap-8 items-center justify-center">
+          <div
+            className="
+              overflow-y-auto
+              flex-1
+              min-h-0
+              pt-6
+"
+          >
+            <div
+              className="flex flex-wrap items-center justify-center gap-8
+"
+            >
               {playlists.length > 0 ? (
                 playlists.map((data, index) => {
                   const id = data.id?.playlistId;
@@ -475,11 +579,22 @@ const Courses = () => {
                   );
                 })
               ) : checkDataExist ? (
-                <p className="text-xl text-slaty">
+                <p
+                  className="
+                    text-xl text-slaty
+"
+                >
                   Youtube API limit is exceed
                 </p>
               ) : (
-                <p className="text-xl text-center text-slaty">Loading...</p>
+                <p
+                  className="
+                    text-xl text-slaty
+                    text-center
+"
+                >
+                  Loading...
+                </p>
               )}
             </div>
           </div>
