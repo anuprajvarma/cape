@@ -339,7 +339,7 @@ export const easyExplainFuntion = async ({
       stream: false,
     });
 
-    const quizArray = parseQuizHtml(res?.choices?.[0]?.message?.content);
+    const quizArray = parseQuizHtml(res?.choices?.[0]?.message?.content ?? "");
     console.log("quiz", quizArray);
     return quizArray;
   } catch (error) {

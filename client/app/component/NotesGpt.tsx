@@ -147,6 +147,7 @@ const NotesGpt = ({
 
       try {
         const result = await chatBotApiCall({ input });
+        console.log(result.content);
 
         const botResponse = result?.content;
         const botRole = result?.role;
@@ -158,13 +159,12 @@ const NotesGpt = ({
           };
           setMessages((prev) => [...prev, botMessage]);
 
-          // ✅ Only send to backend if input and botResponse are present
           if (input.trim() && botResponse.trim()) {
             await GPTDataPostToMongoDB({
               email: session.data?.user?.email ?? "",
               playlistId: id,
               question: input,
-              answer: result.content,
+              answer: result.content ?? "",
             });
           }
         }
@@ -374,7 +374,7 @@ const NotesGpt = ({
             <div className="w-full h-full flex flex-col justify-center items-center gap-4">
               <button
                 className="px-4 py-1 rounded-lg hover:bg-slaty/10 transition duration-300 border border-lightSlaty"
-                onClick={quizzHandler()}
+                onClick={quizzHandler}
               >
                 Click me
               </button>

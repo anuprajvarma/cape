@@ -17,35 +17,11 @@ const CourseCard = dynamic(() => import("../component/CourseCard"), {
   ssr: false,
 });
 
-interface SpeechRecognitionEvent extends Event {
-  results: SpeechRecognitionResultList;
-}
+type SpeechRecognitionConstructor = new () => SpeechRecognition;
 
-interface SpeechRecognitionErrorEvent extends Event {
-  error: string;
-}
-
-interface SpeechRecognitionInstance {
-  lang: string;
-  interimResults: boolean;
-  maxAlternatives: number;
-  start: () => void;
-  stop: () => void;
-  onresult: ((event: SpeechRecognitionEvent) => void) | null;
-  onerror: ((event: SpeechRecognitionErrorEvent) => void) | null;
-  onend: (() => void) | null;
-}
-
-interface SpeechRecognitionConstructor {
-  new (): SpeechRecognitionInstance;
-}
-
-declare global {
-  interface Window {
-    SpeechRecognition?: SpeechRecognitionConstructor;
-    webkitSpeechRecognition?: SpeechRecognitionConstructor;
-  }
-}
+type SpeechWindow = Window & {
+  webkitSpeechRecognition?: SpeechRecognitionConstructor;
+};
 
 const YOUTUBE_API_KEY = [
   process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_1,
@@ -104,6 +80,11 @@ const Courses = () => {
   });
 
   const [topic, setTopic] = useState("");
+
+  // const speechWindow = window as unknown as SpeechWindow;
+
+  // const SpeechRecognitionConstructor =
+  //   speechWindow.SpeechRecognition || speechWindow.webkitSpeechRecognition;
 
   useEffect(() => {
     const handleSearchData = async () => {
@@ -253,12 +234,11 @@ const Courses = () => {
 
   const handleVoiceSearch = () => {
     if (typeof window === "undefined") return;
-    console.log(window);
+
+    const speechWindow = window as unknown as SpeechWindow;
 
     const SpeechRecognitionConstructor =
-      window.SpeechRecognition || window.webkitSpeechRecognition;
-
-    console.log("SpeechRecognitionConstructor " + SpeechRecognitionConstructor);
+      speechWindow.SpeechRecognition || speechWindow.webkitSpeechRecognition;
 
     if (!SpeechRecognitionConstructor) {
       alert(
@@ -267,7 +247,6 @@ const Courses = () => {
       return;
     }
 
-    // Create recognition only once
     if (!recognitionRef.current) {
       const recognition = new SpeechRecognitionConstructor();
 
@@ -276,24 +255,24 @@ const Courses = () => {
       recognition.maxAlternatives = 1;
 
       recognition.onresult = (event) => {
-        const transcript = event.results[0][0].transcript;
+        const transcript = event.results[0]?.[0]?.transcript ?? "";
+
+        if (!transcript) return;
 
         console.log("Voice result:", transcript);
 
         setSearchQuery(transcript);
-
         handleAutoSearch(transcript);
       };
 
       recognition.onerror = (event) => {
-        if (event.error === "network") {
-          setIsRecording(false);
-          console.log(
-            "Arc/Chromium restriction detected. Switching to fallback API...",
-          );
+        setIsRecording(false);
 
+        if (event.error === "network") {
+          console.log("Network error detected while using speech recognition.");
           return;
         }
+
         console.error("Speech recognition error:", event.error);
       };
 
@@ -308,9 +287,12 @@ const Courses = () => {
     try {
       recognitionRef.current.start();
       setIsRecording(true);
-      console.log("Listening... " + recognitionRef);
+
+      console.log("Listening...");
     } catch (error) {
       console.error("Could not start speech recognition:", error);
+
+      setIsRecording(false);
     }
   };
 
