@@ -1,4 +1,12 @@
 import { toast } from "react-toastify";
+import { Groq } from "groq-sdk";
+
+console.log("GROQ KEY EXISTS:", !!process.env.NEXT_PUBLIC_GROQ_API_KEY);
+
+const groq = new Groq({
+  apiKey: process.env.NEXT_PUBLIC_GROQ_API_KEY,
+  dangerouslyAllowBrowser: true,
+});
 
 const YOUTUBE_API_KEY = [
   process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_1,
@@ -83,7 +91,7 @@ export async function fetchPlaylist({
 }) {
   try {
     const res = await fetch(
-      `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${topic}&type=playlist&key=${apikey}&maxResults=${max}`
+      `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${topic}&type=playlist&key=${apikey}&maxResults=${max}`,
     );
 
     if (!res.ok) throw new Error("Failed to fetch playlist");
@@ -108,7 +116,7 @@ export const handleEnrolled = async (email: string) => {
           email,
         }),
         credentials: "include",
-      }
+      },
     );
     const data = await res.json();
     return data.bookmarkCourse;
@@ -120,7 +128,7 @@ export const handleEnrolled = async (email: string) => {
 
 export async function playlist(id: string) {
   const res = await fetch(
-    `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${id}&maxResults=3&key=${apikey}`
+    `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${id}&maxResults=3&key=${apikey}`,
   );
   const data = await res.json();
   return data.items[0].snippet?.resourceId.videoId;
@@ -141,7 +149,7 @@ export async function editorDataFetch({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, playlistId }),
         credentials: "include",
-      }
+      },
     );
 
     const data = await res.json();
@@ -169,7 +177,7 @@ export async function enrolledCourseDataFetch({
           playlistId: playlistId,
         }),
         credentials: "include",
-      }
+      },
     );
     const data = await res.json();
     return data.getChapterData?.chapters;
@@ -196,7 +204,7 @@ export async function enrolledCourseDelete({
           playlistId,
         }),
         credentials: "include",
-      }
+      },
     );
   } catch (error) {
     console.log(error);
@@ -234,7 +242,7 @@ export async function loginFuntion({
           imageUrl,
         }),
         credentials: "include",
-      }
+      },
     );
     return res;
   } catch (error) {
@@ -261,7 +269,7 @@ export const fetchDiscussionData = async ({
           videoId,
         }),
         credentials: "include",
-      }
+      },
     );
     const data = await res.json();
     return data.discussionData?.discussions;
@@ -297,7 +305,7 @@ export const postDiscussionData = async ({
           userImageUrl,
         }),
         credentials: "include",
-      }
+      },
     );
   } catch (error) {
     console.log(error);
@@ -346,30 +354,29 @@ Do not include any extra text, only HTML.
 
 export const chatBotApiCall = async ({ input }: { input: string }) => {
   try {
-    console.log("input", input);
-    const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_HUGGINGFACE_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: "deepseek/deepseek-r1:free",
-        stream: false,
-        messages: [
-          {
-            role: "user",
-            content: input,
-          },
-        ],
-      }),
+    console.log("input:", input);
+
+    const chatCompletion = await groq.chat.completions.create({
+      messages: [
+        {
+          role: "user",
+          content: input,
+        },
+      ],
+      model: "openai/gpt-oss-120b",
+      temperature: 1,
+      max_completion_tokens: 2048,
+      top_p: 1,
+      reasoning_effort: "medium",
+      stream: false,
     });
 
-    const data = await res.json();
-    console.log("data", data);
-    return data?.choices?.[0]?.message;
+    // console.log("data:", chatCompletion.choices[0]?.message);
+
+    return chatCompletion.choices[0]?.message;
   } catch (error) {
-    console.log(error);
+    console.error("Groq API error:", error);
+    throw error;
   }
 };
 
@@ -419,7 +426,7 @@ export const GPTDataFetchToMongoDB = async ({
           playlistId,
         }),
         credentials: "include",
-      }
+      },
     );
     const data = await res.json();
     return data.chatData?.chats;
@@ -452,7 +459,7 @@ export const handleChapter = async ({
             videoId,
           }),
           credentials: "include",
-        }
+        },
       );
       const data = await res.json();
       if (data.appChapterHandler) {
@@ -480,7 +487,7 @@ export const handleChapter = async ({
             videoId,
           }),
           credentials: "include",
-        }
+        },
       );
       const data = await res.json();
       if (data.removeChapterHandler) {
@@ -505,7 +512,7 @@ export const funtionForVideoDetail = async ({
 }) => {
   try {
     const res = await fetch(
-      `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&id=${videoId}&key=${apikey}`
+      `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&id=${videoId}&key=${apikey}`,
     );
     const data = await res.json();
     return data.items;
@@ -532,7 +539,7 @@ export const fetchChapterData = async ({
           playlistId,
         }),
         credentials: "include",
-      }
+      },
     );
     const data = await res.json();
     return data.getChapterData?.chapters;
@@ -544,7 +551,7 @@ export const fetchChapterData = async ({
 export const fetchPlayListVideos = async ({ id }: { id: string }) => {
   try {
     const res = await fetch(
-      `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${id}&maxResults=200&key=${apikey}`
+      `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${id}&maxResults=200&key=${apikey}`,
     );
     const data = await res.json();
     return data.items;

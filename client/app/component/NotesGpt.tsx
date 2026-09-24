@@ -44,7 +44,7 @@ const NotesGpt = ({
   const [input, setInput] = useState("");
   const [questions, setQuestion] = useState<string[]>([]);
   const [messages, setMessages] = useState<{ sender: string; text: string }[]>(
-    []
+    [],
   );
   const [gptcheck, setgptCheck] = useState<boolean>(false);
   const [chooseOption, setChooseOption] = useState<string[]>([]);
@@ -66,7 +66,7 @@ const NotesGpt = ({
             videoId,
           }),
           credentials: "include",
-        }
+        },
       );
       const data = await res.json();
       console.log("Quizzes data fetch:", data.quizzData[0]?.quizz);
@@ -101,7 +101,7 @@ const NotesGpt = ({
             email: session.data?.user?.email ?? "",
           }),
           credentials: "include",
-        }
+        },
       );
     };
 
@@ -123,7 +123,7 @@ const NotesGpt = ({
             email: session.data?.user?.email ?? "",
           }),
           credentials: "include",
-        }
+        },
       );
       const data = await res.json();
       console.log("User score :", data.userScore?.score);
@@ -141,7 +141,7 @@ const NotesGpt = ({
   const sendMessage = async () => {
     if (session.status === "authenticated") {
       if (!input.trim()) return;
-
+      console.log("session.status " + session.status);
       const userMsg = { sender: "user", text: input };
       setMessages((prev) => [...prev, userMsg]);
 
@@ -182,7 +182,7 @@ const NotesGpt = ({
       `Selected Option: ${option} | Correct Answer: ${answer
         .split(" ")
         .slice(2)
-        .join(" ")} | Question: ${question}`
+        .join(" ")} | Question: ${question}`,
     );
     const selectedOption = option;
     const correctAnswer = answer.split(" ").slice(2).join(" ");
@@ -218,7 +218,7 @@ const NotesGpt = ({
               quizz: result,
             }),
             credentials: "include",
-          }
+          },
         );
         const data = await res.json();
         console.log("Quizzes saved to database:", data);
