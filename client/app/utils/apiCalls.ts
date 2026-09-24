@@ -318,29 +318,6 @@ export const easyExplainFuntion = async ({
   videoTitle: string;
 }) => {
   try {
-    // const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-    //   method: "POST",
-    //   headers: {
-    //     Authorization: `Bearer ${process.env.NEXT_PUBLIC_HUGGINGFACE_API_KEY}`,
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     model: "deepseek/deepseek-r1:free",
-    //     messages: [
-    //       {
-    //         role: "user",
-    //         content: `Generate 10 multiple-choice quiz questions for beginners learning only in english ${videoTitle}.
-    // Format the response strictly in HTML:
-    // - Use <h1> for each question
-    // - Use <p> for each option (A, B, C, D)
-    // - Use <h2> to show the correct answer (with both option letter and explanation)
-    // Do not include any extra text, only HTML.
-    // `,
-    //       },
-    //     ],
-    //   }),
-    // });
-
     const res = await groq.chat.completions.create({
       messages: [
         {

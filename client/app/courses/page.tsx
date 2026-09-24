@@ -519,26 +519,8 @@ const Courses = () => {
                 </Tooltip.Provider>
               </div>
             </div>
-            {
-              // <div className="w-[33rem] h-full flex absolute top-0 z-50">
-              //   <div className="w-full h-60 flex flex-col gap-3 bg-mediumSlaty border border-lightSlaty rounded-lg p-5 text-slaty">
-              //     {isRecording && (
-              //       <motion.span
-              //         className="absolute inset-0 rounded-full bg-blue-400 opacity-75"
-              //         animate={{ scale: [1, 1.4, 1], opacity: [0.7, 0, 0.7] }}
-              //         transition={{ duration: 1.5, repeat: Infinity }}
-              //       />
-              //     )}
-              //     {/* Microphone Icon */}
-              //     <Mic className="relative z-50 w-6 h-6" />
-              //   </div>
-              // </div>
-            }
           </div>
-
           <LoginModal />
-
-          {/* ONLY THIS PART SCROLLS */}
           <div
             className="
               overflow-y-auto

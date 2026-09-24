@@ -372,9 +372,6 @@ const NotesGpt = ({
             )
           ) : (
             <div className="w-full h-full flex flex-col justify-center items-center gap-4">
-              {/* <p className="sm:px-12 py-2 rounded-full border border-lightSlaty">
-                Cooking quizzes, it&apos;s take time
-              </p> */}
               <button
                 className="px-4 py-1 rounded-lg hover:bg-slaty/10 transition duration-300 border border-lightSlaty"
                 onClick={quizzHandler()}
