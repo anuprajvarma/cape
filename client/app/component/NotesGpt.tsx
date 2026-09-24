@@ -52,28 +52,28 @@ const NotesGpt = ({
   const [countedScore, setCountedScore] = useState<number>(0);
   const [DbScore, setDbScore] = useState<string>("");
 
-  useEffect(() => {
-    const chat = async () => {
-      // const result = await easyExplainFuntion({ videoTitle });
-      // setQuizz(result);
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/quizz/getQiuzzData`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            playlistId: id,
-            videoId,
-          }),
-          credentials: "include",
-        },
-      );
-      const data = await res.json();
-      console.log("Quizzes data fetch:", data.quizzData[0]?.quizz);
-      setQuizz(data.quizzData[0]?.quizz);
-    };
-    chat();
-  }, [id, videoId]);
+  // useEffect(() => {
+  //   const chat = async () => {
+  //     // const result = await easyExplainFuntion({ videoTitle });
+  //     // setQuizz(result);
+  //     const res = await fetch(
+  //       `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/quizz/getQiuzzData`,
+  //       {
+  //         method: "POST",
+  //         headers: { "Content-Type": "application/json" },
+  //         body: JSON.stringify({
+  //           playlistId: id,
+  //           videoId,
+  //         }),
+  //         credentials: "include",
+  //       },
+  //     );
+  //     const data = await res.json();
+  //     console.log("Quizzes data fetch:", data.quizzData[0]?.quizz);
+  //     setQuizz(data.quizzData[0]?.quizz);
+  //   };
+  //   chat();
+  // }, [id, videoId]);
 
   useEffect(() => {
     const chat = async () => {
@@ -202,34 +202,29 @@ const NotesGpt = ({
     }
   };
 
-  useEffect(() => {
-    const quizzHandler = async () => {
-      try {
-        const result = await easyExplainFuntion({ videoTitle });
-        setQuizz(result ?? []);
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/quizz/addQiuzzes`,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              playlistId: id,
-              videoId,
-              quizz: result,
-            }),
-            credentials: "include",
-          },
-        );
-        const data = await res.json();
-        console.log("Quizzes saved to database:", data);
-      } catch (error) {
-        console.error("Error fetching from OpenRouter or saving to DB:", error);
-      }
-    };
-    if (!quizz) {
-      quizzHandler();
+  const quizzHandler = async () => {
+    try {
+      const result = await easyExplainFuntion({ videoTitle });
+      setQuizz(result ?? []);
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/quizz/addQiuzzes`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            playlistId: id,
+            videoId,
+            quizz: result,
+          }),
+          credentials: "include",
+        },
+      );
+      const data = await res.json();
+      console.log("Quizzes saved to database:", data);
+    } catch (error) {
+      console.error("Error fetching from OpenRouter or saving to DB:", error);
     }
-  }, [videoId, id, videoTitle]);
+  };
 
   const handleNotes = () => {
     setNoteCheck(true);
@@ -377,12 +372,15 @@ const NotesGpt = ({
             )
           ) : (
             <div className="w-full h-full flex flex-col justify-center items-center gap-4">
-              <p className="sm:px-12 py-2 rounded-full border border-lightSlaty">
+              {/* <p className="sm:px-12 py-2 rounded-full border border-lightSlaty">
                 Cooking quizzes, it&apos;s take time
-              </p>
-              {/* <button className="px-4 py-1 rounded-lg hover:bg-slaty/10 transition duration-300 border border-lightSlaty">
+              </p> */}
+              <button
+                className="px-4 py-1 rounded-lg hover:bg-slaty/10 transition duration-300 border border-lightSlaty"
+                onClick={quizzHandler()}
+              >
                 Click me
-              </button> */}
+              </button>
             </div>
           )
         ) : (

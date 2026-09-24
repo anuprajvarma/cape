@@ -318,33 +318,51 @@ export const easyExplainFuntion = async ({
   videoTitle: string;
 }) => {
   try {
-    const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_HUGGINGFACE_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: "deepseek/deepseek-r1:free",
-        messages: [
-          {
-            role: "user",
-            content: `Generate 10 multiple-choice quiz questions for beginners learning only in english ${videoTitle}.
-Format the response strictly in HTML:
-- Use <h1> for each question
-- Use <p> for each option (A, B, C, D)
-- Use <h2> to show the correct answer (with both option letter and explanation)
-Do not include any extra text, only HTML.
-`,
-          },
-        ],
-      }),
+    // const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+    //   method: "POST",
+    //   headers: {
+    //     Authorization: `Bearer ${process.env.NEXT_PUBLIC_HUGGINGFACE_API_KEY}`,
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     model: "deepseek/deepseek-r1:free",
+    //     messages: [
+    //       {
+    //         role: "user",
+    //         content: `Generate 10 multiple-choice quiz questions for beginners learning only in english ${videoTitle}.
+    // Format the response strictly in HTML:
+    // - Use <h1> for each question
+    // - Use <p> for each option (A, B, C, D)
+    // - Use <h2> to show the correct answer (with both option letter and explanation)
+    // Do not include any extra text, only HTML.
+    // `,
+    //       },
+    //     ],
+    //   }),
+    // });
+
+    const res = await groq.chat.completions.create({
+      messages: [
+        {
+          role: "user",
+          content: `Generate 10 multiple-choice quiz questions for beginners learning only in english ${videoTitle}.
+    Format the response strictly in HTML:
+    - Use <h1> for each question
+    - Use <p> for each option (A, B, C, D)
+    - Use <h2> to show the correct answer (with both option letter and explanation)
+    Do not include any extra text, only HTML.
+    `,
+        },
+      ],
+      model: "openai/gpt-oss-120b",
+      temperature: 1,
+      max_completion_tokens: 2048,
+      top_p: 1,
+      reasoning_effort: "medium",
+      stream: false,
     });
 
-    const data = await res.json();
-    console.log("res", data);
-    console.log("data", data?.choices?.[0]?.message?.content);
-    const quizArray = parseQuizHtml(data?.choices?.[0]?.message?.content);
+    const quizArray = parseQuizHtml(res?.choices?.[0]?.message?.content);
     console.log("quiz", quizArray);
     return quizArray;
   } catch (error) {
