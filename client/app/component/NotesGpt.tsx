@@ -51,6 +51,7 @@ const NotesGpt = ({
   const [Completed, setCompleted] = useState<number>(0);
   const [countedScore, setCountedScore] = useState<number>(0);
   const [DbScore, setDbScore] = useState<string>("");
+  const [dataFetching, setDataFetching] = useState<boolean>(false);
 
   // useEffect(() => {
   //   const chat = async () => {
@@ -204,7 +205,9 @@ const NotesGpt = ({
 
   const quizzHandler = async () => {
     try {
+      setDataFetching(true);
       const result = await easyExplainFuntion({ videoTitle });
+      setDataFetching(false);
       setQuizz(result ?? []);
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/quizz/addQiuzzes`,
@@ -370,6 +373,12 @@ const NotesGpt = ({
                 ))}
               </div>
             )
+          ) : dataFetching ? (
+            <div className="w-full h-full flex flex-col justify-center items-center gap-4">
+              <div className="px-4 py-1 rounded-lg hover:bg-slaty/10 transition duration-300 border border-lightSlaty">
+                loading...
+              </div>
+            </div>
           ) : (
             <div className="w-full h-full flex flex-col justify-center items-center gap-4">
               <button
