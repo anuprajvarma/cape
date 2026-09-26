@@ -326,7 +326,7 @@ export const easyExplainFuntion = async ({
     Format the response strictly in HTML:
     - Use <h1> for each question
     - Use <p> for each option (A, B, C, D)
-    - Use <h2> to show the correct answer (with both option letter and explanation)
+    - Use <h2> to show the correct answer who picked by option currect answer same text from option don't include in option input put this seperate
     Do not include any extra text, only HTML.
     `,
         },

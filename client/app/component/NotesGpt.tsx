@@ -180,13 +180,10 @@ const NotesGpt = ({
 
   const checkAnswer = (option: string, answer: string, question: string) => {
     console.log(
-      `Selected Option: ${option} | Correct Answer: ${answer
-        .split(" ")
-        .slice(2)
-        .join(" ")} | Question: ${question}`,
+      `Selected Option: ${option} | Correct Answer: ${answer} | Question: ${question}`,
     );
     const selectedOption = option;
-    const correctAnswer = answer.split(" ").slice(2).join(" ");
+    const correctAnswer = answer;
     const isQuestionExists = questions.includes(question);
     if (!isQuestionExists) {
       setCompleted((prev) => prev + 1);
@@ -198,7 +195,7 @@ const NotesGpt = ({
         console.log("Correct Answer!");
       } else {
         console.log(questions);
-        console.log("Wrong Answer! Try again.");
+        console.log("Wrong Answer! Try again. " + correctAnswer.slice(0, 2));
       }
     }
   };
@@ -207,6 +204,7 @@ const NotesGpt = ({
     try {
       setDataFetching(true);
       const result = await easyExplainFuntion({ videoTitle });
+
       setDataFetching(false);
       setQuizz(result ?? []);
       const res = await fetch(
@@ -341,6 +339,7 @@ const NotesGpt = ({
                   <div key={index} className="py-2 flex flex-col gap-2">
                     <div className="text-white flex gap-2 font-semibold text-xl">
                       <p>{quizz.question}</p>
+                      <p>{quizz.answer}</p>
                     </div>
                     <div>
                       <div className="list-disc pl-6 flex flex-col gap-2">
