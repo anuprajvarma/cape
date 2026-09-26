@@ -7,7 +7,6 @@ import React, { useEffect, useState } from "react";
 import { IoPlayCircleOutline } from "react-icons/io5";
 import { IoBookmarkOutline } from "react-icons/io5";
 import { FaBookmark } from "react-icons/fa";
-import { AiOutlineDelete } from "react-icons/ai";
 import { IoMdShareAlt } from "react-icons/io";
 import { CourseCardType } from "@/types";
 import { playlist } from "../utils/apiCalls";
@@ -79,7 +78,7 @@ const CourseCard = ({
               email: session.data?.user?.email,
             }),
             credentials: "include",
-          }
+          },
         );
         const data = await res.json();
         if (data.isExist) {
@@ -117,7 +116,7 @@ const CourseCard = ({
           id,
         }),
         credentials: "include",
-      }
+      },
     );
     const data = await res.json();
     if (data.deleteBookmarCourseHandler) {
@@ -157,7 +156,7 @@ const CourseCard = ({
               email: session.data?.user?.email,
             }),
             credentials: "include",
-          }
+          },
         );
         const data = await res.json();
         if (data.isExist) {
@@ -264,7 +263,7 @@ const CourseCard = ({
                   </Tooltip.Portal>
                 </Tooltip.Root>
               </Tooltip.Provider>
-              {bookmark ? (
+              {/* {bookmark ? (
                 <Tooltip.Provider delayDuration={0}>
                   <Tooltip.Root>
                     <Tooltip.Trigger asChild>
@@ -291,12 +290,20 @@ const CourseCard = ({
                 </Tooltip.Provider>
               ) : (
                 <></>
-              )}
+              )} */}
               {bookmark ? (
                 <Tooltip.Provider delayDuration={0}>
                   <Tooltip.Root>
                     <Tooltip.Trigger asChild>
-                      <FaBookmark className="text-2xl hover:text-slaty cursor-pointer" />
+                      <button
+                        onClick={() =>
+                          handleDeletBookmarkCourse({
+                            id,
+                          })
+                        }
+                      >
+                        <FaBookmark className="text-2xl hover:text-slaty cursor-pointer" />
+                      </button>
                     </Tooltip.Trigger>
                     <Tooltip.Portal>
                       <Tooltip.Content
@@ -353,8 +360,8 @@ const CourseCard = ({
                         dispatch(setCourseLinkModal(true));
                         dispatch(
                           setCourseLink(
-                            `https://cape-lyart.vercel.app/course/${id}/${firstVideoId}`
-                          )
+                            `https://cape-lyart.vercel.app/course/${id}/${firstVideoId}`,
+                          ),
                         );
                       }}
                     >
