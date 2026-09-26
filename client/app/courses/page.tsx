@@ -79,7 +79,7 @@ const Courses = () => {
     setShowSuggestions(false);
   });
 
-  const [topic, setTopic] = useState("");
+  const [topic, setTopic] = useState("react");
 
   // const speechWindow = window as unknown as SpeechWindow;
 
