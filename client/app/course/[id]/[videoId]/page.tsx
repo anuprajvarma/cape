@@ -174,7 +174,7 @@ const Course = () => {
           const id = item.snippet?.playlistId;
           if (id) {
             const lenthRes = await fetch(
-              `https://www.googleapis.com/youtube/v3/playlists?part=contentDetails&id=${id}&key=${apikey}`
+              `https://www.googleapis.com/youtube/v3/playlists?part=contentDetails&id=${id}&key=${apikey}`,
             );
 
             const data = await lenthRes.json();
@@ -182,7 +182,7 @@ const Course = () => {
               newLengths[id] = data.items[0]?.contentDetails?.itemCount || 0;
             }
           }
-        })
+        }),
       );
 
       setPlaylistLengths(newLengths);
@@ -216,7 +216,7 @@ const Course = () => {
           content,
         }),
         credentials: "include",
-      }
+      },
     );
     const data = await res.json();
     console.log(data.deleteDiscussion);
@@ -278,8 +278,8 @@ const Course = () => {
                         dispatch(setCourseLinkModal(true));
                         dispatch(
                           setCourseLink(
-                            `https://cape-lyart.vercel.app/course/${id}/${videoId}`
-                          )
+                            `https://cape-lyart.vercel.app/course/${id}/${videoId}`,
+                          ),
                         );
                       }}
                     >
@@ -494,9 +494,14 @@ const Course = () => {
                   <div className="flex gap-2 p-4">
                     <input
                       value={discussionContent}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" && discussionContent.trim()) {
+                          discussionHandler();
+                        }
+                      }}
                       onChange={(e) => setDiscussionContent(e.target.value)}
                       className="flex-1 p-2 rounded-md bg-lightSlaty focus:outline-none border border-slaty/50 text-slaty placeholder-slaty/50"
-                      placeholder="Type a message..."
+                      placeholder="Say something"
                     />
                     <button
                       onClick={discussionHandler}
