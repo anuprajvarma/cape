@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useSession } from "next-auth/react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import { chatType } from "@/types";
 import {
@@ -37,6 +37,8 @@ const NotesGpt = ({
   const session = useSession();
   const dispatch = useDispatch<AppDispatch>();
   // const [fetchData, setFetchData] = useState(true);
+  const quizScrollRef = useRef<HTMLDivElement>(null);
+  const [showCompleted, setShowCompleted] = useState(true);
   const [chats, setChats] = useState<chatType[]>([]);
   const [quizzcheck, setQuizzCheck] = useState<boolean>(false);
   const [quizz, setQuizz] = useState<QuizzType[]>([]);
@@ -75,6 +77,35 @@ const NotesGpt = ({
   //   };
   //   chat();
   // }, [id, videoId]);
+
+  useEffect(() => {
+    const container = quizScrollRef.current;
+    if (!container) return;
+
+    let timer: ReturnType<typeof setTimeout>;
+
+    const handleActivity = () => {
+      setShowCompleted(true);
+
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        setShowCompleted(false);
+      }, 2000);
+    };
+
+    handleActivity();
+
+    container.addEventListener("scroll", handleActivity, { passive: true });
+    container.addEventListener("touchstart", handleActivity, { passive: true });
+    container.addEventListener("wheel", handleActivity, { passive: true });
+
+    return () => {
+      clearTimeout(timer);
+      container.removeEventListener("scroll", handleActivity);
+      container.removeEventListener("touchstart", handleActivity);
+      container.removeEventListener("wheel", handleActivity);
+    };
+  }, [Completed, gptcheck, notecheck]);
 
   useEffect(() => {
     const chat = async () => {
@@ -181,7 +212,7 @@ const NotesGpt = ({
 
   const checkAnswer = (option: string, answer: string, question: string) => {
     console.log(
-      `Selected Option: ${option.split(" ").slice(1).join(" ")} | Correct Answer: ${answer.split(" ").slice(1).join(" ")} | Question: ${question}`,
+      `Selected Option: ${option} | Correct Answer: ${answer} | Question: ${question}`,
     );
     const selectedOption = option;
     const correctAnswer = answer;
@@ -342,9 +373,18 @@ const NotesGpt = ({
               </div>
             </div>
           ) : quizz.length > 0 ? (
-            <div className="sm:px-12 sm:py-2 w-full h-full prose prose-lg prose-headings:my-0 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-a:text-blue-600 hover:prose-a:underline max-w-none overflow-auto scrollbar-hide">
-              <div className="flex justify-end hover:text-slaty text-slaty/80 cursor-pointer transition duration-300">
-                <p className="text-sm text-center bg-lightSlaty rounded-lg px-4 py-2">{`Progress - ${Completed}/${quizz.length} `}</p>
+            <div
+              ref={quizScrollRef}
+              className="sm:px-12 sm:py-2 w-full h-full prose prose-lg prose-headings:my-0 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-a:text-blue-600 hover:prose-a:underline max-w-none overflow-auto scrollbar-hide relative"
+            >
+              <div
+                className={`sticky top-0 z-50 flex justify-end text-white transition-all  duration-300 ${
+                  showCompleted
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 -translate-y-full pointer-events-none"
+                }`}
+              >
+                <p className="text-sm text-center bg-lightSlaty rounded-lg px-4 py-2">{`Completed - ${Completed}/${quizz.length} `}</p>
               </div>
               {quizz.map((quizz, index) => (
                 <div key={index} className="py-2 flex flex-col gap-2">
@@ -359,9 +399,9 @@ const NotesGpt = ({
                             checkAnswer(option, quizz.answer, quizz.question)
                           }
                           key={idx}
-                          className={`hover:text-slaty flex gap-4 text-slaty/80 text-start rounded-lg border border-lightSlaty hover:bg-lightSlaty px-8 py-2 transition duration-300 ${
+                          className={`hover:text-slaty flex gap-4 text-slaty/80 text-start rounded-lg border border-lightSlaty hover:bg-blue-600/25 px-8 py-2 transition duration-300 ${
                             chooseOption.includes(option)
-                              ? "bg-lightSlaty text-slaty"
+                              ? "text-slaty bg-blue-600/25"
                               : ""
                           }`}
                         >
@@ -372,7 +412,7 @@ const NotesGpt = ({
                             value={option.split(" ").slice(1).join(" ")}
                             checked={chooseOption.includes(option)}
                           />
-                          <p>{option.split(" ").slice(1).join(" ")}</p>
+                          <p>{option}</p>
                           {/* <p>{chooseOption.includes(option) + "a"}</p> */}
                         </button>
                       ))}

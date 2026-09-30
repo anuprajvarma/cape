@@ -322,7 +322,7 @@ export const easyExplainFuntion = async ({
       messages: [
         {
           role: "user",
-          content: `Generate 10 multiple-choice quiz questions for beginners learning only in english to coding related ${videoTitle}.
+          content: `Generate 10 multiple-choice quiz questions for beginners learning only in english to coding related also don't include a,b,c,d or 1,2,3,4 in answer option and give numbers only to question ${videoTitle}.
     Format the response strictly in HTML:
     - Use <h1> for each question
     - Use <p> for each option (A, B, C, D)
