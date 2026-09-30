@@ -36,47 +36,20 @@ const NotesGpt = ({
 }) => {
   const session = useSession();
   const dispatch = useDispatch<AppDispatch>();
-  // const [fetchData, setFetchData] = useState(true);
   const quizScrollRef = useRef<HTMLDivElement>(null);
   const [showCompleted, setShowCompleted] = useState(true);
-  const [chats, setChats] = useState<chatType[]>([]);
+  const [temporaryChatData, setTemporaryChatData] = useState<chatType[]>([]);
   const [quizzcheck, setQuizzCheck] = useState<boolean>(false);
   const [quizz, setQuizz] = useState<QuizzType[]>([]);
   const [notecheck, setNoteCheck] = useState<boolean>(true);
   const [input, setInput] = useState("");
   const [questions, setQuestion] = useState<string[]>([]);
-  const [messages, setMessages] = useState<{ sender: string; text: string }[]>(
-    [],
-  );
   const [gptcheck, setgptCheck] = useState<boolean>(false);
   const [chooseOption, setChooseOption] = useState<string[]>([]);
   const [Completed, setCompleted] = useState<number>(0);
   const [countedScore, setCountedScore] = useState<number>(0);
   const [DbScore, setDbScore] = useState<string>("");
   const [dataFetching, setDataFetching] = useState<boolean>(false);
-
-  // useEffect(() => {
-  //   const chat = async () => {
-  //     // const result = await easyExplainFuntion({ videoTitle });
-  //     // setQuizz(result);
-  //     const res = await fetch(
-  //       `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/quizz/getQiuzzData`,
-  //       {
-  //         method: "POST",
-  //         headers: { "Content-Type": "application/json" },
-  //         body: JSON.stringify({
-  //           playlistId: id,
-  //           videoId,
-  //         }),
-  //         credentials: "include",
-  //       },
-  //     );
-  //     const data = await res.json();
-  //     console.log("Quizzes data fetch:", data.quizzData[0]?.quizz);
-  //     setQuizz(data.quizzData[0]?.quizz);
-  //   };
-  //   chat();
-  // }, [id, videoId]);
 
   useEffect(() => {
     const container = quizScrollRef.current;
@@ -113,12 +86,11 @@ const NotesGpt = ({
         email: session.data?.user?.email ?? "",
         playlistId: id,
       });
-      console.log("runnnn " + " " + result);
-      setChats(result);
+      setTemporaryChatData(result);
     };
 
     chat();
-  }, [gptcheck, messages, session.data?.user?.email, id]);
+  }, [id, session.data?.user?.email]);
 
   useEffect(() => {
     const addScore = async () => {
@@ -174,33 +146,31 @@ const NotesGpt = ({
   const sendMessage = async () => {
     if (session.status === "authenticated") {
       if (!input.trim()) return;
+      if (temporaryChatData?.length > 0) {
+        setTemporaryChatData((prev) => [
+          ...prev,
+          { question: input, answer: "" },
+        ]);
+      } else {
+        setTemporaryChatData([{ question: input, answer: "" }]);
+      }
       setInput("");
-      console.log("session.status " + session.status);
-      const userMsg = { sender: "user", text: input };
-      setMessages((prev) => [...prev, userMsg]);
-
       try {
         const result = await chatBotApiCall({ input });
-        console.log(result.content);
-
-        const botResponse = result?.content;
-        const botRole = result?.role;
-
-        if (botResponse) {
-          if (input.trim() && botResponse.trim()) {
-            const chatdata = await GPTDataPostToMongoDB({
-              email: session.data?.user?.email ?? "",
-              playlistId: id,
-              question: input,
-              answer: result.content ?? "",
-            });
-            console.log("chatdata " + chatdata);
-          }
-          const botMessage = {
-            sender: botRole,
-            text: botResponse,
-          };
-          setMessages((prev) => [...prev, botMessage]);
+        setTemporaryChatData((prev) =>
+          prev.map((chat) =>
+            chat.question === input
+              ? { ...chat, answer: result.content }
+              : chat,
+          ),
+        );
+        if (result.content) {
+          await GPTDataPostToMongoDB({
+            email: session.data?.user?.email ?? "",
+            playlistId: id,
+            question: input,
+            answer: result.content ?? "",
+          });
         }
       } catch (error) {
         console.error("Error fetching from OpenRouter or saving to DB:", error);
@@ -317,9 +287,9 @@ const NotesGpt = ({
         )}
         {gptcheck ? (
           <div className="w-full h-full">
-            {chats?.length > 0 ? (
+            {temporaryChatData?.length > 0 ? (
               <div className="space-y-2 w-full h-full p-1 sm:p-12 rounded overflow-y-auto">
-                {chats?.map((msg, i) => (
+                {temporaryChatData?.map((msg, i) => (
                   <div key={i}>
                     <div className="flex w-full justify-end text-xl text-white py-2 sm:py-4">
                       <p className="border border-lightSlaty px-6 py-2 rounded-3xl">
@@ -327,7 +297,11 @@ const NotesGpt = ({
                       </p>
                     </div>
                     <div className="prose prose-slate prose-lg w-full h-full overflow-auto max-w-none p-2 sm:p-12 prose-headings:my-2 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-ul:my-0 hover:prose-a:underline">
-                      <ReactMarkdown>{msg.answer}</ReactMarkdown>
+                      {msg.answer !== "" ? (
+                        <ReactMarkdown>{msg.answer}</ReactMarkdown>
+                      ) : (
+                        ".............."
+                      )}
                     </div>
                   </div>
                 ))}
