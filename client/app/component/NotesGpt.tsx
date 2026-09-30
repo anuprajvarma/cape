@@ -143,6 +143,7 @@ const NotesGpt = ({
   const sendMessage = async () => {
     if (session.status === "authenticated") {
       if (!input.trim()) return;
+      setInput("");
       console.log("session.status " + session.status);
       const userMsg = { sender: "user", text: input };
       setMessages((prev) => [...prev, userMsg]);
@@ -155,25 +156,24 @@ const NotesGpt = ({
         const botRole = result?.role;
 
         if (botResponse) {
-          const botMessage = {
-            sender: botRole,
-            text: botResponse,
-          };
-          setMessages((prev) => [...prev, botMessage]);
-
           if (input.trim() && botResponse.trim()) {
-            await GPTDataPostToMongoDB({
+            const chatdata = await GPTDataPostToMongoDB({
               email: session.data?.user?.email ?? "",
               playlistId: id,
               question: input,
               answer: result.content ?? "",
             });
+            console.log("chatdata " + chatdata);
           }
+          const botMessage = {
+            sender: botRole,
+            text: botResponse,
+          };
+          setMessages((prev) => [...prev, botMessage]);
         }
       } catch (error) {
         console.error("Error fetching from OpenRouter or saving to DB:", error);
       }
-      setInput("");
     } else {
       dispatch(setIsOpen(true));
     }
@@ -304,11 +304,10 @@ const NotesGpt = ({
               </div>
             ) : (
               <div className="w-full h-full flex flex-col justify-center items-center gap-4">
-                <div className="px-4 py-1 rounded-lg border border-lightSlaty">
-                  What&apos;s the agenda today
-                </div>
+                <div>What&apos;s the agenda today ?</div>
               </div>
             )}
+
             <div className="py-4 flex gap-2">
               <input
                 value={input}
@@ -353,7 +352,6 @@ const NotesGpt = ({
                   <div key={index} className="py-2 flex flex-col gap-2">
                     <div className="text-white flex gap-2 font-semibold text-xl">
                       <p>{quizz.question}</p>
-                      <p>{quizz.answer}</p>
                     </div>
                     <div>
                       <div className="list-disc pl-6 flex flex-col gap-2">

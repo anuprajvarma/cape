@@ -8,7 +8,7 @@ const chatHandler = async (req, res) => {
       email,
       playlistId,
     },
-    { $addToSet: { chats: { question, answer } } }
+    { $addToSet: { chats: { question, answer } } },
   );
 
   if (!chat) {
@@ -32,7 +32,7 @@ const chatDataGet = async (req, res) => {
     email,
   });
 
-  // console.log(`getChapterData ${getChapterData}`);
+  console.log(`chatData ${chatData}`);
   res.json({ chatData });
 };
 

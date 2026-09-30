@@ -359,16 +359,27 @@ export const chatBotApiCall = async ({ input }: { input: string }) => {
         },
       ],
       model: "openai/gpt-oss-120b",
-      temperature: 1,
-      max_completion_tokens: 2048,
+      temperature: 2,
+      max_completion_tokens: 8192,
       top_p: 1,
       reasoning_effort: "medium",
       stream: false,
     });
 
-    // console.log("data:", chatCompletion.choices[0]?.message);
+    const choice = chatCompletion.choices[0];
 
-    return chatCompletion.choices[0]?.message;
+    console.log("Finish reason:", choice?.finish_reason);
+    console.log("Usage:", chatCompletion.usage);
+
+    const content = choice?.message;
+
+    if (!content) {
+      throw new Error("No content received from Groq");
+    }
+
+    console.log("Full answer:", content);
+
+    return content;
   } catch (error) {
     console.error("Groq API error:", error);
     throw error;

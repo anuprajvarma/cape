@@ -18,7 +18,7 @@
     "@heroicons/react": "^2.2.0",
     "@radix-ui/react-tooltip": "^1.2.7",
     "@reduxjs/toolkit": "^2.8.2",
-    "@tailwindcss/typography": "^0.5.16",
+    "@tailwindcss/typography": "^0.5.20",
     "framer-motion": "^13.4.0",
     "groq-sdk": "^1.6.0",
     "linkify-react": "^4.3.1",
