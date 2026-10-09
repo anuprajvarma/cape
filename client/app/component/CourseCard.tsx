@@ -175,7 +175,7 @@ const CourseCard = ({
 
   return (
     <>
-      <div className="w-full sm:w-[20rem] h-[346px] flex flex-col gap-3 bg-mediumSlaty border border-lightSlaty rounded-lg">
+      <div className="w-full sm:w-[20rem] flex flex-col gap-3 bg-mediumSlaty border border-lightSlaty rounded-lg">
         <div className="h-[13rem] relative">
           <Image
             src={thumbnails || "/code.jpg"}
@@ -194,7 +194,7 @@ const CourseCard = ({
               </p>
             </div>
           </div>
-          <div className="flex justify-between pt-2 text-slaty">
+          <div className="flex justify-between py-1 text-slaty">
             <button
               onClick={() =>
                 handleEnrolled({
