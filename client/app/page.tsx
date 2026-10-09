@@ -1,15 +1,10 @@
 "use client";
 
 import NavBar from "./component/NavBar";
-import dynamic from "next/dynamic";
 import React, { useRef } from "react";
 import { IoPlayCircleOutline } from "react-icons/io5";
 import Link from "next/link";
 import LoginModal from "./component/LoginModal";
-
-const PopularCourses = dynamic(() => import("./component/PopularCourses"), {
-  ssr: false,
-});
 
 export default function Page() {
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -76,7 +71,6 @@ export default function Page() {
               </div>
             </div>
           </div>
-          <PopularCourses />
         </div>
       </div>
       <NavBar />
