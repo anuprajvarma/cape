@@ -71,7 +71,7 @@ function parseQuizHtml(html: string) {
   return quiz;
 }
 
-function getRotatedKey(): string {
+export default function getRotatedKey(): string {
   const now = new Date();
   const hour = now.getUTCHours(); // use UTC for consistency
   const index = hour % YOUTUBE_API_KEY.length;
@@ -83,11 +83,9 @@ const apikey = getRotatedKey();
 export async function fetchPlaylist({
   max,
   topic,
-  apikey,
 }: {
   max: string;
   topic: string;
-  apikey: string;
 }) {
   try {
     const res = await fetch(

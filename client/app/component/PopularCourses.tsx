@@ -7,45 +7,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../redux/store";
 import { setPopularPlaylist } from "../redux/slices/playlistSlice";
 import { fetchPlaylist } from "../utils/apiCalls";
+import getApiKey from "../utils/apiCalls";
 
 const CourseCard = dynamic(() => import("./CourseCard"), {
   ssr: false,
 });
-
-const YOUTUBE_API_KEY = [
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_1,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_2,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_3,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_4,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_5,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_6,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_7,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_8,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_9,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_10,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_11,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_12,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_13,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_14,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_15,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_16,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_17,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_18,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_19,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_20,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_21,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_22,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_23,
-];
-
-function getRotatedKey(): string {
-  const now = new Date();
-  const hour = now.getUTCHours(); // use UTC for consistency
-  const index = hour % YOUTUBE_API_KEY.length;
-  return YOUTUBE_API_KEY[index]!;
-}
-
-const apikey = getRotatedKey();
 
 const PopularCourses = () => {
   const playlists = useSelector((state: RootState) => state.playlist);
@@ -62,12 +28,12 @@ const PopularCourses = () => {
 
   function getRotatedKey(): number {
     const now = new Date();
-    const hour = now.getUTCHours(); // use UTC for consistency
+    const hour = now.getUTCHours();
     return hour;
   }
 
   getRotatedKey();
-  // console.log(`hour ${hour}`);
+  const apikey = getApiKey();
 
   useEffect(() => {
     setHasMounted(true);
@@ -78,7 +44,7 @@ const PopularCourses = () => {
       const max = "3";
       const topic = "reactjs";
       if (apikey) {
-        const result = await fetchPlaylist({ max, topic, apikey });
+        const result = await fetchPlaylist({ max, topic });
         dispatch(setPopularPlaylist(result));
         if (result.length > 0) {
           setCheckDataExist(false);
