@@ -54,7 +54,7 @@ const PopularCourses = () => {
       }
     }
     load();
-  }, [dispatch]);
+  }, [dispatch, apikey]);
 
   useEffect(() => {
     const fetchLengths = async () => {
@@ -79,7 +79,7 @@ const PopularCourses = () => {
     if (playlists?.length > 0) {
       fetchLengths();
     }
-  }, [playlists]);
+  }, [playlists, apikey]);
 
   useEffect(() => {
     const fetchLengths = async () => {
@@ -104,7 +104,7 @@ const PopularCourses = () => {
     if (playlists?.length > 0) {
       fetchLengths();
     }
-  }, [playlists]);
+  }, [playlists, apikey]);
 
   return (
     <div className="flex flex-col gap-[2rem] sm:gap-[3rem] pt-[3rem] w-full">

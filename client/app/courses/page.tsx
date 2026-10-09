@@ -91,7 +91,7 @@ const Courses = () => {
       }
     }
     load();
-  }, [topic]);
+  }, [topic, apikey]);
 
   useEffect(() => {
     const fetchLengths = async () => {
@@ -116,7 +116,7 @@ const Courses = () => {
     if (playlists?.length > 0) {
       fetchLengths();
     }
-  }, [playlists]);
+  }, [playlists, apikey]);
 
   useEffect(() => {
     const fetchLengths = async () => {
@@ -143,7 +143,7 @@ const Courses = () => {
     if (playlists?.length > 0) {
       fetchLengths();
     }
-  }, [playlists]);
+  }, [playlists, apikey]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
