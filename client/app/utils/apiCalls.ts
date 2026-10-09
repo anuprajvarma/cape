@@ -89,7 +89,7 @@ export async function fetchPlaylist({
 }) {
   try {
     const res = await fetch(
-      `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${topic}&type=playlist&key=${apikey}&maxResults=${max}`,
+      `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(topic)}&type=playlist&key=${apikey}&maxResults=${max}`,
     );
 
     if (!res.ok) throw new Error("Failed to fetch playlist");

@@ -40,7 +40,7 @@ const Courses = () => {
     setShowSuggestions(false);
   });
 
-  const [topic, setTopic] = useState("react");
+  const [topic, setTopic] = useState("aiml and llm and cloude code");
 
   const apikey = getApiKey();
 
