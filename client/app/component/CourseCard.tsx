@@ -64,7 +64,6 @@ const CourseCard = ({
               title,
               channelTitle,
               thumbnails,
-
               id,
               description,
               firstVideoId,
@@ -175,7 +174,7 @@ const CourseCard = ({
 
   return (
     <>
-      <div className="w-full sm:w-[20rem] flex flex-col gap-3 bg-mediumSlaty border border-lightSlaty rounded-lg">
+      <div className="w-full sm:w-[20rem] max-h-[20rem] flex flex-col gap-3 bg-mediumSlaty border border-lightSlaty rounded-lg">
         <div className="h-[13rem] relative">
           <Image
             src={thumbnails || "/code.jpg"}

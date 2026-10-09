@@ -5,12 +5,11 @@ const enrolledCourseHandler = async (req, res) => {
     title,
     channelTitle,
     thumbnails,
-    length,
-    channelThumb,
     id,
     description,
     firstVideoId,
     bookmark,
+    videoId,
     indexOrder,
     email,
   } = req.body;
@@ -24,20 +23,20 @@ const enrolledCourseHandler = async (req, res) => {
     res.json({ enrolledkCourse, isExist: true });
   }
 
+  console.log("video id" + videoId);
+
   if (!enrolledkCourse) {
     enrolledkCourse = await EnrolledkCourse.create({
       email: email,
       thumbnail: thumbnails,
       playlistId: id,
       playlistDescription: description,
-      chapterLength: length,
       firstVideoId: firstVideoId,
       title: title,
       bookmark: bookmark,
-      chapters: [],
+      chapters: videoId !== undefined ? [videoId] : [],
       channelTitle: channelTitle,
       indexOrder: indexOrder,
-      channelImage: channelThumb,
     });
     // console.log(`create course enrolledcourse ${enrolledkCourse}`);
     res.json({ enrolledkCourse, isExist: false });
@@ -65,7 +64,7 @@ const appChapterHandler = async (req, res) => {
       email,
       playlistId,
     },
-    { $addToSet: { chapters: videoId } }
+    { $addToSet: { chapters: videoId } },
   );
 
   // console.log(`appChapterHandler ${appChapterHandler}`);
@@ -79,7 +78,7 @@ const removeChapterHandler = async (req, res) => {
       email,
       playlistId,
     },
-    { $pull: { chapters: videoId } }
+    { $pull: { chapters: videoId } },
   );
 
   // console.log(`removeChapterHandler ${removeChapterHandler}`);
@@ -120,7 +119,7 @@ const updateOrderHandler = async (req, res) => {
       const res = await EnrolledkCourse.findOneAndUpdate(
         { email, playlistId },
         { indexOrder: index },
-        { new: true } // ✅ return updated document
+        { new: true }, // ✅ return updated document
       );
       if (!res) {
         console.log("❌ No document found for:", email, playlistId);

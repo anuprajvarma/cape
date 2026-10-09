@@ -9,16 +9,16 @@ const enrolledCourseSchema = new mongoose.Schema({
     required: true,
     type: String,
   },
+  videoId: {
+    required: false,
+    type: String,
+  },
   playlistId: {
     required: true,
     type: String,
   },
   playlistDescription: {
     type: String,
-  },
-  chapterLength: {
-    required: true,
-    type: Number,
   },
   firstVideoId: {
     required: true,
@@ -29,10 +29,6 @@ const enrolledCourseSchema = new mongoose.Schema({
     type: String,
   },
   channelTitle: {
-    required: true,
-    type: String,
-  },
-  channelImage: {
     required: true,
     type: String,
   },

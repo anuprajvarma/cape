@@ -444,11 +444,25 @@ export const handleChapter = async ({
   email,
   playlistId,
   videoId,
+  title,
+  channelTitle,
+  thumbnails,
+  description,
+  firstVideoId,
+  bookmark,
+  indexOrder,
 }: {
   e: boolean;
   email: string;
   playlistId: string;
   videoId: string;
+  title: string;
+  channelTitle: string;
+  thumbnails: string;
+  description: string;
+  firstVideoId: string;
+  bookmark: boolean;
+  indexOrder: number;
 }) => {
   if (e === true) {
     try {
@@ -466,12 +480,40 @@ export const handleChapter = async ({
         },
       );
       const data = await res.json();
+      console.log("data " + data.appChapterHandler);
       if (data.appChapterHandler) {
         toast.success("chapter is complete", {
           hideProgressBar: true,
         });
       } else {
-        toast.error("you need enrolled in course", {
+        try {
+          await fetch(
+            `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/enrolledCourse`,
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                title,
+                channelTitle,
+                thumbnails,
+                id: playlistId,
+                description,
+                firstVideoId,
+                videoId,
+                bookmark: bookmark,
+                indexOrder: indexOrder,
+                email,
+              }),
+              credentials: "include",
+            },
+          );
+        } catch (error) {
+          console.log(error);
+          toast.error(`${error}`, {
+            hideProgressBar: true,
+          });
+        }
+        toast.success("course is enrolled", {
           hideProgressBar: true,
         });
       }
