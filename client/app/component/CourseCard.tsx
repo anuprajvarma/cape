@@ -22,8 +22,6 @@ const CourseCard = ({
   title,
   channelTitle,
   thumbnails,
-  length,
-  channelThumb,
   id,
   bookmark,
   description,
@@ -49,8 +47,6 @@ const CourseCard = ({
     title,
     channelTitle,
     thumbnails,
-    length,
-    channelThumb,
     description,
     id,
     getDataCheck,
@@ -68,8 +64,7 @@ const CourseCard = ({
               title,
               channelTitle,
               thumbnails,
-              length,
-              channelThumb,
+
               id,
               description,
               firstVideoId,
@@ -131,8 +126,6 @@ const CourseCard = ({
     title,
     channelTitle,
     thumbnails,
-    length,
-    channelThumb,
     id,
     getDataCheck,
     setGetDataCheck,
@@ -148,8 +141,6 @@ const CourseCard = ({
               title,
               channelTitle,
               thumbnails,
-              length,
-              channelThumb,
               id,
               bookmark: true,
               firstVideoId,
@@ -201,22 +192,6 @@ const CourseCard = ({
               <p className="text-lg text-white line-clamp-1 font-semibold">
                 {title}
               </p>
-              <div className="flex justify-between text-sm items-center text-slaty/80">
-                <div className="flex gap-2 items-center">
-                  <div className="flex w-[26px] h-[26px] relative">
-                    <Image
-                      src={channelThumb || "/code.jpg"}
-                      alt="playlist thumbnail"
-                      quality={100}
-                      sizes="(max-width: 768px) 80px, 160px"
-                      fill
-                      className="rounded-full"
-                    />
-                  </div>
-                  <p>{channelTitle}</p>
-                </div>
-                <p>chapters {length}</p>
-              </div>
             </div>
           </div>
           <div className="flex justify-between pt-2 text-slaty">
@@ -226,8 +201,6 @@ const CourseCard = ({
                   title,
                   channelTitle,
                   thumbnails,
-                  length,
-                  channelThumb,
                   description,
                   bookmark,
                   id,
@@ -263,34 +236,6 @@ const CourseCard = ({
                   </Tooltip.Portal>
                 </Tooltip.Root>
               </Tooltip.Provider>
-              {/* {bookmark ? (
-                <Tooltip.Provider delayDuration={0}>
-                  <Tooltip.Root>
-                    <Tooltip.Trigger asChild>
-                      <button
-                        onClick={() =>
-                          handleDeletBookmarkCourse({
-                            id,
-                          })
-                        }
-                      >
-                        <AiOutlineDelete className="text-2xl hover:text-slaty transition duration-300" />
-                      </button>
-                    </Tooltip.Trigger>
-                    <Tooltip.Portal>
-                      <Tooltip.Content
-                        side="top"
-                        className="bg-lightSlaty text-slaty px-3 py-1 text-sm rounded shadow-md z-20"
-                      >
-                        Delete
-                        <Tooltip.Arrow className="fill-lightSlaty" />
-                      </Tooltip.Content>
-                    </Tooltip.Portal>
-                  </Tooltip.Root>
-                </Tooltip.Provider>
-              ) : (
-                <></>
-              )} */}
               {bookmark ? (
                 <Tooltip.Provider delayDuration={0}>
                   <Tooltip.Root>
@@ -326,8 +271,6 @@ const CourseCard = ({
                             title,
                             channelTitle,
                             thumbnails,
-                            length,
-                            channelThumb,
                             description,
                             bookmark,
                             id,

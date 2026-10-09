@@ -4,8 +4,6 @@ export interface CourseCardType {
   title: string;
   channelTitle: string;
   thumbnails: string;
-  length: string;
-  channelThumb: string;
   id: string;
   description: string;
   bookmark: boolean;

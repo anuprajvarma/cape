@@ -27,12 +27,6 @@ type SpeechWindow = Window & {
 
 const Courses = () => {
   const [playlists, setPopularPlaylist] = useState<playlistType[]>([]);
-  const [playlistLengths, setPlaylistLengths] = useState<
-    Record<string, string>
-  >({});
-  const [channelThumbnail, setChannelThumbnail] = useState<
-    Record<string, string>
-  >({});
   const [hasMounted, setHasMounted] = useState(false);
   const [checkDataExist, setCheckDataExist] = useState<boolean>(false);
   const [suggestionsArray, setSuggestionsArray] = useState<string[]>([]);
@@ -62,7 +56,6 @@ const Courses = () => {
           },
         );
         const data = await res.json();
-        // console.log(`data.search ${data.searchData[0].title}`);
         setSuggestionsArray(data.searchData[0].title);
       } catch (error) {
         console.log(error);
@@ -92,58 +85,6 @@ const Courses = () => {
     }
     load();
   }, [topic, apikey]);
-
-  useEffect(() => {
-    const fetchLengths = async () => {
-      const newLengths: Record<string, string> = {};
-      await Promise.all(
-        playlists.map(async (item) => {
-          const id = item.id?.playlistId;
-          if (id) {
-            const lenthRes = await fetch(
-              `https://www.googleapis.com/youtube/v3/playlists?part=contentDetails&id=${id}&key=${apikey}`,
-            );
-
-            const data = await lenthRes.json();
-            newLengths[id] = data.items[0]?.contentDetails?.itemCount || 0;
-          }
-        }),
-      );
-
-      setPlaylistLengths(newLengths);
-    };
-
-    if (playlists?.length > 0) {
-      fetchLengths();
-    }
-  }, [playlists, apikey]);
-
-  useEffect(() => {
-    const fetchLengths = async () => {
-      const newThumbnail: Record<string, string> = {};
-      await Promise.all(
-        playlists.map(async (item) => {
-          const channelId = item.snippet?.channelId;
-
-          if (channelId) {
-            // console.log(`channelid ${channelId}`);
-            const ownerThumbnailRes = await fetch(
-              `https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${channelId}&key=${apikey}`,
-            );
-
-            const thumbnailData = await ownerThumbnailRes.json();
-            newThumbnail[channelId] =
-              thumbnailData.items[0]?.snippet.thumbnails.high.url;
-          }
-        }),
-      );
-      setChannelThumbnail(newThumbnail);
-    };
-
-    if (playlists?.length > 0) {
-      fetchLengths();
-    }
-  }, [playlists, apikey]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -182,12 +123,9 @@ const Courses = () => {
   };
 
   const myFunction = () => {
-    // console.log("funtion run");
     if (searchQuery === "") {
-      // console.log(`hee ${searchQuery}`);
       setTopic(topic);
     } else {
-      // console.log(`hey ${searchQuery}`);
       setTopic(searchQuery);
     }
   };
@@ -482,10 +420,8 @@ const Courses = () => {
               {playlists.length > 0 ? (
                 playlists.map((data, index) => {
                   const id = data.id?.playlistId;
-                  const channelId = data.snippet?.channelId;
+
                   const description = data.snippet?.description;
-                  const length = playlistLengths[id] || "0";
-                  const channelThumb = channelThumbnail[channelId] || "";
 
                   if (!hasMounted) return null;
 
@@ -494,11 +430,9 @@ const Courses = () => {
                       title={data.snippet?.title}
                       channelTitle={data.snippet?.channelTitle}
                       thumbnails={data.snippet?.thumbnails.high.url}
-                      length={length}
                       id={id}
                       bookmark={false}
                       description={description}
-                      channelThumb={channelThumb}
                       setGetDataCheck={setGetDataCheck}
                       getDataCheck={getDataCheck}
                       key={index}
