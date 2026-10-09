@@ -13,10 +13,6 @@ const bookmarkCourseSchema = new mongoose.Schema({
     required: true,
     type: String,
   },
-  chapterLength: {
-    required: true,
-    type: Number,
-  },
   firstVideoId: {
     required: true,
     type: String,
@@ -26,10 +22,6 @@ const bookmarkCourseSchema = new mongoose.Schema({
     type: String,
   },
   channelTitle: {
-    required: true,
-    type: String,
-  },
-  channelImage: {
     required: true,
     type: String,
   },

@@ -2,17 +2,8 @@ const BookmarkCourse = require("../models/bookmarkCourse");
 
 const bookmarCourseHandler = async (req, res) => {
   // console.log("bookmark");
-  const {
-    title,
-    channelTitle,
-    thumbnails,
-    length,
-    channelThumb,
-    id,
-    firstVideoId,
-    bookmark,
-    email,
-  } = req.body;
+  const { title, channelTitle, thumbnails, id, firstVideoId, bookmark, email } =
+    req.body;
   let bookmarkCourse = await BookmarkCourse.findOne({
     playlistId: id,
     email,
@@ -27,11 +18,9 @@ const bookmarCourseHandler = async (req, res) => {
       email: email,
       thumbnail: thumbnails,
       playlistId: id,
-      chapterLength: length,
       firstVideoId: firstVideoId,
       title: title,
       channelTitle: channelTitle,
-      channelImage: channelThumb,
       bookmark: bookmark,
     });
   }
