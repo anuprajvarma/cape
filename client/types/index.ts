@@ -14,7 +14,7 @@ export interface CourseCardType {
 
 export interface chatType {
   question: string;
-  answer: string;
+  answer: string | null;
 }
 
 export interface discussionType {

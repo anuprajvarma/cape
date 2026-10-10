@@ -72,11 +72,9 @@ const Bookmark = () => {
                     title={data.title}
                     channelTitle={data.channelTitle}
                     thumbnails={data.thumbnail}
-                    length={data.chapterLength}
                     id={data.playlistId}
                     bookmark={data.bookmark}
                     description={data.playlistDescription}
-                    channelThumb={data.channelImage}
                     getDataCheck={getDataCheck}
                     setGetDataCheck={setGetDataCheck}
                     indexOrder={index}
