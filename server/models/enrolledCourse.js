@@ -20,10 +20,6 @@ const enrolledCourseSchema = new mongoose.Schema({
   playlistDescription: {
     type: String,
   },
-  firstVideoId: {
-    required: true,
-    type: String,
-  },
   title: {
     required: true,
     type: String,

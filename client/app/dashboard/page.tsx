@@ -69,7 +69,6 @@ function SortableItem({
         playlistId={data.playlistId}
         playlistDescription={data.playlistDescription}
         channelImage={data.channelImage}
-        firstVideoId={data.firstVideoId}
         setGetDataCheck={setGetDataCheck}
         getDataCheck={getDataCheck}
       />
@@ -128,7 +127,7 @@ const Dashboard: React.FC = () => {
             email: session?.user?.email,
             newOrder: updatedItems.map((p) => p.playlistId),
           }),
-        }
+        },
       );
 
       if (!res.ok) throw new Error("Failed to update order");
@@ -155,7 +154,7 @@ const Dashboard: React.FC = () => {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email: session.user.email }),
             credentials: "include",
-          }
+          },
         );
 
         const data = await res.json();
@@ -163,7 +162,7 @@ const Dashboard: React.FC = () => {
         const enrolled = data.enrolledkCourse ?? [];
 
         const sortedEnrolled = [...enrolled].sort(
-          (a, b) => a.indexOrder - b.indexOrder
+          (a, b) => a.indexOrder - b.indexOrder,
         );
 
         setEnrolledCoursePlaylist(sortedEnrolled);

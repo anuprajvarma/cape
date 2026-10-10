@@ -28,7 +28,6 @@ interface bookmarkPlaylistType {
   channelImage: string;
   playlistId: string;
   playlistDescription: string;
-  firstVideoId: string;
   setGetDataCheck: React.Dispatch<React.SetStateAction<boolean>>;
   getDataCheck: boolean;
 }
@@ -41,7 +40,6 @@ const EnrolledCard = ({
   channelImage,
   playlistId,
   playlistDescription,
-  firstVideoId,
   setGetDataCheck,
   getDataCheck,
 }: bookmarkPlaylistType) => {
@@ -149,7 +147,7 @@ const EnrolledCard = ({
                     <Tooltip.Trigger asChild>
                       <button
                         onClick={() =>
-                          router.push(`/course/${playlistId}/${firstVideoId}`)
+                          router.push(`/course/${playlistId}/${1}`)
                         }
                       >
                         <IoPlayCircleOutline className="text-2xl hover:text-slaty transition duration-300 w-6 h-6" />
@@ -196,8 +194,8 @@ const EnrolledCard = ({
                           dispatch(setCourseLinkModal(true));
                           dispatch(
                             setCourseLink(
-                              `https://cape-lyart.vercel.app/course/${playlistId}/${firstVideoId}`
-                            )
+                              `https://cape-lyart.vercel.app/course/${playlistId}/${1}`,
+                            ),
                           );
                         }}
                       >

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { PlaylistCardType } from "@/types";
@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../redux/store";
 import { setCheckBox } from "../redux/slices/checkboxSlice";
-import { handleChapter, playlist } from "../utils/apiCalls";
+import { handleChapter } from "../utils/apiCalls";
 // import { toast } from "react-toastify";
 import { IoPlay } from "react-icons/io5";
 import { setIsOpen } from "../redux/slices/LoginModalSlice";
@@ -26,15 +26,15 @@ const PlalistVideoCard = ({
 
   const checkboxTrack = useSelector((state: RootState) => state.checkbox);
   const dispatch = useDispatch<AppDispatch>();
-  const [firstVideoId, setFirstVideoId] = useState("");
+  // const [firstVideoId, setFirstVideoId] = useState("");
 
-  useEffect(() => {
-    const load = async () => {
-      const result = await playlist(id);
-      setFirstVideoId(result);
-    };
-    load();
-  }, [id]);
+  // useEffect(() => {
+  //   const load = async () => {
+  //     const result = await playlist(id);
+  //     setFirstVideoId(result);
+  //   };
+  //   load();
+  // }, [id]);
 
   const playVideo = ({ id, videoId }: { id: string; videoId: string }) => {
     router.push(`/course/${id}/${videoId}`);
@@ -51,7 +51,6 @@ const PlalistVideoCard = ({
         channelTitle,
         thumbnails,
         description: "random",
-        firstVideoId,
         bookmark: true,
         indexOrder: index,
       });

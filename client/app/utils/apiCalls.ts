@@ -124,7 +124,7 @@ export const handleEnrolled = async (email: string) => {
   }
 };
 
-export async function playlist(id: string) {
+export async function playlist(id: string | undefined | string[]) {
   const res = await fetch(
     `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${id}&maxResults=3&key=${apikey}`,
   );
@@ -448,7 +448,6 @@ export const handleChapter = async ({
   channelTitle,
   thumbnails,
   description,
-  firstVideoId,
   bookmark,
   indexOrder,
 }: {
@@ -460,7 +459,6 @@ export const handleChapter = async ({
   channelTitle: string;
   thumbnails: string;
   description: string;
-  firstVideoId: string;
   bookmark: boolean;
   indexOrder: number;
 }) => {
@@ -498,7 +496,6 @@ export const handleChapter = async ({
                 thumbnails,
                 id: playlistId,
                 description,
-                firstVideoId,
                 videoId,
                 bookmark: bookmark,
                 indexOrder: indexOrder,

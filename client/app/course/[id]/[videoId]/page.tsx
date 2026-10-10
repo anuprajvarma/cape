@@ -1,14 +1,14 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import PlalistVideoCard from "../../../component/PlalistVideoCard";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import { playlistType2, discussionType } from "@/types";
 import { setIsOpen } from "../../../redux/slices/LoginModalSlice";
 import { AiOutlineDelete } from "react-icons/ai";
 import { toast } from "react-toastify";
-import getApiKey from "../../../utils/apiCalls";
+import getApiKey, { playlist } from "../../../utils/apiCalls";
 import {
   fetchDiscussionData,
   postDiscussionData,
@@ -50,11 +50,10 @@ const apikey = getApiKey();
 const Course = () => {
   const session = useSession();
   const params = useParams();
+  const router = useRouter();
   const { id, videoId } = params;
-
   const checkboxTrack = useSelector((state: RootState) => state.checkbox);
   const dispatch = useDispatch<AppDispatch>();
-
   const [discussionData, setDiscussionData] = useState<discussionType[]>([]);
   const [discussionContent, setDiscussionContent] = useState("");
   const [playlists, setPlaylists] = useState<playlistType2[]>([]);
@@ -67,6 +66,16 @@ const Course = () => {
   const [videoTitle, setVideoTitle] = useState("");
   const [videoDescription, setVideoDescription] = useState("");
   const [commentStateUpdate, setCommentStateUpdate] = useState(false);
+
+  useEffect(() => {
+    const load = async () => {
+      const result = await playlist(id);
+      router.push(`/course/${id}/${result}`);
+    };
+    if (videoId === "1") {
+      load();
+    }
+  }, []);
 
   useEffect(() => {
     const discussion = async () => {
@@ -286,6 +295,7 @@ const Course = () => {
                     const videoid = data.snippet?.resourceId.videoId;
                     const isChecked = completedChapters?.includes(videoid);
                     if (!hasMounted) return null;
+                    console.log("video id " + videoid);
                     return (
                       <PlalistVideoCard
                         title={data.snippet?.title}

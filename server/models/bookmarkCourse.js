@@ -13,10 +13,6 @@ const bookmarkCourseSchema = new mongoose.Schema({
     required: true,
     type: String,
   },
-  firstVideoId: {
-    required: true,
-    type: String,
-  },
   title: {
     required: true,
     type: String,

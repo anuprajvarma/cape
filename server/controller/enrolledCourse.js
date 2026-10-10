@@ -7,7 +7,6 @@ const enrolledCourseHandler = async (req, res) => {
     thumbnails,
     id,
     description,
-    firstVideoId,
     bookmark,
     videoId,
     indexOrder,
@@ -31,34 +30,26 @@ const enrolledCourseHandler = async (req, res) => {
       thumbnail: thumbnails,
       playlistId: id,
       playlistDescription: description,
-      firstVideoId: firstVideoId,
       title: title,
       bookmark: bookmark,
       chapters: videoId !== undefined ? [videoId] : [],
       channelTitle: channelTitle,
       indexOrder: indexOrder,
     });
-    // console.log(`create course enrolledcourse ${enrolledkCourse}`);
     res.json({ enrolledkCourse, isExist: false });
   }
 };
 
 const getEnrolledCourseHandler = async (req, res) => {
-  //   console.log("step 3");
   const { email } = req.body;
   let enrolledkCourse = await EnrolledkCourse.find({
     email,
   });
-
-  // console.log(`google call ${email}`);
-
-  //   console.log(`enrolledkCourse ${enrolledkCourse}`);
   res.json({ enrolledkCourse });
 };
 
 const appChapterHandler = async (req, res) => {
   const { email, playlistId, videoId } = req.body;
-  //   console.log(email, playlistId, videoId);
   let appChapterHandler = await EnrolledkCourse.findOneAndUpdate(
     {
       email,
@@ -66,8 +57,6 @@ const appChapterHandler = async (req, res) => {
     },
     { $addToSet: { chapters: videoId } },
   );
-
-  // console.log(`appChapterHandler ${appChapterHandler}`);
   res.json({ appChapterHandler });
 };
 

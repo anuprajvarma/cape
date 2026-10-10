@@ -3,13 +3,13 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { IoPlayCircleOutline } from "react-icons/io5";
 import { IoBookmarkOutline } from "react-icons/io5";
 import { FaBookmark } from "react-icons/fa";
 import { IoMdShareAlt } from "react-icons/io";
 import { CourseCardType } from "@/types";
-import { playlist } from "../utils/apiCalls";
+// import { playlist } from "../utils/apiCalls";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
@@ -31,17 +31,7 @@ const CourseCard = ({
 }: CourseCardType) => {
   const router = useRouter();
   const session = useSession();
-  // console.log(id);
-  const [firstVideoId, setFirstVideoId] = useState("");
   const dispatch = useDispatch<AppDispatch>();
-
-  useEffect(() => {
-    const load = async () => {
-      const result = await playlist(id);
-      setFirstVideoId(result);
-    };
-    load();
-  }, [id]);
 
   const handleEnrolled = async ({
     title,
@@ -66,7 +56,6 @@ const CourseCard = ({
               thumbnails,
               id,
               description,
-              firstVideoId,
               bookmark: true,
               indexOrder: indexOrder,
               email: session.data?.user?.email,
@@ -142,7 +131,6 @@ const CourseCard = ({
               thumbnails,
               id,
               bookmark: true,
-              firstVideoId,
               email: session.data?.user?.email,
             }),
             credentials: "include",
@@ -216,11 +204,7 @@ const CourseCard = ({
               <Tooltip.Provider delayDuration={0}>
                 <Tooltip.Root>
                   <Tooltip.Trigger asChild>
-                    <button
-                      onClick={() =>
-                        router.push(`/course/${id}/${firstVideoId}`)
-                      }
-                    >
+                    <button onClick={() => router.push(`/course/${id}/${1}`)}>
                       <IoPlayCircleOutline className="text-2xl hover:text-slaty hover:text-darkRed transition duration-300" />
                     </button>
                   </Tooltip.Trigger>
@@ -302,7 +286,7 @@ const CourseCard = ({
                         dispatch(setCourseLinkModal(true));
                         dispatch(
                           setCourseLink(
-                            `https://cape-lyart.vercel.app/course/${id}/${firstVideoId}`,
+                            `https://cape-lyart.vercel.app/course/${id}/${1}`,
                           ),
                         );
                       }}
