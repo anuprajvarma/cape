@@ -40,7 +40,9 @@ const Courses = () => {
     setShowSuggestions(false);
   });
 
-  const [topic, setTopic] = useState("aiml and llm and cloude code");
+  const [topic, setTopic] = useState(
+    "ai AND claude code AND robotics engineering",
+  );
 
   const apikey = getApiKey();
 
