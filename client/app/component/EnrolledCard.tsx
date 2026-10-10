@@ -19,6 +19,7 @@ import { AppDispatch } from "../redux/store";
 import { useDispatch } from "react-redux";
 import { setCourseLinkModal } from "../redux/slices/CourseLinkModal";
 import { setCourseLink } from "../redux/slices/CourseLink";
+import getApiKey from "../utils/apiCalls";
 
 interface bookmarkPlaylistType {
   title: string;
@@ -49,34 +50,46 @@ const EnrolledCard = ({
   const [precentage, setPrecentage] = useState<number>(0);
   const dispatch = useDispatch<AppDispatch>();
 
-  const actualId = Array.isArray(playlistId) ? playlistId[0] : playlistId;
+  const apikey = getApiKey();
 
   useEffect(() => {
-    if (actualId) {
-      const percentage =
-        (100 * completedChapters.length) / Number(chapterLength);
-      setPrecentage(Math.round(percentage));
+    const url = `https://www.googleapis.com/youtube/v3/playlists?${new URLSearchParams(
+      {
+        part: "contentDetails",
+        id: playlistId,
+        key: apikey,
+      },
+    )}`;
+
+    try {
+      const fetchEnrolledData = async () => {
+        const res = await fetch(url);
+        const data = await res.json();
+
+        const percentage =
+          (100 * completedChapters.length) /
+          data.items[0].contentDetails.itemCount;
+        setPrecentage(Math.round(percentage));
+      };
+      fetchEnrolledData();
+    } catch (error) {
+      console.log(error);
     }
-    // console.log(precentage);
+  }, [playlistId, session.data?.user, apikey, completedChapters]);
+
+  useEffect(() => {
     const getChapterData = async () => {
       const result = await enrolledCourseDataFetch({
         email: session.data?.user?.email ?? "",
         playlistId,
       });
       if (result) {
-        // console.log(`data ka length hai`);
         setCompletedChapters(result);
       }
     };
+
     getChapterData();
-  }, [
-    session.data?.user,
-    playlistId,
-    actualId,
-    chapterLength,
-    completedChapters.length,
-    precentage,
-  ]);
+  }, [session.data?.user, playlistId, completedChapters.length, precentage]);
 
   const handleDeletEnrolledCourse = async ({
     playlistId,
