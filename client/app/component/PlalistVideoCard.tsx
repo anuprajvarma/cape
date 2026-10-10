@@ -26,15 +26,6 @@ const PlalistVideoCard = ({
 
   const checkboxTrack = useSelector((state: RootState) => state.checkbox);
   const dispatch = useDispatch<AppDispatch>();
-  // const [firstVideoId, setFirstVideoId] = useState("");
-
-  // useEffect(() => {
-  //   const load = async () => {
-  //     const result = await playlist(id);
-  //     setFirstVideoId(result);
-  //   };
-  //   load();
-  // }, [id]);
 
   const playVideo = ({ id, videoId }: { id: string; videoId: string }) => {
     router.push(`/course/${id}/${videoId}`);

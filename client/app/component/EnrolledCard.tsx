@@ -37,16 +37,14 @@ const EnrolledCard = ({
   title,
   channelTitle,
   thumbnail,
-  chapterLength,
-  channelImage,
   playlistId,
-  playlistDescription,
   setGetDataCheck,
   getDataCheck,
 }: bookmarkPlaylistType) => {
   const router = useRouter();
   const session = useSession();
   const [completedChapters, setCompletedChapters] = useState<string[]>([]);
+  const [playlistChapters, setPlaylistChapters] = useState<number>(0);
   const [precentage, setPrecentage] = useState<number>(0);
   const dispatch = useDispatch<AppDispatch>();
 
@@ -65,7 +63,7 @@ const EnrolledCard = ({
       const fetchEnrolledData = async () => {
         const res = await fetch(url);
         const data = await res.json();
-
+        setPlaylistChapters(data.items[0].contentDetails.itemCount);
         const percentage =
           (100 * completedChapters.length) /
           data.items[0].contentDetails.itemCount;
@@ -109,7 +107,7 @@ const EnrolledCard = ({
   return (
     <div className="flex justify-center lg:justify-between gap-8">
       <div className="flex flex-col sm:flex-row w-full sm:w-[37rem] md:w-[52rem] min-h-[12rem] rounded-lg bg-mediumSlaty border border-lightSlaty">
-        <div className="flex w-full sm:w-[24rem] h-[13rem] relative">
+        <div className="flex w-full sm:w-[20rem] h-[12rem] relative">
           <Image
             src={thumbnail || "/code.jpg"}
             alt="playlist thumbnail"
@@ -120,37 +118,25 @@ const EnrolledCard = ({
             className="rounded-md"
           />
         </div>
-        <div className="flex sm:w-[32rem] flex-col p-2 gap-2">
-          <p className="text-xl text-white line-clamp-1 font-semibold">
+        <div className="flex sm:w-[32rem] flex-col px-2 py-4 gap-2">
+          <p className="text-xl text-white line-clamp-2 font-semibold">
             {title}
           </p>
           <div className="flex justify-between text-md text-slaty/80">
             <div className="flex gap-2 items-center justify-center">
-              <div className="flex w-[2rem] h-[2rem] relative">
-                <Image
-                  src={channelImage || "/code.jpg"}
-                  alt="playlist thumbnail"
-                  quality={100}
-                  sizes="80px"
-                  fill
-                  style={{ objectFit: "cover" }}
-                  className="rounded-full"
-                />
-              </div>
               <p>{channelTitle}</p>
             </div>
             <div className="flex gap-2 items-center justify-center">
-              <p>chapters {chapterLength}</p>
+              <p>chapters {playlistChapters}</p>
             </div>
           </div>
           <div className="flex flex-col gap-2 items-end text-slaty/80">
-            <p className="line-clamp-3 text-base">{playlistDescription}</p>
             <div className="flex gap-2 justify-between lg:justify-end w-full">
               <div className=" flex lg:hidden gap-2 font-medium text-slaty/90">
                 <p className="text-slaty">Completed -</p>
                 <div>
-                  {chapterLength && (
-                    <p>{`${completedChapters?.length}/${chapterLength}`}</p>
+                  {playlistChapters && (
+                    <p>{`${completedChapters?.length}/${playlistChapters}`}</p>
                   )}
                 </div>
               </div>
