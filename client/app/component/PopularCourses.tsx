@@ -1,101 +1,101 @@
-"use client";
+// "use client";
 
-import dynamic from "next/dynamic";
-import React, { useEffect, useState } from "react";
-import Link from "next/link";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState, AppDispatch } from "../redux/store";
-import { setPopularPlaylist } from "../redux/slices/playlistSlice";
-import { fetchPlaylist } from "../utils/apiCalls";
-import getApiKey from "../utils/apiCalls";
+// import dynamic from "next/dynamic";
+// import React, { useEffect, useState } from "react";
+// import Link from "next/link";
+// import { useSelector, useDispatch } from "react-redux";
+// import { RootState, AppDispatch } from "../redux/store";
+// import { setPopularPlaylist } from "../redux/slices/playlistSlice";
+// import { fetchPlaylist } from "../utils/apiCalls";
+// import getApiKey from "../utils/apiCalls";
 
-const CourseCard = dynamic(() => import("./CourseCard"), {
-  ssr: false,
-});
+// const CourseCard = dynamic(() => import("./CourseCard"), {
+//   ssr: false,
+// });
 
-const PopularCourses = () => {
-  const playlists = useSelector((state: RootState) => state.playlist);
-  const dispatch = useDispatch<AppDispatch>();
-  const [hasMounted, setHasMounted] = useState(false);
-  const [getDataCheck, setGetDataCheck] = useState<boolean>(false);
-  const [checkDataExist, setCheckDataExist] = useState<boolean>(false);
+// const PopularCourses = () => {
+//   const playlists = useSelector((state: RootState) => state.playlist);
+//   const dispatch = useDispatch<AppDispatch>();
+//   const [hasMounted, setHasMounted] = useState(false);
+//   const [getDataCheck, setGetDataCheck] = useState<boolean>(false);
+//   const [checkDataExist, setCheckDataExist] = useState<boolean>(false);
 
-  function getRotatedKey(): number {
-    const now = new Date();
-    const hour = now.getUTCHours();
-    return hour;
-  }
+//   function getRotatedKey(): number {
+//     const now = new Date();
+//     const hour = now.getUTCHours();
+//     return hour;
+//   }
 
-  getRotatedKey();
-  const apikey = getApiKey();
+//   getRotatedKey();
+//   const apikey = getApiKey();
 
-  useEffect(() => {
-    setHasMounted(true);
-  }, []);
+//   useEffect(() => {
+//     setHasMounted(true);
+//   }, []);
 
-  useEffect(() => {
-    async function load() {
-      const max = "3";
-      const topic = "reactjs";
-      if (apikey) {
-        const result = await fetchPlaylist({ max, topic });
-        dispatch(setPopularPlaylist(result));
-        if (result.length > 0) {
-          setCheckDataExist(false);
-        } else {
-          setCheckDataExist(true);
-        }
-      }
-    }
-    load();
-  }, [dispatch, apikey]);
+//   useEffect(() => {
+//     async function load() {
+//       const max = "3";
+//       const topic = "reactjs";
+//       if (apikey) {
+//         const result = await fetchPlaylist({ max, topic });
+//         dispatch(setPopularPlaylist(result));
+//         if (result.length > 0) {
+//           setCheckDataExist(false);
+//         } else {
+//           setCheckDataExist(true);
+//         }
+//       }
+//     }
+//     load();
+//   }, [dispatch, apikey]);
 
-  return (
-    <div className="flex flex-col gap-[2rem] sm:gap-[3rem] pt-[3rem] w-full">
-      <p className="text-center font-semibold text-2xl sm:text-4xl text-white">
-        Popular Courses
-      </p>
-      <div className="flex flex-col gap-8 sm:gap-14">
-        <div className="flex flex-wrap gap-8 items-center justify-center">
-          {playlists.length > 0 ? (
-            playlists?.map((data, index) => {
-              const id = data.id?.playlistId;
+//   return (
+//     <div className="flex flex-col gap-[2rem] sm:gap-[3rem] pt-[3rem] w-full">
+//       <p className="text-center font-semibold text-2xl sm:text-4xl text-white">
+//         Popular Courses
+//       </p>
+//       <div className="flex flex-col gap-8 sm:gap-14">
+//         <div className="flex flex-wrap gap-8 items-center justify-center">
+//           {playlists.length > 0 ? (
+//             playlists?.map((data, index) => {
+//               const id = data.id?.playlistId;
 
-              const description = data.snippet?.description;
+//               const description = data.snippet?.description;
 
-              if (!hasMounted) return null;
-              return (
-                <CourseCard
-                  title={data.snippet?.title}
-                  channelTitle={data.snippet?.channelTitle}
-                  thumbnails={data.snippet?.thumbnails.high.url}
-                  id={id}
-                  bookmark={false}
-                  description={description}
-                  setGetDataCheck={setGetDataCheck}
-                  getDataCheck={getDataCheck}
-                  indexOrder={index}
-                  key={index}
-                />
-              );
-            })
-          ) : checkDataExist ? (
-            <p className="text-xl text-slaty">Youtube API limit is exceed</p>
-          ) : (
-            <p className="text-xl text-center text-slaty">Loading...</p>
-          )}
-        </div>
-        <div className="flex justify-center ">
-          <Link
-            href="/courses"
-            className="px-6 py-2 rounded-[6px] bg-lightSlaty text-slaty/80 hover:bg-slaty/20 hover:text-slaty transition duration-300 cursor-pointer"
-          >
-            View all Courses
-          </Link>
-        </div>
-      </div>
-    </div>
-  );
-};
+//               if (!hasMounted) return null;
+//               return (
+//                 <CourseCard
+//                   title={data.snippet?.title}
+//                   channelTitle={data.snippet?.channelTitle}
+//                   thumbnails={data.snippet?.thumbnails.high.url}
+//                   id={id}
+//                   bookmark={false}
+//                   description={description}
+//                   setGetDataCheck={setGetDataCheck}
+//                   getDataCheck={getDataCheck}
+//                   indexOrder={index}
+//                   key={index}
+//                 />
+//               );
+//             })
+//           ) : checkDataExist ? (
+//             <p className="text-xl text-slaty">Youtube API limit is exceed</p>
+//           ) : (
+//             <p className="text-xl text-center text-slaty">Loading...</p>
+//           )}
+//         </div>
+//         <div className="flex justify-center ">
+//           <Link
+//             href="/courses"
+//             className="px-6 py-2 rounded-[6px] bg-lightSlaty text-slaty/80 hover:bg-slaty/20 hover:text-slaty transition duration-300 cursor-pointer"
+//           >
+//             View all Courses
+//           </Link>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
 
-export default PopularCourses;
+// export default PopularCourses;
