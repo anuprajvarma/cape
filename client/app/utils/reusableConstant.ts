@@ -1,25 +1,3 @@
-// export const backendCalls = async ({
-//   email,
-//   playlistId,
-// }: {
-//   email: string;
-//   playlistId: string;
-// }) => {
-//   const res = await fetch(
-//     `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/chat/getData`,
-//     {
-//       method: "POST",
-//       headers: { "Content-Type": "application/json" },
-//       body: JSON.stringify({
-//         email,
-//         playlistId,
-//       }),
-//       credentials: "include",
-//     },
-//   );
-//     const data = await res.json();
-// };
-
 const YOUTUBE_API_KEY = [
   process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_1,
   process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_2,

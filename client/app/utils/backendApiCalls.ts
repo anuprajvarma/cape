@@ -2,9 +2,33 @@ import { toast } from "react-toastify";
 
 const backendUrl = `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api`;
 
+const fetchData = async ({ 
+  email,
+  playlistId,
+  videoId,
+  url,
+}: {
+  email: string;
+  playlistId: string;
+  videoId: string;
+  url: string;
+}) => {
+  const res = await fetch(`${backendUrl}${url}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      email,
+      playlistId,
+      videoId,
+    }),
+    credentials: "include",
+  });
+  const data = await res.json();
+  return data;
+};
+
 export const handleEnrolled = async (email: string) => {
   try {
-    // console.log("step 2");
     const res = await fetch(`${backendUrl}/bookmarkCourse/getData`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -166,18 +190,12 @@ export const handleChapter = async ({
 }) => {
   if (e === true) {
     try {
-      const res = await fetch(`${backendUrl}/enrolledCourse/addChapter`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email,
-          playlistId,
-          videoId,
-        }),
-        credentials: "include",
+      const data = await fetchData({
+        email,
+        playlistId,
+        videoId,
+        url: "/enrolledCourse/addChapter",
       });
-      const data = await res.json();
-      console.log("data " + data.appChapterHandler);
       if (data.appChapterHandler) {
         toast.success("chapter is complete", {
           hideProgressBar: true,
@@ -215,17 +233,12 @@ export const handleChapter = async ({
     }
   } else {
     try {
-      const res = await fetch(`${backendUrl}/enrolledCourse/removeChapter`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email,
-          playlistId,
-          videoId,
-        }),
-        credentials: "include",
+      const data = await fetchData({
+        email,
+        playlistId,
+        videoId,
+        url: "/enrolledCourse/removeChapter",
       });
-      const data = await res.json();
       if (data.removeChapterHandler) {
         toast.success("chapter is Incomplete", {
           hideProgressBar: true,
