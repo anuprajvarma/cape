@@ -1,38 +1,22 @@
 import { toast } from "react-toastify";
 import { Groq } from "groq-sdk";
+import { YOUTUBE_API_KEY } from "./reusableConstant";
 
-console.log("GROQ KEY EXISTS:", !!process.env.NEXT_PUBLIC_GROQ_API_KEY);
+const backendUrl = `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api`;
 
 const groq = new Groq({
   apiKey: process.env.NEXT_PUBLIC_GROQ_API_KEY,
   dangerouslyAllowBrowser: true,
 });
 
-const YOUTUBE_API_KEY = [
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_1,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_2,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_3,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_4,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_5,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_6,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_7,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_8,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_9,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_10,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_11,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_12,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_13,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_14,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_15,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_16,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_17,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_18,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_19,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_20,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_21,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_22,
-  process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_23,
-];
+export default function getRotatedKey(): string {
+  const now = new Date();
+  const hour = now.getUTCHours(); // use UTC for consistency
+  const index = hour % YOUTUBE_API_KEY.length;
+  return YOUTUBE_API_KEY[index]!;
+}
+
+const apikey = getRotatedKey();
 
 function parseQuizHtml(html: string) {
   const lines = html
@@ -71,15 +55,6 @@ function parseQuizHtml(html: string) {
   return quiz;
 }
 
-export default function getRotatedKey(): string {
-  const now = new Date();
-  const hour = now.getUTCHours(); // use UTC for consistency
-  const index = hour % YOUTUBE_API_KEY.length;
-  return YOUTUBE_API_KEY[index]!;
-}
-
-const apikey = getRotatedKey();
-
 export async function fetchPlaylist({
   max,
   topic,
@@ -105,17 +80,14 @@ export async function fetchPlaylist({
 export const handleEnrolled = async (email: string) => {
   try {
     // console.log("step 2");
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/bookmarkCourse/getData`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email,
-        }),
-        credentials: "include",
-      },
-    );
+    const res = await fetch(`${backendUrl}/bookmarkCourse/getData`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email,
+      }),
+      credentials: "include",
+    });
     const data = await res.json();
     return data.bookmarkCourse;
   } catch (error) {
@@ -140,15 +112,12 @@ export async function editorDataFetch({
   playlistId: string;
 }) {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/notes/getNote`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, playlistId }),
-        credentials: "include",
-      },
-    );
+    const res = await fetch(`${backendUrl}/notes/getNote`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, playlistId }),
+      credentials: "include",
+    });
 
     const data = await res.json();
     return data.noteData?.content;
@@ -165,18 +134,15 @@ export async function enrolledCourseDataFetch({
   playlistId: string;
 }) {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/enrolledCourse/getChapterData`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email,
-          playlistId: playlistId,
-        }),
-        credentials: "include",
-      },
-    );
+    const res = await fetch(`${backendUrl}/enrolledCourse/getChapterData`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email,
+        playlistId: playlistId,
+      }),
+      credentials: "include",
+    });
     const data = await res.json();
     return data.getChapterData?.chapters;
   } catch (error) {
@@ -192,25 +158,22 @@ export async function enrolledCourseDelete({
   playlistId: string;
 }) {
   try {
-    await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/enrolledCourse/delete`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email,
-          playlistId,
-        }),
-        credentials: "include",
-      },
-    );
+    await fetch(`${backendUrl}/enrolledCourse/delete`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email,
+        playlistId,
+      }),
+      credentials: "include",
+    });
   } catch (error) {
     console.log(error);
   }
 }
 
 export async function signOutFuntion() {
-  await fetch(`${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/auth/signout`, {
+  await fetch(`${backendUrl}/auth/signout`, {
     method: "POST",
     credentials: "include",
     headers: {
@@ -229,19 +192,16 @@ export async function loginFuntion({
   imageUrl: string;
 }) {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/auth/login`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name,
-          email,
-          imageUrl,
-        }),
-        credentials: "include",
-      },
-    );
+    const res = await fetch(`${backendUrl}/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name,
+        email,
+        imageUrl,
+      }),
+      credentials: "include",
+    });
     return res;
   } catch (error) {
     console.log(error);
@@ -257,18 +217,15 @@ export const fetchDiscussionData = async ({
   videoId: string;
 }) => {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/discussion/getData`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          playlistId: id,
-          videoId,
-        }),
-        credentials: "include",
-      },
-    );
+    const res = await fetch(`${backendUrl}/discussion/getData`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        playlistId: id,
+        videoId,
+      }),
+      credentials: "include",
+    });
     const data = await res.json();
     return data.discussionData?.discussions;
   } catch (error) {
@@ -290,21 +247,18 @@ export const postDiscussionData = async ({
   userImageUrl: string;
 }) => {
   try {
-    await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/discussion/postData`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          playlistId,
-          videoId,
-          content,
-          username,
-          userImageUrl,
-        }),
-        credentials: "include",
-      },
-    );
+    await fetch(`${backendUrl}/discussion/postData`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        playlistId,
+        videoId,
+        content,
+        username,
+        userImageUrl,
+      }),
+      credentials: "include",
+    });
   } catch (error) {
     console.log(error);
   }
@@ -396,7 +350,7 @@ export const GPTDataPostToMongoDB = async ({
   answer: string;
 }) => {
   try {
-    await fetch(`${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/chat`, {
+    await fetch(`${backendUrl}/chat`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -420,18 +374,15 @@ export const GPTDataFetchToMongoDB = async ({
   playlistId: string;
 }) => {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/chat/getData`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email,
-          playlistId,
-        }),
-        credentials: "include",
-      },
-    );
+    const res = await fetch(`${backendUrl}/chat/getData`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email,
+        playlistId,
+      }),
+      credentials: "include",
+    });
     const data = await res.json();
     return data.chatData?.chats;
   } catch (error) {
@@ -464,19 +415,16 @@ export const handleChapter = async ({
 }) => {
   if (e === true) {
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/enrolledCourse/addChapter`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email,
-            playlistId,
-            videoId,
-          }),
-          credentials: "include",
-        },
-      );
+      const res = await fetch(`${backendUrl}/enrolledCourse/addChapter`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          playlistId,
+          videoId,
+        }),
+        credentials: "include",
+      });
       const data = await res.json();
       console.log("data " + data.appChapterHandler);
       if (data.appChapterHandler) {
@@ -485,25 +433,22 @@ export const handleChapter = async ({
         });
       } else {
         try {
-          await fetch(
-            `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/enrolledCourse`,
-            {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                title,
-                channelTitle,
-                thumbnails,
-                id: playlistId,
-                description,
-                videoId,
-                bookmark: bookmark,
-                indexOrder: indexOrder,
-                email,
-              }),
-              credentials: "include",
-            },
-          );
+          await fetch(`${backendUrl}/enrolledCourse`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              title,
+              channelTitle,
+              thumbnails,
+              id: playlistId,
+              description,
+              videoId,
+              bookmark: bookmark,
+              indexOrder: indexOrder,
+              email,
+            }),
+            credentials: "include",
+          });
         } catch (error) {
           console.log(error);
           toast.error(`${error}`, {
@@ -519,19 +464,16 @@ export const handleChapter = async ({
     }
   } else {
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/enrolledCourse/removeChapter`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email,
-            playlistId,
-            videoId,
-          }),
-          credentials: "include",
-        },
-      );
+      const res = await fetch(`${backendUrl}/enrolledCourse/removeChapter`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          playlistId,
+          videoId,
+        }),
+        credentials: "include",
+      });
       const data = await res.json();
       if (data.removeChapterHandler) {
         toast.success("chapter is Incomplete", {
@@ -572,18 +514,15 @@ export const fetchChapterData = async ({
   playlistId: string;
 }) => {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/enrolledCourse/getChapterData`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email,
-          playlistId,
-        }),
-        credentials: "include",
-      },
-    );
+    const res = await fetch(`${backendUrl}/enrolledCourse/getChapterData`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email,
+        playlistId,
+      }),
+      credentials: "include",
+    });
     const data = await res.json();
     return data.getChapterData?.chapters;
   } catch (error) {
