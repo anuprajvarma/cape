@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import { GrMicrophone } from "react-icons/gr";
 import { IoSearch } from "react-icons/io5";
 import * as Tooltip from "@radix-ui/react-tooltip";
-import { fetchPlaylist } from "../utils/apiCalls";
+import { fetchPlaylist } from "../utils/frontendApiCalls";
 import LoginModal from "../component/LoginModal";
 import CourseLinkModal from "../component/CourseLinkModal";
 import { playlistType } from "@/types";

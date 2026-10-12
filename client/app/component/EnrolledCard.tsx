@@ -13,7 +13,7 @@ import * as Tooltip from "@radix-ui/react-tooltip";
 import {
   enrolledCourseDataFetch,
   enrolledCourseDelete,
-} from "../utils/backendCalls";
+} from "../utils/backendApiCalls";
 import { toast } from "react-toastify";
 import { AppDispatch } from "../redux/store";
 import { useDispatch } from "react-redux";

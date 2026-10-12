@@ -8,11 +8,11 @@ import { chatType } from "@/types";
 import {
   GPTDataFetchToMongoDB,
   GPTDataPostToMongoDB,
-} from "../utils/backendCalls";
+} from "../utils/backendApiCalls";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../redux/store";
 import { setIsOpen } from "../redux/slices/LoginModalSlice";
-import { chatBotApiCall, easyExplainFuntion } from "../utils/apiCalls";
+import { chatBotApiCall, easyExplainFuntion } from "../utils/frontendApiCalls";
 
 const Editor = dynamic(() => import("./Editor"), {
   ssr: false,

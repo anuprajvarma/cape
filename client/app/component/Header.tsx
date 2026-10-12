@@ -11,7 +11,7 @@ import { FaArrowRight } from "react-icons/fa";
 import { IoMenu } from "react-icons/io5";
 import { toast } from "react-toastify";
 
-import { loginFuntion, signOutFuntion } from "../utils/backendCalls";
+import { loginFuntion, signOutFuntion } from "../utils/backendApiCalls";
 import useClickOutside from "../utils/outsideClick";
 
 type User = {

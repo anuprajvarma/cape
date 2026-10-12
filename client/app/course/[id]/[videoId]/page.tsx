@@ -8,13 +8,13 @@ import { playlistType2, discussionType } from "@/types";
 import { setIsOpen } from "../../../redux/slices/LoginModalSlice";
 import { AiOutlineDelete } from "react-icons/ai";
 import { toast } from "react-toastify";
-import { playlist } from "../../../utils/apiCalls";
+import { playlist } from "../../../utils/frontendApiCalls";
 import getApiKey from "../../../utils/reusableConstant";
 import {
   fetchChapterData,
   fetchDiscussionData,
   postDiscussionData,
-} from "../../../utils/backendCalls";
+} from "../../../utils/backendApiCalls";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useDispatch } from "react-redux";
@@ -36,7 +36,7 @@ import { RootState } from "../../../redux/store";
 import {
   fetchPlayListVideos,
   funtionForVideoDetail,
-} from "@/app/utils/apiCalls";
+} from "@/app/utils/frontendApiCalls";
 import LoginModal from "@/app/component/LoginModal";
 import CourseLinkModal from "@/app/component/CourseLinkModal";
 

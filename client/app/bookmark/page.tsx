@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import { handleEnrolled } from "../utils/backendCalls";
+import { handleEnrolled } from "../utils/backendApiCalls";
 import CourseLinkModal from "../component/CourseLinkModal";
 
 const CourseCard = dynamic(() => import("../component/CourseCard"), {
