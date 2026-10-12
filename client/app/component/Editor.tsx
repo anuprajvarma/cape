@@ -10,7 +10,7 @@ import {
   Theme,
 } from "@blocknote/mantine";
 import { useEffect } from "react";
-import { editorDataFetch } from "../utils/backendApiCalls";
+import { fetchBackendData } from "../utils/backendApiCalls";
 import { useSession } from "next-auth/react";
 
 const lightRedTheme = {
@@ -101,10 +101,14 @@ export default function Editor({
   useEffect(() => {
     const fetchNote = async () => {
       try {
-        const result = await editorDataFetch({ email, playlistId });
+        const result = await fetchBackendData({
+          email,
+          playlistId,
+          url: "/notes/getNote",
+        });
 
-        if (result) {
-          editor.replaceBlocks(editor.document, result);
+        if (result.noteData?.content) {
+          editor.replaceBlocks(editor.document, result.noteData?.content);
         }
       } catch (err) {
         console.error("Fetch error:", err);

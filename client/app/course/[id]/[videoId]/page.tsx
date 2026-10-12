@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 import { playlist } from "../../../utils/frontendApiCalls";
 import getApiKey from "../../../utils/reusableConstant";
 import {
-  fetchChapterData,
+  fetchBackendData,
   fetchDiscussionData,
   postDiscussionData,
 } from "../../../utils/backendApiCalls";
@@ -95,7 +95,7 @@ const Course = () => {
       if (typeof videoId === "string") {
         const result = await funtionForVideoDetail({ videoId });
         if (result) {
-          setVideoTitle(result[0].snippet.title);
+          setVideoTitle(result[0]?.snippet.title);
           setVideoDescription(result[0]?.snippet.description);
         }
       }
@@ -110,12 +110,13 @@ const Course = () => {
   useEffect(() => {
     const getChapterData = async () => {
       if (typeof id === "string") {
-        const result = await fetchChapterData({
+        const result = await fetchBackendData({
           email: session.data?.user?.email ?? "",
           playlistId: id,
+          url: "/enrolledCourse/getChapterData",
         });
-        if (result) {
-          setCompletedChapters(result);
+        if (result.getChapterData?.chapters) {
+          setCompletedChapters(result.getChapterData?.chapters);
         }
       }
     };
@@ -223,7 +224,7 @@ const Course = () => {
   };
 
   const lines = videoDescription
-    .split("\n")
+    ?.split("\n")
     .map((line) => line.trim())
     .filter((line) => line.length > 0);
 
@@ -320,7 +321,7 @@ const Course = () => {
                 <ChevronDownIcon className="size-5 fill-slaty group-data-hover:fill-white/50 group-data-open:rotate-180" />
               </DisclosureButton>
               <DisclosurePanel className="mt-2 text-sm/5 text-slaty px-1 sm:px-2">
-                {lines.map((line, idx) => (
+                {lines?.map((line, idx) => (
                   <p key={idx}>
                     <Linkify options={options}>{line}.</Linkify>
                   </p>

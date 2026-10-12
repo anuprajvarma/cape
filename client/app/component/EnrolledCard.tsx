@@ -10,10 +10,7 @@ import "react-circular-progressbar/dist/styles.css";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import * as Tooltip from "@radix-ui/react-tooltip";
-import {
-  enrolledCourseDataFetch,
-  enrolledCourseDelete,
-} from "../utils/backendApiCalls";
+import { fetchBackendData } from "../utils/backendApiCalls";
 import { toast } from "react-toastify";
 import { AppDispatch } from "../redux/store";
 import { useDispatch } from "react-redux";
@@ -77,12 +74,13 @@ const EnrolledCard = ({
 
   useEffect(() => {
     const getChapterData = async () => {
-      const result = await enrolledCourseDataFetch({
+      const result = await fetchBackendData({
         email: session.data?.user?.email ?? "",
         playlistId,
+        url: "/enrolledCourse/getChapterData",
       });
-      if (result) {
-        setCompletedChapters(result);
+      if (result.getChapterData?.chapters) {
+        setCompletedChapters(result.getChapterData?.chapters);
       }
     };
 
@@ -94,9 +92,10 @@ const EnrolledCard = ({
   }: {
     playlistId: string;
   }) => {
-    await enrolledCourseDelete({
+    await fetchBackendData({
       email: session.data?.user?.email ?? "",
       playlistId,
+      url: "/enrolledCourse/delete",
     });
     toast.success("course is delete", {
       hideProgressBar: true,

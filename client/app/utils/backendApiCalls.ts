@@ -21,74 +21,6 @@ export const handleEnrolled = async (email: string) => {
   }
 };
 
-export async function editorDataFetch({
-  email,
-  playlistId,
-}: {
-  email: string;
-  playlistId: string;
-}) {
-  try {
-    const res = await fetch(`${backendUrl}/notes/getNote`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, playlistId }),
-      credentials: "include",
-    });
-
-    const data = await res.json();
-    return data.noteData?.content;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-export async function enrolledCourseDataFetch({
-  email,
-  playlistId,
-}: {
-  email: string;
-  playlistId: string;
-}) {
-  try {
-    const res = await fetch(`${backendUrl}/enrolledCourse/getChapterData`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email,
-        playlistId: playlistId,
-      }),
-      credentials: "include",
-    });
-    const data = await res.json();
-    return data.getChapterData?.chapters;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-export async function enrolledCourseDelete({
-  email,
-  playlistId,
-}: {
-  email: string;
-  playlistId: string;
-}) {
-  try {
-    await fetch(`${backendUrl}/enrolledCourse/delete`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email,
-        playlistId,
-      }),
-      credentials: "include",
-    });
-  } catch (error) {
-    console.log(error);
-  }
-}
-
 export async function signOutFuntion() {
   await fetch(`${backendUrl}/auth/signout`, {
     method: "POST",
@@ -209,30 +141,6 @@ export const GPTDataPostToMongoDB = async ({
   }
 };
 
-export const GPTDataFetchToMongoDB = async ({
-  email,
-  playlistId,
-}: {
-  email: string;
-  playlistId: string;
-}) => {
-  try {
-    const res = await fetch(`${backendUrl}/chat/getData`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email,
-        playlistId,
-      }),
-      credentials: "include",
-    });
-    const data = await res.json();
-    return data.chatData?.chats;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 export const handleChapter = async ({
   e,
   email,
@@ -333,15 +241,17 @@ export const handleChapter = async ({
   }
 };
 
-export const fetchChapterData = async ({
+export const fetchBackendData = async ({
   email,
   playlistId,
+  url,
 }: {
   email: string;
   playlistId: string;
+  url: string;
 }) => {
   try {
-    const res = await fetch(`${backendUrl}/enrolledCourse/getChapterData`, {
+    const res = await fetch(`${backendUrl}${url}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -351,7 +261,7 @@ export const fetchChapterData = async ({
       credentials: "include",
     });
     const data = await res.json();
-    return data.getChapterData?.chapters;
+    return data;
   } catch (error) {
     console.log(error);
   }
