@@ -6,14 +6,13 @@ import React, { useEffect, useState, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import { chatType } from "@/types";
 import {
-  chatBotApiCall,
-  easyExplainFuntion,
   GPTDataFetchToMongoDB,
   GPTDataPostToMongoDB,
-} from "../utils/apiCalls";
+} from "../utils/backendCalls";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../redux/store";
 import { setIsOpen } from "../redux/slices/LoginModalSlice";
+import { chatBotApiCall, easyExplainFuntion } from "../utils/apiCalls";
 
 const Editor = dynamic(() => import("./Editor"), {
   ssr: false,

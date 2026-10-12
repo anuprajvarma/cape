@@ -10,7 +10,7 @@ import {
   Theme,
 } from "@blocknote/mantine";
 import { useEffect } from "react";
-import { editorDataFetch } from "../utils/apiCalls";
+import { editorDataFetch } from "../utils/backendCalls";
 import { useSession } from "next-auth/react";
 
 const lightRedTheme = {
@@ -126,7 +126,7 @@ export default function Editor({
           content: editor.document,
         }),
         credentials: "include",
-      }
+      },
     );
   };
 

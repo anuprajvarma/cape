@@ -11,9 +11,10 @@ import { toast } from "react-toastify";
 import { playlist } from "../../../utils/apiCalls";
 import getApiKey from "../../../utils/reusableConstant";
 import {
+  fetchChapterData,
   fetchDiscussionData,
   postDiscussionData,
-} from "../../../utils/apiCalls";
+} from "../../../utils/backendCalls";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useDispatch } from "react-redux";
@@ -33,7 +34,6 @@ import NotesGpt from "@/app/component/NotesGpt";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import {
-  fetchChapterData,
   fetchPlayListVideos,
   funtionForVideoDetail,
 } from "@/app/utils/apiCalls";

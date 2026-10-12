@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../redux/store";
 import { setCheckBox } from "../redux/slices/checkboxSlice";
-import { handleChapter } from "../utils/apiCalls";
+import { handleChapter } from "../utils/backendCalls";
 // import { toast } from "react-toastify";
 import { IoPlay } from "react-icons/io5";
 import { setIsOpen } from "../redux/slices/LoginModalSlice";

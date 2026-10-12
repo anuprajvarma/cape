@@ -20,7 +20,7 @@
 //     const data = await res.json();
 // };
 
- const YOUTUBE_API_KEY = [
+const YOUTUBE_API_KEY = [
   process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_1,
   process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_2,
   process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_3,
@@ -52,3 +52,40 @@ export default function getRotatedKey(): string {
   const index = hour % YOUTUBE_API_KEY.length;
   return YOUTUBE_API_KEY[index]!;
 }
+
+export const parseQuizHtml = (html: string) => {
+  const lines = html
+    .split("\n")
+    .map((line) => line.trim())
+    .filter(Boolean);
+  const quiz = [];
+
+  let question = "";
+  let options: string[] = [];
+  let answer = "";
+
+  for (const line of lines) {
+    if (line.startsWith("<h1>")) {
+      if (question) {
+        quiz.push({ question, options, answer });
+        options = [];
+        answer = "";
+      }
+      question = line.replace(/<\/?h1>/g, "").trim();
+    } else if (line.startsWith("<p>")) {
+      options.push(line.replace(/<\/?p>/g, "").trim());
+    } else if (line.startsWith("<h2>")) {
+      answer = line
+        .replace(/<\/?h2>/g, "")
+        .replace(/^Answer:\s*/i, "")
+        .trim();
+    }
+  }
+
+  // Push the last one
+  if (question) {
+    quiz.push({ question, options, answer });
+  }
+
+  return quiz;
+};
