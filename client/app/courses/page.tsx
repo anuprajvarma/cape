@@ -13,7 +13,7 @@ import CourseLinkModal from "../component/CourseLinkModal";
 import { playlistType } from "@/types";
 import useClickOutside from "../utils/outsideClick";
 
-import getApiKey from "../utils/apiCalls";
+import getApiKey from "../utils/reusableConstant";
 
 const CourseCard = dynamic(() => import("../component/CourseCard"), {
   ssr: false,

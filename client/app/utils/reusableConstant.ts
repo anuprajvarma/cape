@@ -20,7 +20,7 @@
 //     const data = await res.json();
 // };
 
-export const YOUTUBE_API_KEY = [
+ const YOUTUBE_API_KEY = [
   process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_1,
   process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_2,
   process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_3,
@@ -45,3 +45,10 @@ export const YOUTUBE_API_KEY = [
   process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_22,
   process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_23,
 ];
+
+export default function getRotatedKey(): string {
+  const now = new Date();
+  const hour = now.getUTCHours(); // use UTC for consistency
+  const index = hour % YOUTUBE_API_KEY.length;
+  return YOUTUBE_API_KEY[index]!;
+}

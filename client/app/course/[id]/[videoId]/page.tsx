@@ -8,7 +8,8 @@ import { playlistType2, discussionType } from "@/types";
 import { setIsOpen } from "../../../redux/slices/LoginModalSlice";
 import { AiOutlineDelete } from "react-icons/ai";
 import { toast } from "react-toastify";
-import getApiKey, { playlist } from "../../../utils/apiCalls";
+import { playlist } from "../../../utils/apiCalls";
+import getApiKey from "../../../utils/reusableConstant";
 import {
   fetchDiscussionData,
   postDiscussionData,

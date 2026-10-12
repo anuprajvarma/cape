@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 import { Groq } from "groq-sdk";
-import { YOUTUBE_API_KEY } from "./reusableConstant";
+import getRotatedKey from "./reusableConstant";
 
 const backendUrl = `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api`;
 
@@ -8,13 +8,6 @@ const groq = new Groq({
   apiKey: process.env.NEXT_PUBLIC_GROQ_API_KEY,
   dangerouslyAllowBrowser: true,
 });
-
-export default function getRotatedKey(): string {
-  const now = new Date();
-  const hour = now.getUTCHours(); // use UTC for consistency
-  const index = hour % YOUTUBE_API_KEY.length;
-  return YOUTUBE_API_KEY[index]!;
-}
 
 const apikey = getRotatedKey();
 

@@ -19,7 +19,7 @@ import { AppDispatch } from "../redux/store";
 import { useDispatch } from "react-redux";
 import { setCourseLinkModal } from "../redux/slices/CourseLinkModal";
 import { setCourseLink } from "../redux/slices/CourseLink";
-import getApiKey from "../utils/apiCalls";
+import getApiKey from "../utils/reusableConstant";
 
 interface bookmarkPlaylistType {
   title: string;
