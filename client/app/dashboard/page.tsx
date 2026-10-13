@@ -20,6 +20,10 @@ import {
 import { CourseLinkModal } from "../component/CourseLinkModal";
 import { BookmarkPlaylistType } from "@/types";
 import { SortEnrolledCourses } from "../component/SortEnrolledCourses";
+import {
+  fetchEnrolledCourses,
+  playlistOrderUpdate,
+} from "../utils/backendApiCalls";
 
 const Dashboard: React.FC = () => {
   const [enrolledCoursePlaylist, setEnrolledCoursePlaylist] = useState<
@@ -52,70 +56,35 @@ const Dashboard: React.FC = () => {
       const newIndex = items.findIndex((item) => item.playlistId === over.id);
       console.log(oldIndex + " " + newIndex);
       const updatedItems = arrayMove(items, oldIndex, newIndex);
-
-      // ✅ Immediately send update to backend
-      updatePlaylistOrder(updatedItems);
+      playlistOrderUpdate({
+        email: session?.user?.email || "",
+        updatedItems,
+      });
 
       return updatedItems;
     });
-  };
-
-  const updatePlaylistOrder = async (updatedItems: BookmarkPlaylistType[]) => {
-    console.log(updatedItems);
-    try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/enrolledCourse/updateOrder`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email: session?.user?.email,
-            newOrder: updatedItems.map((p) => p.playlistId),
-          }),
-        },
-      );
-
-      if (!res.ok) throw new Error("Failed to update order");
-      console.log("✅ Order updated successfully");
-    } catch (err) {
-      console.error("❌ Error updating order:", err);
-    }
   };
 
   useEffect(() => {
     setHasMounted(true);
   }, []);
 
-  // fetch enrolled courses
   useEffect(() => {
     const handleEnrolled = async () => {
       if (!session?.user?.email) return;
       setDataLoading(true);
-      try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/enrolledCourse/getData`,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email: session.user.email }),
-            credentials: "include",
-          },
-        );
 
-        const data = await res.json();
+      const data = await fetchEnrolledCourses({ email: session.user.email });
 
-        const enrolled = data.enrolledkCourse ?? [];
+      const enrolled = data.enrolledkCourse ?? [];
 
-        const sortedEnrolled = [...enrolled].sort(
-          (a, b) => a.indexOrder - b.indexOrder,
-        );
+      const sortedEnrolled = [...enrolled].sort(
+        (a, b) => a.indexOrder - b.indexOrder,
+      );
 
-        setEnrolledCoursePlaylist(sortedEnrolled);
-        setCheckDataExist(enrolled.length === 0);
-      } catch (error) {
-        setDataLoading(false);
-        console.log(error);
-      }
+      setEnrolledCoursePlaylist(sortedEnrolled);
+      setCheckDataExist(enrolled.length === 0);
+      setDataLoading(false);
     };
 
     handleEnrolled();

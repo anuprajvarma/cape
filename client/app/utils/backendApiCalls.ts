@@ -1,5 +1,6 @@
 import {
   AddAndRemoveChaptersType,
+  BookmarkPlaylistType,
   ChapterActionType,
   FetchDiscussionDataPropType,
   FetchMultipleTypeDataType,
@@ -34,7 +35,7 @@ const addAndRemoveChapters = async ({
   return data;
 };
 
-export const fetchEnrolledCourses = async (email: string) => {
+export const fetchBookmarkedCourses = async (email: string) => {
   try {
     const res = await fetch(`${backendUrl}/bookmarkCourse/getData`, {
       method: "POST",
@@ -250,6 +251,51 @@ export const fetchMultipleTypeData = async ({
       }),
       credentials: "include",
     });
+    if (!res.ok) {
+      throw new Error(` error: ${res.status}`);
+    }
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const playlistOrderUpdate = async ({
+  email,
+  updatedItems,
+}: {
+  email: string;
+  updatedItems: BookmarkPlaylistType[];
+}) => {
+  try {
+    const res = await fetch(`${backendUrl}/enrolledCourse/updateOrder`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: email,
+        newOrder: updatedItems.map((p) => p.playlistId),
+      }),
+    });
+
+    if (!res.ok) throw new Error("Failed to update order");
+    console.log("✅ Order updated successfully");
+  } catch (err) {
+    console.error("❌ Error updating order:", err);
+  }
+};
+
+export const fetchEnrolledCourses = async ({ email }: { email: string }) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/enrolledCourse/getData`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+        credentials: "include",
+      },
+    );
     if (!res.ok) {
       throw new Error(` error: ${res.status}`);
     }
