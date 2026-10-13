@@ -35,19 +35,26 @@ const Editor = ({ email, playlistId }: EditorPropType) => {
   }, [email, playlistId, editor]);
 
   const saveNote = async () => {
-    await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/notes/addNote`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email,
-          playlistId,
-          content: editor.document,
-        }),
-        credentials: "include",
-      },
-    );
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/notes/addNote`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email,
+            playlistId,
+            content: editor.document,
+          }),
+          credentials: "include",
+        },
+      );
+      if (!res.ok) {
+        throw new Error("error " + res.status);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
