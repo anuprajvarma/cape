@@ -1,6 +1,5 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
 import { isMobile } from "react-device-detect";
 import { useSession } from "next-auth/react";
@@ -16,50 +15,11 @@ import {
 import {
   arrayMove,
   SortableContext,
-  useSortable,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
 import { CourseLinkModal } from "../component/CourseLinkModal";
-import { BookmarkPlaylistType, SortItemPropType } from "@/types";
-
-// dynamically import EnrolledCard to avoid SSR issues
-const EnrolledCard = dynamic(() => import("../component/EnrolledCard"), {
-  ssr: false,
-});
-
-// Single sortable item component
-const SortableItem = ({
-  id,
-  data,
-  setGetDataCheck,
-  getDataCheck,
-}: SortItemPropType) => {
-  const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id });
-
-  const style: React.CSSProperties = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-    cursor: "grab",
-  };
-
-  return (
-    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      <EnrolledCard
-        title={data.title}
-        channelTitle={data.channelTitle}
-        thumbnail={data.thumbnail}
-        chapterLength={data.chapterLength}
-        playlistId={data.playlistId}
-        playlistDescription={data.playlistDescription}
-        channelImage={data.channelImage}
-        setGetDataCheck={setGetDataCheck}
-        getDataCheck={getDataCheck}
-      />
-    </div>
-  );
-};
+import { BookmarkPlaylistType } from "@/types";
+import { SortEnrolledCourses } from "../component/SortEnrolledCourses";
 
 const Dashboard: React.FC = () => {
   const [enrolledCoursePlaylist, setEnrolledCoursePlaylist] = useState<
@@ -179,7 +139,7 @@ const Dashboard: React.FC = () => {
             >
               {enrolledCoursePlaylist.length > 0 ? (
                 enrolledCoursePlaylist.map((data) => (
-                  <SortableItem
+                  <SortEnrolledCourses
                     key={data.playlistId}
                     id={data.playlistId}
                     data={data}
