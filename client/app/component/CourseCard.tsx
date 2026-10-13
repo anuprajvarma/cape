@@ -17,7 +17,10 @@ import { AppDispatch } from "../redux/store";
 import { setIsOpen } from "../redux/slices/LoginModalSlice";
 import { setCourseLinkModal } from "../redux/slices/CourseLinkModal";
 import { setCourseLink } from "../redux/slices/CourseLink";
-import { saveEnrolledCourse } from "../utils/backendApiCalls";
+import {
+  deleteBookmarkCourse,
+  saveEnrolledCourse,
+} from "../utils/backendApiCalls";
 
 const CourseCard = ({
   title,
@@ -73,19 +76,10 @@ const CourseCard = ({
   };
 
   const handleDeletBookmarkCourse = async ({ id }: { id: string }) => {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/bookmarkCourse/delete`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: session.data?.user?.email,
-          id,
-        }),
-        credentials: "include",
-      },
-    );
-    const data = await res.json();
+    const data = await deleteBookmarkCourse({
+      email: session.data?.user?.email ?? "",
+      id,
+    });
     if (data.deleteBookmarCourseHandler) {
       toast.success("course is unmark", {
         hideProgressBar: true,

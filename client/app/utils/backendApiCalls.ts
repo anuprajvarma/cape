@@ -38,6 +38,33 @@ const addAndRemoveChapters = async ({
   return data;
 };
 
+export const deleteBookmarkCourse = async ({
+  email,
+  id,
+}: {
+  email: string;
+  id: string;
+}) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/bookmarkCourse/delete`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          id,
+        }),
+        credentials: "include",
+      },
+    );
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const fetchBookmarkedCourses = async (email: string) => {
   try {
     const res = await fetch(`${backendUrl}/bookmarkCourse/getData`, {
