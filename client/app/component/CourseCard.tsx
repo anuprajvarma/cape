@@ -17,6 +17,7 @@ import { AppDispatch } from "../redux/store";
 import { setIsOpen } from "../redux/slices/LoginModalSlice";
 import { setCourseLinkModal } from "../redux/slices/CourseLinkModal";
 import { setCourseLink } from "../redux/slices/CourseLink";
+import { saveEnrolledCourse } from "../utils/backendApiCalls";
 
 const CourseCard = ({
   title,
@@ -44,45 +45,28 @@ const CourseCard = ({
     indexOrder,
   }: CourseCardType) => {
     if (session.status === "authenticated") {
-      try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/enrolledCourse`,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              title,
-              channelTitle,
-              thumbnails,
-              id,
-              description,
-              bookmark: true,
-              indexOrder: indexOrder,
-              email: session.data?.user?.email,
-            }),
-            credentials: "include",
-          },
-        );
-        const data = await res.json();
-        if (data.isExist) {
-          // console.log(data);
-          toast.success("course is already exist", {
-            hideProgressBar: true,
-          });
-        } else {
-          // console.log(data.isExist);
-          toast.success("course is enrolled", {
-            hideProgressBar: true,
-          });
-        }
-
-        setGetDataCheck(!getDataCheck);
-      } catch (error) {
-        // console.log(error);
-        toast.error(`${error}`, {
+      const data = await saveEnrolledCourse({
+        title,
+        channelTitle,
+        thumbnails,
+        id,
+        description,
+        indexOrder: indexOrder,
+        email: session.data?.user?.email ?? "",
+      });
+      if (data.isExist) {
+        // console.log(data);
+        toast.success("you are already enrolled", {
+          hideProgressBar: true,
+        });
+      } else {
+        // console.log(data.isExist);
+        toast.success("course is enrolled", {
           hideProgressBar: true,
         });
       }
+
+      setGetDataCheck(!getDataCheck);
     } else {
       dispatch(setIsOpen(true));
     }

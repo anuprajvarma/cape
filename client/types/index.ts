@@ -133,6 +133,16 @@ export interface ChapterActionType {
   indexOrder: number;
 }
 
+export interface EnrolledCourseType {
+  title: string;
+  channelTitle: string;
+  thumbnails: string;
+  id: string;
+  description: string;
+  indexOrder: number;
+  email: string;
+}
+
 export interface CourseCardType {
   title: string;
   channelTitle: string;

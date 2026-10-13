@@ -3,6 +3,7 @@ import {
   BookmarkPlaylistType,
   ChapterActionType,
   DeleteDisussionPropType,
+  EnrolledCourseType,
   FetchDiscussionDataPropType,
   FetchMultipleTypeDataType,
   LoginType,
@@ -155,6 +156,41 @@ export const saveChatbotData = async ({
       }),
       credentials: "include",
     });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const saveEnrolledCourse = async ({
+  title,
+  channelTitle,
+  thumbnails,
+  id,
+  description,
+  indexOrder,
+  email,
+}: EnrolledCourseType) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/enrolledCourse`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title,
+          channelTitle,
+          thumbnails,
+          id,
+          description,
+          bookmark: true,
+          indexOrder,
+          email,
+        }),
+        credentials: "include",
+      },
+    );
+    const data = await res.json();
+    return data;
   } catch (error) {
     console.log(error);
   }
