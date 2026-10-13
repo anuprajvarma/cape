@@ -65,12 +65,12 @@ const CourseCard = ({
         );
         const data = await res.json();
         if (data.isExist) {
-          console.log(data);
+          // console.log(data);
           toast.success("course is already exist", {
             hideProgressBar: true,
           });
         } else {
-          console.log(data.isExist);
+          // console.log(data.isExist);
           toast.success("course is enrolled", {
             hideProgressBar: true,
           });
@@ -78,7 +78,7 @@ const CourseCard = ({
 
         setGetDataCheck(!getDataCheck);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         toast.error(`${error}`, {
           hideProgressBar: true,
         });

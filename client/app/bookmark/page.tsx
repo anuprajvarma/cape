@@ -41,7 +41,7 @@ const Bookmark = () => {
       setDataLoading(true);
       const email = session.data?.user?.email as string;
       const result = await handleEnrolled(email);
-      console.log(`resul ${result}`);
+      // console.log(`resul ${result}`);
       if (result) {
         setBookmarkCoursePlaylist(result);
         if (result.length > 0) {

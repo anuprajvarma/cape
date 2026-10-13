@@ -2,7 +2,7 @@ import { toast } from "react-toastify";
 
 const backendUrl = `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api`;
 
-const fetchData = async ({ 
+const fetchData = async ({
   email,
   playlistId,
   videoId,
@@ -23,6 +23,9 @@ const fetchData = async ({
     }),
     credentials: "include",
   });
+  if (!res.ok) {
+    throw new Error(` error: ${res.status}`);
+  }
   const data = await res.json();
   return data;
 };
