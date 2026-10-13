@@ -24,7 +24,7 @@ const YOUTUBE_API_KEY = [
   process.env.NEXT_PUBLIC_YOUTUBE_API_KEY_23,
 ];
 
-export default function getRotatedKey(): string {
+export default function youtubeApiKey(): string {
   const now = new Date();
   const hour = now.getUTCHours(); // use UTC for consistency
   const index = hour % YOUTUBE_API_KEY.length;

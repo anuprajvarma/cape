@@ -1,20 +1,20 @@
 import { Groq } from "groq-sdk";
-import getRotatedKey, { parseQuizHtml } from "./reusableConstant";
+import youtubeApiKey, { parseQuizHtml } from "./reusableConstant";
 
 const groq = new Groq({
   apiKey: process.env.NEXT_PUBLIC_GROQ_API_KEY,
   dangerouslyAllowBrowser: true,
 });
 
-const apikey = getRotatedKey();
+const apikey = youtubeApiKey();
 
-export async function fetchPlaylist({
+export const fetchPlaylist = async ({
   max,
   topic,
 }: {
   max: string;
   topic: string;
-}) {
+}) => {
   try {
     const res = await fetch(
       `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(topic)}&type=playlist&key=${apikey}&maxResults=${max}`,
@@ -28,15 +28,15 @@ export async function fetchPlaylist({
     console.log(`Error fetching playlist: ${error}`);
     return [];
   }
-}
+};
 
-export async function playlist(id: string | undefined | string[]) {
+export const playlist = async (id: string | undefined | string[]) => {
   const res = await fetch(
     `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${id}&maxResults=3&key=${apikey}`,
   );
   const data = await res.json();
   return data.items[0].snippet?.resourceId.videoId;
-}
+};
 
 export const easyExplainFuntion = async ({
   videoTitle,
