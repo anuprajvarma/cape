@@ -16,18 +16,14 @@ const Editor = ({ email, playlistId }: EditorPropType) => {
 
   useEffect(() => {
     const fetchNote = async () => {
-      try {
-        const result = await fetchMultipleTypeData({
-          email,
-          playlistId,
-          url: "/notes/getNote",
-        });
+      const result = await fetchMultipleTypeData({
+        email,
+        playlistId,
+        url: "/notes/getNote",
+      });
 
-        if (result.noteData?.content) {
-          editor.replaceBlocks(editor.document, result.noteData?.content);
-        }
-      } catch (err) {
-        console.error("Fetch error:", err);
+      if (result.noteData?.content) {
+        editor.replaceBlocks(editor.document, result.noteData?.content);
       }
     };
 
