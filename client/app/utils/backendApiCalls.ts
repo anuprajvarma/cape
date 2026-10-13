@@ -58,8 +58,38 @@ export const deleteBookmarkCourse = async ({
         credentials: "include",
       },
     );
+    if (!res.ok) {
+      throw new Error(` error: ${res.status}`);
+    }
     const data = await res.json();
     return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const saveSearchTopic = async ({
+  searchQuery,
+}: {
+  searchQuery: string;
+}) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/searchs`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: searchQuery,
+        }),
+        credentials: "include",
+      },
+    );
+    if (!res.ok) {
+      throw new Error(` error: ${res.status}`);
+    }
   } catch (error) {
     console.log(error);
   }
@@ -95,6 +125,9 @@ export const saveBookmarkCourse = async ({
         credentials: "include",
       },
     );
+    if (!res.ok) {
+      throw new Error(` error: ${res.status}`);
+    }
     const data = await res.json();
     return data;
   } catch (error) {

@@ -6,6 +6,7 @@ import * as Tooltip from "@radix-ui/react-tooltip";
 import { useRef, useState } from "react";
 import useClickOutside from "../utils/outsideClick";
 import { SpeechWindow } from "@/types";
+import { saveSearchTopic } from "../utils/backendApiCalls";
 
 const SearchInput = ({
   showSuggestions,
@@ -161,24 +162,7 @@ const SearchInput = ({
                   } else {
                     setTopic(searchQuery);
                   }
-
-                  const res = await fetch(
-                    `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/searchs`,
-                    {
-                      method: "POST",
-                      headers: {
-                        "Content-Type": "application/json",
-                      },
-                      body: JSON.stringify({
-                        title: searchQuery,
-                      }),
-                      credentials: "include",
-                    },
-                  );
-
-                  const data = await res.json();
-
-                  console.log("voice data", data.search);
+                  await saveSearchTopic({ searchQuery });
                 }}
                 className="h-full px-3 py-3 rounded-r-xl bg-lightSlaty border-l border-lightSlaty duration-300 transition"
               >
