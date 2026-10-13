@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState, useRef } from "react";
 import ReactMarkdown from "react-markdown";
-import { chatType } from "@/types";
+import { chatType, NotesGptPropType, QuizzType } from "@/types";
 import {
   fetchMultipleTypeData,
   saveChatbotData,
@@ -18,21 +18,7 @@ const Editor = dynamic(() => import("./Editor"), {
   ssr: false,
 });
 
-interface QuizzType {
-  question: string;
-  options: string[];
-  answer: string;
-}
-
-const NotesGpt = ({
-  id,
-  videoId,
-  videoTitle,
-}: {
-  id: string;
-  videoId: string;
-  videoTitle: string;
-}) => {
+const NotesGpt = ({ id, videoId, videoTitle }: NotesGptPropType) => {
   const session = useSession();
   const dispatch = useDispatch<AppDispatch>();
   const quizScrollRef = useRef<HTMLDivElement>(null);

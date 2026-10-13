@@ -7,7 +7,7 @@ import { AppDispatch, RootState } from "../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsOpen } from "../redux/slices/LoginModalSlice";
 
-export default function LoginModal() {
+export const LoginModal = () => {
   const isOpen = useSelector((state: RootState) => state.checkModal);
   const dispatch = useDispatch<AppDispatch>();
 
@@ -48,4 +48,4 @@ export default function LoginModal() {
       </Dialog>
     </>
   );
-}
+};

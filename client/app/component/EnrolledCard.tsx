@@ -16,19 +16,8 @@ import { AppDispatch } from "../redux/store";
 import { useDispatch } from "react-redux";
 import { setCourseLinkModal } from "../redux/slices/CourseLinkModal";
 import { setCourseLink } from "../redux/slices/CourseLink";
-import getApiKey from "../utils/reusableConstant";
-
-interface bookmarkPlaylistType {
-  title: string;
-  channelTitle: string;
-  thumbnail: string;
-  chapterLength: string;
-  channelImage: string;
-  playlistId: string;
-  playlistDescription: string;
-  setGetDataCheck: React.Dispatch<React.SetStateAction<boolean>>;
-  getDataCheck: boolean;
-}
+import { youtubeApiKey } from "../utils/reusableConstant";
+import { EnrolledCardPropType } from "@/types";
 
 const EnrolledCard = ({
   title,
@@ -37,7 +26,7 @@ const EnrolledCard = ({
   playlistId,
   setGetDataCheck,
   getDataCheck,
-}: bookmarkPlaylistType) => {
+}: EnrolledCardPropType) => {
   const router = useRouter();
   const session = useSession();
   const [completedChapters, setCompletedChapters] = useState<string[]>([]);
@@ -45,7 +34,7 @@ const EnrolledCard = ({
   const [precentage, setPrecentage] = useState<number>(0);
   const dispatch = useDispatch<AppDispatch>();
 
-  const apikey = getApiKey();
+  const apikey = youtubeApiKey();
 
   useEffect(() => {
     const url = `https://www.googleapis.com/youtube/v3/playlists?${new URLSearchParams(

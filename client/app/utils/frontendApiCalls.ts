@@ -1,5 +1,6 @@
 import { Groq } from "groq-sdk";
-import youtubeApiKey, { parseQuizHtml } from "./reusableConstant";
+import { parseQuizHtml, youtubeApiKey } from "./reusableConstant";
+import { FetchPlaylistsPropType } from "@/types";
 
 const groq = new Groq({
   apiKey: process.env.NEXT_PUBLIC_GROQ_API_KEY,
@@ -11,10 +12,7 @@ const apikey = youtubeApiKey();
 export const fetchPlaylists = async ({
   max,
   topic,
-}: {
-  max: string;
-  topic: string;
-}) => {
+}: FetchPlaylistsPropType) => {
   try {
     const res = await fetch(
       `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(topic)}&type=playlist&key=${apikey}&maxResults=${max}`,

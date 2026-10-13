@@ -4,27 +4,16 @@ import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { fetchEnrolledCourses } from "../utils/backendApiCalls";
-import CourseLinkModal from "../component/CourseLinkModal";
+import { CourseLinkModal } from "../component/CourseLinkModal";
+import { BookmarkType } from "@/types";
 
 const CourseCard = dynamic(() => import("../component/CourseCard"), {
   ssr: false,
 });
 
-interface bookmarkPlaylistType {
-  title: string;
-  channelTitle: string;
-  thumbnail: string;
-  chapterLength: string;
-  channelImage: string;
-  playlistId: string;
-  playlistDescription: string;
-  firstVideoId: string;
-  bookmark: boolean;
-}
-
-const Bookmark = () => {
+export default function Bookmark() {
   const [bookmarkCoursePlaylist, setBookmarkCoursePlaylist] = useState<
-    bookmarkPlaylistType[]
+    BookmarkType[]
   >([]);
   const [hasMounted, setHasMounted] = useState(false);
   const [checkDataExist, setCheckDataExist] = useState<boolean>(false);
@@ -100,6 +89,4 @@ const Bookmark = () => {
       </div>
     </>
   );
-};
-
-export default Bookmark;
+}

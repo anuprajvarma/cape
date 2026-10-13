@@ -1,6 +1,7 @@
 import {
   AddAndRemoveChaptersType,
   ChapterActionType,
+  FetchDiscussionDataPropType,
   FetchMultipleTypeDataType,
   LoginType,
   SaveChatbotDataType,
@@ -53,7 +54,7 @@ export const fetchEnrolledCourses = async (email: string) => {
   }
 };
 
-export async function logOut() {
+export const logOut = async () => {
   await fetch(`${backendUrl}/auth/signout`, {
     method: "POST",
     credentials: "include",
@@ -61,9 +62,9 @@ export async function logOut() {
       "Content-Type": "application/x-www-form-urlencoded",
     },
   });
-}
+};
 
-export async function login({ name, email, imageUrl }: LoginType) {
+export const login = async ({ name, email, imageUrl }: LoginType) => {
   try {
     const res = await fetch(`${backendUrl}/auth/login`, {
       method: "POST",
@@ -82,15 +83,12 @@ export async function login({ name, email, imageUrl }: LoginType) {
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 export const fetchDiscussionData = async ({
   id,
   videoId,
-}: {
-  id: string;
-  videoId: string;
-}) => {
+}: FetchDiscussionDataPropType) => {
   try {
     const res = await fetch(`${backendUrl}/discussion/getData`, {
       method: "POST",

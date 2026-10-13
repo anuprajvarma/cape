@@ -9,7 +9,7 @@ import { setIsOpen } from "../../../redux/slices/LoginModalSlice";
 import { AiOutlineDelete } from "react-icons/ai";
 import { toast } from "react-toastify";
 import { fetchfirstVideoIdOfPlaylist } from "../../../utils/frontendApiCalls";
-import getApiKey from "../../../utils/reusableConstant";
+import { youtubeApiKey } from "../../../utils/reusableConstant";
 import {
   fetchMultipleTypeData,
   fetchDiscussionData,
@@ -37,8 +37,8 @@ import {
   fetchPlaylistVideos,
   fetchVideoDetail,
 } from "@/app/utils/frontendApiCalls";
-import LoginModal from "@/app/component/LoginModal";
-import CourseLinkModal from "@/app/component/CourseLinkModal";
+import { LoginModal } from "@/app/component/LoginModal";
+import { CourseLinkModal } from "@/app/component/CourseLinkModal";
 
 const options = {
   target: "_blank",
@@ -46,9 +46,9 @@ const options = {
   className: () => "text-blue-600 underline prose",
 };
 
-const apikey = getApiKey();
+const apikey = youtubeApiKey();
 
-const Course = () => {
+export default function Course() {
   const session = useSession();
   const params = useParams();
   const router = useRouter();
@@ -91,7 +91,7 @@ const Course = () => {
   }, [session.data?.user?.email, id, videoId, commentStateUpdate]);
 
   useEffect(() => {
-    async function playlist() {
+    const playlist = async () => {
       if (typeof videoId === "string") {
         const result = await fetchVideoDetail({ videoId });
         if (result) {
@@ -99,7 +99,7 @@ const Course = () => {
           setVideoDescription(result[0]?.snippet.description);
         }
       }
-    }
+    };
     if (videoId) {
       playlist();
     }
@@ -136,12 +136,12 @@ const Course = () => {
   }, []);
 
   useEffect(() => {
-    async function playlist() {
+    const playlist = async () => {
       if (typeof id === "string") {
         const result = await fetchPlaylistVideos({ id });
         setPlaylists(result);
       }
-    }
+    };
     playlist();
   }, [id]);
 
@@ -498,6 +498,4 @@ const Course = () => {
       </div>
     </>
   );
-};
-
-export default Course;
+}

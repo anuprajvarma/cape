@@ -3,98 +3,14 @@
 import "@blocknote/core/fonts/inter.css";
 import "@blocknote/mantine/style.css";
 import { useCreateBlockNote } from "@blocknote/react";
-import {
-  BlockNoteView,
-  darkDefaultTheme,
-  lightDefaultTheme,
-  Theme,
-} from "@blocknote/mantine";
+import { BlockNoteView } from "@blocknote/mantine";
 import { useEffect } from "react";
 import { fetchMultipleTypeData } from "../utils/backendApiCalls";
 import { useSession } from "next-auth/react";
+import { redTheme } from "../utils/reusableConstant";
+import { EditorPropType } from "@/types";
 
-const lightRedTheme = {
-  colors: {
-    editor: {
-      text: "#222222",
-      background: "#101827",
-    },
-    menu: {
-      text: "#ffffff",
-      background: "#ffedd5",
-    },
-    tooltip: {
-      text: "#ffffff",
-      background: "#ffedd5",
-    },
-    hovered: {
-      text: "#ffffff",
-      background: "#ffedd5",
-    },
-    selected: {
-      text: "#ffffff",
-      background: "#ffedd5",
-    },
-    disabled: {
-      text: "#9b0000",
-      background: "#ffedd5",
-    },
-    shadow: "#640000",
-    border: "#870000",
-    sideMenu: "#bababa",
-    highlights: lightDefaultTheme.colors!.highlights,
-  },
-  borderRadius: 4,
-  fontFamily: "Helvetica Neue, sans-serif",
-} satisfies Theme;
-
-const darkRedTheme = {
-  colors: {
-    editor: {
-      text: "#D1D5DB",
-      background: "#101827",
-    },
-    menu: {
-      text: "#D1D5DB",
-      background: "#1F2937",
-    },
-    tooltip: {
-      text: "#D1D5DB",
-      background: "#1F2937",
-    },
-    hovered: {
-      text: "#D1D5DB",
-      background: "#1F2937",
-    },
-    selected: {
-      text: "#D1D5DB",
-      background: "#1F2937",
-    },
-    disabled: {
-      text: "#D1D5DB",
-      background: "#1F2937",
-    },
-    shadow: "#374151",
-    border: "#374151",
-    sideMenu: "#bababa",
-    highlights: darkDefaultTheme.colors!.highlights,
-  },
-  borderRadius: 4,
-  fontFamily: "Helvetica Neue, sans-serif",
-} satisfies Theme;
-
-const redTheme = {
-  light: lightRedTheme,
-  dark: darkRedTheme,
-};
-
-export default function Editor({
-  email,
-  playlistId,
-}: {
-  email: string;
-  playlistId: string;
-}) {
+const Editor = ({ email, playlistId }: EditorPropType) => {
   const editor = useCreateBlockNote();
   const session = useSession();
 
@@ -150,4 +66,6 @@ export default function Editor({
       )}
     </div>
   );
-}
+};
+
+export default Editor;

@@ -8,24 +8,18 @@ import { GrMicrophone } from "react-icons/gr";
 import { IoSearch } from "react-icons/io5";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { fetchPlaylists } from "../utils/frontendApiCalls";
-import LoginModal from "../component/LoginModal";
-import CourseLinkModal from "../component/CourseLinkModal";
-import { playlistType } from "@/types";
+import { LoginModal } from "../component/LoginModal";
+import { CourseLinkModal } from "../component/CourseLinkModal";
+import { playlistType, SpeechWindow } from "@/types";
 import useClickOutside from "../utils/outsideClick";
 
-import getApiKey from "../utils/reusableConstant";
+import { youtubeApiKey } from "../utils/reusableConstant";
 
 const CourseCard = dynamic(() => import("../component/CourseCard"), {
   ssr: false,
 });
 
-type SpeechRecognitionConstructor = new () => SpeechRecognition;
-
-type SpeechWindow = Window & {
-  webkitSpeechRecognition?: SpeechRecognitionConstructor;
-};
-
-const Courses = () => {
+export default function Courses() {
   const [playlists, setPopularPlaylist] = useState<playlistType[]>([]);
   const [hasMounted, setHasMounted] = useState(false);
   const [checkDataExist, setCheckDataExist] = useState<boolean>(false);
@@ -44,7 +38,7 @@ const Courses = () => {
     "ai AND claude code AND robotics engineering",
   );
 
-  const apikey = getApiKey();
+  const apikey = youtubeApiKey();
 
   useEffect(() => {
     const handleSearchData = async () => {
@@ -72,7 +66,7 @@ const Courses = () => {
   }, []);
 
   useEffect(() => {
-    async function load() {
+    const load = async () => {
       const max = "50";
       if (apikey) {
         setPopularPlaylist([]);
@@ -84,7 +78,7 @@ const Courses = () => {
           setCheckDataExist(true);
         }
       }
-    }
+    };
     load();
   }, [topic, apikey]);
 
@@ -466,6 +460,4 @@ const Courses = () => {
       </div>
     </>
   );
-};
-
-export default Courses;
+}

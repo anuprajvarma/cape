@@ -13,12 +13,7 @@ import { toast } from "react-toastify";
 
 import { login, logOut } from "../utils/backendApiCalls";
 import useClickOutside from "../utils/outsideClick";
-
-type User = {
-  name: string;
-  email: string;
-  imageUrl: string;
-};
+import { User } from "@/types";
 
 const Header = () => {
   const session = useSession();

@@ -9,7 +9,7 @@ import { AppDispatch, RootState } from "../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { setCourseLinkModal } from "../redux/slices/CourseLinkModal";
 
-export default function CourseLinkModal() {
+export const CourseLinkModal = () => {
   const isOpen = useSelector((state: RootState) => state.CourseLinkModal);
   const courseLink = useSelector((state: RootState) => state.CourseLink);
   const dispatch = useDispatch<AppDispatch>();
@@ -59,4 +59,4 @@ export default function CourseLinkModal() {
       </Dialog>
     </>
   );
-}
+};

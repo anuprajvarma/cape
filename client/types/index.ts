@@ -1,5 +1,84 @@
 import React from "react";
 
+export interface FetchPlaylistsPropType {
+  max: string;
+  topic: string;
+}
+
+export interface FetchDiscussionDataPropType {
+  id: string;
+  videoId: string;
+}
+
+export interface SortItemPropType {
+  id: string;
+  data: BookmarkPlaylistType;
+  setGetDataCheck: React.Dispatch<React.SetStateAction<boolean>>;
+  getDataCheck: boolean;
+}
+
+export interface NotesGptPropType {
+  id: string;
+  videoId: string;
+  videoTitle: string;
+}
+
+export interface QuizzType {
+  question: string;
+  options: string[];
+  answer: string;
+}
+
+export interface User {
+  name: string;
+  email: string;
+  imageUrl: string;
+}
+
+export interface EnrolledCardPropType {
+  title: string;
+  channelTitle: string;
+  thumbnail: string;
+  chapterLength: string;
+  channelImage: string;
+  playlistId: string;
+  playlistDescription: string;
+  setGetDataCheck: React.Dispatch<React.SetStateAction<boolean>>;
+  getDataCheck: boolean;
+}
+
+export interface EditorPropType {
+  email: string;
+  playlistId: string;
+}
+
+export interface BookmarkType {
+  title: string;
+  channelTitle: string;
+  thumbnail: string;
+  chapterLength: string;
+  channelImage: string;
+  playlistId: string;
+  playlistDescription: string;
+  bookmark: boolean;
+}
+
+export type SpeechRecognitionConstructor = new () => SpeechRecognition;
+
+export type SpeechWindow = Window & {
+  webkitSpeechRecognition?: SpeechRecognitionConstructor;
+};
+
+export interface BookmarkPlaylistType {
+  title: string;
+  channelTitle: string;
+  thumbnail: string;
+  chapterLength: string;
+  channelImage: string;
+  playlistId: string;
+  playlistDescription: string;
+}
+
 export interface FetchMultipleTypeDataType {
   email: string;
   playlistId: string;

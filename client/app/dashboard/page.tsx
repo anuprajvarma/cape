@@ -20,36 +20,21 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import CourseLinkModal from "../component/CourseLinkModal";
+import { CourseLinkModal } from "../component/CourseLinkModal";
+import { BookmarkPlaylistType, SortItemPropType } from "@/types";
 
 // dynamically import EnrolledCard to avoid SSR issues
 const EnrolledCard = dynamic(() => import("../component/EnrolledCard"), {
   ssr: false,
 });
 
-interface BookmarkPlaylistType {
-  title: string;
-  channelTitle: string;
-  thumbnail: string;
-  chapterLength: string;
-  channelImage: string;
-  playlistId: string;
-  playlistDescription: string;
-  firstVideoId: string;
-}
-
 // Single sortable item component
-function SortableItem({
+const SortableItem = ({
   id,
   data,
   setGetDataCheck,
   getDataCheck,
-}: {
-  id: string;
-  data: BookmarkPlaylistType;
-  setGetDataCheck: React.Dispatch<React.SetStateAction<boolean>>;
-  getDataCheck: boolean;
-}) {
+}: SortItemPropType) => {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id });
 
@@ -74,7 +59,7 @@ function SortableItem({
       />
     </div>
   );
-}
+};
 
 const Dashboard: React.FC = () => {
   const [enrolledCoursePlaylist, setEnrolledCoursePlaylist] = useState<
@@ -115,7 +100,7 @@ const Dashboard: React.FC = () => {
     });
   };
 
-  async function updatePlaylistOrder(updatedItems: BookmarkPlaylistType[]) {
+  const updatePlaylistOrder = async (updatedItems: BookmarkPlaylistType[]) => {
     console.log(updatedItems);
     try {
       const res = await fetch(
@@ -135,7 +120,7 @@ const Dashboard: React.FC = () => {
     } catch (err) {
       console.error("❌ Error updating order:", err);
     }
-  }
+  };
 
   useEffect(() => {
     setHasMounted(true);

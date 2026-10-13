@@ -4,7 +4,7 @@ import NavBar from "./component/NavBar";
 import React, { useRef } from "react";
 import { IoPlayCircleOutline } from "react-icons/io5";
 import Link from "next/link";
-import LoginModal from "./component/LoginModal";
+import { LoginModal } from "./component/LoginModal";
 
 export default function Page() {
   const iframeRef = useRef<HTMLIFrameElement>(null);
