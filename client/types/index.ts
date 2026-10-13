@@ -1,5 +1,15 @@
 import React from "react";
 
+export interface SearchInputPropType {
+  showSuggestions: boolean;
+  suggestionsArray: string[];
+  searchQuery: string;
+  topic: string;
+  setShowSuggestions: React.Dispatch<React.SetStateAction<boolean>>;
+  setTopic: React.Dispatch<React.SetStateAction<string>>;
+  setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
+}
+
 export interface DeleteDisussionPropType {
   playlistId: string;
   videoId: string;
