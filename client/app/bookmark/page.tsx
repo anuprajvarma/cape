@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import { fetchEnrolledCourses } from "../utils/backendApiCalls";
+import { fetchBookmarkedCourses } from "../utils/backendApiCalls";
 import { CourseLinkModal } from "../component/CourseLinkModal";
 import { BookmarkType } from "@/types";
 
@@ -29,7 +29,7 @@ export default function Bookmark() {
     const load = async () => {
       setDataLoading(true);
       const email = session.data?.user?.email as string;
-      const result = await fetchEnrolledCourses(email);
+      const result = await fetchBookmarkedCourses(email);
       // console.log(`resul ${result}`);
       if (result) {
         setBookmarkCoursePlaylist(result);

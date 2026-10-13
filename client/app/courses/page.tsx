@@ -14,6 +14,7 @@ import { playlistType, SpeechWindow } from "@/types";
 import useClickOutside from "../utils/outsideClick";
 
 import { youtubeApiKey } from "../utils/reusableConstant";
+import { fechSearchtopics } from "../utils/backendApiCalls";
 
 const CourseCard = dynamic(() => import("../component/CourseCard"), {
   ssr: false,
@@ -42,22 +43,9 @@ export default function Courses() {
 
   useEffect(() => {
     const handleSearchData = async () => {
-      try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/searchs/getData`,
-          {
-            method: "GET",
-            headers: { "Content-Type": "application/json" },
-            credentials: "include",
-          },
-        );
-        const data = await res.json();
-        setSuggestionsArray(data.searchData[0].title);
-      } catch (error) {
-        console.log(error);
-      }
+      const data = await fechSearchtopics();
+      setSuggestionsArray(data.searchData[0].title);
     };
-    console.log("backend ur " + process.env.NEXT_PUBLIC_BACKEND_BASE_URL);
     handleSearchData();
   }, []);
 

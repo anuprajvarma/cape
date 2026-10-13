@@ -2,9 +2,11 @@ import {
   AddAndRemoveChaptersType,
   BookmarkPlaylistType,
   ChapterActionType,
+  DeleteDisussionPropType,
   FetchDiscussionDataPropType,
   FetchMultipleTypeDataType,
   LoginType,
+  QuizzType,
   SaveChatbotDataType,
   SaveDiscussionDataType,
 } from "@/types";
@@ -287,18 +289,152 @@ export const playlistOrderUpdate = async ({
 
 export const fetchEnrolledCourses = async ({ email }: { email: string }) => {
   try {
+    const res = await fetch(`${backendUrl}/enrolledCourse/getData`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+      credentials: "include",
+    });
+    if (!res.ok) {
+      throw new Error(` error: ${res.status}`);
+    }
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const fechSearchtopics = async () => {
+  try {
+    const res = await fetch(`${backendUrl}/searchs/getData`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    });
+    if (!res.ok) {
+      throw new Error(` error: ${res.status}`);
+    }
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deteteDiscusion = async ({
+  playlistId,
+  videoId,
+  name,
+  content,
+}: DeleteDisussionPropType) => {
+  try {
+    const res = await fetch(`${backendUrl}/discussion/delete`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        playlistId,
+        videoId,
+        name,
+        content,
+      }),
+      credentials: "include",
+    });
+    if (!res.ok) {
+      throw new Error(` error: ${res.status}`);
+    }
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const saveUserQiuzzScore = async ({
+  id,
+  videoId,
+  score,
+  email,
+}: {
+  id: string;
+  videoId: string;
+  score: number;
+  email: string;
+}) => {
+  try {
+    const res = await fetch(`${backendUrl}/score/addUserScore`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        playlistId: id,
+        videoId,
+        score,
+        email,
+      }),
+      credentials: "include",
+    });
+    if (!res.ok) {
+      throw new Error(` error: ${res.status}`);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const saveQuizzes = async ({
+  id,
+  videoId,
+  quizz,
+}: {
+  id: string;
+  videoId: string;
+  quizz: QuizzType[];
+}) => {
+  try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/enrolledCourse/getData`,
+      `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/quizz/addQiuzzes`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({
+          playlistId: id,
+          videoId,
+          quizz,
+        }),
         credentials: "include",
       },
     );
     if (!res.ok) {
       throw new Error(` error: ${res.status}`);
     }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const fetchQuizzScore = async ({
+  playlistId,
+  videoId,
+  email,
+}: {
+  playlistId: string;
+  videoId: string;
+  email: string;
+}) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/score/getUserScore`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          playlistId,
+          videoId,
+          email,
+        }),
+        credentials: "include",
+      },
+    );
     const data = await res.json();
     return data;
   } catch (error) {

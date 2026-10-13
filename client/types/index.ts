@@ -1,5 +1,12 @@
 import React from "react";
 
+export interface DeleteDisussionPropType {
+  playlistId: string;
+  videoId: string;
+  name: string;
+  content: string;
+}
+
 export interface FetchPlaylistsPropType {
   max: string;
   topic: string;

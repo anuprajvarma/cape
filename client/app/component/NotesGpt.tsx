@@ -7,7 +7,10 @@ import ReactMarkdown from "react-markdown";
 import { chatType, NotesGptPropType, QuizzType } from "@/types";
 import {
   fetchMultipleTypeData,
+  fetchQuizzScore,
   saveChatbotData,
+  saveQuizzes,
+  saveUserQiuzzScore,
 } from "../utils/backendApiCalls";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../redux/store";
@@ -80,20 +83,12 @@ const NotesGpt = ({ id, videoId, videoTitle }: NotesGptPropType) => {
 
   useEffect(() => {
     const addScore = async () => {
-      await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/score/addUserScore`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            playlistId: id,
-            videoId,
-            score: countedScore,
-            email: session.data?.user?.email ?? "",
-          }),
-          credentials: "include",
-        },
-      );
+      saveUserQiuzzScore({
+        id,
+        videoId,
+        score: countedScore,
+        email: session.data?.user?.email || "",
+      });
     };
 
     if (Completed === 10) {
@@ -103,25 +98,14 @@ const NotesGpt = ({ id, videoId, videoTitle }: NotesGptPropType) => {
 
   useEffect(() => {
     const fetchUserScore = async () => {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/score/getUserScore`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            playlistId: id,
-            videoId,
-            email: session.data?.user?.email ?? "",
-          }),
-          credentials: "include",
-        },
-      );
-      const data = await res.json();
-      console.log("User score :", data.userScore?.score);
+      const data = await fetchQuizzScore({
+        playlistId: id,
+        videoId,
+        email: session.data?.user?.email ?? "",
+      });
       if (data.userScore?.score !== undefined) {
         setDbScore(data.userScore?.score);
       }
-      // setDbScore(data.userScore.score);
     };
 
     if (Completed === 10 || Completed === 0) {
@@ -194,21 +178,12 @@ const NotesGpt = ({ id, videoId, videoTitle }: NotesGptPropType) => {
 
       setDataFetching(false);
       setQuizz(result ?? []);
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/quizz/addQiuzzes`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            playlistId: id,
-            videoId,
-            quizz: result,
-          }),
-          credentials: "include",
-        },
-      );
-      const data = await res.json();
-      console.log("Quizzes saved to database:", data);
+
+      await saveQuizzes({
+        id,
+        videoId,
+        quizz: result ?? [],
+      });
     } catch (error) {
       console.error("Error fetching from OpenRouter or saving to DB:", error);
     }

@@ -4,7 +4,11 @@ import React, { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import PlalistVideoCard from "../../../component/PlalistVideoCard";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-import { playlistType2, discussionType } from "@/types";
+import {
+  playlistType2,
+  discussionType,
+  DeleteDisussionPropType,
+} from "@/types";
 import { setIsOpen } from "../../../redux/slices/LoginModalSlice";
 import { AiOutlineDelete } from "react-icons/ai";
 import { toast } from "react-toastify";
@@ -14,6 +18,7 @@ import {
   fetchMultipleTypeData,
   fetchDiscussionData,
   saveDiscussionData,
+  deteteDiscusion,
 } from "../../../utils/backendApiCalls";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
@@ -177,27 +182,8 @@ export default function Course() {
     videoId,
     name,
     content,
-  }: {
-    playlistId: string;
-    videoId: string;
-    name: string;
-    content: string;
-  }) => {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/discussion/delete`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          playlistId,
-          videoId,
-          name,
-          content,
-        }),
-        credentials: "include",
-      },
-    );
-    const data = await res.json();
+  }: DeleteDisussionPropType) => {
+    const data = await deteteDiscusion({ playlistId, videoId, name, content });
     console.log(data.deleteDiscussion);
     if (data.deleteDiscussion) {
       toast.success("comment is delete", {
