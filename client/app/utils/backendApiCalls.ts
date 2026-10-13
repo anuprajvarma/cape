@@ -65,6 +65,46 @@ export const deleteBookmarkCourse = async ({
   }
 };
 
+export const saveBookmarkCourse = async ({
+  title,
+  channelTitle,
+  thumbnails,
+  id,
+  email,
+}: {
+  title: string;
+  channelTitle: string;
+  thumbnails: string;
+  id: string;
+  email: string;
+}) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/bookmarkCourse`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title,
+          channelTitle,
+          thumbnails,
+          id,
+          bookmark: true,
+          email,
+        }),
+        credentials: "include",
+      },
+    );
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+    toast.error(`${error}`, {
+      hideProgressBar: true,
+    });
+  }
+};
+
 export const fetchBookmarkedCourses = async (email: string) => {
   try {
     const res = await fetch(`${backendUrl}/bookmarkCourse/getData`, {

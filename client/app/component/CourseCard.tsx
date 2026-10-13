@@ -19,6 +19,7 @@ import { setCourseLinkModal } from "../redux/slices/CourseLinkModal";
 import { setCourseLink } from "../redux/slices/CourseLink";
 import {
   deleteBookmarkCourse,
+  saveBookmarkCourse,
   saveEnrolledCourse,
 } from "../utils/backendApiCalls";
 
@@ -97,42 +98,25 @@ const CourseCard = ({
     setGetDataCheck,
   }: CourseCardType) => {
     if (session.status === "authenticated") {
-      try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/bookmarkCourse`,
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              title,
-              channelTitle,
-              thumbnails,
-              id,
-              bookmark: true,
-              email: session.data?.user?.email,
-            }),
-            credentials: "include",
-          },
-        );
-        const data = await res.json();
-        if (data.isExist) {
-          console.log(data);
-          toast.success("course is already bookmark", {
-            hideProgressBar: true,
-          });
-        } else {
-          console.log(data.isExist);
-          toast.success("course is bookmarke", {
-            hideProgressBar: true,
-          });
-        }
-        setGetDataCheck(!getDataCheck);
-      } catch (error) {
-        console.log(error);
-        toast.error(`${error}`, {
+      const data = await saveBookmarkCourse({
+        title,
+        channelTitle,
+        thumbnails,
+        id,
+        email: session.data?.user?.email ?? "",
+      });
+      if (data.isExist) {
+        console.log(data);
+        toast.success("course is already bookmark", {
+          hideProgressBar: true,
+        });
+      } else {
+        console.log(data.isExist);
+        toast.success("course is bookmarke", {
           hideProgressBar: true,
         });
       }
+      setGetDataCheck(!getDataCheck);
     } else {
       dispatch(setIsOpen(true));
     }
