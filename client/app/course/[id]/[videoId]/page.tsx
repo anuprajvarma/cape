@@ -11,9 +11,9 @@ import { toast } from "react-toastify";
 import { playlist } from "../../../utils/frontendApiCalls";
 import getApiKey from "../../../utils/reusableConstant";
 import {
-  fetchBackendData,
+  fetchMultipleTypeData,
   fetchDiscussionData,
-  postDiscussionData,
+  saveDiscussionData,
 } from "../../../utils/backendApiCalls";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
@@ -110,7 +110,7 @@ const Course = () => {
   useEffect(() => {
     const getChapterData = async () => {
       if (typeof id === "string") {
-        const result = await fetchBackendData({
+        const result = await fetchMultipleTypeData({
           email: session.data?.user?.email ?? "",
           playlistId: id,
           url: "/enrolledCourse/getChapterData",
@@ -209,7 +209,7 @@ const Course = () => {
 
   const discussionHandler = async () => {
     if (session.status === "authenticated") {
-      await postDiscussionData({
+      await saveDiscussionData({
         playlistId: id as string,
         videoId: videoId as string,
         content: discussionContent,

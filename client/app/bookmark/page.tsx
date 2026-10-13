@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import { handleEnrolled } from "../utils/backendApiCalls";
+import { fetchEnrolledCourses } from "../utils/backendApiCalls";
 import CourseLinkModal from "../component/CourseLinkModal";
 
 const CourseCard = dynamic(() => import("../component/CourseCard"), {
@@ -40,7 +40,7 @@ const Bookmark = () => {
     const load = async () => {
       setDataLoading(true);
       const email = session.data?.user?.email as string;
-      const result = await handleEnrolled(email);
+      const result = await fetchEnrolledCourses(email);
       // console.log(`resul ${result}`);
       if (result) {
         setBookmarkCoursePlaylist(result);

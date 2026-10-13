@@ -10,7 +10,7 @@ import "react-circular-progressbar/dist/styles.css";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import * as Tooltip from "@radix-ui/react-tooltip";
-import { fetchBackendData } from "../utils/backendApiCalls";
+import { fetchMultipleTypeData } from "../utils/backendApiCalls";
 import { toast } from "react-toastify";
 import { AppDispatch } from "../redux/store";
 import { useDispatch } from "react-redux";
@@ -74,7 +74,7 @@ const EnrolledCard = ({
 
   useEffect(() => {
     const getChapterData = async () => {
-      const result = await fetchBackendData({
+      const result = await fetchMultipleTypeData({
         email: session.data?.user?.email ?? "",
         playlistId,
         url: "/enrolledCourse/getChapterData",
@@ -92,7 +92,7 @@ const EnrolledCard = ({
   }: {
     playlistId: string;
   }) => {
-    await fetchBackendData({
+    await fetchMultipleTypeData({
       email: session.data?.user?.email ?? "",
       playlistId,
       url: "/enrolledCourse/delete",

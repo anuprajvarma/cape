@@ -11,7 +11,7 @@ import { FaArrowRight } from "react-icons/fa";
 import { IoMenu } from "react-icons/io5";
 import { toast } from "react-toastify";
 
-import { loginFuntion, signOutFuntion } from "../utils/backendApiCalls";
+import { login, logOut } from "../utils/backendApiCalls";
 import useClickOutside from "../utils/outsideClick";
 
 type User = {
@@ -37,12 +37,12 @@ const Header = () => {
 
   const handleSignout = async () => {
     await signOut();
-    await signOutFuntion();
+    await logOut();
   };
 
   useEffect(() => {
     const handleGoogleAuthSubmit = async () => {
-      const res = await loginFuntion({
+      const res = await login({
         name: session.data?.user?.name ?? "",
         email: session.data?.user?.email ?? "",
         imageUrl: session.data?.user?.image ?? "",

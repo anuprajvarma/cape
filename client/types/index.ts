@@ -1,5 +1,52 @@
 import React from "react";
 
+export interface FetchMultipleTypeDataType {
+  email: string;
+  playlistId: string;
+  url: string;
+}
+
+export interface SaveChatbotDataType {
+  email: string;
+  playlistId: string;
+  question: string;
+  answer: string;
+}
+
+export interface SaveDiscussionDataType {
+  playlistId: string;
+  videoId: string;
+  content: string;
+  username: string;
+  userImageUrl: string;
+}
+
+export interface LoginType {
+  name: string;
+  email: string;
+  imageUrl: string;
+}
+
+export interface AddAndRemoveChaptersType {
+  email: string;
+  playlistId: string;
+  videoId: string;
+  url: string;
+}
+
+export interface ChapterActionType {
+  isCompleted: boolean;
+  email: string;
+  playlistId: string;
+  videoId: string;
+  title: string;
+  channelTitle: string;
+  thumbnails: string;
+  description: string;
+  bookmark: boolean;
+  indexOrder: number;
+}
+
 export interface CourseCardType {
   title: string;
   channelTitle: string;

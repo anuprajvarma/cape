@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../redux/store";
 import { setCheckBox } from "../redux/slices/checkboxSlice";
-import { handleChapter } from "../utils/backendApiCalls";
+import { handleChapterActions } from "../utils/backendApiCalls";
 // import { toast } from "react-toastify";
 import { IoPlay } from "react-icons/io5";
 import { setIsOpen } from "../redux/slices/LoginModalSlice";
@@ -33,8 +33,8 @@ const PlalistVideoCard = ({
 
   const checkBoxHandler = async (e: boolean) => {
     if (session.status === "authenticated") {
-      await handleChapter({
-        e,
+      await handleChapterActions({
+        isCompleted: e,
         email: session.data?.user?.email ?? "",
         playlistId: id,
         videoId,

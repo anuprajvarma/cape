@@ -1,18 +1,21 @@
+import {
+  AddAndRemoveChaptersType,
+  ChapterActionType,
+  FetchMultipleTypeDataType,
+  LoginType,
+  SaveChatbotDataType,
+  SaveDiscussionDataType,
+} from "@/types";
 import { toast } from "react-toastify";
 
 const backendUrl = `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api`;
 
-const fetchData = async ({
+const addAndRemoveChapters = async ({
   email,
   playlistId,
   videoId,
   url,
-}: {
-  email: string;
-  playlistId: string;
-  videoId: string;
-  url: string;
-}) => {
+}: AddAndRemoveChaptersType) => {
   const res = await fetch(`${backendUrl}${url}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -30,7 +33,7 @@ const fetchData = async ({
   return data;
 };
 
-export const handleEnrolled = async (email: string) => {
+export const fetchEnrolledCourses = async (email: string) => {
   try {
     const res = await fetch(`${backendUrl}/bookmarkCourse/getData`, {
       method: "POST",
@@ -40,15 +43,17 @@ export const handleEnrolled = async (email: string) => {
       }),
       credentials: "include",
     });
+    if (!res.ok) {
+      throw new Error(` error: ${res.status}`);
+    }
     const data = await res.json();
     return data.bookmarkCourse;
   } catch (error) {
     console.log(error);
-    return;
   }
 };
 
-export async function signOutFuntion() {
+export async function logOut() {
   await fetch(`${backendUrl}/auth/signout`, {
     method: "POST",
     credentials: "include",
@@ -58,15 +63,7 @@ export async function signOutFuntion() {
   });
 }
 
-export async function loginFuntion({
-  name,
-  email,
-  imageUrl,
-}: {
-  name: string;
-  email: string;
-  imageUrl: string;
-}) {
+export async function login({ name, email, imageUrl }: LoginType) {
   try {
     const res = await fetch(`${backendUrl}/auth/login`, {
       method: "POST",
@@ -78,10 +75,12 @@ export async function loginFuntion({
       }),
       credentials: "include",
     });
+    if (!res.ok) {
+      throw new Error(` error: ${res.status}`);
+    }
     return res;
   } catch (error) {
     console.log(error);
-    return;
   }
 }
 
@@ -102,6 +101,9 @@ export const fetchDiscussionData = async ({
       }),
       credentials: "include",
     });
+    if (!res.ok) {
+      throw new Error(` error: ${res.status}`);
+    }
     const data = await res.json();
     return data.discussionData?.discussions;
   } catch (error) {
@@ -109,19 +111,13 @@ export const fetchDiscussionData = async ({
   }
 };
 
-export const postDiscussionData = async ({
+export const saveDiscussionData = async ({
   playlistId,
   videoId,
   content,
   username,
   userImageUrl,
-}: {
-  playlistId: string;
-  videoId: string;
-  content: string;
-  username: string;
-  userImageUrl: string;
-}) => {
+}: SaveDiscussionDataType) => {
   try {
     await fetch(`${backendUrl}/discussion/postData`, {
       method: "POST",
@@ -140,17 +136,12 @@ export const postDiscussionData = async ({
   }
 };
 
-export const GPTDataPostToMongoDB = async ({
+export const saveChatbotData = async ({
   email,
   playlistId,
   question,
   answer,
-}: {
-  email: string;
-  playlistId: string;
-  question: string;
-  answer: string;
-}) => {
+}: SaveChatbotDataType) => {
   try {
     await fetch(`${backendUrl}/chat`, {
       method: "POST",
@@ -168,8 +159,8 @@ export const GPTDataPostToMongoDB = async ({
   }
 };
 
-export const handleChapter = async ({
-  e,
+export const handleChapterActions = async ({
+  isCompleted,
   email,
   playlistId,
   videoId,
@@ -179,21 +170,10 @@ export const handleChapter = async ({
   description,
   bookmark,
   indexOrder,
-}: {
-  e: boolean;
-  email: string;
-  playlistId: string;
-  videoId: string;
-  title: string;
-  channelTitle: string;
-  thumbnails: string;
-  description: string;
-  bookmark: boolean;
-  indexOrder: number;
-}) => {
-  if (e === true) {
+}: ChapterActionType) => {
+  if (isCompleted === true) {
     try {
-      const data = await fetchData({
+      const data = await addAndRemoveChapters({
         email,
         playlistId,
         videoId,
@@ -236,7 +216,7 @@ export const handleChapter = async ({
     }
   } else {
     try {
-      const data = await fetchData({
+      const data = await addAndRemoveChapters({
         email,
         playlistId,
         videoId,
@@ -257,15 +237,11 @@ export const handleChapter = async ({
   }
 };
 
-export const fetchBackendData = async ({
+export const fetchMultipleTypeData = async ({
   email,
   playlistId,
   url,
-}: {
-  email: string;
-  playlistId: string;
-  url: string;
-}) => {
+}: FetchMultipleTypeDataType) => {
   try {
     const res = await fetch(`${backendUrl}${url}`, {
       method: "POST",
@@ -276,6 +252,9 @@ export const fetchBackendData = async ({
       }),
       credentials: "include",
     });
+    if (!res.ok) {
+      throw new Error(` error: ${res.status}`);
+    }
     const data = await res.json();
     return data;
   } catch (error) {

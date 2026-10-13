@@ -10,7 +10,7 @@ import {
   Theme,
 } from "@blocknote/mantine";
 import { useEffect } from "react";
-import { fetchBackendData } from "../utils/backendApiCalls";
+import { fetchMultipleTypeData } from "../utils/backendApiCalls";
 import { useSession } from "next-auth/react";
 
 const lightRedTheme = {
@@ -101,7 +101,7 @@ export default function Editor({
   useEffect(() => {
     const fetchNote = async () => {
       try {
-        const result = await fetchBackendData({
+        const result = await fetchMultipleTypeData({
           email,
           playlistId,
           url: "/notes/getNote",

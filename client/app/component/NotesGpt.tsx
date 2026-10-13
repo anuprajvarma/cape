@@ -6,8 +6,8 @@ import React, { useEffect, useState, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import { chatType } from "@/types";
 import {
-  fetchBackendData,
-  GPTDataPostToMongoDB,
+  fetchMultipleTypeData,
+  saveChatbotData,
 } from "../utils/backendApiCalls";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../redux/store";
@@ -81,7 +81,7 @@ const NotesGpt = ({
 
   useEffect(() => {
     const chat = async () => {
-      const result = await fetchBackendData({
+      const result = await fetchMultipleTypeData({
         email: session.data?.user?.email ?? "",
         playlistId: id,
         url: "/chat/getData",
@@ -165,7 +165,7 @@ const NotesGpt = ({
           ),
         );
         if (result.content) {
-          await GPTDataPostToMongoDB({
+          await saveChatbotData({
             email: session.data?.user?.email ?? "",
             playlistId: id,
             question: input,
