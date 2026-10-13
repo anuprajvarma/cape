@@ -12,7 +12,7 @@ import {
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../redux/store";
 import { setIsOpen } from "../redux/slices/LoginModalSlice";
-import { chatBotApiCall, easyExplainFuntion } from "../utils/frontendApiCalls";
+import { fetchChatbotAnswer, fetchQuizzes } from "../utils/frontendApiCalls";
 
 const Editor = dynamic(() => import("./Editor"), {
   ssr: false,
@@ -156,7 +156,7 @@ const NotesGpt = ({
       }
       setInput("");
       try {
-        const result = await chatBotApiCall({ input });
+        const result = await fetchChatbotAnswer({ input });
         setTemporaryChatData((prev) =>
           prev.map((chat) =>
             chat.question === input
@@ -204,7 +204,7 @@ const NotesGpt = ({
   const quizzHandler = async () => {
     try {
       setDataFetching(true);
-      const result = await easyExplainFuntion({ videoTitle });
+      const result = await fetchQuizzes({ videoTitle });
 
       setDataFetching(false);
       setQuizz(result ?? []);

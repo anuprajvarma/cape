@@ -8,7 +8,7 @@ const groq = new Groq({
 
 const apikey = youtubeApiKey();
 
-export const fetchPlaylist = async ({
+export const fetchPlaylists = async ({
   max,
   topic,
 }: {
@@ -30,19 +30,20 @@ export const fetchPlaylist = async ({
   }
 };
 
-export const playlist = async (id: string | undefined | string[]) => {
+export const fetchfirstVideoIdOfPlaylist = async (
+  id: string | undefined | string[],
+) => {
   const res = await fetch(
     `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${id}&maxResults=3&key=${apikey}`,
   );
+  if (!res.ok) {
+    throw new Error(` error: ${res.status}`);
+  }
   const data = await res.json();
   return data.items[0].snippet?.resourceId.videoId;
 };
 
-export const easyExplainFuntion = async ({
-  videoTitle,
-}: {
-  videoTitle: string;
-}) => {
+export const fetchQuizzes = async ({ videoTitle }: { videoTitle: string }) => {
   try {
     const res = await groq.chat.completions.create({
       messages: [
@@ -66,6 +67,9 @@ export const easyExplainFuntion = async ({
     });
 
     const quizArray = parseQuizHtml(res?.choices?.[0]?.message?.content ?? "");
+    if (!quizArray) {
+      throw new Error("No quizArray received from Groq");
+    }
     console.log("quiz", quizArray);
     return quizArray;
   } catch (error) {
@@ -73,7 +77,7 @@ export const easyExplainFuntion = async ({
   }
 };
 
-export const chatBotApiCall = async ({ input }: { input: string }) => {
+export const fetchChatbotAnswer = async ({ input }: { input: string }) => {
   try {
     console.log("input:", input);
 
@@ -112,15 +116,14 @@ export const chatBotApiCall = async ({ input }: { input: string }) => {
   }
 };
 
-export const funtionForVideoDetail = async ({
-  videoId,
-}: {
-  videoId: string;
-}) => {
+export const fetchVideoDetail = async ({ videoId }: { videoId: string }) => {
   try {
     const res = await fetch(
       `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&id=${videoId}&key=${apikey}`,
     );
+    if (!res.ok) {
+      throw new Error(` error: ${res.status}`);
+    }
     const data = await res.json();
     return data.items;
   } catch (error) {
@@ -128,11 +131,14 @@ export const funtionForVideoDetail = async ({
   }
 };
 
-export const fetchPlayListVideos = async ({ id }: { id: string }) => {
+export const fetchPlaylistVideos = async ({ id }: { id: string }) => {
   try {
     const res = await fetch(
       `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${id}&maxResults=200&key=${apikey}`,
     );
+    if (!res.ok) {
+      throw new Error(` error: ${res.status}`);
+    }
     const data = await res.json();
     return data.items;
   } catch (error) {

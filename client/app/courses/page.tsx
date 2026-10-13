@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import { GrMicrophone } from "react-icons/gr";
 import { IoSearch } from "react-icons/io5";
 import * as Tooltip from "@radix-ui/react-tooltip";
-import { fetchPlaylist } from "../utils/frontendApiCalls";
+import { fetchPlaylists } from "../utils/frontendApiCalls";
 import LoginModal from "../component/LoginModal";
 import CourseLinkModal from "../component/CourseLinkModal";
 import { playlistType } from "@/types";
@@ -76,7 +76,7 @@ const Courses = () => {
       const max = "50";
       if (apikey) {
         setPopularPlaylist([]);
-        const result = await fetchPlaylist({ max, topic });
+        const result = await fetchPlaylists({ max, topic });
         setPopularPlaylist(result);
         if (result.length > 0) {
           setCheckDataExist(false);

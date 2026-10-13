@@ -8,7 +8,7 @@ import { playlistType2, discussionType } from "@/types";
 import { setIsOpen } from "../../../redux/slices/LoginModalSlice";
 import { AiOutlineDelete } from "react-icons/ai";
 import { toast } from "react-toastify";
-import { playlist } from "../../../utils/frontendApiCalls";
+import { fetchfirstVideoIdOfPlaylist } from "../../../utils/frontendApiCalls";
 import getApiKey from "../../../utils/reusableConstant";
 import {
   fetchMultipleTypeData,
@@ -34,8 +34,8 @@ import NotesGpt from "@/app/component/NotesGpt";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import {
-  fetchPlayListVideos,
-  funtionForVideoDetail,
+  fetchPlaylistVideos,
+  fetchVideoDetail,
 } from "@/app/utils/frontendApiCalls";
 import LoginModal from "@/app/component/LoginModal";
 import CourseLinkModal from "@/app/component/CourseLinkModal";
@@ -70,7 +70,7 @@ const Course = () => {
 
   useEffect(() => {
     const load = async () => {
-      const result = await playlist(id);
+      const result = await fetchfirstVideoIdOfPlaylist(id);
       router.push(`/course/${id}/${result}`);
     };
     if (videoId === "1") {
@@ -93,7 +93,7 @@ const Course = () => {
   useEffect(() => {
     async function playlist() {
       if (typeof videoId === "string") {
-        const result = await funtionForVideoDetail({ videoId });
+        const result = await fetchVideoDetail({ videoId });
         if (result) {
           setVideoTitle(result[0]?.snippet.title);
           setVideoDescription(result[0]?.snippet.description);
@@ -138,7 +138,7 @@ const Course = () => {
   useEffect(() => {
     async function playlist() {
       if (typeof id === "string") {
-        const result = await fetchPlayListVideos({ id });
+        const result = await fetchPlaylistVideos({ id });
         setPlaylists(result);
       }
     }
