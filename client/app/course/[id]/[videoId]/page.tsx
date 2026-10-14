@@ -2,8 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 
 import {
   Disclosure,
@@ -29,6 +27,7 @@ import {
 } from "../../../utils/frontendApiCalls";
 import { fetchMultipleTypeData } from "../../../utils/backendApiCalls";
 import { VideoDetail } from "@/app/hooks/videoDetail";
+import { SessionAndRouterDetails } from "@/app/hooks/sesionAndRouterDetail";
 
 const options = {
   target: "_blank",
@@ -37,13 +36,12 @@ const options = {
 };
 
 export default function Course() {
-  const session = useSession();
-  const params = useParams();
-  const router = useRouter();
+  const { router, session, params } = SessionAndRouterDetails();
   const { id, videoId } = params;
+  const [completedChapters, setCompletedChapters] = useState<string[]>([]);
+
   const checkboxTrack = useSelector((state: RootState) => state.checkbox);
   const dispatch = useDispatch<AppDispatch>();
-  const [completedChapters, setCompletedChapters] = useState<string[]>([]);
   const { videoTitle, videoDescription } = VideoDetail({ videoId });
 
   useEffect(() => {
