@@ -13,8 +13,8 @@ export const ChapterCompletionTracker = ({
         <div className="flex gap-2 font-semibold text-base text-slaty/90">
           <p className="text-slaty">Progress -</p>
           <div>
-            {typeof id === "string" && playlistLengths[id] && (
-              <p>{`${completedChapters?.length}/${playlistLengths[id]}`}</p>
+            {typeof id === "string" && playlistLengths && (
+              <p>{`${completedChapters?.length}/${playlistLengths}`}</p>
             )}
           </div>
         </div>

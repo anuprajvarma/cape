@@ -3,7 +3,7 @@ import React from "react";
 export interface PlaylistVideosPropType {
   id: string | string[] | undefined;
   videoId: string | string[] | undefined;
-  playlistLengths: Record<string, string>;
+  playlistLengths: number | undefined;
   playlists: playlistType2[];
   completedChapters: string[];
   mobile: boolean;
@@ -13,7 +13,7 @@ export interface PlaylistVideosPropType {
 
 export interface ChapterCompletionPropType {
   id: string | string[] | undefined;
-  playlistLengths: Record<string, string>;
+  playlistLengths: number | undefined;
   completedChapters: string[];
   precentage: number;
 }
@@ -23,11 +23,9 @@ export interface videoTitleSection {
   videoTitle: string;
   videoId: string | string[] | undefined;
   playlists: playlistType2[];
-  playlistLengths: Record<string, string>;
+  playlistLengths: number | undefined;
   completedChapters: string[];
-  setPlaylistLengths: React.Dispatch<
-    React.SetStateAction<Record<string, string>>
-  >;
+  setPlaylistLengths: React.Dispatch<React.SetStateAction<number | undefined>>;
 }
 
 export interface ChatbotSectionPropType {

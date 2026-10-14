@@ -5,10 +5,8 @@ import { IoMdShareAlt } from "react-icons/io";
 import { AppDispatch } from "../redux/store";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { youtubeApiKey } from "../utils/reusableConstant";
 import { videoTitleSection } from "@/types";
-
-const apikey = youtubeApiKey();
+import { PlaylistLength } from "../utils/frontendApiCalls";
 
 export const PlayVideoSection = ({
   id,
@@ -23,26 +21,9 @@ export const PlayVideoSection = ({
 
   useEffect(() => {
     const fetchLengths = async () => {
-      const newLengths: Record<string, string> = {};
-      await Promise.all(
-        playlists.map(async (item) => {
-          const id = item.snippet?.playlistId;
-          if (id) {
-            const lenthRes = await fetch(
-              `https://www.googleapis.com/youtube/v3/playlists?part=contentDetails&id=${id}&key=${apikey}`,
-            );
-
-            const data = await lenthRes.json();
-            if (data.items[0]) {
-              newLengths[id] = data.items[0]?.contentDetails?.itemCount || 0;
-            }
-          }
-        }),
-      );
-
-      setPlaylistLengths(newLengths);
+      const data = await PlaylistLength({id})
+      setPlaylistLengths(data.items[0].contentDetails.itemCount);
     };
-
     if (playlists?.length > 0) {
       fetchLengths();
     }
@@ -80,8 +61,8 @@ export const PlayVideoSection = ({
                 <div className="flex lg:hidden gap-2 font-medium text-slaty/80">
                   <p className="text-slaty sm:flex hidden">Progress -</p>
                   <div>
-                    {typeof id === "string" && playlistLengths[id] && (
-                      <p>{`${completedChapters?.length}/${playlistLengths[id]}`}</p>
+                    {typeof id === "string" && playlistLengths && (
+                      <p>{`${completedChapters?.length}/${playlistLengths}`}</p>
                     )}
                   </div>
                 </div>

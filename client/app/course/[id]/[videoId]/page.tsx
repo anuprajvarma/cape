@@ -37,9 +37,7 @@ export default function Course() {
   const checkboxTrack = useSelector((state: RootState) => state.checkbox);
   const [PlaylistVideos, setPlaylistVideos] = useState<playlistType2[]>([]);
   const [completedChapters, setCompletedChapters] = useState<string[]>([]);
-  const [playlistLengths, setPlaylistLengths] = useState<
-    Record<string, string>
-  >({});
+  const [playlistLengths, setPlaylistLengths] = useState<number>();
   const [videoTitle, setVideoTitle] = useState<string>("");
   const [videoDescription, setVideoDescription] = useState<string>("");
 

@@ -9,6 +9,22 @@ const groq = new Groq({
 
 const apikey = youtubeApiKey();
 
+export const PlaylistLength = async ({
+  id,
+}: {
+  id: string | string[] | undefined;
+}) => {
+  try {
+    const res = await fetch(
+      `https://www.googleapis.com/youtube/v3/playlists?part=contentDetails&id=${id}&key=${apikey}`,
+    );
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const fetchPlaylists = async ({
   max,
   topic,

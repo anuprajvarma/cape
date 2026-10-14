@@ -35,9 +35,9 @@ export const PlaylistVideosSection = ({
   }, [videoId]);
 
   useEffect(() => {
-    if (actualId && playlistLengths[actualId]) {
+    if (actualId && playlistLengths) {
       const percentage =
-        (100 * completedChapters.length) / Number(playlistLengths[actualId]);
+        (100 * completedChapters.length) / Number(playlistLengths);
       setPrecentage(Math.round(percentage));
     }
   }, [actualId, playlistLengths, completedChapters.length]);
