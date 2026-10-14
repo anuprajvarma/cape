@@ -1,14 +1,10 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams, useRouter } from "next/navigation";
-import {
-  fetchfirstVideoIdOfPlaylist,
-  fetchVideoDetail,
-  PlaylistLength,
-} from "../../../utils/frontendApiCalls";
-import { fetchMultipleTypeData } from "../../../utils/backendApiCalls";
 import { useSession } from "next-auth/react";
+
 import {
   Disclosure,
   DisclosureButton,
@@ -16,15 +12,23 @@ import {
 } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import Linkify from "linkify-react";
+
 import NotesGpt from "@/app/component/NotesGpt";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../../redux/store";
 import { LoginModal } from "@/app/component/LoginModal";
 import { CourseLinkModal } from "@/app/component/CourseLinkModal";
 import { DiscussionSection } from "@/app/component/DiscussionSection";
 import { PlayVideoSection } from "@/app/component/PlayVideo";
 import { PlaylistVideosSection } from "@/app/component/PlaylistVideosSection";
+
+import { AppDispatch, RootState } from "../../../redux/store";
 import { setPlayListLength } from "@/app/redux/slices/PlaylistLengthSlice";
+
+import {
+  fetchfirstVideoIdOfPlaylist,
+  PlaylistLength,
+} from "../../../utils/frontendApiCalls";
+import { fetchMultipleTypeData } from "../../../utils/backendApiCalls";
+import { VideoDetail } from "@/app/hooks/videoDetail";
 
 const options = {
   target: "_blank",
@@ -40,23 +44,7 @@ export default function Course() {
   const checkboxTrack = useSelector((state: RootState) => state.checkbox);
   const dispatch = useDispatch<AppDispatch>();
   const [completedChapters, setCompletedChapters] = useState<string[]>([]);
-  const [videoTitle, setVideoTitle] = useState<string>("");
-  const [videoDescription, setVideoDescription] = useState<string>("");
-
-  useEffect(() => {
-    const playlist = async () => {
-      if (typeof videoId === "string") {
-        const result = await fetchVideoDetail({ videoId });
-        if (result) {
-          setVideoTitle(result[0]?.snippet.title);
-          setVideoDescription(result[0]?.snippet.description);
-        }
-      }
-    };
-    if (videoId) {
-      playlist();
-    }
-  }, [videoId]);
+  const { videoTitle, videoDescription } = VideoDetail({ videoId });
 
   useEffect(() => {
     const fetchLengths = async () => {
