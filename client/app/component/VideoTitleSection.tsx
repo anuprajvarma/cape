@@ -6,7 +6,7 @@ import { AppDispatch } from "../redux/store";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { youtubeApiKey } from "../utils/reusableConstant";
-import { playlistType2 } from "@/types";
+import { videoTitleSection } from "@/types";
 
 const apikey = youtubeApiKey();
 
@@ -18,17 +18,7 @@ export const VideoTitleSection = ({
   playlistLengths,
   completedChapters,
   setPlaylistLengths,
-}: {
-  id: string | string[] | undefined;
-  videoTitle: string;
-  videoId: string | string[] | undefined;
-  playlists: playlistType2[];
-  playlistLengths: Record<string, string>;
-  completedChapters: string[];
-  setPlaylistLengths: React.Dispatch<
-    React.SetStateAction<Record<string, string>>
-  >;
-}) => {
+}: videoTitleSection) => {
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {

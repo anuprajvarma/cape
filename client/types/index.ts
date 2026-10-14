@@ -1,5 +1,17 @@
 import React from "react";
 
+export interface videoTitleSection {
+  id: string | string[] | undefined;
+  videoTitle: string;
+  videoId: string | string[] | undefined;
+  playlists: playlistType2[];
+  playlistLengths: Record<string, string>;
+  completedChapters: string[];
+  setPlaylistLengths: React.Dispatch<
+    React.SetStateAction<Record<string, string>>
+  >;
+}
+
 export interface ChatbotSectionPropType {
   id: string;
   temporaryChatData: chatType[];
