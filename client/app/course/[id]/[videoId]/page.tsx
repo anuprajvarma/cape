@@ -4,23 +4,10 @@ import React, { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import PlalistVideoCard from "../../../component/PlalistVideoCard";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-import {
-  playlistType2,
-  discussionType,
-  DeleteDisussionPropType,
-} from "@/types";
-import { setIsOpen } from "../../../redux/slices/LoginModalSlice";
-import { AiOutlineDelete } from "react-icons/ai";
-import { toast } from "react-toastify";
+import { playlistType2 } from "@/types";
 import { fetchfirstVideoIdOfPlaylist } from "../../../utils/frontendApiCalls";
 import { youtubeApiKey } from "../../../utils/reusableConstant";
-import {
-  fetchMultipleTypeData,
-  fetchDiscussionData,
-  saveDiscussionData,
-  deteteDiscusion,
-} from "../../../utils/backendApiCalls";
-import Image from "next/image";
+import { fetchMultipleTypeData } from "../../../utils/backendApiCalls";
 import { useSession } from "next-auth/react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../redux/store";
@@ -44,6 +31,7 @@ import {
 } from "@/app/utils/frontendApiCalls";
 import { LoginModal } from "@/app/component/LoginModal";
 import { CourseLinkModal } from "@/app/component/CourseLinkModal";
+import { DiscussionSection } from "@/app/component/DiscussionSection";
 
 const options = {
   target: "_blank",
@@ -60,8 +48,6 @@ export default function Course() {
   const { id, videoId } = params;
   const checkboxTrack = useSelector((state: RootState) => state.checkbox);
   const dispatch = useDispatch<AppDispatch>();
-  const [discussionData, setDiscussionData] = useState<discussionType[]>([]);
-  const [discussionContent, setDiscussionContent] = useState("");
   const [playlists, setPlaylists] = useState<playlistType2[]>([]);
   const [completedChapters, setCompletedChapters] = useState<string[]>([]);
   const [hasMounted, setHasMounted] = useState(false);
@@ -71,7 +57,6 @@ export default function Course() {
   const [precentage, setPrecentage] = useState<number>(0);
   const [videoTitle, setVideoTitle] = useState("");
   const [videoDescription, setVideoDescription] = useState("");
-  const [commentStateUpdate, setCommentStateUpdate] = useState(false);
 
   useEffect(() => {
     const load = async () => {
@@ -82,18 +67,6 @@ export default function Course() {
       load();
     }
   }, []);
-
-  useEffect(() => {
-    const discussion = async () => {
-      if (typeof id === "string" && typeof videoId === "string") {
-        const result = await fetchDiscussionData({ id, videoId });
-        setDiscussionData(result);
-      }
-    };
-    if (videoId) {
-      discussion();
-    }
-  }, [session.data?.user?.email, id, videoId, commentStateUpdate]);
 
   useEffect(() => {
     const playlist = async () => {
@@ -176,38 +149,6 @@ export default function Course() {
       fetchLengths();
     }
   }, [playlists]);
-
-  const DeteleDiscussion = async ({
-    playlistId,
-    videoId,
-    name,
-    content,
-  }: DeleteDisussionPropType) => {
-    const data = await deteteDiscusion({ playlistId, videoId, name, content });
-    console.log(data.deleteDiscussion);
-    if (data.deleteDiscussion) {
-      toast.success("comment is delete", {
-        hideProgressBar: true,
-      });
-    }
-    setCommentStateUpdate(!commentStateUpdate);
-  };
-
-  const discussionHandler = async () => {
-    if (session.status === "authenticated") {
-      await saveDiscussionData({
-        playlistId: id as string,
-        videoId: videoId as string,
-        content: discussionContent,
-        username: session.data?.user?.name ?? "",
-        userImageUrl: session.data?.user?.image ?? "",
-      });
-      setCommentStateUpdate(!commentStateUpdate);
-      setDiscussionContent("");
-    } else {
-      dispatch(setIsOpen(true));
-    }
-  };
 
   const lines = videoDescription
     ?.split("\n")
@@ -370,115 +311,7 @@ export default function Course() {
                 })}
               </div>
             </div>
-            <div>
-              {discussionData ? (
-                <div className="w-full h-full min-h-[50.4rem] border border-lightSlaty rounded-xl lg:flex lg:flex-col hidden">
-                  <div className="w-full items-center text-center font-semibold py-4 justify-center bg-mediumSlaty rounded-t-xl">
-                    Discussion
-                  </div>
-                  <div className="space-y-2 w-full h-full p-4 rounded overflow-y-auto">
-                    {discussionData?.map((msg, i) => (
-                      <div
-                        className="flex gap-4"
-                        key={i}
-                        // className={msg.sender === "user" ? "text-right" : "text-left"}
-                      >
-                        <div className="flex w-[4rem] items-start h-[3rem] relative">
-                          <Image
-                            src={msg.image || "/code.jpg"}
-                            alt="code"
-                            quality={100}
-                            sizes="80px"
-                            fill
-                            style={{ objectFit: "cover" }}
-                            className="rounded-full"
-                          />
-                        </div>
-                        <div className="flex flex-col w-full">
-                          <p className="text-white text-xs font-semibold">
-                            {msg.name}
-                          </p>
-                          <p className="text-sm text-slaty">{msg.content}</p>
-                        </div>
-                        <div className="flex w-[3rem] items-center justify-center">
-                          <Tooltip.Provider delayDuration={0}>
-                            <Tooltip.Root>
-                              <Tooltip.Trigger asChild>
-                                <button
-                                  onClick={() =>
-                                    DeteleDiscussion({
-                                      playlistId: id as string,
-                                      videoId: videoId as string,
-                                      name: msg.name,
-                                      content: msg.content,
-                                    })
-                                  }
-                                >
-                                  <AiOutlineDelete className="text-xl hover:text-white transition duration-300" />
-                                </button>
-                              </Tooltip.Trigger>
-                              <Tooltip.Portal>
-                                <Tooltip.Content
-                                  side="top"
-                                  className="bg-lightSlaty text-white px-2 py-1 text-xs rounded shadow-md z-20"
-                                >
-                                  Delete
-                                  <Tooltip.Arrow className="fill-lightSlaty" />
-                                </Tooltip.Content>
-                              </Tooltip.Portal>
-                            </Tooltip.Root>
-                          </Tooltip.Provider>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="flex gap-2 p-4">
-                    <input
-                      value={discussionContent}
-                      onChange={(e) => setDiscussionContent(e.target.value)}
-                      className="flex-1 p-2 rounded-md bg-lightSlaty focus:outline-none border border-slaty/50 text-slaty placeholder-slaty/50"
-                      placeholder="Type a message..."
-                    />
-                    <button
-                      onClick={discussionHandler}
-                      className="px-2 bg-blue-600 text-white rounded"
-                    >
-                      Send
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <div className="w-full h-[47.7rem] border border-lightSlaty rounded-xl lg:flex lg:flex-col hidden">
-                  <div className="w-full items-center text-center font-semibold py-4 justify-center bg-mediumSlaty rounded-t-xl">
-                    Discussion
-                  </div>
-                  <div className="w-full h-[40rem] flex items-center justify-center p-4">
-                    <p className="text-slaty text-center">
-                      No discussion available yet.
-                    </p>
-                  </div>
-                  <div className="flex gap-2 p-4">
-                    <input
-                      value={discussionContent}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter" && discussionContent.trim()) {
-                          discussionHandler();
-                        }
-                      }}
-                      onChange={(e) => setDiscussionContent(e.target.value)}
-                      className="flex-1 p-2 rounded-md bg-lightSlaty focus:outline-none border border-slaty/50 text-slaty placeholder-slaty/50"
-                      placeholder="Say something"
-                    />
-                    <button
-                      onClick={discussionHandler}
-                      className="px-2 bg-blue-600 text-white rounded"
-                    >
-                      Send
-                    </button>
-                  </div>
-                </div>
-              )}
-            </div>
+            <DiscussionSection id={id} videoId={videoId} />
           </div>
         </div>
       </div>
