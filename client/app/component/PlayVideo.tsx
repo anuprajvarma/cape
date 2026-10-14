@@ -4,30 +4,16 @@ import * as Tooltip from "@radix-ui/react-tooltip";
 import { IoMdShareAlt } from "react-icons/io";
 import { AppDispatch } from "../redux/store";
 import { useDispatch } from "react-redux";
-import { useEffect } from "react";
 import { videoTitleSection } from "@/types";
-import { PlaylistLength } from "../utils/frontendApiCalls";
 
 export const PlayVideoSection = ({
   id,
   videoTitle,
   videoId,
-  playlists,
   playlistLengths,
   completedChapters,
-  setPlaylistLengths,
 }: videoTitleSection) => {
   const dispatch = useDispatch<AppDispatch>();
-
-  useEffect(() => {
-    const fetchLengths = async () => {
-      const data = await PlaylistLength({id})
-      setPlaylistLengths(data.items[0].contentDetails.itemCount);
-    };
-    if (playlists?.length > 0) {
-      fetchLengths();
-    }
-  }, [playlists]);
 
   return (
     <>

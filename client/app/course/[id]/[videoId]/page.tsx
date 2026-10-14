@@ -3,7 +3,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { playlistType2 } from "@/types";
-import { fetchfirstVideoIdOfPlaylist } from "../../../utils/frontendApiCalls";
+import {
+  fetchfirstVideoIdOfPlaylist,
+  PlaylistLength,
+} from "../../../utils/frontendApiCalls";
 import { fetchMultipleTypeData } from "../../../utils/backendApiCalls";
 import { useSession } from "next-auth/react";
 import {
@@ -42,6 +45,16 @@ export default function Course() {
   const [videoDescription, setVideoDescription] = useState<string>("");
 
   useEffect(() => {
+    const fetchLengths = async () => {
+      const data = await PlaylistLength({ id });
+      setPlaylistLengths(data.items[0].contentDetails.itemCount);
+    };
+    if (PlaylistVideos?.length > 0) {
+      fetchLengths();
+    }
+  }, [PlaylistVideos, id]);
+
+  useEffect(() => {
     const load = async () => {
       const result = await fetchfirstVideoIdOfPlaylist(id);
       router.push(`/course/${id}/${result}`);
@@ -49,7 +62,7 @@ export default function Course() {
     if (videoId === "1") {
       load();
     }
-  }, []);
+  }, [id, videoId, router]);
 
   useEffect(() => {
     const getChapterData = async () => {
