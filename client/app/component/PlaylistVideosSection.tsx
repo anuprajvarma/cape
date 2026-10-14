@@ -4,7 +4,7 @@ import { ChapterCompletionTracker } from "./ChapterCompletionTracker";
 import PlalistVideoCard from "./PlalistVideoCard";
 import { PlaylistVideosPropType } from "@/types";
 
-export const PlaylistVideos = ({
+export const PlaylistVideosSection = ({
   id,
   videoId,
   playlistLengths,

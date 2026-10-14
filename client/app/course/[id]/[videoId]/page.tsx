@@ -21,7 +21,7 @@ import { LoginModal } from "@/app/component/LoginModal";
 import { CourseLinkModal } from "@/app/component/CourseLinkModal";
 import { DiscussionSection } from "@/app/component/DiscussionSection";
 import { PlayVideoSection } from "@/app/component/PlayVideo";
-import { PlaylistVideos } from "@/app/component/PlaylistVideos";
+import { PlaylistVideosSection } from "@/app/component/PlaylistVideosSection";
 
 const options = {
   target: "_blank",
@@ -35,7 +35,7 @@ export default function Course() {
   const router = useRouter();
   const { id, videoId } = params;
   const checkboxTrack = useSelector((state: RootState) => state.checkbox);
-  const [playlists, setPlaylists] = useState<playlistType2[]>([]);
+  const [PlaylistVideos, setPlaylistVideos] = useState<playlistType2[]>([]);
   const [completedChapters, setCompletedChapters] = useState<string[]>([]);
   const [playlistLengths, setPlaylistLengths] = useState<
     Record<string, string>
@@ -73,7 +73,7 @@ export default function Course() {
     const playlist = async () => {
       if (typeof id === "string") {
         const result = await fetchPlaylistVideos({ id });
-        setPlaylists(result);
+        setPlaylistVideos(result);
       }
     };
     playlist();
@@ -95,7 +95,7 @@ export default function Course() {
               id={id}
               videoTitle={videoTitle}
               videoId={videoId}
-              playlists={playlists}
+              playlists={PlaylistVideos}
               playlistLengths={playlistLengths}
               completedChapters={completedChapters}
               setPlaylistLengths={setPlaylistLengths}
@@ -106,11 +106,11 @@ export default function Course() {
                 <ChevronDownIcon className="size-5 fill-slaty group-data-hover:fill-white/50 group-data-open:rotate-180" />
               </DisclosureButton>
               <DisclosurePanel className="mt-2 text-sm/5 text-slaty">
-                <PlaylistVideos
+                <PlaylistVideosSection
                   id={id}
                   videoId={videoId}
                   playlistLengths={playlistLengths}
-                  playlists={playlists}
+                  playlists={PlaylistVideos}
                   completedChapters={completedChapters}
                   mobile={false}
                   setVideoTitle={setVideoTitle}
@@ -139,11 +139,11 @@ export default function Course() {
           </div>
           <div className="flex flex-col gap-5">
             <div className="w-[30rem] border border-lightSlaty rounded-xl hidden lg:flex flex-col">
-              <PlaylistVideos
+              <PlaylistVideosSection
                 id={id}
                 videoId={videoId}
                 playlistLengths={playlistLengths}
-                playlists={playlists}
+                playlists={PlaylistVideos}
                 completedChapters={completedChapters}
                 mobile={true}
                 setVideoTitle={setVideoTitle}
