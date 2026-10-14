@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
-import { fetchVideoDetail } from "@/app/utils/frontendApiCalls";
+import {
+  fetchPlaylistVideos,
+  fetchVideoDetail,
+} from "@/app/utils/frontendApiCalls";
 import { ChapterCompletionTracker } from "./ChapterCompletionTracker";
 import PlalistVideoCard from "./PlalistVideoCard";
-import { PlaylistVideosPropType } from "@/types";
+import { playlistType2, PlaylistVideosPropType } from "@/types";
 
 export const PlaylistVideosSection = ({
   id,
   videoId,
   playlistLengths,
-  playlists,
   completedChapters,
   mobile,
   setVideoTitle,
@@ -16,8 +18,19 @@ export const PlaylistVideosSection = ({
 }: PlaylistVideosPropType) => {
   const [hasMounted, setHasMounted] = useState(false);
   const [precentage, setPrecentage] = useState<number>(0);
+  const [PlaylistVideos, setPlaylistVideos] = useState<playlistType2[]>([]);
 
   const actualId = Array.isArray(id) ? id[0] : id;
+
+  useEffect(() => {
+    const playlist = async () => {
+      if (typeof id === "string") {
+        const result = await fetchPlaylistVideos({ id });
+        setPlaylistVideos(result);
+      }
+    };
+    playlist();
+  }, [id]);
 
   useEffect(() => {
     const playlist = async () => {
@@ -57,7 +70,7 @@ export const PlaylistVideosSection = ({
         />
       )}
       <div className="py-2 max-h-[41.6rem] flex flex-col gap-4 rounded-xl overflow-y-auto">
-        {playlists?.map((data, index) => {
+        {PlaylistVideos?.map((data, index) => {
           const id = data.snippet?.playlistId;
           const videoid = data.snippet?.resourceId.videoId;
           const isChecked = completedChapters?.includes(videoid);

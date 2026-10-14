@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { playlistType2 } from "@/types";
 import {
   fetchfirstVideoIdOfPlaylist,
   PlaylistLength,
@@ -19,7 +18,6 @@ import Linkify from "linkify-react";
 import NotesGpt from "@/app/component/NotesGpt";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { fetchPlaylistVideos } from "@/app/utils/frontendApiCalls";
 import { LoginModal } from "@/app/component/LoginModal";
 import { CourseLinkModal } from "@/app/component/CourseLinkModal";
 import { DiscussionSection } from "@/app/component/DiscussionSection";
@@ -38,7 +36,6 @@ export default function Course() {
   const router = useRouter();
   const { id, videoId } = params;
   const checkboxTrack = useSelector((state: RootState) => state.checkbox);
-  const [PlaylistVideos, setPlaylistVideos] = useState<playlistType2[]>([]);
   const [completedChapters, setCompletedChapters] = useState<string[]>([]);
   const [playlistLengths, setPlaylistLengths] = useState<number>();
   const [videoTitle, setVideoTitle] = useState<string>("");
@@ -49,10 +46,9 @@ export default function Course() {
       const data = await PlaylistLength({ id });
       setPlaylistLengths(data.items[0].contentDetails.itemCount);
     };
-    if (PlaylistVideos?.length > 0) {
-      fetchLengths();
-    }
-  }, [PlaylistVideos, id]);
+
+    fetchLengths();
+  }, [id]);
 
   useEffect(() => {
     const load = async () => {
@@ -79,16 +75,6 @@ export default function Course() {
     };
     getChapterData();
   }, [session.data?.user, id, checkboxTrack]);
-
-  useEffect(() => {
-    const playlist = async () => {
-      if (typeof id === "string") {
-        const result = await fetchPlaylistVideos({ id });
-        setPlaylistVideos(result);
-      }
-    };
-    playlist();
-  }, [id]);
 
   const lines = videoDescription
     ?.split("\n")
@@ -120,7 +106,6 @@ export default function Course() {
                   id={id}
                   videoId={videoId}
                   playlistLengths={playlistLengths}
-                  playlists={PlaylistVideos}
                   completedChapters={completedChapters}
                   mobile={false}
                   setVideoTitle={setVideoTitle}
@@ -153,7 +138,6 @@ export default function Course() {
                 id={id}
                 videoId={videoId}
                 playlistLengths={playlistLengths}
-                playlists={PlaylistVideos}
                 completedChapters={completedChapters}
                 mobile={true}
                 setVideoTitle={setVideoTitle}

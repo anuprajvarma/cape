@@ -4,7 +4,6 @@ export interface PlaylistVideosPropType {
   id: string | string[] | undefined;
   videoId: string | string[] | undefined;
   playlistLengths: number | undefined;
-  playlists: playlistType2[];
   completedChapters: string[];
   mobile: boolean;
   setVideoTitle: React.Dispatch<React.SetStateAction<string>>;
