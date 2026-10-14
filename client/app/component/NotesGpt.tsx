@@ -2,16 +2,14 @@
 
 import dynamic from "next/dynamic";
 import { useSession } from "next-auth/react";
-import React, { useEffect, useState, useRef } from "react";
-import { chatType, NotesGptPropType, QuizzType } from "@/types";
+import React, { useEffect, useState } from "react";
+import { chatType, NotesGptPropType } from "@/types";
 import {
   fetchMultipleTypeData,
-  fetchQuizzScore,
-  saveQuizzes,
   saveUserQiuzzScore,
 } from "../utils/backendApiCalls";
-import { fetchQuizzes } from "../utils/frontendApiCalls";
 import { ChatbotSection } from "./ChatbotSection";
+import { QuizzSection } from "./QuizzSection";
 
 const Editor = dynamic(() => import("./Editor"), {
   ssr: false,
@@ -19,48 +17,12 @@ const Editor = dynamic(() => import("./Editor"), {
 
 const NotesGpt = ({ id, videoId, videoTitle }: NotesGptPropType) => {
   const session = useSession();
-  const quizScrollRef = useRef<HTMLDivElement>(null);
-  const [showCompleted, setShowCompleted] = useState(true);
   const [temporaryChatData, setTemporaryChatData] = useState<chatType[]>([]);
   const [quizzcheck, setQuizzCheck] = useState<boolean>(false);
-  const [quizz, setQuizz] = useState<QuizzType[]>([]);
   const [notecheck, setNoteCheck] = useState<boolean>(true);
-  const [questions, setQuestion] = useState<string[]>([]);
   const [gptcheck, setgptCheck] = useState<boolean>(false);
-  const [chooseOption, setChooseOption] = useState<string[]>([]);
   const [Completed, setCompleted] = useState<number>(0);
   const [countedScore, setCountedScore] = useState<number>(0);
-  const [DbScore, setDbScore] = useState<string>("");
-  const [dataFetching, setDataFetching] = useState<boolean>(false);
-
-  useEffect(() => {
-    const container = quizScrollRef.current;
-    if (!container) return;
-
-    let timer: ReturnType<typeof setTimeout>;
-
-    const handleActivity = () => {
-      setShowCompleted(true);
-
-      clearTimeout(timer);
-      timer = setTimeout(() => {
-        setShowCompleted(false);
-      }, 2000);
-    };
-
-    handleActivity();
-
-    container.addEventListener("scroll", handleActivity, { passive: true });
-    container.addEventListener("touchstart", handleActivity, { passive: true });
-    container.addEventListener("wheel", handleActivity, { passive: true });
-
-    return () => {
-      clearTimeout(timer);
-      container.removeEventListener("scroll", handleActivity);
-      container.removeEventListener("touchstart", handleActivity);
-      container.removeEventListener("wheel", handleActivity);
-    };
-  }, [Completed, gptcheck, notecheck]);
 
   useEffect(() => {
     const chat = async () => {
@@ -89,62 +51,6 @@ const NotesGpt = ({ id, videoId, videoTitle }: NotesGptPropType) => {
       addScore();
     }
   }, [Completed, id, videoId, session.data?.user?.email, countedScore]);
-
-  useEffect(() => {
-    const fetchUserScore = async () => {
-      const data = await fetchQuizzScore({
-        playlistId: id,
-        videoId,
-        email: session.data?.user?.email ?? "",
-      });
-      if (data.userScore?.score !== undefined) {
-        setDbScore(data.userScore?.score);
-      }
-    };
-
-    if (Completed === 10 || Completed === 0) {
-      fetchUserScore();
-    }
-  }, [Completed, id, videoId, session.data?.user?.email]);
-
-  const checkAnswer = (option: string, answer: string, question: string) => {
-    console.log(
-      `Selected Option: ${option} | Correct Answer: ${answer} | Question: ${question}`,
-    );
-    const selectedOption = option;
-    const correctAnswer = answer;
-    const isQuestionExists = questions.includes(question);
-    if (!isQuestionExists) {
-      setCompleted((prev) => prev + 1);
-      setChooseOption((prev) => [...prev, selectedOption]);
-      setQuestion((prev) => [...prev, question]);
-      if (selectedOption === correctAnswer) {
-        setCountedScore((prev) => prev + 1);
-
-        console.log("Correct Answer!");
-      } else {
-        console.log("Wrong Answer! Try again. ");
-      }
-    }
-  };
-
-  const quizzHandler = async () => {
-    try {
-      setDataFetching(true);
-      const result = await fetchQuizzes({ videoTitle });
-
-      setDataFetching(false);
-      setQuizz(result ?? []);
-
-      await saveQuizzes({
-        id,
-        videoId,
-        quizz: result ?? [],
-      });
-    } catch (error) {
-      console.error("Error fetching from OpenRouter or saving to DB:", error);
-    }
-  };
 
   const handleNotes = () => {
     setNoteCheck(true);
@@ -195,145 +101,29 @@ const NotesGpt = ({ id, videoId, videoTitle }: NotesGptPropType) => {
         </button>
       </div>
       <div className="w-full h-[40rem]">
-        {notecheck ? (
+        {notecheck && (
           <Editor
             email={session.data?.user?.email as string}
             playlistId={id as string}
           />
-        ) : (
-          <></>
         )}
-        {gptcheck ? (
+        {gptcheck && (
           <ChatbotSection
             id={id}
             temporaryChatData={temporaryChatData}
             setTemporaryChatData={setTemporaryChatData}
           />
-        ) : (
-          // <div className="w-full h-full">
-          //   {temporaryChatData?.length > 0 ? (
-          //     <div className="space-y-2 w-full h-full p-1 sm:p-12 rounded overflow-y-auto">
-          //       {temporaryChatData?.map((msg, i) => (
-          //         <div key={i}>
-          //           <div className="flex w-full justify-end text-xl text-white py-2 sm:py-4">
-          //             <p className="border border-lightSlaty px-6 py-2 rounded-3xl">
-          //               {msg.question}
-          //             </p>
-          //           </div>
-          //           <div className="prose prose-slate prose-lg w-full h-full overflow-auto max-w-none p-2 sm:p-12 prose-headings:my-2 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-ul:my-0 hover:prose-a:underline">
-          //             {msg.answer !== "" ? (
-          //               <ReactMarkdown>{msg.answer}</ReactMarkdown>
-          //             ) : (
-          //               ".............."
-          //             )}
-          //           </div>
-          //         </div>
-          //       ))}
-          //     </div>
-          //   ) : (
-          //     <div className="w-full h-full flex flex-col justify-center items-center gap-4">
-          //       <div>What&apos;s the agenda today ?</div>
-          //     </div>
-          //   )}
-
-          //   <div className="py-4 flex gap-2">
-          //     <input
-          //       value={input}
-          //       onKeyDown={(e) => {
-          //         if (e.key === "Enter" && input.trim()) {
-          //           sendMessage();
-          //         }
-          //       }}
-          //       onChange={(e) => setInput(e.target.value)}
-          //       className="flex-1 p-2 rounded-md bg-lightSlaty focus:outline-none border border-slaty/50 text-slaty placeholder-slaty/50"
-          //       placeholder="Ask anything..."
-          //     />
-          //     <button
-          //       onClick={sendMessage}
-          //       className="px-4 py-2 bg-lightBlue hover:bg-lightBlue/80 text-white rounded"
-          //     >
-          //       Send
-          //     </button>
-          //   </div>
-          // </div>
-          <></>
         )}
-        {quizzcheck &&
-          (DbScore !== "" || Completed === 10 ? (
-            <div className="w-full h-full flex flex-col justify-center items-center">
-              <p className="sm:px-12 py-2 text-xl">
-                Congratulations! You have completed the test
-              </p>
-              <div className="flex gap-2 text-xl font-semibold">
-                <p>Score -</p>
-                <p>{`${DbScore ? DbScore : countedScore}/10`}</p>
-              </div>
-            </div>
-          ) : quizz.length > 0 ? (
-            <div
-              ref={quizScrollRef}
-              className="sm:px-12 sm:py-2 w-full h-full prose prose-lg prose-headings:my-0 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-a:text-blue-600 hover:prose-a:underline max-w-none overflow-auto scrollbar-hide relative"
-            >
-              <div
-                className={`sticky top-0 z-50 flex justify-end text-white transition-all  duration-300 ${
-                  showCompleted
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 -translate-y-full pointer-events-none"
-                }`}
-              >
-                <p className="text-sm text-center bg-lightSlaty rounded-lg px-4 py-2">{`Completed - ${Completed}/${quizz.length} `}</p>
-              </div>
-              {quizz.map((quizz, index) => (
-                <div key={index} className="py-2 flex flex-col gap-2">
-                  <div className="text-white flex gap-2 font-semibold text-xl">
-                    <p>{quizz.question}</p>
-                  </div>
-                  <div>
-                    <div className="list-disc pl-6 flex flex-col gap-2">
-                      {quizz.options.map((option, idx) => (
-                        <button
-                          onClick={() =>
-                            checkAnswer(option, quizz.answer, quizz.question)
-                          }
-                          key={idx}
-                          className={`hover:text-slaty flex gap-4 text-slaty/80 text-start rounded-lg border border-lightSlaty hover:bg-blue-600/25 px-8 py-2 transition duration-300 ${
-                            chooseOption.includes(option)
-                              ? "text-slaty bg-blue-600/25"
-                              : ""
-                          }`}
-                        >
-                          <input
-                            type="radio"
-                            name={option}
-                            id={option}
-                            value={option.split(" ").slice(1).join(" ")}
-                            checked={chooseOption.includes(option)}
-                          />
-                          <p>{option}</p>
-                          {/* <p>{chooseOption.includes(option) + "a"}</p> */}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : dataFetching ? (
-            <div className="w-full h-full flex flex-col justify-center items-center gap-4">
-              <div className="px-4 py-1 rounded-lg hover:bg-slaty/10 transition duration-300 border border-lightSlaty">
-                loading...
-              </div>
-            </div>
-          ) : (
-            <div className="w-full h-full flex flex-col justify-center items-center gap-4">
-              <button
-                className="px-4 py-1 rounded-lg hover:bg-slaty/10 transition duration-300 border border-lightSlaty"
-                onClick={quizzHandler}
-              >
-                Click me
-              </button>
-            </div>
-          ))}
+        <QuizzSection
+          videoTitle={videoTitle}
+          id={id}
+          videoId={videoId}
+          Completed={Completed}
+          quizzcheck={quizzcheck}
+          countedScore={countedScore}
+          setCompleted={setCompleted}
+          setCountedScore={setCountedScore}
+        />
       </div>
     </div>
   );
