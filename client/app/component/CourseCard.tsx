@@ -44,8 +44,6 @@ const CourseCard = ({
     thumbnails,
     description,
     id,
-    getDataCheck,
-    setGetDataCheck,
     indexOrder,
   }: CourseCardType) => {
     if (session.status === "authenticated") {
@@ -69,8 +67,6 @@ const CourseCard = ({
           hideProgressBar: true,
         });
       }
-
-      setGetDataCheck(!getDataCheck);
     } else {
       dispatch(setIsOpen(true));
     }

@@ -2,49 +2,22 @@
 
 import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
-import { fetchBookmarkedCourses } from "../utils/backendApiCalls";
 import { CourseLinkModal } from "../component/CourseLinkModal";
-import { BookmarkType } from "@/types";
+import { BookmarkPlaylisitHook } from "../hooks/bookmarkPlaylist";
 
 const CourseCard = dynamic(() => import("../component/CourseCard"), {
   ssr: false,
 });
 
 export default function Bookmark() {
-  const [bookmarkCoursePlaylist, setBookmarkCoursePlaylist] = useState<
-    BookmarkType[]
-  >([]);
   const [hasMounted, setHasMounted] = useState(false);
-  const [checkDataExist, setCheckDataExist] = useState<boolean>(false);
   const [getDataCheck, setGetDataCheck] = useState<boolean>(false);
-  const [dataLoading, setDataLoading] = useState<boolean>(false);
-  const session = useSession();
+  const { bookmarkCoursePlaylist, checkDataExist, dataLoading } =
+    BookmarkPlaylisitHook({ getDataCheck });
 
   useEffect(() => {
     setHasMounted(true);
   }, []);
-
-  useEffect(() => {
-    const load = async () => {
-      setDataLoading(true);
-      const email = session.data?.user?.email as string;
-      const result = await fetchBookmarkedCourses(email);
-      // console.log(`resul ${result}`);
-      if (result) {
-        setBookmarkCoursePlaylist(result);
-        if (result.length > 0) {
-          setCheckDataExist(false);
-        } else {
-          setCheckDataExist(true);
-        }
-      }
-      setDataLoading(false);
-    };
-    if (session.data?.user !== undefined) {
-      load();
-    }
-  }, [session.data?.user, getDataCheck]);
 
   return (
     <>
