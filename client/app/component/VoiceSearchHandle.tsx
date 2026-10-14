@@ -32,6 +32,8 @@ const VoiceSearchHandle = ({
     if (!recognitionRef.current) {
       const recognition = new SpeechRecognitionConstructor();
 
+      console.log("recognitionRef.current " + recognitionRef.current);
+
       recognition.lang = "en-US";
       recognition.interimResults = false;
       recognition.maxAlternatives = 1;
