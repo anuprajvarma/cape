@@ -6,8 +6,6 @@ export interface PlaylistVideosPropType {
   playlistLengths: number | undefined;
   completedChapters: string[];
   mobile: boolean;
-  setVideoTitle: React.Dispatch<React.SetStateAction<string>>;
-  setVideoDescription: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export interface ChapterCompletionPropType {

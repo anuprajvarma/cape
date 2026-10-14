@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import {
   fetchPlaylistVideos,
-  fetchVideoDetail,
 } from "@/app/utils/frontendApiCalls";
 import { ChapterCompletionTracker } from "./ChapterCompletionTracker";
 import PlalistVideoCard from "./PlalistVideoCard";
@@ -13,8 +12,6 @@ export const PlaylistVideosSection = ({
   playlistLengths,
   completedChapters,
   mobile,
-  setVideoTitle,
-  setVideoDescription,
 }: PlaylistVideosPropType) => {
   const [hasMounted, setHasMounted] = useState(false);
   const [precentage, setPrecentage] = useState<number>(0);
@@ -31,21 +28,6 @@ export const PlaylistVideosSection = ({
     };
     playlist();
   }, [id]);
-
-  useEffect(() => {
-    const playlist = async () => {
-      if (typeof videoId === "string") {
-        const result = await fetchVideoDetail({ videoId });
-        if (result) {
-          setVideoTitle(result[0]?.snippet.title);
-          setVideoDescription(result[0]?.snippet.description);
-        }
-      }
-    };
-    if (videoId) {
-      playlist();
-    }
-  }, [videoId]);
 
   useEffect(() => {
     if (actualId && playlistLengths) {

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import {
   fetchfirstVideoIdOfPlaylist,
+  fetchVideoDetail,
   PlaylistLength,
 } from "../../../utils/frontendApiCalls";
 import { fetchMultipleTypeData } from "../../../utils/backendApiCalls";
@@ -40,6 +41,21 @@ export default function Course() {
   const [playlistLengths, setPlaylistLengths] = useState<number>();
   const [videoTitle, setVideoTitle] = useState<string>("");
   const [videoDescription, setVideoDescription] = useState<string>("");
+
+  useEffect(() => {
+    const playlist = async () => {
+      if (typeof videoId === "string") {
+        const result = await fetchVideoDetail({ videoId });
+        if (result) {
+          setVideoTitle(result[0]?.snippet.title);
+          setVideoDescription(result[0]?.snippet.description);
+        }
+      }
+    };
+    if (videoId) {
+      playlist();
+    }
+  }, [videoId]);
 
   useEffect(() => {
     const fetchLengths = async () => {
@@ -108,8 +124,6 @@ export default function Course() {
                   playlistLengths={playlistLengths}
                   completedChapters={completedChapters}
                   mobile={false}
-                  setVideoTitle={setVideoTitle}
-                  setVideoDescription={setVideoDescription}
                 />
               </DisclosurePanel>
             </Disclosure>
@@ -140,8 +154,6 @@ export default function Course() {
                 playlistLengths={playlistLengths}
                 completedChapters={completedChapters}
                 mobile={true}
-                setVideoTitle={setVideoTitle}
-                setVideoDescription={setVideoDescription}
               />
             </div>
             <DiscussionSection id={id} videoId={videoId} />
