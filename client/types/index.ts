@@ -22,7 +22,6 @@ export interface videoTitleSection {
   id: string | string[] | undefined;
   videoTitle: string;
   videoId: string | string[] | undefined;
-  playlists: playlistType2[];
   playlistLengths: number | undefined;
   completedChapters: string[];
   setPlaylistLengths: React.Dispatch<React.SetStateAction<number | undefined>>;

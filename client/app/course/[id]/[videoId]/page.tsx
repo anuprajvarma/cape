@@ -106,7 +106,6 @@ export default function Course() {
               id={id}
               videoTitle={videoTitle}
               videoId={videoId}
-              playlists={PlaylistVideos}
               playlistLengths={playlistLengths}
               completedChapters={completedChapters}
               setPlaylistLengths={setPlaylistLengths}
