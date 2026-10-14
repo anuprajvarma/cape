@@ -1,5 +1,22 @@
 import React from "react";
 
+export interface ChatbotSectionPropType {
+  id: string;
+  temporaryChatData: chatType[];
+  setTemporaryChatData: React.Dispatch<React.SetStateAction<chatType[]>>;
+}
+
+export interface QuizzSectionPropType {
+  videoTitle: string;
+  id: string;
+  videoId: string;
+  Completed: number;
+  quizzcheck: boolean;
+  countedScore: number;
+  setCompleted: React.Dispatch<React.SetStateAction<number>>;
+  setCountedScore: React.Dispatch<React.SetStateAction<number>>;
+}
+
 export interface SearchInputPropType {
   showSuggestions: boolean;
   suggestionsArray: string[];

@@ -1,4 +1,4 @@
-import { chatType } from "@/types";
+import { ChatbotSectionPropType } from "@/types";
 import ReactMarkdown from "react-markdown";
 import { saveChatbotData } from "../utils/backendApiCalls";
 import { setIsOpen } from "../redux/slices/LoginModalSlice";
@@ -12,11 +12,7 @@ export const ChatbotSection = ({
   id,
   temporaryChatData,
   setTemporaryChatData,
-}: {
-  id: string;
-  temporaryChatData: chatType[];
-  setTemporaryChatData: React.Dispatch<React.SetStateAction<chatType[]>>;
-}) => {
+}: ChatbotSectionPropType) => {
   const session = useSession();
   const dispatch = useDispatch<AppDispatch>();
   const [input, setInput] = useState("");

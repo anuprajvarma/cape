@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { fetchQuizzScore, saveQuizzes } from "../utils/backendApiCalls";
 import { fetchQuizzes } from "../utils/frontendApiCalls";
-import { QuizzType } from "@/types";
+import { QuizzSectionPropType, QuizzType } from "@/types";
 import { useSession } from "next-auth/react";
 
 export const QuizzSection = ({
@@ -13,16 +13,7 @@ export const QuizzSection = ({
   countedScore,
   setCompleted,
   setCountedScore,
-}: {
-  videoTitle: string;
-  id: string;
-  videoId: string;
-  Completed: number;
-  quizzcheck: boolean;
-  countedScore: number;
-  setCompleted: React.Dispatch<React.SetStateAction<number>>;
-  setCountedScore: React.Dispatch<React.SetStateAction<number>>;
-}) => {
+}: QuizzSectionPropType) => {
   const session = useSession();
   const quizScrollRef = useRef<HTMLDivElement>(null);
   const [showCompleted, setShowCompleted] = useState(true);
