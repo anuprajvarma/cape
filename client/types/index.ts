@@ -1,5 +1,16 @@
 import React from "react";
 
+export interface PlaylistVideosPropType {
+  id: string | string[] | undefined;
+  videoId: string | string[] | undefined;
+  playlistLengths: Record<string, string>;
+  playlists: playlistType2[];
+  completedChapters: string[];
+  mobile: boolean;
+  setVideoTitle: React.Dispatch<React.SetStateAction<string>>;
+  setVideoDescription: React.Dispatch<React.SetStateAction<string>>;
+}
+
 export interface ChapterCompletionPropType {
   id: string | string[] | undefined;
   playlistLengths: Record<string, string>;

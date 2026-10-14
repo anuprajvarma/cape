@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import PlalistVideoCard from "../../../component/PlalistVideoCard";
 import { playlistType2 } from "@/types";
 import { fetchfirstVideoIdOfPlaylist } from "../../../utils/frontendApiCalls";
 import { fetchMultipleTypeData } from "../../../utils/backendApiCalls";
@@ -17,15 +16,12 @@ import Linkify from "linkify-react";
 import NotesGpt from "@/app/component/NotesGpt";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import {
-  fetchPlaylistVideos,
-  fetchVideoDetail,
-} from "@/app/utils/frontendApiCalls";
+import { fetchPlaylistVideos } from "@/app/utils/frontendApiCalls";
 import { LoginModal } from "@/app/component/LoginModal";
 import { CourseLinkModal } from "@/app/component/CourseLinkModal";
 import { DiscussionSection } from "@/app/component/DiscussionSection";
-import { PlayVideoSection } from "@/app/component/VideoTitleSection";
-import { ChapterCompletionTracker } from "@/app/component/ChapterCompletionTracker";
+import { PlayVideoSection } from "@/app/component/PlayVideo";
+import { PlaylistVideos } from "@/app/component/PlaylistVideos";
 
 const options = {
   target: "_blank",
@@ -41,13 +37,11 @@ export default function Course() {
   const checkboxTrack = useSelector((state: RootState) => state.checkbox);
   const [playlists, setPlaylists] = useState<playlistType2[]>([]);
   const [completedChapters, setCompletedChapters] = useState<string[]>([]);
-  const [hasMounted, setHasMounted] = useState(false);
   const [playlistLengths, setPlaylistLengths] = useState<
     Record<string, string>
   >({});
-  const [precentage, setPrecentage] = useState<number>(0);
-  const [videoTitle, setVideoTitle] = useState("");
-  const [videoDescription, setVideoDescription] = useState("");
+  const [videoTitle, setVideoTitle] = useState<string>("");
+  const [videoDescription, setVideoDescription] = useState<string>("");
 
   useEffect(() => {
     const load = async () => {
@@ -58,23 +52,6 @@ export default function Course() {
       load();
     }
   }, []);
-
-  useEffect(() => {
-    const playlist = async () => {
-      if (typeof videoId === "string") {
-        const result = await fetchVideoDetail({ videoId });
-        if (result) {
-          setVideoTitle(result[0]?.snippet.title);
-          setVideoDescription(result[0]?.snippet.description);
-        }
-      }
-    };
-    if (videoId) {
-      playlist();
-    }
-  }, [videoId]);
-
-  const actualId = Array.isArray(id) ? id[0] : id;
 
   useEffect(() => {
     const getChapterData = async () => {
@@ -91,18 +68,6 @@ export default function Course() {
     };
     getChapterData();
   }, [session.data?.user, id, checkboxTrack]);
-
-  useEffect(() => {
-    if (actualId && playlistLengths[actualId]) {
-      const percentage =
-        (100 * completedChapters.length) / Number(playlistLengths[actualId]);
-      setPrecentage(Math.round(percentage));
-    }
-  }, [actualId, playlistLengths, completedChapters.length]);
-
-  useEffect(() => {
-    setHasMounted(true);
-  }, []);
 
   useEffect(() => {
     const playlist = async () => {
@@ -141,28 +106,16 @@ export default function Course() {
                 <ChevronDownIcon className="size-5 fill-slaty group-data-hover:fill-white/50 group-data-open:rotate-180" />
               </DisclosureButton>
               <DisclosurePanel className="mt-2 text-sm/5 text-slaty">
-                <div className="py-2 h-[586px] flex flex-col gap-4 rounded-xl overflow-y-auto">
-                  {playlists?.map((data, index) => {
-                    const id = data.snippet?.playlistId;
-                    const videoid = data.snippet?.resourceId.videoId;
-                    const isChecked = completedChapters?.includes(videoid);
-                    if (!hasMounted) return null;
-                    console.log("video id " + videoid);
-                    return (
-                      <PlalistVideoCard
-                        title={data.snippet?.title}
-                        channelTitle={data.snippet?.channelTitle}
-                        thumbnails={data.snippet?.thumbnails.high?.url}
-                        id={id}
-                        isChecked={isChecked}
-                        videoId={videoid}
-                        currentvideoId={videoId as string}
-                        key={index}
-                        index={index}
-                      />
-                    );
-                  })}
-                </div>
+                <PlaylistVideos
+                  id={id}
+                  videoId={videoId}
+                  playlistLengths={playlistLengths}
+                  playlists={playlists}
+                  completedChapters={completedChapters}
+                  mobile={false}
+                  setVideoTitle={setVideoTitle}
+                  setVideoDescription={setVideoDescription}
+                />
               </DisclosurePanel>
             </Disclosure>
             <Disclosure as="div" className="" defaultOpen={false}>
@@ -185,34 +138,17 @@ export default function Course() {
             />
           </div>
           <div className="flex flex-col gap-5">
-            <div className="w-[30rem] h-[41.6rem] border border-lightSlaty rounded-xl hidden lg:flex flex-col">
-              <ChapterCompletionTracker
+            <div className="w-[30rem] border border-lightSlaty rounded-xl hidden lg:flex flex-col">
+              <PlaylistVideos
                 id={id}
+                videoId={videoId}
                 playlistLengths={playlistLengths}
+                playlists={playlists}
                 completedChapters={completedChapters}
-                precentage={precentage}
+                mobile={true}
+                setVideoTitle={setVideoTitle}
+                setVideoDescription={setVideoDescription}
               />
-              <div className="py-2 flex flex-col gap-4 rounded-xl overflow-y-auto scrollbar-hide">
-                {playlists?.map((data, index) => {
-                  const id = data.snippet?.playlistId;
-                  const videoid = data.snippet?.resourceId.videoId;
-                  const isChecked = completedChapters?.includes(videoid);
-                  if (!hasMounted) return null;
-                  return (
-                    <PlalistVideoCard
-                      title={data.snippet?.title}
-                      channelTitle={data.snippet?.channelTitle}
-                      thumbnails={data.snippet?.thumbnails.high?.url}
-                      id={id}
-                      isChecked={isChecked}
-                      videoId={videoid}
-                      currentvideoId={videoId as string}
-                      key={index}
-                      index={index}
-                    />
-                  );
-                })}
-              </div>
             </div>
             <DiscussionSection id={id} videoId={videoId} />
           </div>
