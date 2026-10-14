@@ -24,7 +24,7 @@ import {
 import { LoginModal } from "@/app/component/LoginModal";
 import { CourseLinkModal } from "@/app/component/CourseLinkModal";
 import { DiscussionSection } from "@/app/component/DiscussionSection";
-import { VideoTitleSection } from "@/app/component/VideoTitleSection";
+import { PlayVideoSection } from "@/app/component/VideoTitleSection";
 import { ChapterCompletionTracker } from "@/app/component/ChapterCompletionTracker";
 
 const options = {
@@ -126,16 +126,7 @@ export default function Course() {
       <div className="w-full -z-20 py-4 px-1 sm:px-4 flex flex-col gap-2 justify-center text-slaty mt-16">
         <div className="w-full flex justify-between gap-2">
           <div className="w-full flex flex-col gap-4">
-            <div className="flex w-full h-[20rem] items-center justify-center sm:h-[41.6rem] ">
-              <iframe
-                src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
-                className="rounded-lg w-full h-full"
-                allowFullScreen
-                allow="autoplay; encrypted-media"
-                title="YouTube video player"
-              />
-            </div>
-            <VideoTitleSection
+            <PlayVideoSection
               id={id}
               videoTitle={videoTitle}
               videoId={videoId}
