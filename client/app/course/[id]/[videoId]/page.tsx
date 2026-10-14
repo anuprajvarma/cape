@@ -17,13 +17,14 @@ import {
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import Linkify from "linkify-react";
 import NotesGpt from "@/app/component/NotesGpt";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../../redux/store";
 import { LoginModal } from "@/app/component/LoginModal";
 import { CourseLinkModal } from "@/app/component/CourseLinkModal";
 import { DiscussionSection } from "@/app/component/DiscussionSection";
 import { PlayVideoSection } from "@/app/component/PlayVideo";
 import { PlaylistVideosSection } from "@/app/component/PlaylistVideosSection";
+import { setPlayListLength } from "@/app/redux/slices/PlaylistLengthSlice";
 
 const options = {
   target: "_blank",
@@ -37,8 +38,8 @@ export default function Course() {
   const router = useRouter();
   const { id, videoId } = params;
   const checkboxTrack = useSelector((state: RootState) => state.checkbox);
+  const dispatch = useDispatch<AppDispatch>();
   const [completedChapters, setCompletedChapters] = useState<string[]>([]);
-  const [playlistLengths, setPlaylistLengths] = useState<number>();
   const [videoTitle, setVideoTitle] = useState<string>("");
   const [videoDescription, setVideoDescription] = useState<string>("");
 
@@ -60,7 +61,7 @@ export default function Course() {
   useEffect(() => {
     const fetchLengths = async () => {
       const data = await PlaylistLength({ id });
-      setPlaylistLengths(data.items[0].contentDetails.itemCount);
+      dispatch(setPlayListLength(data.items[0].contentDetails.itemCount));
     };
 
     fetchLengths();
@@ -108,9 +109,7 @@ export default function Course() {
               id={id}
               videoTitle={videoTitle}
               videoId={videoId}
-              playlistLengths={playlistLengths}
               completedChapters={completedChapters}
-              setPlaylistLengths={setPlaylistLengths}
             />
             <Disclosure as="div" className="lg:hidden" defaultOpen={false}>
               <DisclosureButton className="group flex w-full bg-mediumSlaty p-1 sm:p-2 rounded-lg items-center text-md border border-lightSlaty justify-between">
@@ -121,7 +120,6 @@ export default function Course() {
                 <PlaylistVideosSection
                   id={id}
                   videoId={videoId}
-                  playlistLengths={playlistLengths}
                   completedChapters={completedChapters}
                   mobile={false}
                 />
@@ -151,7 +149,6 @@ export default function Course() {
               <PlaylistVideosSection
                 id={id}
                 videoId={videoId}
-                playlistLengths={playlistLengths}
                 completedChapters={completedChapters}
                 mobile={true}
               />

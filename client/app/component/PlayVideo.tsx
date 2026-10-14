@@ -2,17 +2,19 @@ import { setCourseLinkModal } from "../redux/slices/CourseLinkModal";
 import { setCourseLink } from "../redux/slices/CourseLink";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { IoMdShareAlt } from "react-icons/io";
-import { AppDispatch } from "../redux/store";
-import { useDispatch } from "react-redux";
+import { AppDispatch, RootState } from "../redux/store";
+import { useDispatch, useSelector } from "react-redux";
 import { videoTitleSection } from "@/types";
 
 export const PlayVideoSection = ({
   id,
   videoTitle,
   videoId,
-  playlistLengths,
   completedChapters,
 }: videoTitleSection) => {
+  const playlistLengths = useSelector(
+    (state: RootState) => state.PlaylistLengthReducer,
+  );
   const dispatch = useDispatch<AppDispatch>();
 
   return (

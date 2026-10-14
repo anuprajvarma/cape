@@ -16,8 +16,9 @@ import { AppDispatch } from "../redux/store";
 import { useDispatch } from "react-redux";
 import { setCourseLinkModal } from "../redux/slices/CourseLinkModal";
 import { setCourseLink } from "../redux/slices/CourseLink";
-import { youtubeApiKey } from "../utils/reusableConstant";
 import { EnrolledCardPropType } from "@/types";
+import { PlaylistLength } from "../utils/frontendApiCalls";
+import { percentageCalculate } from "../utils/reusableConstant";
 
 const EnrolledCard = ({
   title,
@@ -34,32 +35,23 @@ const EnrolledCard = ({
   const [precentage, setPrecentage] = useState<number>(0);
   const dispatch = useDispatch<AppDispatch>();
 
-  const apikey = youtubeApiKey();
-
   useEffect(() => {
-    const url = `https://www.googleapis.com/youtube/v3/playlists?${new URLSearchParams(
-      {
-        part: "contentDetails",
-        id: playlistId,
-        key: apikey,
-      },
-    )}`;
-
     try {
       const fetchEnrolledData = async () => {
-        const res = await fetch(url);
-        const data = await res.json();
+        const data = await PlaylistLength({ id: playlistId });
         setPlaylistChapters(data.items[0].contentDetails.itemCount);
-        const percentage =
-          (100 * completedChapters.length) /
-          data.items[0].contentDetails.itemCount;
+        const chapterLenght = data.items[0].contentDetails.itemCount;
+        const percentage = percentageCalculate({
+          completedChapters,
+          chapterLenght,
+        });
         setPrecentage(Math.round(percentage));
       };
       fetchEnrolledData();
     } catch (error) {
       console.log(error);
     }
-  }, [playlistId, session.data?.user, apikey, completedChapters]);
+  }, [playlistId, session.data?.user, completedChapters]);
 
   useEffect(() => {
     const getChapterData = async () => {

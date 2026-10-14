@@ -1,20 +1,22 @@
 import { useEffect, useState } from "react";
-import {
-  fetchPlaylistVideos,
-} from "@/app/utils/frontendApiCalls";
+import { fetchPlaylistVideos } from "@/app/utils/frontendApiCalls";
 import { ChapterCompletionTracker } from "./ChapterCompletionTracker";
 import PlalistVideoCard from "./PlalistVideoCard";
 import { playlistType2, PlaylistVideosPropType } from "@/types";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 
 export const PlaylistVideosSection = ({
   id,
   videoId,
-  playlistLengths,
   completedChapters,
   mobile,
 }: PlaylistVideosPropType) => {
   const [hasMounted, setHasMounted] = useState(false);
   const [precentage, setPrecentage] = useState<number>(0);
+  const playlistLengths = useSelector(
+    (state: RootState) => state.PlaylistLengthReducer,
+  );
   const [PlaylistVideos, setPlaylistVideos] = useState<playlistType2[]>([]);
 
   const actualId = Array.isArray(id) ? id[0] : id;

@@ -144,3 +144,15 @@ export const parseQuizHtml = (html: string) => {
 
   return quiz;
 };
+
+export const percentageCalculate = ({
+  completedChapters,
+  chapterLenght,
+}: {
+  completedChapters: string[];
+  chapterLenght: number;
+}) => {
+  const percentage = (100 * completedChapters.length) / chapterLenght;
+
+  return percentage;
+};

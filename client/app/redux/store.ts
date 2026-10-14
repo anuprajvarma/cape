@@ -5,6 +5,7 @@ import chapterHandleSlice from "./slices/chapterHandleSlice";
 import LoginModalSlice from "./slices/LoginModalSlice";
 import CourseLinkModalSlice from "./slices/CourseLinkModal";
 import CourseLink from "./slices/CourseLink";
+import PlaylistLengthSlice from "./slices/PlaylistLengthSlice";
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     checkModal: LoginModalSlice,
     CourseLinkModal: CourseLinkModalSlice,
     CourseLink: CourseLink,
+    PlaylistLengthReducer: PlaylistLengthSlice,
   },
 });
 
