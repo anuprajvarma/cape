@@ -1,5 +1,12 @@
 import React from "react";
 
+export interface ChapterCompletionPropType {
+  id: string | string[] | undefined;
+  playlistLengths: Record<string, string>;
+  completedChapters: string[];
+  precentage: number;
+}
+
 export interface videoTitleSection {
   id: string | string[] | undefined;
   videoTitle: string;
