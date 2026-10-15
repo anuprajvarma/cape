@@ -53,7 +53,7 @@ export const PlaylistVideosSection = ({
           precentage={precentage}
         />
       )}
-      <div className="py-2 max-h-[41.6rem] flex flex-col gap-4 rounded-xl overflow-y-auto">
+      <div className="py-2 min-h-[30rem] max-h-[41.6rem] flex flex-col gap-4 rounded-xl overflow-y-auto">
         {PlaylistVideos?.map((data, index) => {
           const id = data.snippet?.playlistId;
           const videoid = data.snippet?.resourceId.videoId;
