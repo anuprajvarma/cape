@@ -1,39 +1,28 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { isMobile } from "react-device-detect";
-import { useSession } from "next-auth/react";
 import {
   DndContext,
+  MouseSensor,
+  TouchSensor,
+  closestCenter,
   useSensor,
   useSensors,
-  closestCenter,
-  DragEndEvent,
-  TouchSensor,
-  MouseSensor,
 } from "@dnd-kit/core";
+import { isMobile } from "react-device-detect";
 import {
-  arrayMove,
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CourseLinkModal } from "../component/CourseLinkModal";
-import { BookmarkPlaylistType } from "@/types";
 import { SortEnrolledCourses } from "../component/SortEnrolledCourses";
-import {
-  fetchEnrolledCourses,
-  playlistOrderUpdate,
-} from "../utils/backendApiCalls";
+import { useDashboard } from "../hooks/dashboard";
 
 const Dashboard: React.FC = () => {
-  const [enrolledCoursePlaylist, setEnrolledCoursePlaylist] = useState<
-    BookmarkPlaylistType[]
-  >([]);
-  const [hasMounted, setHasMounted] = useState(false);
-  const [getDataCheck, setGetDataCheck] = useState(false);
-  const [dataLoading, setDataLoading] = useState<boolean>(false);
-  const [checkDataExist, setCheckDataExist] = useState(false);
-  const { data: session } = useSession();
+  const [hasMounted, setHasMounted] = useState<boolean>(false);
+  const [getDataCheck, setGetDataCheck] = useState<boolean>(false);
+  const { handleDragEnd, enrolledCoursePlaylist, checkDataExist, dataLoading } =
+    useDashboard({ getDataCheck });
 
   const mouseSensor = useSensor(MouseSensor, {
     activationConstraint: { distance: 5 },
@@ -45,50 +34,9 @@ const Dashboard: React.FC = () => {
 
   const sensors = useSensors(isMobile ? touchSensor : mouseSensor);
 
-  const handleDragEnd = async (event: DragEndEvent) => {
-    const { active, over } = event;
-    if (!over || active.id === over.id) return;
-
-    console.log(active.id + " " + over.id);
-
-    setEnrolledCoursePlaylist((items) => {
-      const oldIndex = items.findIndex((item) => item.playlistId === active.id);
-      const newIndex = items.findIndex((item) => item.playlistId === over.id);
-      console.log(oldIndex + " " + newIndex);
-      const updatedItems = arrayMove(items, oldIndex, newIndex);
-      playlistOrderUpdate({
-        email: session?.user?.email || "",
-        updatedItems,
-      });
-
-      return updatedItems;
-    });
-  };
-
   useEffect(() => {
     setHasMounted(true);
   }, []);
-
-  useEffect(() => {
-    const handleEnrolled = async () => {
-      if (!session?.user?.email) return;
-      setDataLoading(true);
-
-      const data = await fetchEnrolledCourses({ email: session.user.email });
-
-      const enrolled = data.enrolledkCourse ?? [];
-
-      const sortedEnrolled = [...enrolled].sort(
-        (a, b) => a.indexOrder - b.indexOrder,
-      );
-
-      setEnrolledCoursePlaylist(sortedEnrolled);
-      setCheckDataExist(enrolled.length === 0);
-      setDataLoading(false);
-    };
-
-    handleEnrolled();
-  }, [session?.user?.email, getDataCheck]);
 
   if (!hasMounted) return null;
 
