@@ -1,5 +1,11 @@
 import React from "react";
 
+export interface VoiceSearchPropType {
+  setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
+  setIsRecording: React.Dispatch<React.SetStateAction<boolean>>;
+  setTopic: React.Dispatch<React.SetStateAction<string>>;
+}
+
 export interface PlaylistVideosPropType {
   id: string | string[] | undefined;
   videoId: string | string[] | undefined;
