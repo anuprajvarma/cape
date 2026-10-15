@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { fetchQuizzScore, saveQuizzes } from "../utils/backendApiCalls";
-import { fetchQuizzes } from "../utils/frontendApiCalls";
-import { QuizzSectionPropType, QuizzType } from "@/types";
+import { fetchQuizzScore } from "../utils/backendApiCalls";
+import { QuizzSectionPropType } from "@/types";
 import { useSession } from "next-auth/react";
+import { useQuizzSection } from "../hooks/quizzSection";
 
 export const QuizzSection = ({
   videoTitle,
@@ -15,13 +15,25 @@ export const QuizzSection = ({
   setCountedScore,
 }: QuizzSectionPropType) => {
   const session = useSession();
-  const quizScrollRef = useRef<HTMLDivElement>(null);
-  const [showCompleted, setShowCompleted] = useState(true);
+  const quizScrollRef = useRef<HTMLDivElement | null>(null);
   const [DbScore, setDbScore] = useState<string>("");
-  const [dataFetching, setDataFetching] = useState<boolean>(false);
-  const [questions, setQuestion] = useState<string[]>([]);
-  const [quizz, setQuizz] = useState<QuizzType[]>([]);
-  const [chooseOption, setChooseOption] = useState<string[]>([]);
+  const {
+    quizz,
+    showCompleted,
+    checkAnswer,
+    chooseOption,
+    dataFetching,
+    quizzHandler,
+  } = useQuizzSection({
+    id,
+    videoTitle,
+    videoId,
+    quizScrollRef,
+    Completed,
+    quizzcheck,
+    setCompleted,
+    setCountedScore,
+  });
 
   useEffect(() => {
     const fetchUserScore = async () => {
@@ -40,73 +52,6 @@ export const QuizzSection = ({
     }
   }, [Completed, id, videoId, session.data?.user?.email]);
 
-  useEffect(() => {
-    const container = quizScrollRef.current;
-    if (!container) return;
-
-    let timer: ReturnType<typeof setTimeout>;
-
-    const handleActivity = () => {
-      setShowCompleted(true);
-
-      clearTimeout(timer);
-      timer = setTimeout(() => {
-        setShowCompleted(false);
-      }, 2000);
-    };
-
-    handleActivity();
-
-    container.addEventListener("scroll", handleActivity, { passive: true });
-    container.addEventListener("touchstart", handleActivity, { passive: true });
-    container.addEventListener("wheel", handleActivity, { passive: true });
-
-    return () => {
-      clearTimeout(timer);
-      container.removeEventListener("scroll", handleActivity);
-      container.removeEventListener("touchstart", handleActivity);
-      container.removeEventListener("wheel", handleActivity);
-    };
-  }, [Completed, quizzcheck]);
-
-  const checkAnswer = (option: string, answer: string, question: string) => {
-    console.log(
-      `Selected Option: ${option} | Correct Answer: ${answer} | Question: ${question}`,
-    );
-    const selectedOption = option;
-    const correctAnswer = answer;
-    const isQuestionExists = questions.includes(question);
-    if (!isQuestionExists) {
-      setCompleted((prev) => prev + 1);
-      setChooseOption((prev) => [...prev, selectedOption]);
-      setQuestion((prev) => [...prev, question]);
-      if (selectedOption === correctAnswer) {
-        setCountedScore((prev) => prev + 1);
-
-        console.log("Correct Answer!");
-      } else {
-        console.log("Wrong Answer! Try again. ");
-      }
-    }
-  };
-
-  const quizzHandler = async () => {
-    try {
-      setDataFetching(true);
-      const result = await fetchQuizzes({ videoTitle });
-
-      setDataFetching(false);
-      setQuizz(result ?? []);
-
-      await saveQuizzes({
-        id,
-        videoId,
-        quizz: result ?? [],
-      });
-    } catch (error) {
-      console.error("Error fetching from OpenRouter or saving to DB:", error);
-    }
-  };
   return (
     <>
       {quizzcheck &&
