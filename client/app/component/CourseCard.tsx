@@ -1,27 +1,19 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 import React from "react";
 import { IoPlayCircleOutline } from "react-icons/io5";
 import { IoBookmarkOutline } from "react-icons/io5";
 import { FaBookmark } from "react-icons/fa";
 import { IoMdShareAlt } from "react-icons/io";
 import { CourseCardType } from "@/types";
-// import { playlist } from "../utils/apiCalls";
 import * as Tooltip from "@radix-ui/react-tooltip";
-import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../redux/store";
-import { setIsOpen } from "../redux/slices/LoginModalSlice";
 import { setCourseLinkModal } from "../redux/slices/CourseLinkModal";
 import { setCourseLink } from "../redux/slices/CourseLink";
-import {
-  deleteBookmarkCourse,
-  saveBookmarkCourse,
-  saveEnrolledCourse,
-} from "../utils/backendApiCalls";
+import { CourseCardLogic } from "../hooks/courseCard";
+import { SessionAndRouterDetails } from "../hooks/sesionAndRouterDetail";
 
 const CourseCard = ({
   title,
@@ -34,89 +26,10 @@ const CourseCard = ({
   setGetDataCheck,
   indexOrder,
 }: CourseCardType) => {
-  const router = useRouter();
-  const session = useSession();
+  const { router } = SessionAndRouterDetails();
+  const { handleEnrolled, handleDeletBookmarkCourse, handleBookmark } =
+    CourseCardLogic({ getDataCheck, setGetDataCheck });
   const dispatch = useDispatch<AppDispatch>();
-
-  const handleEnrolled = async ({
-    title,
-    channelTitle,
-    thumbnails,
-    description,
-    id,
-    indexOrder,
-  }: CourseCardType) => {
-    if (session.status === "authenticated") {
-      const data = await saveEnrolledCourse({
-        title,
-        channelTitle,
-        thumbnails,
-        id,
-        description,
-        indexOrder: indexOrder,
-        email: session.data?.user?.email ?? "",
-      });
-      if (data.isExist) {
-        // console.log(data);
-        toast.success("you are already enrolled", {
-          hideProgressBar: true,
-        });
-      } else {
-        // console.log(data.isExist);
-        toast.success("course is enrolled", {
-          hideProgressBar: true,
-        });
-      }
-    } else {
-      dispatch(setIsOpen(true));
-    }
-  };
-
-  const handleDeletBookmarkCourse = async ({ id }: { id: string }) => {
-    const data = await deleteBookmarkCourse({
-      email: session.data?.user?.email ?? "",
-      id,
-    });
-    if (data.deleteBookmarCourseHandler) {
-      toast.success("course is unmark", {
-        hideProgressBar: true,
-      });
-    }
-    setGetDataCheck(!getDataCheck);
-  };
-
-  const handleBookmark = async ({
-    title,
-    channelTitle,
-    thumbnails,
-    id,
-    getDataCheck,
-    setGetDataCheck,
-  }: CourseCardType) => {
-    if (session.status === "authenticated") {
-      const data = await saveBookmarkCourse({
-        title,
-        channelTitle,
-        thumbnails,
-        id,
-        email: session.data?.user?.email ?? "",
-      });
-      if (data.isExist) {
-        console.log(data);
-        toast.success("course is already bookmark", {
-          hideProgressBar: true,
-        });
-      } else {
-        console.log(data.isExist);
-        toast.success("course is bookmarke", {
-          hideProgressBar: true,
-        });
-      }
-      setGetDataCheck(!getDataCheck);
-    } else {
-      dispatch(setIsOpen(true));
-    }
-  };
 
   return (
     <>
