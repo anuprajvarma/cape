@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
 
 import {
   Disclosure,
@@ -18,16 +17,8 @@ import { DiscussionSection } from "@/app/component/DiscussionSection";
 import { PlayVideoSection } from "@/app/component/PlayVideo";
 import { PlaylistVideosSection } from "@/app/component/PlaylistVideosSection";
 
-import { AppDispatch, RootState } from "../../../redux/store";
-import { setPlayListLength } from "@/app/redux/slices/PlaylistLengthSlice";
-
-import {
-  fetchfirstVideoIdOfPlaylist,
-  PlaylistLength,
-} from "../../../utils/frontendApiCalls";
-import { fetchMultipleTypeData } from "../../../utils/backendApiCalls";
-import { useVideoDetail } from "@/app/hooks/videoDetail";
 import { useSessionsDetails } from "@/app/hooks/sesionAndRouterDetail";
+import { useCourse } from "@/app/hooks/course";
 
 const options = {
   target: "_blank",
@@ -36,48 +27,12 @@ const options = {
 };
 
 export default function Course() {
-  const { router, session, params } = useSessionsDetails();
+  const { params } = useSessionsDetails();
   const { id, videoId } = params;
-  const [completedChapters, setCompletedChapters] = useState<string[]>([]);
-
-  const checkboxTrack = useSelector((state: RootState) => state.checkbox);
-  const dispatch = useDispatch<AppDispatch>();
-  const { videoTitle, videoDescription } = useVideoDetail({ videoId });
-
-  useEffect(() => {
-    const fetchLengths = async () => {
-      const data = await PlaylistLength({ id });
-      dispatch(setPlayListLength(data.items[0].contentDetails.itemCount));
-    };
-
-    fetchLengths();
-  }, [id]);
-
-  useEffect(() => {
-    const load = async () => {
-      const result = await fetchfirstVideoIdOfPlaylist(id);
-      router.push(`/course/${id}/${result}`);
-    };
-    if (videoId === "1") {
-      load();
-    }
-  }, [id, videoId, router]);
-
-  useEffect(() => {
-    const getChapterData = async () => {
-      if (typeof id === "string") {
-        const result = await fetchMultipleTypeData({
-          email: session.data?.user?.email ?? "",
-          playlistId: id,
-          url: "/enrolledCourse/getChapterData",
-        });
-        if (result.getChapterData?.chapters) {
-          setCompletedChapters(result.getChapterData?.chapters);
-        }
-      }
-    };
-    getChapterData();
-  }, [session.data?.user, id, checkboxTrack]);
+  const { completedChapters, videoTitle, videoDescription } = useCourse({
+    id,
+    videoId,
+  });
 
   const lines = videoDescription
     ?.split("\n")
