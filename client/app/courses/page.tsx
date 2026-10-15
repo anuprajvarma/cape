@@ -1,87 +1,26 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import React, { useEffect, useState } from "react";
-import { fetchPlaylists } from "../utils/frontendApiCalls";
+import React, { useState } from "react";
 import { LoginModal } from "../component/LoginModal";
 import { CourseLinkModal } from "../component/CourseLinkModal";
-import { playlistType } from "@/types";
 
-import { youtubeApiKey } from "../utils/reusableConstant";
-import { fechSearchtopics } from "../utils/backendApiCalls";
 import SearchInput from "../component/SearchInput";
+import { useCourses } from "../hooks/couses";
 
 const CourseCard = dynamic(() => import("../component/CourseCard"), {
   ssr: false,
 });
 
 export default function Courses() {
-  const [playlists, setPopularPlaylist] = useState<playlistType[]>([]);
-  const [hasMounted, setHasMounted] = useState(false);
-  const [checkDataExist, setCheckDataExist] = useState<boolean>(false);
-  const [suggestionsArray, setSuggestionsArray] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [getDataCheck, setGetDataCheck] = useState<boolean>(false);
-
-  const [topic, setTopic] = useState(
+  const [topic, setTopic] = useState<string>(
     "ai AND claude code AND robotics engineering",
   );
-
-  const apikey = youtubeApiKey();
-
-  useEffect(() => {
-    const handleSearchData = async () => {
-      const data = await fechSearchtopics();
-      setSuggestionsArray(data.searchData[0].title);
-    };
-    handleSearchData();
-  }, []);
-
-  useEffect(() => {
-    setHasMounted(true);
-  }, []);
-
-  useEffect(() => {
-    const load = async () => {
-      const max = "50";
-      if (apikey) {
-        setPopularPlaylist([]);
-        const result = await fetchPlaylists({ max, topic });
-        setPopularPlaylist(result);
-        if (result.length > 0) {
-          setCheckDataExist(false);
-        } else {
-          setCheckDataExist(true);
-        }
-      }
-    };
-    load();
-  }, [topic, apikey]);
-
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Enter") {
-        setShowSuggestions(false);
-        myFunction();
-      }
-
-      if (event.key === "Escape") {
-        console.log("Escape key pressed!");
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [searchQuery]);
-
-  const myFunction = () => {
-    if (searchQuery === "") {
-      setTopic(topic);
-    } else {
-      setTopic(searchQuery);
-    }
-  };
+  const { suggestionsArray, playlists, hasMounted, checkDataExist } =
+    useCourses({ topic, searchQuery, setTopic, setShowSuggestions });
 
   return (
     <>
