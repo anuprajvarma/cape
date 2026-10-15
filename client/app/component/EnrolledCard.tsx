@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { IoPlayCircleOutline } from "react-icons/io5";
 import { IoMdShareAlt } from "react-icons/io";
@@ -8,17 +8,13 @@ import { useRouter } from "next/navigation";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import Image from "next/image";
-import { useSession } from "next-auth/react";
 import * as Tooltip from "@radix-ui/react-tooltip";
-import { fetchMultipleTypeData } from "../utils/backendApiCalls";
-import { toast } from "react-toastify";
 import { AppDispatch } from "../redux/store";
 import { useDispatch } from "react-redux";
 import { setCourseLinkModal } from "../redux/slices/CourseLinkModal";
 import { setCourseLink } from "../redux/slices/CourseLink";
 import { EnrolledCardPropType } from "@/types";
-import { PlaylistLength } from "../utils/frontendApiCalls";
-import { percentageCalculate } from "../utils/reusableConstant";
+import { useEnrolledCardLogic } from "../hooks/enrolledCard";
 
 const EnrolledCard = ({
   title,
@@ -29,60 +25,14 @@ const EnrolledCard = ({
   getDataCheck,
 }: EnrolledCardPropType) => {
   const router = useRouter();
-  const session = useSession();
-  const [completedChapters, setCompletedChapters] = useState<string[]>([]);
-  const [playlistChapters, setPlaylistChapters] = useState<number>(0);
-  const [precentage, setPrecentage] = useState<number>(0);
   const dispatch = useDispatch<AppDispatch>();
 
-  useEffect(() => {
-    try {
-      const fetchEnrolledData = async () => {
-        const data = await PlaylistLength({ id: playlistId });
-        setPlaylistChapters(data.items[0].contentDetails.itemCount);
-        const chapterLenght = data.items[0].contentDetails.itemCount;
-        const percentage = percentageCalculate({
-          completedChapters,
-          chapterLenght,
-        });
-        setPrecentage(Math.round(percentage));
-      };
-      fetchEnrolledData();
-    } catch (error) {
-      console.log(error);
-    }
-  }, [playlistId, session.data?.user, completedChapters]);
-
-  useEffect(() => {
-    const getChapterData = async () => {
-      const result = await fetchMultipleTypeData({
-        email: session.data?.user?.email ?? "",
-        playlistId,
-        url: "/enrolledCourse/getChapterData",
-      });
-      if (result.getChapterData?.chapters) {
-        setCompletedChapters(result.getChapterData?.chapters);
-      }
-    };
-
-    getChapterData();
-  }, [session.data?.user, playlistId, completedChapters.length, precentage]);
-
-  const handleDeletEnrolledCourse = async ({
-    playlistId,
-  }: {
-    playlistId: string;
-  }) => {
-    await fetchMultipleTypeData({
-      email: session.data?.user?.email ?? "",
-      playlistId,
-      url: "/enrolledCourse/delete",
-    });
-    toast.success("course is delete", {
-      hideProgressBar: true,
-    });
-    setGetDataCheck(!getDataCheck);
-  };
+  const {
+    playlistChapters,
+    completedChapters,
+    handleDeletEnrolledCourse,
+    precentage,
+  } = useEnrolledCardLogic({ playlistId, getDataCheck, setGetDataCheck });
 
   return (
     <div className="flex justify-center lg:justify-between gap-8">
