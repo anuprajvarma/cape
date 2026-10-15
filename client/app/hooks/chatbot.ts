@@ -3,18 +3,31 @@ import { AppDispatch } from "../redux/store";
 import { fetchChatbotAnswer } from "../utils/frontendApiCalls";
 import { useSessionsDetails } from "./sesionAndRouterDetail";
 import { setIsOpen } from "../redux/slices/LoginModalSlice";
-import { ChatbotSectionPropType } from "@/types";
-import { saveChatbotData } from "../utils/backendApiCalls";
-import { useState } from "react";
+import { ChatbotSectionPropType, chatType } from "@/types";
+import {
+  fetchMultipleTypeData,
+  saveChatbotData,
+} from "../utils/backendApiCalls";
+import { useEffect, useState } from "react";
 
-export const useChatbotButtonClick = ({
-  id,
-  temporaryChatData,
-  setTemporaryChatData,
-}: ChatbotSectionPropType) => {
+export const useChatbotButtonClick = ({ id }: ChatbotSectionPropType) => {
   const { session } = useSessionsDetails();
   const [input, setInput] = useState("");
+  const [temporaryChatData, setTemporaryChatData] = useState<chatType[]>([]);
   const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    const chat = async () => {
+      const result = await fetchMultipleTypeData({
+        email: session.data?.user?.email ?? "",
+        playlistId: id,
+        url: "/chat/getData",
+      });
+      setTemporaryChatData(result.chatData?.chats);
+    };
+
+    chat();
+  }, [id, session.data?.user?.email]);
 
   const sendMessage = async () => {
     if (session.status === "authenticated") {
@@ -52,5 +65,5 @@ export const useChatbotButtonClick = ({
       dispatch(setIsOpen(true));
     }
   };
-  return { input, setInput, sendMessage };
+  return { input, setInput, sendMessage, temporaryChatData };
 };

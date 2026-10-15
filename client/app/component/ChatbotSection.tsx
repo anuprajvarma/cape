@@ -2,16 +2,11 @@ import { ChatbotSectionPropType } from "@/types";
 import ReactMarkdown from "react-markdown";
 import { useChatbotButtonClick } from "../hooks/chatbot";
 
-export const ChatbotSection = ({
-  id,
-  temporaryChatData,
-  setTemporaryChatData,
-}: ChatbotSectionPropType) => {
-  const { input, setInput, sendMessage } = useChatbotButtonClick({
-    id,
-    temporaryChatData,
-    setTemporaryChatData,
-  });
+export const ChatbotSection = ({ id }: ChatbotSectionPropType) => {
+  const { input, setInput, sendMessage, temporaryChatData } =
+    useChatbotButtonClick({
+      id,
+    });
 
   return (
     <div className="w-full h-full">

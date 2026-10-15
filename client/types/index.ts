@@ -23,8 +23,6 @@ export interface videoTitleSection {
 
 export interface ChatbotSectionPropType {
   id: string;
-  temporaryChatData: chatType[];
-  setTemporaryChatData: React.Dispatch<React.SetStateAction<chatType[]>>;
 }
 
 export interface QuizzSectionPropType {

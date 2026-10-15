@@ -1,74 +1,30 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useSession } from "next-auth/react";
-import React, { useEffect, useState } from "react";
-import { chatType, NotesGptPropType } from "@/types";
-import {
-  fetchMultipleTypeData,
-  saveUserQiuzzScore,
-} from "../utils/backendApiCalls";
+import React, { useState } from "react";
+import { NotesGptPropType } from "@/types";
 import { ChatbotSection } from "./ChatbotSection";
 import { QuizzSection } from "./QuizzSection";
+import { useSessionsDetails } from "../hooks/sesionAndRouterDetail";
+import { useNotesGpt } from "../hooks/notesGpt";
 
 const Editor = dynamic(() => import("./Editor"), {
   ssr: false,
 });
 
 const NotesGpt = ({ id, videoId, videoTitle }: NotesGptPropType) => {
-  const session = useSession();
-  const [temporaryChatData, setTemporaryChatData] = useState<chatType[]>([]);
-  const [quizzcheck, setQuizzCheck] = useState<boolean>(false);
-  const [notecheck, setNoteCheck] = useState<boolean>(true);
-  const [gptcheck, setgptCheck] = useState<boolean>(false);
+  const { session } = useSessionsDetails();
   const [Completed, setCompleted] = useState<number>(0);
   const [countedScore, setCountedScore] = useState<number>(0);
+  const {
+    handleNotes,
+    notecheck,
+    handleGPT,
+    gptcheck,
+    handleEasyExplain,
+    quizzcheck,
+  } = useNotesGpt({ id, videoId, countedScore, Completed });
 
-  useEffect(() => {
-    const chat = async () => {
-      const result = await fetchMultipleTypeData({
-        email: session.data?.user?.email ?? "",
-        playlistId: id,
-        url: "/chat/getData",
-      });
-      setTemporaryChatData(result.chatData?.chats);
-    };
-
-    chat();
-  }, [id, session.data?.user?.email]);
-
-  useEffect(() => {
-    const addScore = async () => {
-      saveUserQiuzzScore({
-        id,
-        videoId,
-        score: countedScore,
-        email: session.data?.user?.email || "",
-      });
-    };
-
-    if (Completed === 10) {
-      addScore();
-    }
-  }, [Completed, id, videoId, session.data?.user?.email, countedScore]);
-
-  const handleNotes = () => {
-    setNoteCheck(true);
-    setgptCheck(false);
-    setQuizzCheck(false);
-  };
-
-  const handleGPT = () => {
-    setNoteCheck(false);
-    setgptCheck(true);
-    setQuizzCheck(false);
-  };
-
-  const handleEasyExplain = () => {
-    setNoteCheck(false);
-    setgptCheck(false);
-    setQuizzCheck(true);
-  };
   return (
     <div className="border rounded-lg border-lightSlaty">
       {" "}
@@ -107,13 +63,7 @@ const NotesGpt = ({ id, videoId, videoTitle }: NotesGptPropType) => {
             playlistId={id as string}
           />
         )}
-        {gptcheck && (
-          <ChatbotSection
-            id={id}
-            temporaryChatData={temporaryChatData}
-            setTemporaryChatData={setTemporaryChatData}
-          />
-        )}
+        {gptcheck && <ChatbotSection id={id} />}
         <QuizzSection
           videoTitle={videoTitle}
           id={id}
