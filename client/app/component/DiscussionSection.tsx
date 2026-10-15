@@ -1,18 +1,9 @@
 import { AiOutlineDelete } from "react-icons/ai";
 import Image from "next/image";
-import { DeleteDisussionPropType, discussionType } from "@/types";
-import { setIsOpen } from "../redux/slices/LoginModalSlice";
-import { toast } from "react-toastify";
-import {
-  saveDiscussionData,
-  deteteDiscusion,
-  fetchDiscussionData,
-} from "../utils/backendApiCalls";
-import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
+import { discussionType } from "@/types";
+import { useState } from "react";
 import * as Tooltip from "@radix-ui/react-tooltip";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../redux/store";
+import { useDiscussionHandle } from "../hooks/DiscussionHandle";
 
 export const DiscussionSection = ({
   id,
@@ -21,55 +12,14 @@ export const DiscussionSection = ({
   id: string | string[] | undefined;
   videoId: string | string[] | undefined;
 }) => {
-  const session = useSession();
-  const [discussionContent, setDiscussionContent] = useState("");
-  const [commentStateUpdate, setCommentStateUpdate] = useState(false);
   const [discussionData, setDiscussionData] = useState<discussionType[]>([]);
-  const dispatch = useDispatch<AppDispatch>();
+  const {
+    DeteleDiscussion,
+    discussionHandler,
+    discussionContent,
+    setDiscussionContent,
+  } = useDiscussionHandle({ id, videoId, setDiscussionData });
 
-  useEffect(() => {
-    const discussion = async () => {
-      if (typeof id === "string" && typeof videoId === "string") {
-        const result = await fetchDiscussionData({ id, videoId });
-        setDiscussionData(result);
-      }
-    };
-    if (videoId) {
-      discussion();
-    }
-  }, [session.data?.user?.email, id, videoId, commentStateUpdate]);
-
-  const DeteleDiscussion = async ({
-    playlistId,
-    videoId,
-    name,
-    content,
-  }: DeleteDisussionPropType) => {
-    const data = await deteteDiscusion({ playlistId, videoId, name, content });
-    console.log(data.deleteDiscussion);
-    if (data.deleteDiscussion) {
-      toast.success("comment is delete", {
-        hideProgressBar: true,
-      });
-    }
-    setCommentStateUpdate(!commentStateUpdate);
-  };
-
-  const discussionHandler = async () => {
-    if (session.status === "authenticated") {
-      await saveDiscussionData({
-        playlistId: id as string,
-        videoId: videoId as string,
-        content: discussionContent,
-        username: session.data?.user?.name ?? "",
-        userImageUrl: session.data?.user?.image ?? "",
-      });
-      setCommentStateUpdate(!commentStateUpdate);
-      setDiscussionContent("");
-    } else {
-      dispatch(setIsOpen(true));
-    }
-  };
   return (
     <div>
       {discussionData ? (
