@@ -1,58 +1,18 @@
 import { ChatbotSectionPropType } from "@/types";
 import ReactMarkdown from "react-markdown";
-import { saveChatbotData } from "../utils/backendApiCalls";
-import { setIsOpen } from "../redux/slices/LoginModalSlice";
-import { fetchChatbotAnswer } from "../utils/frontendApiCalls";
-import { useState } from "react";
-import { useSession } from "next-auth/react";
-import { AppDispatch } from "../redux/store";
-import { useDispatch } from "react-redux";
+import { ChatbotButtonClickLogic } from "../hooks/chatbot";
 
 export const ChatbotSection = ({
   id,
   temporaryChatData,
   setTemporaryChatData,
 }: ChatbotSectionPropType) => {
-  const session = useSession();
-  const dispatch = useDispatch<AppDispatch>();
-  const [input, setInput] = useState("");
+  const { input, setInput, sendMessage } = ChatbotButtonClickLogic({
+    id,
+    temporaryChatData,
+    setTemporaryChatData,
+  });
 
-  const sendMessage = async () => {
-    if (session.status === "authenticated") {
-      if (!input.trim()) return;
-      if (temporaryChatData?.length > 0) {
-        setTemporaryChatData((prev) => [
-          ...prev,
-          { question: input, answer: "" },
-        ]);
-      } else {
-        setTemporaryChatData([{ question: input, answer: "" }]);
-      }
-      setInput("");
-      try {
-        const result = await fetchChatbotAnswer({ input });
-        setTemporaryChatData((prev) =>
-          prev.map((chat) =>
-            chat.question === input
-              ? { ...chat, answer: result.content }
-              : chat,
-          ),
-        );
-        if (result.content) {
-          await saveChatbotData({
-            email: session.data?.user?.email ?? "",
-            playlistId: id,
-            question: input,
-            answer: result.content ?? "",
-          });
-        }
-      } catch (error) {
-        console.error("Error fetching from OpenRouter or saving to DB:", error);
-      }
-    } else {
-      dispatch(setIsOpen(true));
-    }
-  };
   return (
     <div className="w-full h-full">
       {temporaryChatData?.length > 0 ? (
