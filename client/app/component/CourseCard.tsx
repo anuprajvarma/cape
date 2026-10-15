@@ -12,8 +12,8 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "../redux/store";
 import { setCourseLinkModal } from "../redux/slices/CourseLinkModal";
 import { setCourseLink } from "../redux/slices/CourseLink";
-import { CourseCardLogic } from "../hooks/courseCard";
-import { SessionAndRouterDetails } from "../hooks/sesionAndRouterDetail";
+import { useCourseCardLogic } from "../hooks/courseCard";
+import { useSessionsDetails } from "../hooks/sesionAndRouterDetail";
 
 const CourseCard = ({
   title,
@@ -26,9 +26,9 @@ const CourseCard = ({
   setGetDataCheck,
   indexOrder,
 }: CourseCardType) => {
-  const { router } = SessionAndRouterDetails();
+  const { router } = useSessionsDetails();
   const { handleEnrolled, handleDeletBookmarkCourse, handleBookmark } =
-    CourseCardLogic({ getDataCheck, setGetDataCheck });
+    useCourseCardLogic({ getDataCheck, setGetDataCheck });
   const dispatch = useDispatch<AppDispatch>();
 
   return (

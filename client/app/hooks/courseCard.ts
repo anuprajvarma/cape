@@ -4,19 +4,19 @@ import {
   saveBookmarkCourse,
   saveEnrolledCourse,
 } from "../utils/backendApiCalls";
-import { SessionAndRouterDetails } from "./sesionAndRouterDetail";
+import { useSessionsDetails } from "./sesionAndRouterDetail";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { setIsOpen } from "../redux/slices/LoginModalSlice";
 
-export const CourseCardLogic = ({
+export const useCourseCardLogic = ({
   getDataCheck,
   setGetDataCheck,
 }: {
   getDataCheck: boolean;
   setGetDataCheck: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const { session } = SessionAndRouterDetails();
+  const { session } = useSessionsDetails();
   const dispatch = useDispatch();
 
   const handleEnrolled = async ({

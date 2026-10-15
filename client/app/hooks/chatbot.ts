@@ -1,18 +1,18 @@
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../redux/store";
 import { fetchChatbotAnswer } from "../utils/frontendApiCalls";
-import { SessionAndRouterDetails } from "./sesionAndRouterDetail";
+import { useSessionsDetails } from "./sesionAndRouterDetail";
 import { setIsOpen } from "../redux/slices/LoginModalSlice";
 import { ChatbotSectionPropType } from "@/types";
 import { saveChatbotData } from "../utils/backendApiCalls";
 import { useState } from "react";
 
-export const ChatbotButtonClickLogic = ({
+export const useChatbotButtonClick = ({
   id,
   temporaryChatData,
   setTemporaryChatData,
 }: ChatbotSectionPropType) => {
-  const { session } = SessionAndRouterDetails();
+  const { session } = useSessionsDetails();
   const [input, setInput] = useState("");
   const dispatch = useDispatch<AppDispatch>();
 

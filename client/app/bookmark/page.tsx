@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
 import { CourseLinkModal } from "../component/CourseLinkModal";
-import { BookmarkPlaylisitHook } from "../hooks/bookmarkPlaylist";
+import { useBookmarkPlaylist } from "../hooks/bookmarkPlaylist";
 
 const CourseCard = dynamic(() => import("../component/CourseCard"), {
   ssr: false,
@@ -13,7 +13,7 @@ export default function Bookmark() {
   const [hasMounted, setHasMounted] = useState(false);
   const [getDataCheck, setGetDataCheck] = useState<boolean>(false);
   const { bookmarkCoursePlaylist, checkDataExist, dataLoading } =
-    BookmarkPlaylisitHook({ getDataCheck });
+    useBookmarkPlaylist({ getDataCheck });
 
   useEffect(() => {
     setHasMounted(true);

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchVideoDetail } from "../utils/frontendApiCalls";
 
-export const VideoDetail = ({
+export const useVideoDetail = ({
   videoId,
 }: {
   videoId: string | string[] | undefined;

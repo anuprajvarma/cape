@@ -26,8 +26,8 @@ import {
   PlaylistLength,
 } from "../../../utils/frontendApiCalls";
 import { fetchMultipleTypeData } from "../../../utils/backendApiCalls";
-import { VideoDetail } from "@/app/hooks/videoDetail";
-import { SessionAndRouterDetails } from "@/app/hooks/sesionAndRouterDetail";
+import { useVideoDetail } from "@/app/hooks/videoDetail";
+import { useSessionsDetails } from "@/app/hooks/sesionAndRouterDetail";
 
 const options = {
   target: "_blank",
@@ -36,13 +36,13 @@ const options = {
 };
 
 export default function Course() {
-  const { router, session, params } = SessionAndRouterDetails();
+  const { router, session, params } = useSessionsDetails();
   const { id, videoId } = params;
   const [completedChapters, setCompletedChapters] = useState<string[]>([]);
 
   const checkboxTrack = useSelector((state: RootState) => state.checkbox);
   const dispatch = useDispatch<AppDispatch>();
-  const { videoTitle, videoDescription } = VideoDetail({ videoId });
+  const { videoTitle, videoDescription } = useVideoDetail({ videoId });
 
   useEffect(() => {
     const fetchLengths = async () => {

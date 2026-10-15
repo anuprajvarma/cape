@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import { SessionAndRouterDetails } from "./sesionAndRouterDetail";
+import { useSessionsDetails } from "./sesionAndRouterDetail";
 import { fetchBookmarkedCourses } from "../utils/backendApiCalls";
 import { BookmarkType } from "@/types";
 
-export const BookmarkPlaylisitHook = ({
+export const useBookmarkPlaylist = ({
   getDataCheck,
 }: {
   getDataCheck: boolean;
 }) => {
-  const { session } = SessionAndRouterDetails();
+  const { session } = useSessionsDetails();
   const [bookmarkCoursePlaylist, setBookmarkCoursePlaylist] = useState<
     BookmarkType[]
   >([]);
