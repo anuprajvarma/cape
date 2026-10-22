@@ -1,27 +1,14 @@
 "use client";
 
 import React from "react";
+import ScrollStack from "../component/Scroll";
 
 export default function ScoreSection() {
   return (
     <>
-      <div className="w-full flex items-center justify-center py-4">
-        <div className="w-[70rem] flex flex-col gap-12">
-          <p className="flex items-center justify-center text-3xl font-semibold">
-            Save hours, learn smarter
-          </p>
-          <div className="w-full h-[30rem] flex">
-            <div className="w-1/2 flex items-center">
-              <div className="flex flex-col w-10/12">
-                <p className="text-3xl font-semibold">Score</p>
-                <p>
-                  you can see your progress , how much precent you complete your
-                  playlist
-                </p>
-              </div>
-            </div>
-            <div className="w-1/2"></div>
-          </div>
+      <div className="w-full flex flex-col items-center justify-center py-4">
+        <div className="w-[70rem]">
+          <ScrollStack />
         </div>
       </div>
     </>

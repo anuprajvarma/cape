@@ -45,7 +45,7 @@ export default function HeroSection() {
   return (
     <>
       <LoginModal />
-      <div className="w-full py-[4rem] px-4 text-black flex justify-center mt-[3rem] sm:mt-[5rem]">
+      <div className="w-full pt-[4rem] px-4 text-black flex justify-center mt-[3rem] sm:mt-[5rem]">
         <div className="w-[70rem]">
           <div className="w-full flex flex-col justify-between gap-10">
             <div className="w-full flex flex-col items-center gap-6 sm:gap-10">
@@ -81,7 +81,7 @@ export default function HeroSection() {
                 </div>
                 <Link
                   href="/courses"
-                  className="py-2 text-center flex items-center sm:px-6 sm:py-2 font-semibold bg-white hover:bg-white/70 text-black text-md bg-white/5 backdrop-blur-2xl rounded-[20px] border border-white/5 px-4 cursor-pointer transition duration-300"
+                  className="py-2 text-center flex items-center sm:px-6 sm:py-2 font-semibold bg-white hover:bg-white/70 text-black text-md backdrop-blur-2xl rounded-[20px] border border-white/5 px-4 cursor-pointer transition duration-300"
                 >
                   Start learning
                 </Link>
@@ -109,9 +109,13 @@ export default function HeroSection() {
                     height={50}
                     alt=""
                   />
-                  <span className="flex items-center justify-center w-10 h-10 text-xs font-medium text-white bg-dark-strong border-2 border-buffer rounded-full">
-                    +99
-                  </span>
+                  <Image
+                    className="w-10 h-10 border-2 border-buffer rounded-full"
+                    src={profilePic}
+                    width={50}
+                    height={50}
+                    alt=""
+                  />
                 </div>
                 <p>Loved by 100+ learners</p>
               </div>
