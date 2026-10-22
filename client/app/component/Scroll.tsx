@@ -42,7 +42,7 @@ function StackCard({
   return (
     <div
       ref={ref}
-      className="sticky flex flex-col items-center justify-center h-[90vh] w-full"
+      className="sticky flex flex-col items-center justify-center h-screen w-full"
       style={{
         top: `${80 + index * 18}px`,
         zIndex: index + 1,
