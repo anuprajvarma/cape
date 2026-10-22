@@ -68,7 +68,7 @@ const Header = () => {
 
   return (
     <div className="w-full mt-4 flex justify-center fixed top-0">
-      <div className="flex gap-4 font-medium items-center z-50 bg-white/10 backdrop-blur-2xl rounded-[20px] border border-white/10 px-5 py-1">
+      <div className="flex gap-4 font-medium items-center z-50 bg-white/5 backdrop-blur-2xl rounded-[20px] border border-white/5 px-5 py-1">
         <div className="flex gap-12">
           <Link
             href="/"
@@ -85,7 +85,7 @@ const Header = () => {
                   : ""
               }`}
             >
-              Courses
+              Discover
             </Link>
             <Link
               href="/bookmark"
@@ -95,7 +95,7 @@ const Header = () => {
                   : ""
               }`}
             >
-              Bookmark
+              List
             </Link>
             <Link
               href="/dashboard"
@@ -105,7 +105,7 @@ const Header = () => {
                   : ""
               }`}
             >
-              Dashboard
+              Score
             </Link>
           </div>
         </div>
@@ -153,7 +153,7 @@ const Header = () => {
                 onClick={() => signIn("google")}
                 className="w-[4rem] h-[2rem] flex items-center justify-center gap-2 rounded-[20px] cursor-pointer font-semibold text-[13px] text-black bg-[#FFFFFF] hover:bg-[#FFFFFF]/70 hover:backdrop-blur-2xl transition duration-300"
               >
-                <p className="w-[4rem] h-[2rem] flex justify-center items-center">
+                <p className="w-[5rem] h-[2rem] flex justify-center items-center">
                   Sign in
                 </p>
               </button>

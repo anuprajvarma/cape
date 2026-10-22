@@ -1,12 +1,20 @@
 "use client";
 
 import NavBar from "./component/NavBar";
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { IoPlayCircleOutline } from "react-icons/io5";
 import Link from "next/link";
 import { LoginModal } from "./component/LoginModal";
 
+const topic = [
+  "Track each course",
+  "Make notes for each course",
+  "AI chatbot help while learning",
+  "Quizz for each chapters of course",
+];
+
 export default function Page() {
+  const [features, setFeatures] = useState<number>(0);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const handlePlay = () => {
     iframeRef.current?.contentWindow?.postMessage(
@@ -19,6 +27,16 @@ export default function Page() {
     );
   };
 
+  useEffect(() => {
+    setTimeout(() => {
+      if (features === 3) {
+        setFeatures(0);
+      } else {
+        setFeatures(features + 1);
+      }
+    }, 3000);
+  }, [features]);
+
   return (
     <>
       <LoginModal />
@@ -26,12 +44,16 @@ export default function Page() {
         <div className="w-[70rem]">
           <div className="w-full flex flex-col justify-between gap-10">
             <div className="w-full flex flex-col items-center gap-6 sm:gap-10">
-              <div className="font-semibold w-full text-white text-center sm:block hidden">
-                <p className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl">
-                  Distraction-free YouTube learning
+              <div className="w-full sm:flex flex-col gap-6 text-white text-center hidden">
+                <p className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold">
+                  <span className="text-green-600">Free</span> distraction-free
+                  <span className="text-red-600">You</span>Tube learning
                 </p>
-                <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl">
-                  with streaks, notes and AI support
+                <p
+                  key={topic[features]}
+                  className="animate-[fadeSlide_1s_ease-in-out] text-2xl sm:text-3xl md:text-4xl lg:text-2xl"
+                >
+                  {topic[features]}
                 </p>
               </div>
               <p className="sm:hidden block font-semibold w-full text-white text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl">
@@ -39,23 +61,25 @@ export default function Page() {
                 support
               </p>
               <div className="flex gap-3 sm:gap-8">
-                <Link
-                  href="/courses"
-                  className="px-3 py-2 text-center flex items-center sm:px-6 sm:py-3 rounded-[6px] cursor-pointer font-semibold bg-lightBlue hover:bg-lightBlue/80 text-white text-md transition duration-300"
+                <div
+                  onClick={handlePlay}
+                  className="flex gap-2 items-center bg-white/5 backdrop-blur-2xl rounded-[20px] border border-white/5 px-4 cursor-pointer"
                 >
-                  Get started
-                </Link>
-                <div className="flex gap-2 items-center">
-                  <button onClick={handlePlay}>
-                    <IoPlayCircleOutline className="text-4xl sm:text-5xl text-slaty/50 hover:text-slaty/80 cursor-pointer hover:text-darkRed transition duration-300" />
-                  </button>
+                  <IoPlayCircleOutline className="text-2xl sm:text-2xl text-white hover:text-slaty/80 hover:text-darkRed transition duration-300" />
+
                   <p className="font-semibold text-xl text-white sm:hidden block">
                     play
                   </p>
-                  <p className="font-semibold text-xl text-white sm:block hidden">
+                  <p className="font-semibold text-md text-white sm:block hidden">
                     how it&apos;s work
                   </p>
                 </div>
+                <Link
+                  href="/courses"
+                  className="py-2 text-center flex items-center sm:px-6 sm:py-2 font-semibold bg-white hover:bg-white/70 text-black text-md bg-white/5 backdrop-blur-2xl rounded-[20px] border border-white/5 px-4 cursor-pointer transition duration-300"
+                >
+                  Start learning
+                </Link>
               </div>
             </div>
             <div className="w-full flex items-center justify-center">
