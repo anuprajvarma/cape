@@ -5,6 +5,11 @@ import React, { useEffect, useRef, useState } from "react";
 import { IoPlayCircleOutline } from "react-icons/io5";
 import Link from "next/link";
 import { LoginModal } from "./component/LoginModal";
+import Image from "next/image";
+
+import profilePic from "../public/my_pic.png";
+import user2 from "../public/courses.png";
+import user3 from "../public/course-page.png";
 
 const topic = [
   "Track each course",
@@ -80,6 +85,35 @@ export default function Page() {
                 >
                   Start learning
                 </Link>
+              </div>
+              <div className="flex gap-4 text-slaty/80 items-center justify-center">
+                <div className="flex -space-x-4 rtl:space-x-reverse">
+                  <Image
+                    className="w-10 h-10 border-2 border-buffer rounded-full"
+                    src={user2}
+                    width={50}
+                    height={50}
+                    alt=""
+                  />
+                  <Image
+                    className="w-10 h-10 border-2 border-buffer rounded-full"
+                    src={user3}
+                    width={50}
+                    height={50}
+                    alt=""
+                  />
+                  <Image
+                    className="w-10 h-10 border-2 border-buffer rounded-full"
+                    src={profilePic}
+                    width={50}
+                    height={50}
+                    alt=""
+                  />
+                  <span className="flex items-center justify-center w-10 h-10 text-xs font-medium text-white bg-dark-strong border-2 border-buffer rounded-full">
+                    +99
+                  </span>
+                </div>
+                <p>Loved by 100+ learners</p>
               </div>
             </div>
             <div className="w-full flex items-center justify-center">
