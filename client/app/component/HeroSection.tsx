@@ -9,7 +9,7 @@ import profilePic from "../../public/my_pic.png";
 import user2 from "../../public/courses.png";
 import user3 from "../../public/course-page.png";
 import { LoginModal } from "./LoginModal";
-import NavBar from "./NavBar";
+// import NavBar from "./NavBar";
 
 const topic = [
   "Track each course",
@@ -131,7 +131,7 @@ export default function HeroSection() {
           </div>
         </div>
       </div>
-      <NavBar />
+      {/* <NavBar /> */}
     </>
   );
 }
