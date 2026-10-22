@@ -84,7 +84,9 @@ export default function ScrollStack() {
   return (
     <div className="relative">
       <div className="sticky top-0 z-0 flex h-[25rem] items-center justify-center px-12">
-        <h2 className="text-5xl font-bold text-white">Explore Our Courses</h2>
+        <h2 className="text-5xl font-bold text-white">
+          Save hours, learn smarter
+        </h2>
       </div>
       {sections.map((section, index) => (
         <StackCard key={section.title} section={section} index={index} />
