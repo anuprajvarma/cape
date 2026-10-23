@@ -2,12 +2,11 @@
 
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { usePathname, useParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { SiSololearn } from "react-icons/si";
-import { FaArrowRight } from "react-icons/fa";
 import { IoMenu } from "react-icons/io5";
 import { toast } from "react-toastify";
 
@@ -18,9 +17,9 @@ import { User } from "@/types";
 const Header = () => {
   const session = useSession();
   const path = usePathname();
-  const param = useParams();
+  // const param = useParams();
   const router = useRouter();
-  const { id, videoId } = param;
+  // const { id, videoId } = param;
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState<User>();
   const [loginLoading, setLoginLoading] = useState<boolean>(false);
@@ -68,60 +67,63 @@ const Header = () => {
   ]);
 
   return (
-    <div className="w-full h-16 px-4 flex justify-center fixed top-0 shadow bg-[#101827]/80 backdrop-blur z-50">
-      <div
-        className={`${
-          path === `/course/${id}/${videoId}` ? "w-full" : "w-[70rem]"
-        } flex justify-between font-medium items-center`}
-      >
-        <Link
-          href="/"
-          className="font-bold cursor-pointer text-xl sm:text-2xl flex gap-2 text-white items-center"
-        >
-          <SiSololearn className="text-lightBlue" />
-          <p>Cape</p>
-        </Link>
-        <div className="sm:flex hidden gap-4 sm:gap-12 text-lg sm:text-md text-slaty/80">
+    <div className="w-full mt-4 flex justify-center fixed top-0 z-50">
+      <div className="flex gap-4 font-medium items-center bg-white/5 backdrop-blur-2xl rounded-[20px] border border-white/5 px-5 py-1">
+        <div className="flex gap-12">
           <Link
-            href="/courses"
-            className={`cursor-pointer hover:text-darkRed transition duration-300 hover:text-white ${
-              path === "/courses" ? "text-white" : ""
-            }`}
+            href="/"
+            className="font-bold cursor-pointer text-xl sm:text-2xl flex gap-2 items-center"
           >
-            Courses
+            <SiSololearn className="text-[#FFFFFF] w-4 h-4" />
           </Link>
-          <Link
-            href="/bookmark"
-            className={`cursor-pointer hover:text-darkRed transition duration-300 hover:text-white ${
-              path === "/bookmark" ? "text-white" : ""
-            }`}
-          >
-            Bookmark
-          </Link>
-          <Link
-            href="/dashboard"
-            className={`cursor-pointer hover:text-darkRed transition duration-300 hover:text-white ${
-              path === "/dashboard" ? "text-white" : ""
-            }`}
-          >
-            Dashboard
-          </Link>
+          <div className="sm:flex hidden gap-8 justify-between text-[13px] font-medium sm:text-md  text-slaty/80">
+            <Link
+              href="/courses"
+              className={`cursor-pointer hover:text-darkRed transition duration-300 hover:text-white py-2 px-3 ${
+                path === "/courses"
+                  ? "text-white bg-white/0 backdrop-blur-xl rounded-[20px]"
+                  : ""
+              }`}
+            >
+              Discover
+            </Link>
+            <Link
+              href="/bookmark"
+              className={`cursor-pointer hover:text-darkRed transition duration-300 hover:text-white py-2 px-3 ${
+                path === "/bookmark"
+                  ? "text-white bg-white/0 backdrop-blur-2xl rounded-[20px]"
+                  : ""
+              }`}
+            >
+              List
+            </Link>
+            <Link
+              href="/dashboard"
+              className={`cursor-pointer hover:text-darkRed transition duration-300 hover:text-white py-2 px-3 ${
+                path === "/dashboard"
+                  ? "text-white bg-white/0 backdrop-blur-2xl rounded-[20px]"
+                  : ""
+              }`}
+            >
+              Score
+            </Link>
+          </div>
         </div>
         <div ref={inputRef}>
           {isLogin ? (
             <div className="relative">
-              <div className="justify-center items-center w-11 h-5 sm:flex hidden">
+              <div className="justify-center items-center w-8 h-2 sm:flex hidden">
                 <button
                   onClick={() => {
                     setIsOpen(!isOpen);
                   }}
-                  className="flex items-center justify-center rounded-full overflow-hidden focus:outline-none"
+                  className="flex items-center justify-center rounded-full overflow-hidden focus:outline-hidden"
                 >
                   <Image
                     src={(user?.imageUrl as string) || "/code.jpg"}
                     alt="Profile"
                     quality={100}
-                    sizes="60px"
+                    sizes="20px"
                     fill
                     style={{ objectFit: "cover" }}
                     className="rounded-full border border-slaty/30 transition duration-300 hover:border-slaty/50"
@@ -136,7 +138,7 @@ const Header = () => {
                 <div className="absolute right-0 mt-2 border border-lightSlaty shadow-lg bg-mediumSlaty rounded-lg transition duration-300">
                   <button
                     onClick={handleSignout}
-                    className="w-full text-left px-4 py-2 rounded text-lightYellow"
+                    className="w-full text-left px-4 py-2 rounded-sm text-lightYellow"
                   >
                     Logout
                   </button>
@@ -146,13 +148,14 @@ const Header = () => {
           ) : loginLoading ? (
             <div className="flex justify-center items-center w-11 h-5"></div>
           ) : (
-            <div className="flex justify-center items-center gap-4">
+            <div className="flex justify-center items-center text-center">
               <button
                 onClick={() => signIn("google")}
-                className="px-3 py-[7px] sm:px-5 sm:py-[10px] flex gap-2 items-center rounded-[8px] cursor-pointer font-semibold text-sm bg-lightBlue hover:bg-lightBlue/80 transition duration-300"
+                className="w-16 h-8 flex items-center justify-center gap-2 rounded-[20px] cursor-pointer font-semibold text-[13px] text-black bg-[#FFFFFF] hover:bg-[#FFFFFF]/70 hover:backdrop-blur-2xl transition duration-300"
               >
-                <p>Sign in</p>
-                <FaArrowRight />
+                <p className="w-20 h-8 flex justify-center items-center">
+                  Sign in
+                </p>
               </button>
               <button onClick={() => setIsOpenMenu(!isOpenMenu)}>
                 <IoMenu className="sm:hidden flex text-3xl" />
@@ -222,7 +225,7 @@ const Header = () => {
               </div>
               {isLogin && (
                 <div className="flex items-center justify-between">
-                  <div className="relative w-[3rem] h-[3rem]">
+                  <div className="relative w-8 h-8">
                     <Image
                       src={(user?.imageUrl as string) || "/code.jpg"}
                       alt="Profile"

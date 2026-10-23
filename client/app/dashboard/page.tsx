@@ -44,7 +44,7 @@ const Dashboard: React.FC = () => {
     <>
       <CourseLinkModal />
       <div className="w-full h-[90vh] py-8 px-4 text-black flex justify-center mt-16">
-        <div className="w-[70rem] h-full flex flex-col gap-12">
+        <div className="w-280 h-full flex flex-col gap-12">
           <DndContext
             sensors={sensors}
             collisionDetection={closestCenter}

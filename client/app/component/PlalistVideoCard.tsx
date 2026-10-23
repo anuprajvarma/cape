@@ -55,7 +55,7 @@ const PlalistVideoCard = ({
     <div
       className={`flex gap-2 pr-2 justify-between items-center ${
         currentvideoId === videoId
-          ? "bg-lightSlaty/70 rounded-sm"
+          ? "bg-lightSlaty/70 rounded-xs"
           : "hover:bg-lightSlaty/70 transition duration-100 "
       }`}
     >
@@ -68,7 +68,7 @@ const PlalistVideoCard = ({
         <div className="w-6">
           {currentvideoId === videoId ? <IoPlay /> : <p>{index + 1}</p>}
         </div>
-        <div className="flex w-[10rem] items-start h-[4rem] relative">
+        <div className="flex w-40 items-start h-16 relative">
           <Image
             src={thumbnails || "/code.jpg"}
             alt="code"

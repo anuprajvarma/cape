@@ -56,7 +56,7 @@ const NotesGpt = ({ id, videoId, videoTitle }: NotesGptPropType) => {
           Quizzes
         </button>
       </div>
-      <div className="w-full h-[40rem]">
+      <div className="w-full h-160">
         {notecheck && (
           <Editor
             email={session.data?.user?.email as string}

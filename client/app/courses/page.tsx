@@ -26,7 +26,7 @@ export default function Courses() {
     <>
       <CourseLinkModal />
       <div className="flex justify-center w-full h-[calc(100vh-4rem)] px-4 mt-16 text-black">
-        <div className="flex flex-col w-full h-full max-w-[70rem]">
+        <div className="flex flex-col w-full h-full max-w-280">
           <SearchInput
             showSuggestions={showSuggestions}
             suggestionsArray={suggestionsArray}

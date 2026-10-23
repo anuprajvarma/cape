@@ -1,5 +1,50 @@
 import { darkDefaultTheme, lightDefaultTheme, Theme } from "@blocknote/mantine";
 
+interface Items {
+  id: number;
+  name: string;
+  image: string;
+  testimonial: string;
+}
+
+export const testimonials: Items[] = [
+  {
+    id: 1,
+    name: "Rahul Sharma",
+    image: "/images/users/rahul.jpg",
+    testimonial:
+      "This platform made learning so much easier. The courses are well-structured, and I can learn at my own pace.",
+  },
+  {
+    id: 2,
+    name: "Priya Verma",
+    image: "/images/users/priya.jpg",
+    testimonial:
+      "I love how everything is organized in one place. Tracking my progress keeps me motivated to learn every day.",
+  },
+  {
+    id: 3,
+    name: "Aman Gupta",
+    image: "/images/users/aman.jpg",
+    testimonial:
+      "The interactive quizzes helped me understand difficult concepts and remember what I learned.",
+  },
+  {
+    id: 4,
+    name: "Sneha Patel",
+    image: "/images/users/sneha.jpg",
+    testimonial:
+      "A great learning experience! I can discover new topics, practice my skills, and revisit lessons whenever I need.",
+  },
+  {
+    id: 5,
+    name: "Arjun Singh",
+    image: "/images/users/arjun.jpg",
+    testimonial:
+      "The simple interface and organized learning resources make it easy to stay focused on my goals.",
+  },
+];
+
 const lightRedTheme = {
   colors: {
     editor: {

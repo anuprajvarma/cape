@@ -47,21 +47,21 @@ const SearchInput = ({
       <div className=" z-20 shrink-0 w-full py-4">
         <div className="flex items-center justify-center w-full gap-2">
           <div className="relative">
-            <div className="flex w-full h-[3rem] rounded-xl sm:w-[33rem]">
-              <div className="relative flex flex-col w-full h-full sm:w-[30rem]">
+            <div className="flex w-full h-12 rounded-xl sm:w-132">
+              <div className="relative flex flex-col w-full h-full sm:w-120">
                 <input
                   type="text"
                   ref={inputRef}
                   value={searchQuery}
                   placeholder="Search your favourite playlist"
-                  className="w-full h-full sm:w-[30rem] px-4 py-6 rounded-l-lg text-slaty bg-lightSlaty outline-none focus:border focus:border-slaty/30 placeholder-slaty/50"
+                  className="w-full h-full sm:w-120 px-4 py-6 rounded-l-lg text-slaty bg-lightSlaty outline-hidden focus:border focus:border-slaty/30 placeholder-slaty/50"
                   onChange={handleChange}
                 />
 
                 {/* Suggestions */}
                 {showSuggestions && filteredSuggestions.length > 0 && (
                   <ul className="absolutetop-full left-0 z-50 w-full mt-1">
-                    <div className="w-full rounded-lg bg-lightSlaty shadow-lg sm:w-[30rem]">
+                    <div className="w-full rounded-lg bg-lightSlaty shadow-lg sm:w-120">
                       {filteredSuggestions.map((suggestion, index) => (
                         <li
                           key={index}

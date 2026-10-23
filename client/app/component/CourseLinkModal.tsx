@@ -19,12 +19,12 @@ export const CourseLinkModal = () => {
       <Dialog
         open={isOpen}
         as="div"
-        className="relative z-30 focus:outline-none"
+        className="relative z-30 focus:outline-hidden"
         onClose={() => dispatch(setCourseLinkModal(false))}
         __demoMode
       >
         <div className="fixed inset-0 z-10 w-screen overflow-y-auto flex justify-center items-center">
-          <div className="flex flex-col gap-4 items-center justify-center p-4 bg-mediumSlaty  border border-lightSlaty w-[15rem] h-[8rem] rounded-lg">
+          <div className="flex flex-col gap-4 items-center justify-center p-4 bg-mediumSlaty  border border-lightSlaty w-60 h-32 rounded-lg">
             <button
               onClick={() => dispatch(setCourseLinkModal(false))}
               className="w-full flex justify-end"
