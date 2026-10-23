@@ -25,7 +25,7 @@ export default function MotionMarquee() {
             className="w-[30rem] h-[13rem] flex items-center justify-center  bg-white/5 backdrop-blur-2xl rounded-[20px] border border-white/5"
           >
             <div className="w-8/12 flex flex-col gap-2 justify-center items-center">
-              <p className="text-sm">{item.testimonial}</p>
+              <p className="text-sm line-clamp-3">{item.testimonial}</p>
               <div className="flex gap-4 items-center">
                 <Image
                   src={course}

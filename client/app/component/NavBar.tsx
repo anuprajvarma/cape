@@ -10,7 +10,7 @@ import * as Tooltip from "@radix-ui/react-tooltip";
 
 const NavBar = () => {
   return (
-    <div className="w-full py-[1rem] px-4 border-t border-lightSlaty flex justify-center z-20">
+    <div className="w-full py-[1rem] px-4 border-t border-slaty/30 flex justify-center z-20">
       <div className="w-[70rem] flex justify-between">
         <div className="flex flex-col gap-2">
           <p className="text-white text-xl">Connect with me</p>
