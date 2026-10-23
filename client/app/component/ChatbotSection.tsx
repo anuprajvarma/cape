@@ -11,7 +11,7 @@ export const ChatbotSection = ({ id }: ChatbotSectionPropType) => {
   return (
     <div className="w-full h-full">
       {temporaryChatData?.length > 0 ? (
-        <div className="space-y-2 w-full h-full p-1 sm:p-12 rounded overflow-y-auto">
+        <div className="space-y-2 w-full h-full p-1 sm:p-12 rounded-sm overflow-y-auto">
           {temporaryChatData?.map((msg, i) => (
             <div key={i}>
               <div className="flex w-full justify-end text-xl text-white py-2 sm:py-4">
@@ -19,7 +19,7 @@ export const ChatbotSection = ({ id }: ChatbotSectionPropType) => {
                   {msg.question}
                 </p>
               </div>
-              <div className="prose prose-slate prose-lg w-full h-full overflow-auto max-w-none p-2 sm:p-12 prose-headings:my-2 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-ul:my-0 hover:prose-a:underline">
+              <div className="prose prose-slate prose-lg w-full h-full overflow-auto max-w-none p-2 sm:p-12 prose-headings:my-2 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-ul:my-0 prose-a:hover:underline">
                 {msg.answer !== "" ? (
                   <ReactMarkdown>{msg.answer}</ReactMarkdown>
                 ) : (
@@ -44,12 +44,12 @@ export const ChatbotSection = ({ id }: ChatbotSectionPropType) => {
             }
           }}
           onChange={(e) => setInput(e.target.value)}
-          className="flex-1 p-2 rounded-md bg-lightSlaty focus:outline-none border border-slaty/50 text-slaty placeholder-slaty/50"
+          className="flex-1 p-2 rounded-md bg-lightSlaty focus:outline-hidden border border-slaty/50 text-slaty placeholder-slaty/50"
           placeholder="Ask anything..."
         />
         <button
           onClick={sendMessage}
-          className="px-4 py-2 bg-lightBlue hover:bg-lightBlue/80 text-white rounded"
+          className="px-4 py-2 bg-lightBlue hover:bg-lightBlue/80 text-white rounded-sm"
         >
           Send
         </button>

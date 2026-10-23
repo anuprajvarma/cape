@@ -27,14 +27,14 @@ export const DiscussionSection = ({
           <div className="w-full items-center text-center font-semibold py-4 justify-center bg-mediumSlaty rounded-t-xl">
             Discussion
           </div>
-          <div className="space-y-2 w-full h-full p-4 rounded overflow-y-auto">
+          <div className="space-y-2 w-full h-full p-4 rounded-sm overflow-y-auto">
             {discussionData?.map((msg, i) => (
               <div
                 className="flex gap-4"
                 key={i}
                 // className={msg.sender === "user" ? "text-right" : "text-left"}
               >
-                <div className="flex w-[4rem] items-start h-[3rem] relative">
+                <div className="flex w-16 items-start h-12 relative">
                   <Image
                     src={msg.image || "/code.jpg"}
                     alt="code"
@@ -49,7 +49,7 @@ export const DiscussionSection = ({
                   <p className="text-white text-xs font-semibold">{msg.name}</p>
                   <p className="text-sm text-slaty">{msg.content}</p>
                 </div>
-                <div className="flex w-[3rem] items-center justify-center">
+                <div className="flex w-12 items-center justify-center">
                   <Tooltip.Provider delayDuration={0}>
                     <Tooltip.Root>
                       <Tooltip.Trigger asChild>
@@ -69,7 +69,7 @@ export const DiscussionSection = ({
                       <Tooltip.Portal>
                         <Tooltip.Content
                           side="top"
-                          className="bg-lightSlaty text-white px-2 py-1 text-xs rounded shadow-md z-20"
+                          className="bg-lightSlaty text-white px-2 py-1 text-xs rounded-sm shadow-md z-20"
                         >
                           Delete
                           <Tooltip.Arrow className="fill-lightSlaty" />
@@ -85,12 +85,12 @@ export const DiscussionSection = ({
             <input
               value={discussionContent}
               onChange={(e) => setDiscussionContent(e.target.value)}
-              className="flex-1 p-2 rounded-md bg-lightSlaty focus:outline-none border border-slaty/50 text-slaty placeholder-slaty/50"
+              className="flex-1 p-2 rounded-md bg-lightSlaty focus:outline-hidden border border-slaty/50 text-slaty placeholder-slaty/50"
               placeholder="Type a message..."
             />
             <button
               onClick={discussionHandler}
-              className="px-2 bg-blue-600 text-white rounded"
+              className="px-2 bg-blue-600 text-white rounded-sm"
             >
               Send
             </button>
@@ -101,7 +101,7 @@ export const DiscussionSection = ({
           <div className="w-full items-center text-center font-semibold py-4 justify-center bg-mediumSlaty rounded-t-xl">
             Discussion
           </div>
-          <div className="w-full h-[40rem] flex items-center justify-center p-4">
+          <div className="w-full h-160 flex items-center justify-center p-4">
             <p className="text-slaty text-center">
               No discussion available yet.
             </p>
@@ -115,12 +115,12 @@ export const DiscussionSection = ({
                 }
               }}
               onChange={(e) => setDiscussionContent(e.target.value)}
-              className="flex-1 p-2 rounded-md bg-lightSlaty focus:outline-none border border-slaty/50 text-slaty placeholder-slaty/50"
+              className="flex-1 p-2 rounded-md bg-lightSlaty focus:outline-hidden border border-slaty/50 text-slaty placeholder-slaty/50"
               placeholder="Say something"
             />
             <button
               onClick={discussionHandler}
-              className="px-2 bg-blue-600 text-white rounded"
+              className="px-2 bg-blue-600 text-white rounded-sm"
             >
               Send
             </button>

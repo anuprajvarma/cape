@@ -36,8 +36,8 @@ const EnrolledCard = ({
 
   return (
     <div className="flex justify-center lg:justify-between gap-8">
-      <div className="flex flex-col sm:flex-row w-full sm:w-[37rem] md:w-[52rem] min-h-[12rem] rounded-lg bg-mediumSlaty border border-lightSlaty">
-        <div className="flex w-full sm:w-[20rem] h-[12rem] relative">
+      <div className="flex flex-col sm:flex-row w-full sm:w-148 md:w-208 min-h-48 rounded-lg bg-mediumSlaty border border-lightSlaty">
+        <div className="flex w-full sm:w-[20rem] h-48 relative">
           <Image
             src={thumbnail || "/code.jpg"}
             alt="playlist thumbnail"
@@ -48,7 +48,7 @@ const EnrolledCard = ({
             className="rounded-md"
           />
         </div>
-        <div className="flex sm:w-[32rem] flex-col px-2 py-4 gap-2">
+        <div className="flex sm:w-lg flex-col px-2 py-4 gap-2">
           <p className="text-xl text-white line-clamp-2 font-semibold">
             {title}
           </p>
@@ -85,7 +85,7 @@ const EnrolledCard = ({
                     <Tooltip.Portal>
                       <Tooltip.Content
                         side="top"
-                        className="bg-lightSlaty text-slaty px-3 py-1 text-sm rounded shadow-md z-20"
+                        className="bg-lightSlaty text-slaty px-3 py-1 text-sm rounded-sm shadow-md z-20"
                       >
                         Play
                         <Tooltip.Arrow className="fill-lightSlaty" />
@@ -107,7 +107,7 @@ const EnrolledCard = ({
                     <Tooltip.Portal>
                       <Tooltip.Content
                         side="top"
-                        className="bg-lightSlaty text-slaty px-3 py-1 text-sm rounded shadow-md z-20"
+                        className="bg-lightSlaty text-slaty px-3 py-1 text-sm rounded-sm shadow-md z-20"
                       >
                         Delete
                         <Tooltip.Arrow className="fill-lightSlaty" />
@@ -134,7 +134,7 @@ const EnrolledCard = ({
                     <Tooltip.Portal>
                       <Tooltip.Content
                         side="top"
-                        className="bg-lightSlaty text-slaty px-3 py-1 text-sm rounded shadow-md z-20"
+                        className="bg-lightSlaty text-slaty px-3 py-1 text-sm rounded-sm shadow-md z-20"
                       >
                         Share
                         <Tooltip.Arrow className="fill-lightSlaty" />
@@ -147,7 +147,7 @@ const EnrolledCard = ({
           </div>
         </div>
       </div>
-      <div className="w-[25rem] rounded-lg border bg-mediumSlaty  border-lightSlaty hidden lg:flex flex-col gap-3 justify-center items-center">
+      <div className="w-100 rounded-lg border bg-mediumSlaty  border-lightSlaty hidden lg:flex flex-col gap-3 justify-center items-center">
         <CircularProgressbar
           value={precentage}
           text={`${precentage}%`}
@@ -158,7 +158,7 @@ const EnrolledCard = ({
             textColor: "#D1D5DB",
             trailColor: "#d6d6d6",
           })}
-          className="h-[6rem]"
+          className="h-24"
         />
         <p className="text-xl text-slaty/80">Progress</p>
       </div>

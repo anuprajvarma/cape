@@ -19,7 +19,7 @@ export const PlayVideoSection = ({
 
   return (
     <>
-      <div className="flex w-full h-[20rem] items-center justify-center sm:h-[41.6rem] ">
+      <div className="flex w-full h-80 items-center justify-center sm:h-[41.6rem] ">
         <iframe
           src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
           className="rounded-lg w-full h-full"
@@ -60,7 +60,7 @@ export const PlayVideoSection = ({
             <Tooltip.Portal>
               <Tooltip.Content
                 side="top"
-                className="bg-lightSlaty text-slaty px-3 py-1 text-sm rounded shadow-md z-20"
+                className="bg-lightSlaty text-slaty px-3 py-1 text-sm rounded-sm shadow-md z-20"
               >
                 Share
                 <Tooltip.Arrow className="fill-lightSlaty" />

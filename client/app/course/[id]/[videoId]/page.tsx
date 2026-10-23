@@ -86,7 +86,7 @@ export default function Course() {
             />
           </div>
           <div className="flex flex-col gap-5">
-            <div className="w-[30rem] border border-lightSlaty rounded-xl hidden lg:flex flex-col">
+            <div className="w-120 border border-lightSlaty rounded-xl hidden lg:flex flex-col">
               <PlaylistVideosSection
                 id={id}
                 videoId={videoId}

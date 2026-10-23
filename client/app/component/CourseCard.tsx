@@ -33,8 +33,8 @@ const CourseCard = ({
 
   return (
     <>
-      <div className="w-full sm:w-[20rem] max-h-[20rem] flex flex-col gap-3 bg-mediumSlaty border border-lightSlaty rounded-lg">
-        <div className="h-[13rem] relative">
+      <div className="w-full sm:w-[20rem] max-h-80 flex flex-col gap-3 bg-mediumSlaty border border-lightSlaty rounded-lg">
+        <div className="h-52 relative">
           <Image
             src={thumbnails || "/code.jpg"}
             alt="playlist thumbnail"
@@ -82,7 +82,7 @@ const CourseCard = ({
                   <Tooltip.Portal>
                     <Tooltip.Content
                       side="top"
-                      className="bg-lightSlaty text-slaty px-3 py-1 text-sm rounded shadow-md z-20"
+                      className="bg-lightSlaty text-slaty px-3 py-1 text-sm rounded-sm shadow-md z-20"
                     >
                       Play
                       <Tooltip.Arrow className="fill-lightSlaty" />
@@ -107,7 +107,7 @@ const CourseCard = ({
                     <Tooltip.Portal>
                       <Tooltip.Content
                         side="top"
-                        className="bg-lightSlaty text-slaty px-3 py-1 text-sm rounded shadow-md z-20"
+                        className="bg-lightSlaty text-slaty px-3 py-1 text-sm rounded-sm shadow-md z-20"
                       >
                         Unmark
                         <Tooltip.Arrow className="fill-lightSlaty" />
@@ -140,7 +140,7 @@ const CourseCard = ({
                     <Tooltip.Portal>
                       <Tooltip.Content
                         side="top"
-                        className="bg-lightSlaty text-slaty px-3 py-1 text-sm rounded shadow-md z-20"
+                        className="bg-lightSlaty text-slaty px-3 py-1 text-sm rounded-sm shadow-md z-20"
                       >
                         Bookmark
                         <Tooltip.Arrow className="fill-lightSlaty" />
@@ -168,7 +168,7 @@ const CourseCard = ({
                   <Tooltip.Portal>
                     <Tooltip.Content
                       side="top"
-                      className="bg-lightSlaty text-slaty px-3 py-1 text-sm rounded shadow-md z-20"
+                      className="bg-lightSlaty text-slaty px-3 py-1 text-sm rounded-sm shadow-md z-20"
                     >
                       Share
                       <Tooltip.Arrow className="fill-lightSlaty" />

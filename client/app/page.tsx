@@ -14,7 +14,7 @@ export default function Page() {
       <ScoreSection />
       <Testomonials />
       <div className="w-full my-20 flex items-center justify-center">
-        <div className="w-[70rem] h-[15rem] bg-white/10 backdrop-blur-2xl rounded-[20px] border border-white/5 flex justify-center items-center">
+        <div className="w-280 h-60 bg-white/10 backdrop-blur-2xl rounded-[20px] border border-white/5 flex justify-center items-center">
           <div className="w-6/12 flex flex-col justify-center items-center gap-4">
             <div className="w-full flex flex-col justify-center items-center">
               <p className="text-4xl font-semibold">

@@ -117,7 +117,7 @@ const Header = () => {
                   onClick={() => {
                     setIsOpen(!isOpen);
                   }}
-                  className="flex items-center justify-center rounded-full overflow-hidden focus:outline-none"
+                  className="flex items-center justify-center rounded-full overflow-hidden focus:outline-hidden"
                 >
                   <Image
                     src={(user?.imageUrl as string) || "/code.jpg"}
@@ -138,7 +138,7 @@ const Header = () => {
                 <div className="absolute right-0 mt-2 border border-lightSlaty shadow-lg bg-mediumSlaty rounded-lg transition duration-300">
                   <button
                     onClick={handleSignout}
-                    className="w-full text-left px-4 py-2 rounded text-lightYellow"
+                    className="w-full text-left px-4 py-2 rounded-sm text-lightYellow"
                   >
                     Logout
                   </button>
@@ -151,9 +151,9 @@ const Header = () => {
             <div className="flex justify-center items-center text-center">
               <button
                 onClick={() => signIn("google")}
-                className="w-[4rem] h-[2rem] flex items-center justify-center gap-2 rounded-[20px] cursor-pointer font-semibold text-[13px] text-black bg-[#FFFFFF] hover:bg-[#FFFFFF]/70 hover:backdrop-blur-2xl transition duration-300"
+                className="w-16 h-8 flex items-center justify-center gap-2 rounded-[20px] cursor-pointer font-semibold text-[13px] text-black bg-[#FFFFFF] hover:bg-[#FFFFFF]/70 hover:backdrop-blur-2xl transition duration-300"
               >
-                <p className="w-[5rem] h-[2rem] flex justify-center items-center">
+                <p className="w-20 h-8 flex justify-center items-center">
                   Sign in
                 </p>
               </button>
@@ -225,7 +225,7 @@ const Header = () => {
               </div>
               {isLogin && (
                 <div className="flex items-center justify-between">
-                  <div className="relative w-[2rem] h-[2rem]">
+                  <div className="relative w-8 h-8">
                     <Image
                       src={(user?.imageUrl as string) || "/code.jpg"}
                       alt="Profile"

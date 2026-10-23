@@ -45,8 +45,8 @@ export default function HeroSection() {
   return (
     <>
       <LoginModal />
-      <div className="w-full pt-[4rem] px-4 text-black flex justify-center mt-[3rem] sm:mt-[5rem]">
-        <div className="w-[70rem]">
+      <div className="w-full pt-16 px-4 text-black flex justify-center mt-12 sm:mt-20">
+        <div className="w-280">
           <div className="w-full flex flex-col justify-between gap-10">
             <div className="w-full flex flex-col items-center gap-6 sm:gap-10">
               <div className="w-full sm:flex flex-col gap-6 text-white text-center hidden">
@@ -113,7 +113,7 @@ export default function HeroSection() {
               </div>
             </div>
             <div className="w-full flex items-center justify-center">
-              <div className="w-full h-[20rem] lg:w-[60rem] lg:h-[35rem] sm:h-[30rem] rounded-lg flex">
+              <div className="w-full h-80 lg:w-240 lg:h-140 sm:h-120 rounded-lg flex">
                 <iframe
                   title="Intro Video"
                   ref={iframeRef}

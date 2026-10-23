@@ -10,8 +10,8 @@ import * as Tooltip from "@radix-ui/react-tooltip";
 
 const NavBar = () => {
   return (
-    <div className="w-full py-[1rem] px-4 border-t border-slaty/30 flex justify-center z-20">
-      <div className="w-[70rem] flex justify-between">
+    <div className="w-full py-4 px-4 border-t border-slaty/30 flex justify-center z-20">
+      <div className="w-280 flex justify-between">
         <div className="flex flex-col gap-2">
           <p className="text-white text-xl">Connect with me</p>
           <div className="flex gap-2 text-slaty/60">
@@ -25,7 +25,7 @@ const NavBar = () => {
                 <Tooltip.Portal>
                   <Tooltip.Content
                     side="top"
-                    className="bg-lightSlaty text-slaty px-3 py-2 text-sm rounded shadow-md z-20"
+                    className="bg-lightSlaty text-slaty px-3 py-2 text-sm rounded-sm shadow-md z-20"
                   >
                     Github
                     <Tooltip.Arrow className="fill-lightSlaty" />
@@ -46,7 +46,7 @@ const NavBar = () => {
                 <Tooltip.Portal>
                   <Tooltip.Content
                     side="top"
-                    className="bg-lightSlaty text-slaty px-3 py-2 text-sm rounded shadow-md z-20"
+                    className="bg-lightSlaty text-slaty px-3 py-2 text-sm rounded-sm shadow-md z-20"
                   >
                     Instagram
                     <Tooltip.Arrow className="fill-lightSlaty" />
@@ -64,7 +64,7 @@ const NavBar = () => {
                 <Tooltip.Portal>
                   <Tooltip.Content
                     side="top"
-                    className="bg-lightSlaty text-slaty px-3 py-2 text-sm rounded shadow-md z-20"
+                    className="bg-lightSlaty text-slaty px-3 py-2 text-sm rounded-sm shadow-md z-20"
                   >
                     Twitter
                     <Tooltip.Arrow className="fill-lightSlaty" />
@@ -85,7 +85,7 @@ const NavBar = () => {
                 <Tooltip.Portal>
                   <Tooltip.Content
                     side="top"
-                    className="bg-lightSlaty text-slaty px-3 py-2 text-sm rounded shadow-md z-20"
+                    className="bg-lightSlaty text-slaty px-3 py-2 text-sm rounded-sm shadow-md z-20"
                   >
                     LinkedIn
                     <Tooltip.Arrow className="fill-lightSlaty" />
@@ -112,7 +112,7 @@ const NavBar = () => {
                 <Tooltip.Portal>
                   <Tooltip.Content
                     side="top"
-                    className="bg-lightSlaty text-slaty px-3 py-2 text-sm rounded shadow-md z-20"
+                    className="bg-lightSlaty text-slaty px-3 py-2 text-sm rounded-sm shadow-md z-20"
                   >
                     Contribute in this project
                     <Tooltip.Arrow className="fill-lightSlaty" />

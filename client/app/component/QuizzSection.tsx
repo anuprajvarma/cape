@@ -68,7 +68,7 @@ export const QuizzSection = ({
         ) : quizz.length > 0 ? (
           <div
             ref={quizScrollRef}
-            className="sm:px-12 sm:py-2 w-full h-full prose prose-lg prose-headings:my-0 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-a:text-blue-600 hover:prose-a:underline max-w-none overflow-auto scrollbar-hide relative"
+            className="sm:px-12 sm:py-2 w-full h-full prose prose-lg prose-headings:my-0 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-a:text-blue-600 prose-a:hover:underline max-w-none overflow-auto scrollbar-hide relative"
           >
             <div
               className={`sticky top-0 z-50 flex justify-end text-white transition-all  duration-300 ${

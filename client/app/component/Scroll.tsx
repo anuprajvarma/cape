@@ -54,7 +54,7 @@ function StackCard({
           scale,
           transformOrigin: "center",
         }}
-        className="flex h-[30rem] w-full items-center justify-center
+        className="flex h-120 w-full items-center justify-center
       overflow-hidden rounded-[20px] border border-white/5
       bg-white/5 text-center text-white shadow-2xl
       backdrop-blur-2xl"
