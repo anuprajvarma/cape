@@ -89,31 +89,23 @@ export default function HeroSection() {
               <div className="flex gap-4 text-slaty/80 items-center justify-center">
                 <div className="flex -space-x-4 rtl:space-x-reverse">
                   <Image
-                    className="w-10 h-10 border-2 border-buffer rounded-full"
+                    className="w-8 h-8 border-2 border-buffer rounded-full"
                     src={user2}
-                    width={50}
-                    height={50}
                     alt=""
                   />
                   <Image
-                    className="w-10 h-10 border-2 border-buffer rounded-full"
+                    className="w-8 h-8 border-2 border-buffer rounded-full"
                     src={user3}
-                    width={50}
-                    height={50}
                     alt=""
                   />
                   <Image
-                    className="w-10 h-10 border-2 border-buffer rounded-full"
+                    className="w-8 h-8 border-2 border-buffer rounded-full"
                     src={profilePic}
-                    width={50}
-                    height={50}
                     alt=""
                   />
                   <Image
-                    className="w-10 h-10 border-2 border-buffer rounded-full"
+                    className="w-8 h-8 border-2 border-buffer rounded-full"
                     src={profilePic}
-                    width={50}
-                    height={50}
                     alt=""
                   />
                 </div>

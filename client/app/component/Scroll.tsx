@@ -67,11 +67,11 @@ function StackCard({
             </div>
           </div>
 
-          <div className="w-1/2">
+          <div className="w-1/2 p-2">
             <Image
               src={coursepic}
               alt="Course preview"
-              className="h-full w-full object-cover"
+              className="h-full w-full object-cover rounded-[20px]"
             />
           </div>
         </div>
