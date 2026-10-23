@@ -33,18 +33,17 @@ const CourseCard = ({
 
   return (
     <>
-      <div className="w-full p-2 sm:w-88 max-h-80 flex flex-col bg-brand-slate-2/15 backdrop-blur-3xl rounded-3xl">
-        <div className="h-52 relative">
+      <div className="p-2 flex w-96 h-80 flex-col gap-1 bg-brand-slate-2/15 backdrop-blur-3xl rounded-3xl">
+        <div className="h-52 w-full relative overflow-hidden rounded-3xl ">
           <Image
             src={thumbnails || "/code.jpg"}
             alt="playlist thumbnail"
             quality={100}
-            sizes="(max-width: 768rem) 80rem, 160rem"
             fill
-            className="rounded-3xl"
+            className="object-cover"
           />
         </div>
-        <div className="flex flex-col gap-2 p-2 rounded-3xl">
+        <div className="flex flex-col gap-2 py-2 px-3 rounded-3xl">
           <div className="flex items-center gap-1">
             <div className="flex gap-1 flex-col w-full">
               <p className="text-md text-white line-clamp-1 font-semibold">
@@ -70,7 +69,7 @@ const CourseCard = ({
                   setGetDataCheck,
                 })
               }
-              className="py-1 px-5 rounded-3xl bg-white hover:bg-slaty/20 hover:text-black text-black transition duration-300 cursor-pointer"
+              className="py-1 px-5 rounded-3xl bg-white hover:bg-slaty/20 hover:text-black text-black transition duration-300 font-semibold cursor-pointer"
             >
               Enroll
             </button>
