@@ -43,83 +43,76 @@ const SearchInput = ({
   };
 
   return (
-    <div className="w-full relative">
-      <div className=" z-20 shrink-0 w-full py-4">
-        <div className="flex items-center justify-center w-full gap-2">
-          <div className="relative">
-            <div className="flex w-full h-12 rounded-xl sm:w-132">
-              <div className="relative flex flex-col w-full h-full sm:w-120">
-                <input
-                  type="text"
-                  ref={inputRef}
-                  value={searchQuery}
-                  placeholder="Search your favourite playlist"
-                  className="w-full h-full sm:w-120 px-4 py-6 rounded-l-lg text-slaty bg-lightSlaty outline-hidden focus:border focus:border-slaty/30 placeholder-slaty/50"
-                  onChange={handleChange}
-                />
-
-                {/* Suggestions */}
-                {showSuggestions && filteredSuggestions.length > 0 && (
-                  <ul className="absolutetop-full left-0 z-50 w-full mt-1">
-                    <div className="w-full rounded-lg bg-lightSlaty shadow-lg sm:w-120">
-                      {filteredSuggestions.map((suggestion, index) => (
-                        <li
-                          key={index}
-                          onClick={() => handleSelect(suggestion)}
-                          className="p-2 text-slaty hover:bg-slaty/10 cursor-pointer"
-                        >
-                          {suggestion}
-                        </li>
-                      ))}
-                    </div>
-                  </ul>
-                )}
-              </div>
-
-              {/* Search button */}
-              <button
-                onClick={async () => {
-                  if (searchQuery === "") {
-                    setTopic(topic);
-                  } else {
-                    setTopic(searchQuery);
-                  }
-                  await saveSearchTopic({ searchQuery });
-                }}
-                className="h-full px-3 py-3 rounded-r-xl bg-lightSlaty border-l border-lightSlaty duration-300 transition"
-              >
-                <IoSearch className="text-xl text-slaty/50" />
-              </button>
-            </div>
-
-            {isRecording && (
-              <div className="w-full h-60 flex flex-col bg-mediumSlaty border border-lightSlaty rounded-lg p-5 text-slaty absolute top-0">
-                <h2>Listening....</h2>
-                <div className="w-full h-full flex justify-center items-center relative">
-                  {isRecording && (
-                    <motion.div
-                      className="rounded-full bg-blue-400 opacity-75 h-20 w-20 absolute -bottom-3"
-                      animate={{
-                        scale: [0.7, 0.9, 1],
-                        opacity: [0.1, 0.2, 0.3],
-                      }}
-                      transition={{ duration: 1, repeat: Infinity }}
-                    ></motion.div>
-                  )}
-                  {/* Microphone Icon */}
-                  <Mic className="w-10 h-10 absolute bottom-2" />
-                </div>
-              </div>
-            )}
+    <div className="w-full flex justify-center sticky top-20 z-50 mb-10 mt-15">
+      <div className="relative w-5/12 h-full px-4 bg-white/5 backdrop-blur-2xl rounded-[20px] text-brand-slate-1">
+        <div className="flex w-full h-12">
+          <div className="relative flex flex-col w-full h-full">
+            <input
+              type="text"
+              ref={inputRef}
+              value={searchQuery}
+              placeholder="Search your favourite playlist"
+              className="w-full h-full px-4 py-6 rounded-l-lg outline-hidden text-white"
+              onChange={handleChange}
+            />
           </div>
 
-          {/* Voice button */}
+          {/* Search button */}
+          <button
+            onClick={async () => {
+              if (searchQuery === "") {
+                setTopic(topic);
+              } else {
+                setTopic(searchQuery);
+              }
+              await saveSearchTopic({ searchQuery });
+            }}
+            className="h-full px-3 py-3 rounded-r-[15px] bg-lightSlaty  duration-300 transition"
+          >
+            <IoSearch className="text-xl text-brand-blue cursor-pointer" />
+          </button>
           <VoiceSearchHandle
             setSearchQuery={setSearchQuery}
             setIsRecording={setIsRecording}
             setTopic={setTopic}
           />
         </div>
+
+        {showSuggestions && filteredSuggestions.length > 0 && (
+          <ul className="absolute top-11 left-0 w-full mt-1">
+            <div className="w-full rounded-3xl bg-brand-slate-1/10 border border-brand-slate-1/50 shadow-lg">
+              {filteredSuggestions.map((suggestion, index) => (
+                <li
+                  key={index}
+                  onClick={() => handleSelect(suggestion)}
+                  className="p-4 text-white hover:bg-brand-slate-1/20 cursor-pointer rounded-[20px]"
+                >
+                  {suggestion}
+                </li>
+              ))}
+            </div>
+          </ul>
+        )}
+
+        {isRecording && (
+          <div className="w-full h-60 flex flex-col bg-mediumSlaty border border-lightSlaty rounded-lg p-5 text-slaty absolute top-0">
+            <h2>Listening....</h2>
+            <div className="w-full h-full flex justify-center items-center relative">
+              {isRecording && (
+                <motion.div
+                  className="rounded-full bg-blue-400 opacity-75 h-20 w-20 absolute -bottom-3"
+                  animate={{
+                    scale: [0.7, 0.9, 1],
+                    opacity: [0.1, 0.2, 0.3],
+                  }}
+                  transition={{ duration: 1, repeat: Infinity }}
+                ></motion.div>
+              )}
+              {/* Microphone Icon */}
+              <Mic className="w-10 h-10 absolute bottom-2 cursor-pointer" />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

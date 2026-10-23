@@ -20,9 +20,9 @@ const VoiceSearchHandle = ({
         <Tooltip.Trigger asChild>
           <button
             onClick={handleVoiceSearch}
-            className="items-center h-10 p-2 rounded-full bg-lightSlaty border border-slaty/30 hover:bg-slaty/30"
+            className="items-center cursor-pointer"
           >
-            <GrMicrophone className="text-xl text-slaty/5" />
+            <GrMicrophone className="text-xl text-brand-slate-1" />
           </button>
         </Tooltip.Trigger>
 

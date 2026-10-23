@@ -76,7 +76,7 @@ const Header = () => {
           >
             <SiSololearn className="text-[#FFFFFF] w-4 h-4" />
           </Link>
-          <div className="sm:flex hidden gap-8 justify-between text-[13px] font-medium sm:text-md  text-slaty/80">
+          <div className="sm:flex hidden gap-8 justify-between text-[13px] font-medium sm:text-md  text-[#B4B2B3]">
             <Link
               href="/courses"
               className={`cursor-pointer hover:text-darkRed transition duration-300 hover:text-white py-2 px-3 ${

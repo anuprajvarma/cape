@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+@theme {
+  --color-brand-slate-1: #b4b2b3;
+  --color-brand-slate-2: #d9d9d9;
+  --color-sunset-orange: oklch(0.65 0.24 35);
+}
+
 @layer base {
   *,
   ::after,

@@ -56,7 +56,7 @@ export default function HeroSection() {
                 </p>
                 <p
                   key={topic[features]}
-                  className="animate-[fadeSlide_1s_ease-in-out] text-2xl sm:text-3xl md:text-4xl lg:text-2xl"
+                  className="animate-[fadeSlide_1s_ease-in-out] text-2xl sm:text-3xl md:text-4xl lg:text-2xl text-[#B4B2B3]"
                 >
                   {topic[features]}
                 </p>
@@ -109,7 +109,7 @@ export default function HeroSection() {
                     alt=""
                   />
                 </div>
-                <p>Loved by 100+ learners</p>
+                <p className="text-[#B4B2B3]">Loved by 100+ learners</p>
               </div>
             </div>
             <div className="w-full flex items-center justify-center">

@@ -33,7 +33,7 @@ const CourseCard = ({
 
   return (
     <>
-      <div className="w-full sm:w-[20rem] max-h-80 flex flex-col gap-3 bg-mediumSlaty border border-lightSlaty rounded-lg">
+      <div className="w-full p-2 sm:w-88 max-h-80 flex flex-col bg-brand-slate-2/15 backdrop-blur-3xl rounded-3xl">
         <div className="h-52 relative">
           <Image
             src={thumbnails || "/code.jpg"}
@@ -41,18 +41,21 @@ const CourseCard = ({
             quality={100}
             sizes="(max-width: 768rem) 80rem, 160rem"
             fill
-            className="rounded-lg"
+            className="rounded-3xl"
           />
         </div>
-        <div className="flex flex-col gap-2 p-2">
+        <div className="flex flex-col gap-2 p-2 rounded-3xl">
           <div className="flex items-center gap-1">
-            <div className="flex flex-col gap-2 w-full">
-              <p className="text-lg text-white line-clamp-1 font-semibold">
+            <div className="flex gap-1 flex-col w-full">
+              <p className="text-md text-white line-clamp-1 font-semibold">
                 {title}
+              </p>
+              <p className="text-sm text-white line-clamp-1 font-medium">
+                {channelTitle}
               </p>
             </div>
           </div>
-          <div className="flex justify-between py-1 text-slaty">
+          <div className="flex justify-between py-1 text-white">
             <button
               onClick={() =>
                 handleEnrolled({
@@ -67,7 +70,7 @@ const CourseCard = ({
                   setGetDataCheck,
                 })
               }
-              className="py-[4px] px-5 rounded-md bg-lightSlaty hover:bg-slaty/20 hover:text-slaty text-slaty/80 transition duration-300"
+              className="py-1 px-5 rounded-3xl bg-white hover:bg-slaty/20 hover:text-black text-black transition duration-300 cursor-pointer"
             >
               Enroll
             </button>
@@ -76,7 +79,7 @@ const CourseCard = ({
                 <Tooltip.Root>
                   <Tooltip.Trigger asChild>
                     <button onClick={() => router.push(`/course/${id}/${1}`)}>
-                      <IoPlayCircleOutline className="text-2xl hover:text-slaty hover:text-darkRed transition duration-300" />
+                      <IoPlayCircleOutline className="text-2xl hover:text-slaty hover:text-darkRed transition duration-300 cursor-pointer" />
                     </button>
                   </Tooltip.Trigger>
                   <Tooltip.Portal>
@@ -134,7 +137,7 @@ const CourseCard = ({
                           })
                         }
                       >
-                        <IoBookmarkOutline className="text-2xl hover:text-slaty hover:text-darkRed" />
+                        <IoBookmarkOutline className="text-2xl hover:text-slaty hover:text-darkRed cursor-pointer" />
                       </button>
                     </Tooltip.Trigger>
                     <Tooltip.Portal>
@@ -162,7 +165,7 @@ const CourseCard = ({
                         );
                       }}
                     >
-                      <IoMdShareAlt className="text-2xl hover:text-slaty transition duration-300 w-6 h-6" />
+                      <IoMdShareAlt className="text-2xl hover:text-slaty transition duration-300 w-6 h-6 cursor-pointer" />
                     </button>
                   </Tooltip.Trigger>
                   <Tooltip.Portal>
