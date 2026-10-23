@@ -67,8 +67,8 @@ const Header = () => {
   ]);
 
   return (
-    <div className="w-full mt-4 flex justify-center fixed top-0">
-      <div className="flex gap-4 font-medium items-center z-50 bg-white/5 backdrop-blur-2xl rounded-[20px] border border-white/5 px-5 py-1">
+    <div className="w-full mt-4 flex justify-center fixed top-0 z-50">
+      <div className="flex gap-4 font-medium items-center bg-white/5 backdrop-blur-2xl rounded-[20px] border border-white/5 px-5 py-1">
         <div className="flex gap-12">
           <Link
             href="/"

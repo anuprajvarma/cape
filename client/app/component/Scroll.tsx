@@ -42,11 +42,11 @@ function StackCard({
   return (
     <div
       ref={ref}
-      className="sticky flex flex-col items-center justify-center h-screen w-full"
+      className="sticky w-full"
       style={{
-        top: `${80 + index * 18}px`,
-        zIndex: index + 1,
-        marginBottom: "-15vh",
+        top: `${100 + index * 18}px`,
+        zIndex: index * 10,
+        // marginBottom: "15vh",
       }}
     >
       <motion.section
@@ -82,15 +82,11 @@ function StackCard({
 
 export default function ScrollStack() {
   return (
-    <div className="relative">
-      <div className="sticky top-0 z-0 flex h-[25rem] items-center justify-center px-12">
-        <h2 className="text-5xl font-bold text-white">
-          Save hours, learn smarter
-        </h2>
-      </div>
+    <div className="relative flex flex-col gap-16">
       {sections.map((section, index) => (
         <StackCard key={section.title} section={section} index={index} />
       ))}
     </div>
+    // </div>
   );
 }

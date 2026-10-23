@@ -50,7 +50,7 @@ export default function HeroSection() {
           <div className="w-full flex flex-col justify-between gap-10">
             <div className="w-full flex flex-col items-center gap-6 sm:gap-10">
               <div className="w-full sm:flex flex-col gap-6 text-white text-center hidden">
-                <p className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold">
+                <p className="text-2xl sm:text-6xl md:text-5xl lg:text-6xl font-semibold">
                   <span className="text-green-600">Free</span> distraction-free
                   <span className="text-red-600">You</span>Tube learning
                 </p>
