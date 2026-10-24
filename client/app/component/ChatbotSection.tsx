@@ -11,7 +11,7 @@ export const ChatbotSection = ({ id }: ChatbotSectionPropType) => {
   return (
     <div className="w-full h-full">
       {temporaryChatData?.length > 0 ? (
-        <div className="space-y-2 w-full h-full rounded-sm overflow-y-auto">
+        <div className="space-y-2 w-full max-h-11/12 rounded-sm overflow-y-auto">
           {temporaryChatData?.map((msg, i) => (
             <div key={i}>
               <div className="flex w-full justify-end text-xl text-white py-2 sm:py-4">
@@ -30,7 +30,7 @@ export const ChatbotSection = ({ id }: ChatbotSectionPropType) => {
           ))}
         </div>
       ) : (
-        <div className="w-full h-full flex flex-col justify-center items-center gap-4">
+        <div className="w-full h-11/12 flex flex-col justify-center items-center gap-4">
           <div>What&apos;s the agenda today ?</div>
         </div>
       )}

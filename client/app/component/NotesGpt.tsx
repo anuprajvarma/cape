@@ -26,7 +26,7 @@ const NotesGpt = ({ id, videoId, videoTitle }: NotesGptPropType) => {
   } = useNotesGpt({ id, videoId, countedScore, Completed });
 
   return (
-    <div className="rounded-3xl w-[35rem]">
+    <div className="rounded-3xl w-[35rem] h-full">
       {" "}
       <div className="flex justify-between bg-mediumSlaty border border-brand-slate-1/20 rounded-t-xl px-2 py-4 w-full">
         <button
@@ -56,7 +56,7 @@ const NotesGpt = ({ id, videoId, videoTitle }: NotesGptPropType) => {
           Quizzes
         </button>
       </div>
-      <div className="w-full">
+      <div className="w-full h-11/12">
         {notecheck && (
           <Editor
             email={session.data?.user?.email as string}
