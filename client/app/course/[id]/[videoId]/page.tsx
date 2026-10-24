@@ -45,7 +45,7 @@ export default function Course() {
     <>
       <CourseLinkModal />
       <LoginModal />
-      <div className="w-full z-50 px-1 sm:px-4 flex flex-col gap-2 justify-center text-slaty mt-20">
+      <div className="w-full z-50 px-1 sm:px-4 flex flex-col gap-2 justify-center text-slaty">
         <div className="w-full flex justify-between gap-2">
           <div className="w-full flex flex-col gap-4">
             <PlayVideoSection

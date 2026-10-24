@@ -2,10 +2,10 @@
 
 import dynamic from "next/dynamic";
 import React, { useEffect, useState } from "react";
-import { CourseLinkModal } from "../component/CourseLinkModal";
-import { useBookmarkPlaylist } from "../hooks/bookmarkPlaylist";
+import { CourseLinkModal } from "../../component/CourseLinkModal";
+import { useBookmarkPlaylist } from "../../hooks/bookmarkPlaylist";
 
-const CourseCard = dynamic(() => import("../component/CourseCard"), {
+const CourseCard = dynamic(() => import("../../component/CourseCard"), {
   ssr: false,
 });
 

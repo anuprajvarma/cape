@@ -14,9 +14,9 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { CourseLinkModal } from "../component/CourseLinkModal";
-import { SortEnrolledCourses } from "../component/SortEnrolledCourses";
-import { useDashboard } from "../hooks/dashboard";
+import { CourseLinkModal } from "../../component/CourseLinkModal";
+import { SortEnrolledCourses } from "../../component/SortEnrolledCourses";
+import { useDashboard } from "../../hooks/dashboard";
 
 const Dashboard: React.FC = () => {
   const [hasMounted, setHasMounted] = useState<boolean>(false);

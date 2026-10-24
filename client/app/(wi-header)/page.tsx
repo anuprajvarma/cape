@@ -1,12 +1,12 @@
 "use client";
 
 import React from "react";
-import HeroSection from "./component/HeroSection";
-import ScoreSection from "./component/ScoreSection";
-import Testomonials from "./component/Testomonials";
-import NavBar from "./component/NavBar";
+import HeroSection from "../component/HeroSection";
+import ScoreSection from "../component/ScoreSection";
+import Testomonials from "../component/Testomonials";
+import NavBar from "../component/NavBar";
 import Link from "next/link";
-import Header from "./component/Header";
+import Header from "../component/Header";
 
 export default function Page() {
   return (

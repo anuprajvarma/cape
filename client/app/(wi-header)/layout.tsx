@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { SessionProvider } from "./component/sessionProvider";
-import { Providers } from "./redux/provider";
+import { SessionProvider } from "../component/sessionProvider";
+import { Providers } from "../redux/provider";
 // import { ToastContainer } from "react-toastify";
-import Toaster from "./component/Toaster";
+import Toaster from "../component/Toaster";
 import "react-toastify/dist/ReactToastify.css";
-import "./globals.css";
-import Header from "./component/Header";
+import "../globals.css";
+import Header from "../component/Header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

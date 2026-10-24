@@ -2,13 +2,13 @@
 
 import dynamic from "next/dynamic";
 import React, { useState } from "react";
-import { LoginModal } from "../component/LoginModal";
-import { CourseLinkModal } from "../component/CourseLinkModal";
+import { LoginModal } from "../../component/LoginModal";
+import { CourseLinkModal } from "../../component/CourseLinkModal";
 
-import SearchInput from "../component/SearchInput";
-import { useCourses } from "../hooks/couses";
+import SearchInput from "../../component/SearchInput";
+import { useCourses } from "../../hooks/couses";
 
-const CourseCard = dynamic(() => import("../component/CourseCard"), {
+const CourseCard = dynamic(() => import("../../component/CourseCard"), {
   ssr: false,
 });
 
