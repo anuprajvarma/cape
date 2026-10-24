@@ -54,7 +54,7 @@ const Editor = ({ email, playlistId }: EditorPropType) => {
   };
 
   return (
-    <div className="w-full h-full py-4">
+    <div className="w-full h-full">
       {session.status === "authenticated" ? (
         <BlockNoteView
           className="w-full editor-wrapper"
