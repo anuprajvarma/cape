@@ -37,7 +37,7 @@ export const LoginModal = () => {
               </DialogTitle>
               <button
                 onClick={() => signIn("google")}
-                className="px-6 py-3 flex gap-2 items-center rounded-[8px] cursor-pointer font-semibold text-sm bg-lightBlue hover:bg-lightBlue/80 transition duration-300"
+                className="px-6 py-3 flex gap-2 items-center rounded-lg cursor-pointer font-semibold text-sm bg-lightBlue hover:bg-lightBlue/80 transition duration-300"
               >
                 <p>Sign in</p>
                 <FaArrowRight />
