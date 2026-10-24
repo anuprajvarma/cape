@@ -80,7 +80,7 @@ export default function Course() {
             </Disclosure>
           </div>
 
-          <div className="w-[60rem] h-screen border border-brand-slate-1/20 rounded-xl hidden lg:flex flex-col">
+          <div className="w-240 h-screen border border-brand-slate-1/20 rounded-xl hidden lg:flex flex-col">
             <NotesGpt
               id={id as string}
               videoId={videoId as string}

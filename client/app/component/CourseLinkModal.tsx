@@ -48,7 +48,7 @@ export const CourseLinkModal = () => {
                   });
                   dispatch(setCourseLinkModal(false));
                 }}
-                className="py-3 text-white text-center flex gap-2 items-center justify-center w-full rounded-[8px] cursor-pointer font-semibold border border-lightSlaty hover:bg-lightSlaty text-sm transition duration-300"
+                className="py-3 text-white text-center flex gap-2 items-center justify-center w-full rounded-lg cursor-pointer font-semibold border border-lightSlaty hover:bg-lightSlaty text-sm transition duration-300"
               >
                 <IoIosLink size={17} />
                 <p>Copy link</p>
