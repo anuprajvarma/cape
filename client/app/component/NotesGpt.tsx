@@ -26,12 +26,12 @@ const NotesGpt = ({ id, videoId, videoTitle }: NotesGptPropType) => {
   } = useNotesGpt({ id, videoId, countedScore, Completed });
 
   return (
-    <div className="border rounded-lg border-lightSlaty">
+    <div className="rounded-3xl w-[35rem]">
       {" "}
-      <div className="flex justify-between bg-mediumSlaty border-b border-lightSlaty px-2 py-4">
+      <div className="flex justify-between bg-mediumSlaty border border-brand-slate-1/20 rounded-t-xl px-2 py-4 w-full">
         <button
           onClick={handleNotes}
-          className={`sm:px-4 sm:py-1 p-1 rounded-md  hover:bg-slaty/20 hover:text-white transition duration-300 border border-lightSlaty ${
+          className={`sm:px-4 sm:py-1 p-1 rounded-md  hover:bg-slaty/20 hover:text-white transition duration-300 border border-brand-slate-1/20 ${
             notecheck ? "bg-slaty/20 text-white" : "text-slaty/80 bg-lightSlaty"
           }`}
         >
@@ -39,7 +39,7 @@ const NotesGpt = ({ id, videoId, videoTitle }: NotesGptPropType) => {
         </button>
         <button
           onClick={handleGPT}
-          className={`sm:px-4 sm:py-1 p-1 rounded-md  hover:bg-slaty/20 hover:text-white transition duration-300 border border-lightSlaty ${
+          className={`sm:px-4 sm:py-1 p-1 rounded-md  hover:bg-slaty/20 hover:text-white transition duration-300 border border-brand-slate-1/20 ${
             gptcheck ? "bg-slaty/20 text-white" : "text-slaty/80 bg-lightSlaty"
           }`}
         >
@@ -47,7 +47,7 @@ const NotesGpt = ({ id, videoId, videoTitle }: NotesGptPropType) => {
         </button>
         <button
           onClick={handleEasyExplain}
-          className={`sm:px-4 sm:py-1 p-1 rounded-md  hover:bg-slaty/20 hover:text-white transition duration-300 border border-lightSlaty ${
+          className={`sm:px-4 sm:py-1 p-1 rounded-md  hover:bg-slaty/20 hover:text-white transition duration-300 border border-brand-slate-1/20 ${
             quizzcheck
               ? "bg-slaty/20 text-white"
               : "text-slaty/80 bg-lightSlaty"
@@ -56,7 +56,7 @@ const NotesGpt = ({ id, videoId, videoTitle }: NotesGptPropType) => {
           Quizzes
         </button>
       </div>
-      <div className="w-full h-160">
+      <div className="w-full">
         {notecheck && (
           <Editor
             email={session.data?.user?.email as string}

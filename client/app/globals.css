@@ -55,3 +55,10 @@ body {
     transform: translateY(0);
   }
 }
+
+.no-editor-border .bn-container,
+.no-editor-border .bn-editor {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}

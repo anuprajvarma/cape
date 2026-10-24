@@ -13,7 +13,6 @@ import Linkify from "linkify-react";
 import NotesGpt from "@/app/component/NotesGpt";
 import { LoginModal } from "@/app/component/LoginModal";
 import { CourseLinkModal } from "@/app/component/CourseLinkModal";
-import { DiscussionSection } from "@/app/component/DiscussionSection";
 import { PlayVideoSection } from "@/app/component/PlayVideo";
 import { PlaylistVideosSection } from "@/app/component/PlaylistVideosSection";
 
@@ -43,7 +42,7 @@ export default function Course() {
     <>
       <CourseLinkModal />
       <LoginModal />
-      <div className="w-full -z-20 py-4 px-1 sm:px-4 flex flex-col gap-2 justify-center text-slaty mt-16">
+      <div className="w-full z-50 px-1 sm:px-4 flex flex-col gap-2 justify-center text-slaty mt-20">
         <div className="w-full flex justify-between gap-2">
           <div className="w-full flex flex-col gap-4">
             <PlayVideoSection
@@ -79,22 +78,20 @@ export default function Course() {
                 ))}
               </DisclosurePanel>
             </Disclosure>
+          </div>
+
+          <div className="w-[60rem] h-screen border border-brand-slate-1/20 rounded-xl hidden lg:flex flex-col">
             <NotesGpt
               id={id as string}
               videoId={videoId as string}
               videoTitle={videoTitle}
             />
-          </div>
-          <div className="flex flex-col gap-5">
-            <div className="w-120 border border-lightSlaty rounded-xl hidden lg:flex flex-col">
-              <PlaylistVideosSection
-                id={id}
-                videoId={videoId}
-                completedChapters={completedChapters}
-                mobile={true}
-              />
-            </div>
-            <DiscussionSection id={id} videoId={videoId} />
+            {/* <PlaylistVideosSection
+              id={id}
+              videoId={videoId}
+              completedChapters={completedChapters}
+              mobile={true}
+            /> */}
           </div>
         </div>
       </div>

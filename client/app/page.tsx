@@ -6,10 +6,12 @@ import ScoreSection from "./component/ScoreSection";
 import Testomonials from "./component/Testomonials";
 import NavBar from "./component/NavBar";
 import Link from "next/link";
+import Header from "./component/Header";
 
 export default function Page() {
   return (
     <>
+      <Header />
       <HeroSection />
       <ScoreSection />
       <Testomonials />
