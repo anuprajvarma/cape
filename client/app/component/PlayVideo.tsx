@@ -1,21 +1,21 @@
-import { setCourseLinkModal } from "../redux/slices/CourseLinkModal";
-import { setCourseLink } from "../redux/slices/CourseLink";
-import * as Tooltip from "@radix-ui/react-tooltip";
-import { IoMdShareAlt } from "react-icons/io";
-import { AppDispatch, RootState } from "../redux/store";
-import { useDispatch, useSelector } from "react-redux";
+// import { setCourseLinkModal } from "../redux/slices/CourseLinkModal";
+// import { setCourseLink } from "../redux/slices/CourseLink";
+// import * as Tooltip from "@radix-ui/react-tooltip";
+// import { IoMdShareAlt } from "react-icons/io";
+// import { AppDispatch, RootState } from "../redux/store";
+// import { useDispatch, useSelector } from "react-redux";
 import { videoTitleSection } from "@/types";
 
 export const PlayVideoSection = ({
-  id,
-  videoTitle,
+  // id,
+  // videoTitle,
   videoId,
-  completedChapters,
+  // completedChapters,
 }: videoTitleSection) => {
-  const playlistLengths = useSelector(
-    (state: RootState) => state.PlaylistLengthReducer,
-  );
-  const dispatch = useDispatch<AppDispatch>();
+  // const playlistLengths = useSelector(
+  //   (state: RootState) => state.PlaylistLengthReducer,
+  // );
+  // const dispatch = useDispatch<AppDispatch>();
 
   return (
     <>
@@ -28,7 +28,7 @@ export const PlayVideoSection = ({
           title="YouTube video player"
         />
       </div>
-      <div className="flex gap-2 justify-between bg-mediumSlaty border-lightSlaty p-1 sm:p-2 rounded-lg">
+      {/* <div className="flex gap-2 justify-between bg-mediumSlaty border-lightSlaty p-1 sm:p-2 rounded-lg">
         <p className="text-lg font-semibold text-white line-clamp-1">
           {videoTitle}
         </p>
@@ -68,7 +68,7 @@ export const PlayVideoSection = ({
             </Tooltip.Portal>
           </Tooltip.Root>
         </Tooltip.Provider>
-      </div>
+      </div> */}
     </>
   );
 };

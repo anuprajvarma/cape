@@ -8,7 +8,10 @@ import {
   DisclosurePanel,
 } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import Linkify from "linkify-react";
+import { BookOpenIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
+import { CgTranscript } from "react-icons/cg";
+
+// import Linkify from "linkify-react";
 
 import NotesGpt from "@/app/component/NotesGpt";
 import { LoginModal } from "@/app/component/LoginModal";
@@ -19,24 +22,24 @@ import { PlaylistVideosSection } from "@/app/component/PlaylistVideosSection";
 import { useSessionsDetails } from "@/app/hooks/sesionAndRouterDetail";
 import { useCourse } from "@/app/hooks/course";
 
-const options = {
-  target: "_blank",
-  rel: "noopener noreferrer",
-  className: () => "text-blue-600 underline prose",
-};
+// const options = {
+//   target: "_blank",
+//   rel: "noopener noreferrer",
+//   className: () => "text-blue-600 underline prose",
+// };
 
 export default function Course() {
   const { params } = useSessionsDetails();
   const { id, videoId } = params;
-  const { completedChapters, videoTitle, videoDescription } = useCourse({
+  const { completedChapters, videoTitle } = useCourse({
     id,
     videoId,
   });
 
-  const lines = videoDescription
-    ?.split("\n")
-    .map((line) => line.trim())
-    .filter((line) => line.length > 0);
+  // const lines = videoDescription
+  //   ?.split("\n")
+  //   .map((line) => line.trim())
+  //   .filter((line) => line.length > 0);
 
   return (
     <>
@@ -65,7 +68,27 @@ export default function Course() {
                 />
               </DisclosurePanel>
             </Disclosure>
-            <Disclosure as="div" className="" defaultOpen={false}>
+            <div className="w-full p-2 flex justify-between">
+              <div className="bg-white/5 backdrop-blur-2xl rounded-lg border border-white/5 flex gap-2 p-2">
+                <div className="bg-white/5 backdrop-blur-2xl rounded-lg flex gap-1 py-1 px-2">
+                  <BookOpenIcon />
+                  <p>Chapters</p>
+                </div>
+                <div className="rounded-lg flex gap-1 py-1 px-2 items-center ">
+                  <CgTranscript />
+                  <p>Transcripts</p>
+                </div>
+              </div>
+              <div className="flex gap-4 items-center justify-center">
+                <div className="bg-white/10 backdrop-blur-2xl rounded-lg flex gap-1 py-1 px-2  items-center justify-center">
+                  <ChevronUpIcon className="w-6 h-6" />
+                </div>
+                <div className="bg-white/10 backdrop-blur-2xl rounded-lg flex gap-1 py-1 px-2 items-center justify-center">
+                  <input type="checkbox" className="w-6 h-6" />
+                </div>
+              </div>
+            </div>
+            {/* <Disclosure as="div" className="" defaultOpen={false}>
               <DisclosureButton className="group flex w-full items-center text-md justify-between px-1 sm:px-2 rounded-lg">
                 <span>Description</span>
                 <ChevronDownIcon className="size-5 fill-slaty group-data-hover:fill-white/50 group-data-open:rotate-180" />
@@ -77,7 +100,7 @@ export default function Course() {
                   </p>
                 ))}
               </DisclosurePanel>
-            </Disclosure>
+            </Disclosure> */}
           </div>
 
           <div className="w-240 h-screen border border-brand-slate-1/20 rounded-xl hidden lg:flex flex-col">
