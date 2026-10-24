@@ -36,28 +36,28 @@ const EnrolledCard = ({
 
   return (
     <div className="flex justify-center lg:justify-between gap-8">
-      <div className="flex flex-col sm:flex-row w-full sm:w-148 md:w-208 min-h-48 rounded-lg bg-mediumSlaty border border-lightSlaty">
-        <div className="flex w-full sm:w-[20rem] h-48 relative">
+      <div className="flex flex-col sm:flex-row w-full sm:w-148 md:w-208 min-h-48 bg-brand-slate-2/15 backdrop-blur-3xl rounded-3xl p-4 text-white gap-4 border border-brand-slate-1/20">
+        <div className="flex w-full sm:w-[20rem] h-42 relative rounded-3xl">
           <Image
             src={thumbnail || "/code.jpg"}
             alt="playlist thumbnail"
             quality={100}
-            sizes="80px"
             fill
-            style={{ objectFit: "cover" }}
-            className="rounded-md"
+            className="rounded-3xl object-cover"
           />
         </div>
-        <div className="flex sm:w-lg flex-col px-2 py-4 gap-2">
-          <p className="text-xl text-white line-clamp-2 font-semibold">
-            {title}
-          </p>
-          <div className="flex justify-between text-md text-slaty/80">
-            <div className="flex gap-2 items-center justify-center">
-              <p>{channelTitle}</p>
-            </div>
-            <div className="flex gap-2 items-center justify-center">
-              <p>chapters {playlistChapters}</p>
+        <div className="flex sm:w-lg flex-col px-2 py-8 gap-8">
+          <div className="flex flex-col gap-2">
+            <p className="text-lg text-white line-clamp-2 font-semibold">
+              {title}
+            </p>
+            <div className="flex justify-between text-sm text-slaty/80">
+              <div className="flex gap-2 items-center justify-center">
+                <p>{channelTitle}</p>
+              </div>
+              <div className="flex gap-2 items-center justify-center">
+                <p>chapters {playlistChapters}</p>
+              </div>
             </div>
           </div>
           <div className="flex flex-col gap-2 items-end text-slaty/80">
@@ -147,14 +147,14 @@ const EnrolledCard = ({
           </div>
         </div>
       </div>
-      <div className="w-100 rounded-lg border bg-mediumSlaty  border-lightSlaty hidden lg:flex flex-col gap-3 justify-center items-center">
+      <div className="w-100 bg-mediumSlaty  border-lightSlaty hidden lg:flex flex-col gap-3 justify-center items-center bg-brand-slate-2/15 backdrop-blur-3xl rounded-3xl border border-brand-slate-1/20 text-white">
         <CircularProgressbar
           value={precentage}
           text={`${precentage}%`}
           styles={buildStyles({
             strokeLinecap: "butt",
             textSize: "20px",
-            pathColor: "#1A56DB",
+            pathColor: "#42B72E",
             textColor: "#D1D5DB",
             trailColor: "#d6d6d6",
           })}

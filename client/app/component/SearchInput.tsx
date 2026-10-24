@@ -44,7 +44,7 @@ const SearchInput = ({
 
   return (
     <div className="w-full flex justify-center sticky top-20 z-50 mb-10 mt-15">
-      <div className="relative w-5/12 h-full px-4 bg-white/5 backdrop-blur-2xl rounded-[20px] text-brand-slate-1">
+      <div className="relative w-5/12 h-full px-4 bg-white/5 backdrop-blur-2xl border border-brand-slate-1/20 rounded-[20px] text-brand-slate-1">
         <div className="flex w-full h-12">
           <div className="relative flex flex-col w-full h-full">
             <input

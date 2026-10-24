@@ -72,7 +72,7 @@ const Dashboard: React.FC = () => {
                 <p className="text-xl text-center text-slaty">Loading...</p>
               ) : (
                 <div className="h-full w-full flex justify-center items-center">
-                  <p className="text-xl text-center text-[#B4B2B3]">
+                  <p className="text-xl text-center text-brand-slate-1">
                     You are not Sign in
                   </p>
                 </div>
