@@ -19,10 +19,10 @@ export const PlayVideoSection = ({
 
   return (
     <>
-      <div className="flex w-full h-80 items-center justify-center sm:h-[41.6rem] ">
+      <div className="flex w-full">
         <iframe
           src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
-          className="rounded-lg w-full h-full"
+          className="rounded-lg object-cover w-full h-128"
           allowFullScreen
           allow="autoplay; encrypted-media"
           title="YouTube video player"
