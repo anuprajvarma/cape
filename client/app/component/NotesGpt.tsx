@@ -31,7 +31,7 @@ const NotesGpt = ({ id, videoId, videoTitle }: NotesGptPropType) => {
       <div className="flex justify-between bg-white/5 backdrop-blur-2xl rounded-lg border border-white/5 rounded-t-xl px-2 py-3 w-full">
         <button
           onClick={handleNotes}
-          className={`sm:px-4 sm:py-1 p-1 rounded-md  hover:bg-slaty/20 hover:text-white transition duration-300 border border-brand-slate-1/20 ${
+          className={`sm:px-4 sm:py-1 p-1 rounded-md cursor-pointer hover:bg-white/5 hover:backdrop-blur-2xl hover:text-white transition duration-300 border border-brand-slate-1/20 ${
             notecheck
               ? "bg-white/5 backdrop-blur-2xl text-white"
               : "text-slaty/80 bg-lightSlaty"
@@ -41,7 +41,7 @@ const NotesGpt = ({ id, videoId, videoTitle }: NotesGptPropType) => {
         </button>
         <button
           onClick={handleGPT}
-          className={`sm:px-4 sm:py-1 p-1 rounded-md  hover:bg-slaty/20 hover:text-white transition duration-300 border border-brand-slate-1/20 ${
+          className={`sm:px-4 sm:py-1 p-1 rounded-md cursor-pointerhover:bg-white/5 hover:backdrop-blur-2xl hover:text-white transition duration-300 border border-brand-slate-1/20 ${
             gptcheck
               ? "bg-white/5 backdrop-blur-2xl text-white"
               : "text-slaty/80 bg-lightSlaty"
@@ -51,7 +51,7 @@ const NotesGpt = ({ id, videoId, videoTitle }: NotesGptPropType) => {
         </button>
         <button
           onClick={handleEasyExplain}
-          className={`sm:px-4 sm:py-1 p-1 rounded-md  hover:bg-slaty/20 hover:text-white transition duration-300 border border-brand-slate-1/20 ${
+          className={`sm:px-4 sm:py-1 p-1 rounded-md cursor-pointer hover:bg-white/5 hover:backdrop-blur-2xl hover:text-white transition duration-300 border border-brand-slate-1/20 ${
             quizzcheck
               ? "bg-white/5 backdrop-blur-2xl text-white"
               : "text-slaty/80 bg-lightSlaty"

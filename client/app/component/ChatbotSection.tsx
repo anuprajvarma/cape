@@ -11,15 +11,15 @@ export const ChatbotSection = ({ id }: ChatbotSectionPropType) => {
   return (
     <div className="w-full flex flex-col gap-2 h-full">
       {temporaryChatData?.length > 0 ? (
-        <div className="w-full h-11/12 rounded-sm overflow-y-auto">
+        <div className="w-full h-11/12 rounded-sm overflow-y-auto px-8">
           {temporaryChatData?.map((msg, i) => (
-            <div key={i}>
-              <div className="flex w-full justify-end text-xl text-white">
-                <p className="border border-lightSlaty px-6 rounded-3xl">
+            <div key={i} className="py-8">
+              <div className="flex w-full justify-end">
+                <p className="border border-brand-slate-1/20 px-6 py-2 rounded-3xl text-white bg-white/5 backdrop-blur-2xl">
                   {msg.question}
                 </p>
               </div>
-              <div className="prose prose-slate prose-lg w-full h-full overflow-auto max-w-none py-4 px-2 prose-headings:my-2 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-ul:my-0 prose-a:hover:underline">
+              <div className="prose prose-slate prose-lg w-full h-full overflow-auto max-w-none py-4 prose-headings:my-2 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-ul:my-0 prose-a:hover:underline">
                 {msg.answer !== "" ? (
                   <ReactMarkdown>{msg.answer}</ReactMarkdown>
                 ) : (

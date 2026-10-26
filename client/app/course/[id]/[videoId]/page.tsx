@@ -196,9 +196,9 @@ export default function Course() {
           </div>
           <div className="w-2/5 flex justify-between items-center text-brand-slate-1/90">
             <p>
-              Complete - {completedChapters.length}/{playlistLengths}
+              Completed - {completedChapters.length}/{playlistLengths}
             </p>
-            <PiShareFat className="w-7 h-7" />
+            <PiShareFat className="w-7 h-7 cursor-pointer hover:text-white" />
           </div>
         </div>
         <div className="w-full flex justify-between gap-2 h-11/12">
