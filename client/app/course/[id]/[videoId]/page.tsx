@@ -26,9 +26,15 @@ import { PlayVideoSection } from "@/app/component/PlayVideo";
 import { PlaylistVideosSection } from "@/app/component/PlaylistVideosSection";
 
 import { useSessionsDetails } from "@/app/hooks/sesionAndRouterDetail";
+import { setCheckBox } from "../../../redux/slices/checkboxSlice";
 import { useCourse } from "@/app/hooks/course";
-import { useSelector } from "react-redux";
-import { RootState } from "@/app/redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/app/redux/store";
+import { playlistType2 } from "@/types";
+import { fetchPlaylistVideos } from "@/app/utils/frontendApiCalls";
+import { useSession } from "next-auth/react";
+import { handleChapterActions } from "@/app/utils/backendApiCalls";
+import { setIsOpen } from "@/app/redux/slices/LoginModalSlice";
 
 // const options = {
 //   target: "_blank",
@@ -39,6 +45,9 @@ import { RootState } from "@/app/redux/store";
 export default function Course() {
   const { params } = useSessionsDetails();
   const { id, videoId } = params;
+  const session = useSession();
+  const dispatch = useDispatch<AppDispatch>();
+  const checkboxTrack = useSelector((state: RootState) => state.checkbox);
   const { completedChapters, videoTitle } = useCourse({
     id,
     videoId,
@@ -47,6 +56,48 @@ export default function Course() {
   const playlistLengths = useSelector(
     (state: RootState) => state.PlaylistLengthReducer,
   );
+
+  const [position, setPosition] = useState<number>();
+
+  const isChecked: boolean =
+    typeof videoId === "string" &&
+    completedChapters?.includes(videoId) === true;
+
+  useEffect(() => {
+    const playlist = async () => {
+      if (typeof id === "string") {
+        const result = await fetchPlaylistVideos({ id });
+        // setPlaylistVideos(result);
+        const videoPosition = result.findIndex(
+          (video: playlistType2) =>
+            video.snippet.resourceId.videoId === videoId,
+        );
+        setPosition(videoPosition + 1);
+        console.log("Video position:", videoPosition + 1);
+      }
+    };
+    playlist();
+  }, [id, videoId]);
+
+  const checkBoxHandler = async (e: boolean) => {
+    if (session.status === "authenticated") {
+      await handleChapterActions({
+        isCompleted: e,
+        email: session.data?.user?.email ?? "",
+        playlistId: id,
+        videoId: videoId,
+        title: videoTitle,
+        channelTitle: "afasfd",
+        thumbnails: "afdasdf",
+        description: "random",
+        bookmark: true,
+        indexOrder: 0,
+      });
+      dispatch(setCheckBox(!checkboxTrack));
+    } else {
+      dispatch(setIsOpen(true));
+    }
+  };
 
   // const lines = videoDescription
   //   ?.split("\n")
@@ -84,17 +135,29 @@ export default function Course() {
                 className="w-8 h-8 cursor-pointer"
                 onClick={() => setIsOpenMenu(true)}
               />
-              <p className="font-semibold">{videoTitle}</p>
+              <p className="font-semibold">
+                {position}. {videoTitle}
+              </p>
             </div>
             {/* <div className="bg-white/10 w-[2rem] backdrop-blur-2xl rounded-lg flex gap-1 py-1 px-2 items-center justify-center">
               <input type="checkbox" className="w-6 h-6" />
             </div> */}
-            <div className="flex items-center">
+            {/* <div className="flex items-center">
               <input
                 type="checkbox"
                 className={`w-5 h-5 accent-blue-600 rounded cursor-pointer`}
                 // checked={isChecked}
                 // onChange={(e) => checkBoxHandler(e.target.checked)}
+              />
+            </div> */}
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                className={`w-5 h-5 ${
+                  isChecked ? "accent-blue-600" : "accent-white"
+                } rounded cursor-pointer`}
+                checked={isChecked}
+                onChange={(e) => checkBoxHandler(e.target.checked)}
               />
             </div>
           </div>

@@ -168,16 +168,16 @@ export interface LoginType {
 
 export interface AddAndRemoveChaptersType {
   email: string;
-  playlistId: string;
-  videoId: string;
+  playlistId: string | string[] | undefined;
+  videoId: string | string[] | undefined;
   url: string;
 }
 
 export interface ChapterActionType {
   isCompleted: boolean;
   email: string;
-  playlistId: string;
-  videoId: string;
+  playlistId: string | string[] | undefined;
+  videoId: string | string[] | undefined;
   title: string;
   channelTitle: string;
   thumbnails: string;
@@ -255,6 +255,7 @@ export interface playlistType2 {
     channelId: string;
     thumbnailURL: string;
     channelTitle: string;
+    position: number;
     resourceId: {
       videoId: string;
     };
