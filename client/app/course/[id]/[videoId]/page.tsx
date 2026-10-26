@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 
 import {
   Disclosure,
@@ -41,6 +41,7 @@ export default function Course() {
     id,
     videoId,
   });
+  const [openMenu, setIsOpenMenu] = useState<boolean>(false);
 
   // const lines = videoDescription
   //   ?.split("\n")
@@ -51,11 +52,25 @@ export default function Course() {
     <>
       <CourseLinkModal />
       <LoginModal />
-      <div className="w-full px-2 flex flex-col justify-center text-slaty h-screen">
+      <div className="w-full relative px-2 flex flex-col justify-center text-slaty h-screen">
+        {openMenu && (
+          <div className="absolute z-50 h-full w-120 left-0 bg-white/5 backdrop-blur-2xl border border-white/5">
+            <PlaylistVideosSection
+              id={id}
+              videoId={videoId}
+              setIsOpenMenu={setIsOpenMenu}
+              completedChapters={completedChapters}
+              mobile={true}
+            />
+          </div>
+        )}
         <div className="w-full flex justify-between gap-2 py-4">
           <div className="w-3/5 flex justify-between px-2">
             <div className="flex gap-3 items-center justify-center">
-              <Bars3BottomRightIcon className="w-8 h-8" />
+              <Bars3BottomRightIcon
+                className="w-8 h-8 cursor-pointer"
+                onClick={() => setIsOpenMenu(true)}
+              />
               <p className="font-semibold">{videoTitle}</p>
             </div>
             {/* <div className="bg-white/10 w-[2rem] backdrop-blur-2xl rounded-lg flex gap-1 py-1 px-2 items-center justify-center">
@@ -92,6 +107,7 @@ export default function Course() {
                 <PlaylistVideosSection
                   id={id}
                   videoId={videoId}
+                  setIsOpenMenu={setIsOpenMenu}
                   completedChapters={completedChapters}
                   mobile={false}
                 />

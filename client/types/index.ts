@@ -9,6 +9,7 @@ export interface VoiceSearchPropType {
 export interface PlaylistVideosPropType {
   id: string | string[] | undefined;
   videoId: string | string[] | undefined;
+  setIsOpenMenu: React.Dispatch<React.SetStateAction<boolean>>;
   completedChapters: string[];
   mobile: boolean;
 }
