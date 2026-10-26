@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   Disclosure,
@@ -27,6 +27,8 @@ import { PlaylistVideosSection } from "@/app/component/PlaylistVideosSection";
 
 import { useSessionsDetails } from "@/app/hooks/sesionAndRouterDetail";
 import { useCourse } from "@/app/hooks/course";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/redux/store";
 
 // const options = {
 //   target: "_blank",
@@ -42,11 +44,22 @@ export default function Course() {
     videoId,
   });
   const [openMenu, setIsOpenMenu] = useState<boolean>(false);
+  const playlistLengths = useSelector(
+    (state: RootState) => state.PlaylistLengthReducer,
+  );
 
   // const lines = videoDescription
   //   ?.split("\n")
   //   .map((line) => line.trim())
   //   .filter((line) => line.length > 0);
+
+  // useEffect(() => {
+  //   if (actualId && playlistLengths) {
+  //     const percentage =
+  //       (100 * completedChapters.length) / Number(playlistLengths);
+  //     setPrecentage(Math.round(percentage));
+  //   }
+  // }, [actualId, playlistLengths, completedChapters.length]);
 
   return (
     <>
@@ -86,7 +99,9 @@ export default function Course() {
             </div>
           </div>
           <div className="w-2/5 flex justify-between items-center text-brand-slate-1/90">
-            <p>Progress - 5/35</p>
+            <p>
+              Complete - {completedChapters.length}/{playlistLengths}
+            </p>
             <PiShareFat className="w-7 h-7" />
           </div>
         </div>
