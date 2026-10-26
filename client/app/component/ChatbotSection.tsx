@@ -9,17 +9,17 @@ export const ChatbotSection = ({ id }: ChatbotSectionPropType) => {
     });
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full flex flex-col gap-2 h-full">
       {temporaryChatData?.length > 0 ? (
-        <div className="space-y-2 w-full max-h-11/12 rounded-sm overflow-y-auto">
+        <div className="w-full h-11/12 rounded-sm overflow-y-auto">
           {temporaryChatData?.map((msg, i) => (
             <div key={i}>
-              <div className="flex w-full justify-end text-xl text-white py-2 sm:py-4">
-                <p className="border border-lightSlaty px-6 py-2 rounded-3xl">
+              <div className="flex w-full justify-end text-xl text-white">
+                <p className="border border-lightSlaty px-6 rounded-3xl">
                   {msg.question}
                 </p>
               </div>
-              <div className="prose prose-slate prose-lg w-full h-full overflow-auto max-w-none p-2 sm:p-12 prose-headings:my-2 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-ul:my-0 prose-a:hover:underline">
+              <div className="prose prose-slate prose-lg w-full h-full overflow-auto max-w-none py-4 px-2 prose-headings:my-2 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-ul:my-0 prose-a:hover:underline">
                 {msg.answer !== "" ? (
                   <ReactMarkdown>{msg.answer}</ReactMarkdown>
                 ) : (
@@ -35,7 +35,7 @@ export const ChatbotSection = ({ id }: ChatbotSectionPropType) => {
         </div>
       )}
 
-      <div className="py-4 flex gap-2">
+      <div className="flex gap-2 px-2">
         <input
           value={input}
           onKeyDown={(e) => {

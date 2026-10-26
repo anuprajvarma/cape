@@ -11,6 +11,8 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import {
   BookOpenIcon,
   Bars3BottomRightIcon,
+  ArrowLeftIcon,
+  ArrowRightIcon,
 } from "@heroicons/react/24/outline";
 import { CgTranscript } from "react-icons/cg";
 import { PiShareFat } from "react-icons/pi";
@@ -49,7 +51,7 @@ export default function Course() {
     <>
       <CourseLinkModal />
       <LoginModal />
-      <div className="w-full px-2 flex flex-col justify-center text-slaty">
+      <div className="w-full px-2 flex flex-col justify-center text-slaty h-screen">
         <div className="w-full flex justify-between gap-2 py-4">
           <div className="w-3/5 flex justify-between px-2">
             <div className="flex gap-3 items-center justify-center">
@@ -68,12 +70,12 @@ export default function Course() {
               />
             </div>
           </div>
-          <div className="w-2/5 flex justify-between items-center text-brand-slate-1/50">
+          <div className="w-2/5 flex justify-between items-center text-brand-slate-1/90">
             <p>Progress - 5/35</p>
             <PiShareFat className="w-7 h-7" />
           </div>
         </div>
-        <div className="w-full flex justify-between gap-2 h-full">
+        <div className="w-full flex justify-between gap-2 h-11/12">
           <div className="w-full flex flex-col gap-4">
             <PlayVideoSection
               id={id}
@@ -106,7 +108,10 @@ export default function Course() {
                   <p>Transcripts</p>
                 </div>
               </div>
-              <div className="flex gap-4 items-center justify-center"></div>
+              <div className="flex gap-4 items-center justify-center">
+                <ArrowLeftIcon className="w-6 h-6" />
+                <ArrowRightIcon className="w-6 h-6" />
+              </div>
             </div>
             {/* <Disclosure as="div" className="" defaultOpen={false}>
               <DisclosureButton className="group flex w-full items-center text-md justify-between px-1 sm:px-2 rounded-lg">
@@ -123,7 +128,7 @@ export default function Course() {
             </Disclosure> */}
           </div>
 
-          <div className="w-240 border border-brand-slate-1/20 rounded-xl hidden lg:flex flex-col">
+          <div className="w-240 h-full border border-brand-slate-1/20 rounded-xl hidden lg:flex flex-col">
             <NotesGpt
               id={id as string}
               videoId={videoId as string}

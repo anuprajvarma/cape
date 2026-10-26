@@ -68,7 +68,7 @@ export const QuizzSection = ({
         ) : quizz.length > 0 ? (
           <div
             ref={quizScrollRef}
-            className="sm:px-12 sm:py-2 w-full h-full prose prose-lg prose-headings:my-0 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-a:text-blue-600 prose-a:hover:underline max-w-none overflow-auto scrollbar-hide relative"
+            className="sm:px-4 sm:py-2 w-full h-full prose prose-lg prose-headings:my-0 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-a:text-blue-600 prose-a:hover:underline max-w-none overflow-auto scrollbar-hide relative"
           >
             <div
               className={`sticky top-0 z-50 flex justify-end text-white transition-all  duration-300 ${
@@ -112,7 +112,7 @@ export const QuizzSection = ({
             ))}
           </div>
         ) : dataFetching ? (
-          <div className="w-full h-full flex flex-col justify-center items-center gap-4">
+          <div className="w-full h-11/12 flex flex-col justify-center items-center gap-4">
             <div className="px-4 py-1 rounded-lg hover:bg-slaty/10 transition duration-300 border border-lightSlaty">
               loading...
             </div>

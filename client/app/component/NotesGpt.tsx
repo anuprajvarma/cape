@@ -28,7 +28,7 @@ const NotesGpt = ({ id, videoId, videoTitle }: NotesGptPropType) => {
   return (
     <div className="rounded-3xl w-140 h-full">
       {" "}
-      <div className="flex justify-between bg-white/5 backdrop-blur-2xl rounded-lg border border-white/5 rounded-t-xl px-2 py-4 w-full">
+      <div className="flex justify-between bg-white/5 backdrop-blur-2xl rounded-lg border border-white/5 rounded-t-xl px-2 py-3 w-full">
         <button
           onClick={handleNotes}
           className={`sm:px-4 sm:py-1 p-1 rounded-md  hover:bg-slaty/20 hover:text-white transition duration-300 border border-brand-slate-1/20 ${
@@ -60,7 +60,7 @@ const NotesGpt = ({ id, videoId, videoTitle }: NotesGptPropType) => {
           Quizzes
         </button>
       </div>
-      <div className="w-full h-10/12">
+      <div className="w-full rounded-3xl h-11/12">
         {notecheck && (
           <Editor
             email={session.data?.user?.email as string}
