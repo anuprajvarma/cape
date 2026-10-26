@@ -53,14 +53,14 @@ const PlalistVideoCard = ({
 
   return (
     <div
-      className={`flex gap-2 pr-2 justify-between items-center ${
+      className={`flex gap-2 pr-2 justify-between items-center cursor-pointer ${
         currentvideoId === videoId
-          ? "bg-lightSlaty/70 rounded-xs"
-          : "hover:bg-lightSlaty/70 transition duration-100 "
+          ? "bg-brand-slate-1/10 rounded-xs"
+          : "hover:bg-brand-slate-1/10 transition duration-100 "
       }`}
     >
       <button
-        className={`flex gap-2 p-1 items-center ${
+        className={`flex gap-2 p-1 items-center cursor-pointer ${
           currentvideoId === videoId ? "text-lightYellow" : ""
         }`}
         onClick={() => playVideo({ id, videoId })}

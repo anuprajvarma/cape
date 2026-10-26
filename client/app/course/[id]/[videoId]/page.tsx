@@ -32,7 +32,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/app/redux/store";
 import { playlistType2 } from "@/types";
 import { fetchPlaylistVideos } from "@/app/utils/frontendApiCalls";
-import { useSession } from "next-auth/react";
 import { handleChapterActions } from "@/app/utils/backendApiCalls";
 import { setIsOpen } from "@/app/redux/slices/LoginModalSlice";
 
@@ -45,7 +44,9 @@ import { setIsOpen } from "@/app/redux/slices/LoginModalSlice";
 export default function Course() {
   const { params } = useSessionsDetails();
   const { id, videoId } = params;
-  const session = useSession();
+  //   const router = useRouter();
+  // const session = useSession();
+  const { router, session } = useSessionsDetails();
   const dispatch = useDispatch<AppDispatch>();
   const checkboxTrack = useSelector((state: RootState) => state.checkbox);
   const { completedChapters, videoTitle } = useCourse({
@@ -57,11 +58,43 @@ export default function Course() {
     (state: RootState) => state.PlaylistLengthReducer,
   );
 
-  const [position, setPosition] = useState<number>();
+  const [position, setPosition] = useState<number>(1);
+  const [PlaylistVideos, setPlaylistVideos] = useState<playlistType2[]>([]);
+
+  const isFirstVideo = position <= 1;
+  const isLastVideo = position >= playlistLengths;
+
+  const handlePrevious = () => {
+    if (isFirstVideo) return;
+
+    // setPosition((prev) => prev - 1);
+    router.push(
+      `/course/${id}/${PlaylistVideos[position - 2].snippet.resourceId.videoId}`,
+    );
+  };
+
+  const handleNext = () => {
+    if (isLastVideo) return;
+
+    // setPosition((prev) => prev + 1);
+    router.push(
+      `/course/${id}/${PlaylistVideos[position].snippet.resourceId.videoId}`,
+    );
+  };
 
   const isChecked: boolean =
     typeof videoId === "string" &&
     completedChapters?.includes(videoId) === true;
+
+  useEffect(() => {
+    const playlist = async () => {
+      if (typeof id === "string") {
+        const result = await fetchPlaylistVideos({ id });
+        setPlaylistVideos(result);
+      }
+    };
+    playlist();
+  }, [id]);
 
   useEffect(() => {
     const playlist = async () => {
@@ -203,8 +236,27 @@ export default function Course() {
                 </div>
               </div>
               <div className="flex gap-4 items-center justify-center">
-                <ArrowLeftIcon className="w-6 h-6" />
-                <ArrowRightIcon className="w-6 h-6" />
+                {position !== undefined && (
+                  <>
+                    <ArrowLeftIcon
+                      onClick={handlePrevious}
+                      className={`h-6 w-6 ${
+                        isFirstVideo
+                          ? "cursor-not-allowed opacity-40"
+                          : "cursor-pointer hover:text-blue-500"
+                      }`}
+                    />
+
+                    <ArrowRightIcon
+                      onClick={handleNext}
+                      className={`h-6 w-6 ${
+                        isLastVideo
+                          ? "cursor-not-allowed opacity-40"
+                          : "cursor-pointer hover:text-blue-500"
+                      }`}
+                    />
+                  </>
+                )}
               </div>
             </div>
             {/* <Disclosure as="div" className="" defaultOpen={false}>
