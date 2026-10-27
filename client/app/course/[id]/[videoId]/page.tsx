@@ -34,6 +34,10 @@ import { playlistType2 } from "@/types";
 import { fetchPlaylistVideos } from "@/app/utils/frontendApiCalls";
 import { handleChapterActions } from "@/app/utils/backendApiCalls";
 import { setIsOpen } from "@/app/redux/slices/LoginModalSlice";
+import {
+  groupTranscriptByPeriod,
+  TranscriptPeriod,
+} from "@/app/utils/reusableConstant";
 
 // const options = {
 //   target: "_blank",
@@ -48,6 +52,7 @@ export default function Course() {
   // const session = useSession();
   const { router, session } = useSessionsDetails();
   const dispatch = useDispatch<AppDispatch>();
+  const [transcript, setTranscript] = useState<TranscriptPeriod[]>();
   const checkboxTrack = useSelector((state: RootState) => state.checkbox);
   const { completedChapters, videoTitle } = useCourse({
     id,
@@ -59,6 +64,7 @@ export default function Course() {
   );
 
   const [position, setPosition] = useState<number>(1);
+  const [chapterOpen, setChapterOpen] = useState<boolean>(true);
   const [PlaylistVideos, setPlaylistVideos] = useState<playlistType2[]>([]);
 
   const isFirstVideo = position <= 1;
@@ -131,6 +137,30 @@ export default function Course() {
       dispatch(setIsOpen(true));
     }
   };
+
+  useEffect(() => {
+    const fetchVideoTranscript = async (videoId: string) => {
+      const response = await fetch("/api/transcripts/fetch", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ videoId }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Transcript fetch failed");
+      }
+      const periods = groupTranscriptByPeriod(data.segments, 20_000);
+
+      setTranscript(periods);
+    };
+    if (typeof videoId === "string") {
+      fetchVideoTranscript(videoId);
+    }
+  }, [videoId]);
 
   // const lines = videoDescription
   //   ?.split("\n")
@@ -226,14 +256,20 @@ export default function Course() {
             </Disclosure>
             <div className="w-full p-2 flex justify-between">
               <div className="bg-white/5 backdrop-blur-2xl rounded-lg border border-white/5 flex gap-2 p-2">
-                <div className="bg-white/5 backdrop-blur-2xl rounded-lg flex gap-1 py-1 px-2">
-                  <BookOpenIcon />
+                <button
+                  onClick={() => setChapterOpen(true)}
+                  className={`${chapterOpen && "bg-white/5 backdrop-blur-2xl"} rounded-lg flex gap-1 py-1 px-2 items-center cursor-pointer hover:bg-white/5 hover:backdrop-blur-2xl`}
+                >
+                  <BookOpenIcon className="w-5 h-5" />
                   <p>Chapters</p>
-                </div>
-                <div className="rounded-lg flex gap-1 py-1 px-2 items-center ">
-                  <CgTranscript />
+                </button>
+                <button
+                  onClick={() => setChapterOpen(false)}
+                  className={`${chapterOpen === false && "bg-white/5 backdrop-blur-2xl"} rounded-lg flex gap-1 py-1 px-2 items-center cursor-pointer hover:bg-white/5 hover:backdrop-blur-2xl`}
+                >
+                  <CgTranscript className="w-5 h-5" />
                   <p>Transcripts</p>
-                </div>
+                </button>
               </div>
               <div className="flex gap-4 items-center justify-center">
                 {position !== undefined && (
@@ -259,6 +295,26 @@ export default function Course() {
                 )}
               </div>
             </div>
+            {chapterOpen ? (
+              <div className="px-2 w-full overflow-y-auto flex flex-col gap-4">
+                alkflkasdfalsj
+              </div>
+            ) : (
+              <div className="px-2 w-full overflow-y-auto flex flex-col gap-4">
+                {transcript?.map((data, index) => {
+                  return (
+                    <div key={index} className="flex w-full flex-col gap-1">
+                      <p className="p-1 w-16 text-center rounded-lg text-sm">
+                        {data.start / 1000}- {data.end / 1000}
+                      </p>
+                      <p className="bg-brand-slate-1/10 p-2 rounded-lg">
+                        {data.text}
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
             {/* <Disclosure as="div" className="" defaultOpen={false}>
               <DisclosureButton className="group flex w-full items-center text-md justify-between px-1 sm:px-2 rounded-lg">
                 <span>Description</span>

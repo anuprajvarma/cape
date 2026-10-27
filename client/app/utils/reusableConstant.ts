@@ -200,3 +200,42 @@ export const percentageCalculate = ({
 
   return percentage;
 };
+
+type TranscriptSegment = {
+  text: string;
+  start: number;
+  end: number;
+};
+
+export type TranscriptPeriod = {
+  start: number;
+  end: number;
+  text: string;
+  segments: TranscriptSegment[];
+};
+
+export function groupTranscriptByPeriod(
+  segments: TranscriptSegment[],
+  periodMs = 20_000,
+): TranscriptPeriod[] {
+  const groups = new Map<number, TranscriptSegment[]>();
+
+  for (const segment of segments) {
+    const periodStart = Math.floor(segment.start / periodMs) * periodMs;
+
+    if (!groups.has(periodStart)) {
+      groups.set(periodStart, []);
+    }
+
+    groups.get(periodStart)!.push(segment);
+  }
+
+  return Array.from(groups.entries())
+    .sort(([a], [b]) => a - b)
+    .map(([start, items]) => ({
+      start,
+      end: start + periodMs,
+      text: items.map((item) => item.text).join(" "),
+      segments: items,
+    }));
+}
