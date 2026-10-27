@@ -1,5 +1,22 @@
 import React from "react";
 
+import "next-auth";
+import "next-auth/jwt";
+
+declare module "next-auth" {
+  interface Session {
+    googleAccessToken?: string;
+  }
+}
+
+declare module "next-auth/jwt" {
+  interface JWT {
+    googleAccessToken?: string;
+    googleRefreshToken?: string;
+    googleTokenExpiresAt?: number;
+  }
+}
+
 export interface VoiceSearchPropType {
   setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
   setIsRecording: React.Dispatch<React.SetStateAction<boolean>>;
