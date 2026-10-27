@@ -41,7 +41,7 @@ const NotesGpt = ({ id, videoId, videoTitle }: NotesGptPropType) => {
         </button>
         <button
           onClick={handleGPT}
-          className={`sm:px-4 sm:py-1 p-1 rounded-md cursor-pointerhover:bg-white/5 hover:backdrop-blur-2xl hover:text-white transition duration-300 border border-brand-slate-1/20 ${
+          className={`sm:px-4 sm:py-1 p-1 rounded-md cursor-pointer hover:bg-white/5 hover:backdrop-blur-2xl hover:text-white transition duration-300 border border-brand-slate-1/20 ${
             gptcheck
               ? "bg-white/5 backdrop-blur-2xl text-white"
               : "text-slaty/80 bg-lightSlaty"

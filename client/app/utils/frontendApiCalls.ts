@@ -1,5 +1,9 @@
 import { Groq } from "groq-sdk";
-import { parseQuizHtml, youtubeApiKey } from "./reusableConstant";
+import {
+  parseQuizHtml,
+  // TranscriptPeriod,
+  youtubeApiKey,
+} from "./reusableConstant";
 import { FetchPlaylistsPropType } from "@/types";
 
 const groq = new Groq({
@@ -90,6 +94,78 @@ export const fetchQuizzes = async ({ videoTitle }: { videoTitle: string }) => {
     console.log(error);
   }
 };
+
+// export const fetchChapters = async ({
+//   transcript,
+// }: {
+//   transcript: TranscriptPeriod[];
+// }) => {
+//   console.log("transcript " + transcript);
+//   try {
+//     const res = await groq.chat.completions.create({
+//       messages: [
+//         {
+//           role: "user",
+//           content: `
+// Here is the timestamped transcript:
+// ${JSON.stringify(
+//   transcript.map(({ start, end, text }) => ({
+//     start: start / 1000,
+//     end: end / 1000,
+//     text,
+//   })),
+//   null,
+//   2,
+// )}
+
+// Parse the supplied timestamped transcript and group related content into meaningful chapters covering the full duration from 0 to 620 seconds.
+
+// Rules:
+// - Use only the content and timestamps provided in the transcript.
+// - Chapter start times must match actual transcript timestamps.
+// - Chapter end times must match actual transcript timestamps, except the final chapter may end at exactly 620 seconds.
+// - Chapters must be chronological and must not overlap.
+// - Each chapter's end must equal the next chapter's start, ensuring continuous coverage without gaps.
+// - The first chapter must start at 0 seconds.
+// - The final chapter must end at exactly 620 seconds.
+// - Combine adjacent transcript periods that discuss the same topic.
+// - Create meaningful, specific titles and concise summaries based on the actual content.
+// - Do not invent topics, details, or timestamps.
+// - All timestamps must be numbers representing seconds.
+// - If the transcript is empty or lacks sufficient content, return an empty chapters array rather than inventing chapters.
+
+// Return ONLY valid JSON in this format:
+
+// {
+//   "chapters": [
+//     {
+//       "title": "Chapter title",
+//       "start": 0,
+//       "end": 60,
+//       "summary": "Short summary of the content."
+//     }
+//   ]
+// }
+// `,
+//         },
+//       ],
+//       model: "openai/gpt-oss-120b",
+//       temperature: 1,
+//       max_completion_tokens: 2048,
+//       top_p: 1,
+//       reasoning_effort: "medium",
+//       stream: false,
+//     });
+//     const chapters = res?.choices?.[0]?.message ?? "";
+//     if (!chapters) {
+//       throw new Error("No chapters received from Groq");
+//     }
+//     console.log("chapters", chapters.content);
+//     return chapters;
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
 export const fetchChatbotAnswer = async ({ input }: { input: string }) => {
   try {

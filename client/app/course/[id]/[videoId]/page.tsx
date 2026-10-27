@@ -31,7 +31,10 @@ import { useCourse } from "@/app/hooks/course";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/app/redux/store";
 import { playlistType2 } from "@/types";
-import { fetchPlaylistVideos } from "@/app/utils/frontendApiCalls";
+import {
+  // fetchChapters,
+  fetchPlaylistVideos,
+} from "@/app/utils/frontendApiCalls";
 import { handleChapterActions } from "@/app/utils/backendApiCalls";
 import { setIsOpen } from "@/app/redux/slices/LoginModalSlice";
 import {
@@ -52,7 +55,7 @@ export default function Course() {
   // const session = useSession();
   const { router, session } = useSessionsDetails();
   const dispatch = useDispatch<AppDispatch>();
-  const [transcript, setTranscript] = useState<TranscriptPeriod[]>();
+  const [transcript, setTranscript] = useState<TranscriptPeriod[]>([]);
   const checkboxTrack = useSelector((state: RootState) => state.checkbox);
   const { completedChapters, videoTitle } = useCourse({
     id,
@@ -162,6 +165,15 @@ export default function Course() {
     }
   }, [videoId]);
 
+  // useEffect(() => {
+  //   const chapters = async () => {
+  //     const result = await fetchChapters({ transcript });
+  //     // const data = await result.json()
+  //   };
+
+  //   chapters();
+  // }, [transcript]);
+
   // const lines = videoDescription
   //   ?.split("\n")
   //   .map((line) => line.trim())
@@ -260,15 +272,15 @@ export default function Course() {
                   onClick={() => setChapterOpen(true)}
                   className={`${chapterOpen && "bg-white/5 backdrop-blur-2xl"} rounded-lg flex gap-1 py-1 px-2 items-center cursor-pointer hover:bg-white/5 hover:backdrop-blur-2xl`}
                 >
-                  <BookOpenIcon className="w-5 h-5" />
-                  <p>Chapters</p>
+                  <CgTranscript className="w-5 h-5" />
+                  <p>Transcripts</p>
                 </button>
                 <button
                   onClick={() => setChapterOpen(false)}
                   className={`${chapterOpen === false && "bg-white/5 backdrop-blur-2xl"} rounded-lg flex gap-1 py-1 px-2 items-center cursor-pointer hover:bg-white/5 hover:backdrop-blur-2xl`}
                 >
-                  <CgTranscript className="w-5 h-5" />
-                  <p>Transcripts</p>
+                  <BookOpenIcon className="w-5 h-5" />
+                  <p>Chapters</p>
                 </button>
               </div>
               <div className="flex gap-4 items-center justify-center">
@@ -297,15 +309,11 @@ export default function Course() {
             </div>
             {chapterOpen ? (
               <div className="px-2 w-full overflow-y-auto flex flex-col gap-4">
-                alkflkasdfalsj
-              </div>
-            ) : (
-              <div className="px-2 w-full overflow-y-auto flex flex-col gap-4">
                 {transcript?.map((data, index) => {
                   return (
                     <div key={index} className="flex w-full flex-col gap-1">
-                      <p className="p-1 w-16 text-center rounded-lg text-sm">
-                        {data.start / 1000}- {data.end / 1000}
+                      <p className="p-1 w-20 text-center rounded-lg text-sm">
+                        {data.start / 1000} - {data.end / 1000}
                       </p>
                       <p className="bg-brand-slate-1/10 p-2 rounded-lg">
                         {data.text}
@@ -313,6 +321,10 @@ export default function Course() {
                     </div>
                   );
                 })}
+              </div>
+            ) : (
+              <div className="px-2 w-full h-full overflow-y-auto flex flex-col gap-4 justify-center items-center">
+                <p>This feature is not added right now try after some time</p>
               </div>
             )}
             {/* <Disclosure as="div" className="" defaultOpen={false}>
