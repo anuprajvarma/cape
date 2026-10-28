@@ -26,7 +26,7 @@ const NotesGpt = ({ id, videoId, videoTitle }: NotesGptPropType) => {
   } = useNotesGpt({ id, videoId, countedScore, Completed });
 
   return (
-    <div className="rounded-3xl w-140 h-full">
+    <div className="rounded-3xl w-142 h-full">
       {" "}
       <div className="flex justify-between bg-white/5 backdrop-blur-2xl rounded-lg border border-white/5 rounded-t-xl px-2 py-3 w-full">
         <button

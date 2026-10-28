@@ -46,7 +46,7 @@ export const ChatbotSection = ({ id }: ChatbotSectionPropType) => {
                       ),
 
                       thead: ({ children }) => (
-                        <thead className="bg-brand-slate-1/30">
+                        <thead className="bg-white/5 backdrop-blur-2xl text-white rounded-3xl">
                           {children}
                         </thead>
                       ),
@@ -90,7 +90,7 @@ export const ChatbotSection = ({ id }: ChatbotSectionPropType) => {
                         <hr className="my-4 border-t border-brand-slate-1/30" />
                       ),
                       pre: ({ children }) => (
-                        <pre className="my-4 overflow-x-auto rounded-lg bg-brand-slate-1/30 p-4 text-sm text-white">
+                        <pre className="my-4 overflow-x-auto bg-white/5 backdrop-blur-2xl text-white rounded-3xl p-4 text-sm">
                           {children}
                         </pre>
                       ),
