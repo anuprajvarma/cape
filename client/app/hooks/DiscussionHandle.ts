@@ -44,7 +44,7 @@ export const useDiscussionHandle = ({
     content,
   }: DeleteDisussionPropType) => {
     const data = await deteteDiscusion({ playlistId, videoId, name, content });
-    console.log(data.deleteDiscussion);
+    // console.log(data.deleteDiscussion);
     if (data.deleteDiscussion) {
       toast.success("comment is delete", {
         hideProgressBar: true,

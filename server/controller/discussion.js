@@ -2,7 +2,7 @@ const Discussion = require("../models/discussion");
 
 const discussoinHandler = async (req, res) => {
   const { playlistId, videoId, content, username, userImageUrl } = req.body;
-  console.log(playlistId, videoId, content, username, userImageUrl);
+  // console.log(playlistId, videoId, content, username, userImageUrl);
   let discussion = await Discussion.findOneAndUpdate(
     {
       playlistId,
@@ -12,7 +12,7 @@ const discussoinHandler = async (req, res) => {
       $push: {
         discussions: { name: username, image: userImageUrl, content: content },
       },
-    }
+    },
   );
 
   if (!discussion) {
@@ -23,14 +23,14 @@ const discussoinHandler = async (req, res) => {
     });
   }
 
-  console.log(`discussion ${discussion}`);
+  // console.log(`discussion ${discussion}`);
 
   res.json({ discussion });
 };
 
 const discussionGetDataHandler = async (req, res) => {
   const { playlistId, videoId } = req.body;
-  console.log(playlistId, videoId);
+  // console.log(playlistId, videoId);
   const discussionData = await Discussion.findOne({
     playlistId,
     videoId,
@@ -42,7 +42,7 @@ const discussionGetDataHandler = async (req, res) => {
 
 const discussionDeleteHandler = async (req, res) => {
   const { playlistId, videoId, name, content } = req.body;
-  console.log(playlistId, videoId, name, content);
+  // console.log(playlistId, videoId, name, content);
   const deleteDiscussion = await Discussion.findOneAndUpdate(
     {
       playlistId,
@@ -55,7 +55,7 @@ const discussionDeleteHandler = async (req, res) => {
           content,
         },
       },
-    }
+    },
   );
   res.json({ deleteDiscussion });
 };

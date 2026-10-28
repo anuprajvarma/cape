@@ -81,12 +81,12 @@ export const useCourseCardLogic = ({
         email: session.data?.user?.email ?? "",
       });
       if (data.isExist) {
-        console.log(data);
+        // console.log(data);
         toast.success("course is already bookmark", {
           hideProgressBar: true,
         });
       } else {
-        console.log(data.isExist);
+        // console.log(data.isExist);
         toast.success("course is bookmarke", {
           hideProgressBar: true,
         });

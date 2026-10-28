@@ -549,6 +549,36 @@ export const saveQuizzes = async ({
   }
 };
 
+export const fetchQuizzesFromBackend = async ({
+  id,
+  videoId,
+}: {
+  id: string;
+  videoId: string;
+}) => {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_BASE_URL}/api/quizz/getQiuzzData`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          playlistId: id,
+          videoId,
+        }),
+        credentials: "include",
+      },
+    );
+    if (!res.ok) {
+      throw new Error(` error: ${res.status}`);
+    }
+    const data = await res.json();
+    return data.quizzData[0].quizz;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const fetchQuizzScore = async ({
   playlistId,
   videoId,

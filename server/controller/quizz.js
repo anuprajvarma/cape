@@ -27,8 +27,10 @@ const getQuizzDataHandler = async (req, res) => {
     videoId: videoId,
     playlistId: playlistId,
   });
-  //   console.log(`quizzData ${quizzData}`);
-  res.json({ quizzData });
+  // console.log(`quizzData ${quizzData}`);
+  if (quizzData.length !== 0) {
+    res.json({ quizzData });
+  }
 };
 
 module.exports = { addQuizzHandler, getQuizzDataHandler };

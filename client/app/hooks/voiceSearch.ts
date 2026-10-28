@@ -30,7 +30,7 @@ export const useVoiceSearch = ({
     if (!recognitionRef.current) {
       const recognition = new SpeechRecognitionConstructor();
 
-      console.log("recognitionRef.current " + recognitionRef.current);
+      // console.log("recognitionRef.current " + recognitionRef.current);
 
       recognition.lang = "en-US";
       recognition.interimResults = false;
@@ -41,7 +41,7 @@ export const useVoiceSearch = ({
 
         if (!transcript) return;
 
-        console.log("Voice result:", transcript);
+        // console.log("Voice result:", transcript);
 
         setSearchQuery(transcript);
         handleAutoSearch(transcript);
@@ -51,7 +51,7 @@ export const useVoiceSearch = ({
         setIsRecording(false);
 
         if (event.error === "network") {
-          console.log("Network error detected while using speech recognition.");
+          // console.log("Network error detected while using speech recognition.");
           return;
         }
 

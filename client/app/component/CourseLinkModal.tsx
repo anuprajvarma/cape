@@ -45,7 +45,7 @@ export const CourseLinkModal = () => {
             >
               <button
                 onClick={async () => {
-                  console.log("Course Link:", courseLink);
+                  // console.log("Course Link:", courseLink);
                   try {
                     await navigator.clipboard.writeText(courseLink);
                   } catch (err) {

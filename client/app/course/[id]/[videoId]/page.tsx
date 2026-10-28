@@ -117,7 +117,7 @@ export default function Course() {
             video.snippet.resourceId.videoId === videoId,
         );
         setPosition(videoPosition + 1);
-        console.log("Video position:", videoPosition + 1);
+        // console.log("Video position:", videoPosition + 1);
       }
     };
     playlist();

@@ -2,7 +2,7 @@ const Chat = require("../models/chat");
 
 const chatHandler = async (req, res) => {
   const { email, playlistId, question, answer } = req.body;
-  console.log(email, playlistId, question, answer);
+  // console.log(email, playlistId, question, answer);
   let chat = await Chat.findOneAndUpdate(
     {
       email,
@@ -19,7 +19,7 @@ const chatHandler = async (req, res) => {
     });
   }
 
-  console.log(`chat ${chat}`);
+  // console.log(`chat ${chat}`);
 
   res.json({ chat });
 };
@@ -32,7 +32,7 @@ const chatDataGet = async (req, res) => {
     email,
   });
 
-  console.log(`chatData ${chatData}`);
+  // console.log(`chatData ${chatData}`);
   res.json({ chatData });
 };
 

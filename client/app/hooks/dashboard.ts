@@ -20,12 +20,12 @@ export const useDashboard = ({ getDataCheck }: { getDataCheck: boolean }) => {
     const { active, over } = event;
     if (!over || active.id === over.id) return;
 
-    console.log(active.id + " " + over.id);
+    // console.log(active.id + " " + over.id);
 
     setEnrolledCoursePlaylist((items) => {
       const oldIndex = items.findIndex((item) => item.playlistId === active.id);
       const newIndex = items.findIndex((item) => item.playlistId === over.id);
-      console.log(oldIndex + " " + newIndex);
+      // console.log(oldIndex + " " + newIndex);
       const updatedItems = arrayMove(items, oldIndex, newIndex);
       playlistOrderUpdate({
         email: session?.user?.email || "",

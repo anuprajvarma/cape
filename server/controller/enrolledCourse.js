@@ -22,7 +22,7 @@ const enrolledCourseHandler = async (req, res) => {
     res.json({ enrolledkCourse, isExist: true });
   }
 
-  console.log("video id" + videoId);
+  // console.log("video id" + videoId);
 
   if (!enrolledkCourse) {
     enrolledkCourse = await EnrolledkCourse.create({
@@ -102,7 +102,7 @@ const updateOrderHandler = async (req, res) => {
     const { email, newOrder } = req.body;
     // newOrder = array of playlistIds in the new order
 
-    console.log(newOrder);
+    // console.log(newOrder);
 
     for (const [index, playlistId] of newOrder.entries()) {
       const res = await EnrolledkCourse.findOneAndUpdate(

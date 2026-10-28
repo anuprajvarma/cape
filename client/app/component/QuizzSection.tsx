@@ -35,6 +35,8 @@ export const QuizzSection = ({
     setCountedScore,
   });
 
+  // console.log("quizz " + quizz);
+
   useEffect(() => {
     const fetchUserScore = async () => {
       const data = await fetchQuizzScore({

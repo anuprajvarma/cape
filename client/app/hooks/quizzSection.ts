@@ -1,5 +1,5 @@
 import { RefObject, useEffect, useState } from "react";
-import { saveQuizzes } from "../utils/backendApiCalls";
+import { fetchQuizzesFromBackend, saveQuizzes } from "../utils/backendApiCalls";
 import { fetchQuizzes } from "../utils/frontendApiCalls";
 import { QuizzType } from "@/types";
 
@@ -27,6 +27,18 @@ export const useQuizzSection = ({
   const [dataFetching, setDataFetching] = useState<boolean>(false);
   const [quizz, setQuizz] = useState<QuizzType[]>([]);
   const [chooseOption, setChooseOption] = useState<string[]>([]);
+
+  useEffect(() => {
+    const quizess = async () => {
+      const result = await fetchQuizzesFromBackend({ id, videoId });
+
+      if (result && result.length > 0) {
+        // console.log("result " + result);
+        setQuizz(result);
+      }
+    };
+    quizess();
+  }, [videoId, id]);
 
   useEffect(() => {
     const container = quizScrollRef.current;
@@ -60,9 +72,9 @@ export const useQuizzSection = ({
   }, [Completed, quizzcheck, quizScrollRef]);
 
   const checkAnswer = (option: string, answer: string, question: string) => {
-    console.log(
-      `Selected Option: ${option} | Correct Answer: ${answer} | Question: ${question}`,
-    );
+    // console.log(
+    //   `Selected Option: ${option} | Correct Answer: ${answer} | Question: ${question}`,
+    // );
     const selectedOption = option;
     const correctAnswer = answer;
     const isQuestionExists = questions.includes(question);
@@ -73,7 +85,7 @@ export const useQuizzSection = ({
       if (selectedOption === correctAnswer) {
         setCountedScore((prev) => prev + 1);
 
-        console.log("Correct Answer!");
+        // console.log("Correct Answer!");
       } else {
         console.log("Wrong Answer! Try again. ");
       }
