@@ -1,6 +1,7 @@
 import { ChatbotSectionPropType } from "@/types";
 import ReactMarkdown from "react-markdown";
 import { useChatbotButtonClick } from "../hooks/chatbot";
+import remarkGfm from "remark-gfm";
 
 export const ChatbotSection = ({ id }: ChatbotSectionPropType) => {
   const { input, setInput, sendMessage, temporaryChatData } =
@@ -8,10 +9,12 @@ export const ChatbotSection = ({ id }: ChatbotSectionPropType) => {
       id,
     });
 
+  console.log("temporaryChatData " + temporaryChatData);
+
   return (
     <div className="w-full flex flex-col h-full">
       {temporaryChatData?.length > 0 ? (
-        <div className="w-full h-11/12 rounded-sm overflow-y-auto px-8">
+        <div className="w-full h-11/12 rounded-sm overflow-y-auto px-6">
           {temporaryChatData?.map((msg, i) => (
             <div key={i} className="pt-8">
               <div className="flex w-full justify-end">
@@ -21,7 +24,53 @@ export const ChatbotSection = ({ id }: ChatbotSectionPropType) => {
               </div>
               <div className="prose prose-slate prose-lg w-full h-full overflow-auto max-w-none py-4 prose-headings:my-2 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-ul:my-0 prose-a:hover:underline">
                 {msg.answer !== "" ? (
-                  <ReactMarkdown>{msg.answer}</ReactMarkdown>
+                  <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
+                    components={{
+                      ul: ({ children }) => (
+                        <ul className="my-3 ml-6 list-disc space-y-1">
+                          {children}
+                        </ul>
+                      ),
+                      ol: ({ children }) => (
+                        <ol className="my-3 ml-6 list-decimal space-y-1">
+                          {children}
+                        </ol>
+                      ),
+                      li: ({ children }) => (
+                        <li className="pl-1">{children}</li>
+                      ),
+                      h2: ({ children }) => (
+                        <li className="font-bold py-4 text-xl">{children}</li>
+                      ),
+                      hr: () => (
+                        <hr className="my-4 border-t border-brand-slate-1/30" />
+                      ),
+                      pre: ({ children }) => (
+                        <pre className="my-4 overflow-x-auto rounded-lg bg-brand-slate-1/30 p-4 text-sm text-white">
+                          {children}
+                        </pre>
+                      ),
+                      code: ({ className, children, ...props }) => {
+                        const isBlock = Boolean(className);
+
+                        return isBlock ? (
+                          <code className={className} {...props}>
+                            {children}
+                          </code>
+                        ) : (
+                          <code
+                            className="rounded bg-brand-slate-1/20 px-1 py-0.5 text-sm text-white"
+                            {...props}
+                          >
+                            {children}
+                          </code>
+                        );
+                      },
+                    }}
+                  >
+                    {msg.answer}
+                  </ReactMarkdown>
                 ) : (
                   ".............."
                 )}
