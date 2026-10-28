@@ -23,14 +23,22 @@ export const CourseLinkModal = () => {
         onClose={() => dispatch(setCourseLinkModal(false))}
         __demoMode
       >
-        <div className="fixed inset-0 z-10 w-screen overflow-y-auto flex justify-center items-center">
-          <div className="flex flex-col gap-4 items-center justify-center p-4 bg-mediumSlaty  border border-lightSlaty w-60 h-32 rounded-lg">
-            <button
-              onClick={() => dispatch(setCourseLinkModal(false))}
-              className="w-full flex justify-end"
-            >
-              <FaXmark />
-            </button>
+        <div className="fixed inset-0 z-10 w-screen overflow-y-auto flex justify-center items-center bg-white/5 backdrop-blur-sm">
+          <div className="flex flex-col gap-4 items-center justify-center p-4 w-96 bg-brand-slate-1/20 rounded-[20px]">
+            <div className="flex w-full items-center justify-between">
+              <p>Share content</p>
+              <FaXmark
+                className="cursor-pointer"
+                onClick={() => dispatch(setCourseLinkModal(false))}
+              />
+            </div>
+
+            <input
+              type="text"
+              value={courseLink}
+              className="w-full border border-brand-slate-1 rounded-lg py-1 px-4 line-clamp-1"
+            />
+
             <DialogPanel
               transition
               className="flex w-full h-full flex-col gap-4"
@@ -48,7 +56,7 @@ export const CourseLinkModal = () => {
                   });
                   dispatch(setCourseLinkModal(false));
                 }}
-                className="py-3 text-white text-center flex gap-2 items-center justify-center w-full rounded-lg cursor-pointer font-semibold border border-lightSlaty hover:bg-lightSlaty text-sm transition duration-300"
+                className="py-3 text-white bg-brand-slate-1/20 text-center flex gap-2 items-center justify-center w-full rounded-lg cursor-pointer font-semibold text-sm transition duration-300"
               >
                 <IoIosLink size={17} />
                 <p>Copy link</p>

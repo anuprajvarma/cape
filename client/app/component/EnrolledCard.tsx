@@ -15,6 +15,7 @@ import { setCourseLinkModal } from "../redux/slices/CourseLinkModal";
 import { setCourseLink } from "../redux/slices/CourseLink";
 import { EnrolledCardPropType } from "@/types";
 import { useEnrolledCardLogic } from "../hooks/enrolledCard";
+import { fetchfirstVideoIdOfPlaylist } from "../utils/frontendApiCalls";
 
 const EnrolledCard = ({
   title,
@@ -119,11 +120,13 @@ const EnrolledCard = ({
                   <Tooltip.Root>
                     <Tooltip.Trigger asChild>
                       <button
-                        onClick={() => {
+                        onClick={async () => {
+                          const firstVideoId =
+                            await fetchfirstVideoIdOfPlaylist(playlistId);
                           dispatch(setCourseLinkModal(true));
                           dispatch(
                             setCourseLink(
-                              `https://cape-lyart.vercel.app/course/${playlistId}/${1}`,
+                              `https://cape-lyart.vercel.app/course/${playlistId}/${firstVideoId}`,
                             ),
                           );
                         }}
