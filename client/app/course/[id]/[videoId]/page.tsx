@@ -320,19 +320,25 @@ export default function Course() {
               </div>
             </div>
             {chapterOpen ? (
-              <div className="px-2 w-full overflow-y-auto flex flex-col gap-4">
-                {transcript?.map((data, index) => {
-                  return (
-                    <div key={index} className="flex w-full flex-col gap-1">
-                      <p className="p-1 w-20 text-center rounded-lg text-sm">
-                        {data.start / 1000} - {data.end / 1000}
-                      </p>
-                      <p className="bg-brand-slate-1/10 p-2 rounded-lg">
-                        {data.text}
-                      </p>
-                    </div>
-                  );
-                })}
+              <div className="px-2 w-full h-full overflow-y-auto flex flex-col gap-4">
+                {transcript.length > 0 ? (
+                  transcript?.map((data, index) => {
+                    return (
+                      <div key={index} className="flex w-full flex-col gap-1">
+                        <p className="p-1 w-20 text-center rounded-lg text-sm">
+                          {data.start / 1000} - {data.end / 1000}
+                        </p>
+                        <p className="bg-brand-slate-1/10 p-2 rounded-lg">
+                          {data.text}
+                        </p>
+                      </div>
+                    );
+                  })
+                ) : (
+                  <div className="px-2 w-full h-full overflow-y-auto flex flex-col gap-4 justify-center items-center">
+                    <p>Video have no caption</p>
+                  </div>
+                )}
               </div>
             ) : (
               <div className="px-2 w-full h-full overflow-y-auto flex flex-col gap-4 justify-center items-center">
