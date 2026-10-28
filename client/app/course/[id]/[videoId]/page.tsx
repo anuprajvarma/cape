@@ -41,6 +41,8 @@ import {
   groupTranscriptByPeriod,
   TranscriptPeriod,
 } from "@/app/utils/reusableConstant";
+import { setCourseLinkModal } from "@/app/redux/slices/CourseLinkModal";
+import { setCourseLink } from "@/app/redux/slices/CourseLink";
 
 // const options = {
 //   target: "_blank",
@@ -240,7 +242,17 @@ export default function Course() {
             <p>
               Completed - {completedChapters.length}/{playlistLengths}
             </p>
-            <PiShareFat className="w-7 h-7 cursor-pointer hover:text-white" />
+            <PiShareFat
+              onClick={async () => {
+                dispatch(setCourseLinkModal(true));
+                dispatch(
+                  setCourseLink(
+                    `https://cape-lyart.vercel.app/course/${id}/${videoId}`,
+                  ),
+                );
+              }}
+              className="w-7 h-7 cursor-pointer hover:text-white"
+            />
           </div>
         </div>
         <div className="w-full flex justify-between gap-2 h-11/12">
