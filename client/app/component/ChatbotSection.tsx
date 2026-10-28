@@ -14,7 +14,7 @@ export const ChatbotSection = ({ id }: ChatbotSectionPropType) => {
   return (
     <div className="w-full flex flex-col h-full">
       {temporaryChatData?.length > 0 ? (
-        <div className="w-full h-11/12 rounded-sm overflow-y-auto px-6">
+        <div className="w-full h-11/12 rounded-sm overflow-y-auto px-4">
           {temporaryChatData?.map((msg, i) => (
             <div key={i} className="pt-8">
               <div className="flex w-full justify-end">
@@ -27,6 +27,49 @@ export const ChatbotSection = ({ id }: ChatbotSectionPropType) => {
                   <ReactMarkdown
                     remarkPlugins={[remarkGfm]}
                     components={{
+                      a: ({ href, children }) => (
+                        <a
+                          href={href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 underline hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 line-clamp-3"
+                        >
+                          {children}
+                        </a>
+                      ),
+                      table: ({ children }) => (
+                        <div className="my-4 w-full overflow-x-auto rounded-lg border border-brand-slate-1/30">
+                          <table className="w-full border-collapse text-left text-sm">
+                            {children}
+                          </table>
+                        </div>
+                      ),
+
+                      thead: ({ children }) => (
+                        <thead className="bg-brand-slate-1/30">
+                          {children}
+                        </thead>
+                      ),
+
+                      tbody: ({ children }) => (
+                        <tbody className="divide-y divide-brand-slate-1/30">
+                          {children}
+                        </tbody>
+                      ),
+
+                      tr: ({ children }) => <tr className="">{children}</tr>,
+
+                      th: ({ children }) => (
+                        <th className="border-b border-brand-slate-1/30 px-4 py-3 font-semibold">
+                          {children}
+                        </th>
+                      ),
+
+                      td: ({ children }) => (
+                        <td className="px-4 py-3 align-top leading-6 max-w-32">
+                          {children}
+                        </td>
+                      ),
                       ul: ({ children }) => (
                         <ul className="my-3 ml-6 list-disc space-y-1">
                           {children}
@@ -41,7 +84,7 @@ export const ChatbotSection = ({ id }: ChatbotSectionPropType) => {
                         <li className="pl-1">{children}</li>
                       ),
                       h2: ({ children }) => (
-                        <li className="font-bold py-4 text-xl">{children}</li>
+                        <li className="font-bold text-xl">{children}</li>
                       ),
                       hr: () => (
                         <hr className="my-4 border-t border-brand-slate-1/30" />
@@ -84,7 +127,7 @@ export const ChatbotSection = ({ id }: ChatbotSectionPropType) => {
         </div>
       )}
 
-      <div className="flex gap-2 px-8">
+      <div className="flex gap-2 px-4">
         <input
           value={input}
           onKeyDown={(e) => {
