@@ -59,7 +59,7 @@ export const QuizzSection = ({
       {quizzcheck &&
         (DbScore !== "" || Completed === 10 ? (
           <div className="w-full h-full flex flex-col justify-center items-center">
-            <p className="sm:px-12 py-2 text-xl">
+            <p className="sm:px-12 py-2 text-xl text-brand-slate-1">
               Congratulations! You have completed the test
             </p>
             <div className="flex gap-2 text-xl font-semibold">
@@ -79,7 +79,7 @@ export const QuizzSection = ({
                   : "opacity-0 -translate-y-full pointer-events-none"
               }`}
             >
-              <p className="text-sm text-center bg-lightSlaty rounded-lg px-4 py-2">{`Completed - ${Completed}/${quizz.length} `}</p>
+              <p className="text-sm text-center bg-lightSlaty rounded-lg px-4 py-2 text-brand-slate-1">{`Completed - ${Completed}/${quizz.length} `}</p>
             </div>
             {quizz.map((quizz, index) => (
               <div key={index} className="py-2 flex flex-col gap-2">
@@ -96,15 +96,19 @@ export const QuizzSection = ({
                         }
                         key={idx}
                         aria-pressed={chooseOption.includes(option)}
-                        className={`hover:text-slaty flex gap-4 text-slaty/80 text-start rounded-lg border border-lightSlaty hover:bg-blue-600/25 px-8 py-2 transition duration-300 ${
+                        className={`hover:text-slaty flex gap-4 text-slaty/80 text-start border-lightSlaty px-4 py-1.5 hover:bg-slaty/10 rounded-lg cursor-pointer hover:bg-white/20 hover:backdrop-blur-2xl text-brand-slate-1 hover:text-white transition duration-500 border border-brand-slate-1/20 ${
                           chooseOption.includes(option)
-                            ? "text-slaty bg-blue-600/25"
+                            ? "text-white bg-white/20 backdrop-blur-2xl border border-brand-slate-1/20"
                             : ""
                         }`}
                       >
-                        <span aria-hidden="true">
-                          {chooseOption.includes(option) ? "🔵" : "◯"}
-                        </span>
+                        <div className="flex justify-center items-center">
+                          {chooseOption.includes(option) ? (
+                            <div className="w-4 h-4 bg-white/20 backdrop-blur-2xl rounded-full"></div>
+                          ) : (
+                            "◯"
+                          )}
+                        </div>
                         <span>{option}</span>
                       </button>
                     ))}
@@ -115,14 +119,14 @@ export const QuizzSection = ({
           </div>
         ) : dataFetching ? (
           <div className="w-full h-11/12 flex flex-col justify-center items-center gap-4">
-            <div className="px-4 py-1 rounded-lg hover:bg-slaty/10 transition duration-300 border border-lightSlaty">
+            <div className="px-4 py-1.5 hover:bg-slaty/10 rounded-lg cursor-pointer hover:bg-white/20 hover:backdrop-blur-2xl text-brand-slate-1 hover:text-white transition duration-500 border border-brand-slate-1/20">
               loading...
             </div>
           </div>
         ) : (
           <div className="w-full h-full flex flex-col justify-center items-center gap-4">
             <button
-              className="px-4 py-1 rounded-lg hover:bg-slaty/10 transition duration-300 border border-lightSlaty"
+              className="px-4 py-1.5 hover:bg-slaty/10 rounded-lg cursor-pointer hover:bg-white/20 hover:backdrop-blur-2xl text-brand-slate-1 hover:text-white transition duration-500 border border-brand-slate-1/20"
               onClick={quizzHandler}
             >
               Click me

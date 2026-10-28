@@ -238,7 +238,7 @@ export default function Course() {
               />
             </div>
           </div>
-          <div className="w-2/5 flex justify-between items-center text-brand-slate-1/90">
+          <div className="w-2/5 flex justify-between items-center text-brand-slate-1">
             <p>
               Completed - {completedChapters.length}/{playlistLengths}
             </p>
