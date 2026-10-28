@@ -9,11 +9,11 @@ export const ChatbotSection = ({ id }: ChatbotSectionPropType) => {
     });
 
   return (
-    <div className="w-full flex flex-col gap-2 h-full">
+    <div className="w-full flex flex-col h-full">
       {temporaryChatData?.length > 0 ? (
         <div className="w-full h-11/12 rounded-sm overflow-y-auto px-8">
           {temporaryChatData?.map((msg, i) => (
-            <div key={i} className="py-8">
+            <div key={i} className="pt-8">
               <div className="flex w-full justify-end">
                 <p className="border border-brand-slate-1/20 px-6 py-2 rounded-3xl text-white bg-white/5 backdrop-blur-2xl">
                   {msg.question}
@@ -35,7 +35,7 @@ export const ChatbotSection = ({ id }: ChatbotSectionPropType) => {
         </div>
       )}
 
-      <div className="flex gap-2 px-2">
+      <div className="flex gap-2 px-8">
         <input
           value={input}
           onKeyDown={(e) => {
@@ -44,15 +44,9 @@ export const ChatbotSection = ({ id }: ChatbotSectionPropType) => {
             }
           }}
           onChange={(e) => setInput(e.target.value)}
-          className="flex-1 p-2 rounded-md bg-lightSlaty focus:outline-hidden border border-slaty/50 text-slaty placeholder-slaty/50"
+          className="flex-1 px-4 py-3 rounded-3xl bg-lightSlaty focus:outline-hidden border border-brand-slate-1/30 text-white placeholder-brand-slate-1"
           placeholder="Ask anything..."
         />
-        <button
-          onClick={sendMessage}
-          className="px-4 py-2 bg-lightBlue hover:bg-lightBlue/80 text-white rounded-sm"
-        >
-          Send
-        </button>
       </div>
     </div>
   );
