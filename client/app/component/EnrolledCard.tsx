@@ -80,16 +80,16 @@ const EnrolledCard = ({
                           router.push(`/course/${playlistId}/${1}`)
                         }
                       >
-                        <IoPlayCircleOutline className="text-2xl hover:text-slaty transition duration-300 w-6 h-6" />
+                        <IoPlayCircleOutline className="text-2xl hover:text-slaty transition duration-300 w-6 h-6 cursor-pointer" />
                       </button>
                     </Tooltip.Trigger>
                     <Tooltip.Portal>
                       <Tooltip.Content
                         side="top"
-                        className="bg-lightSlaty text-slaty px-3 py-1 text-sm rounded-sm shadow-md z-20"
+                        className="bg-brand-slate-1/20 text-slaty px-3 py-1 text-sm rounded-sm shadow-md z-20"
                       >
                         Play
-                        <Tooltip.Arrow className="fill-lightSlaty" />
+                        <Tooltip.Arrow className="fill-brand-slate-1/20" />
                       </Tooltip.Content>
                     </Tooltip.Portal>
                   </Tooltip.Root>
@@ -102,16 +102,16 @@ const EnrolledCard = ({
                           handleDeletEnrolledCourse({ playlistId })
                         }
                       >
-                        <AiOutlineDelete className="text-2xl hover:text-slaty transition duration-300 w-6 h-6" />
+                        <AiOutlineDelete className="text-2xl hover:text-slaty transition duration-300 w-6 h-6 cursor-pointer" />
                       </button>
                     </Tooltip.Trigger>
                     <Tooltip.Portal>
                       <Tooltip.Content
                         side="top"
-                        className="bg-lightSlaty text-slaty px-3 py-1 text-sm rounded-sm shadow-md z-20"
+                        className="bg-brand-slate-1/20 text-slaty px-3 py-1 text-sm rounded-sm shadow-md z-20"
                       >
                         Delete
-                        <Tooltip.Arrow className="fill-lightSlaty" />
+                        <Tooltip.Arrow className="fill-brand-slate-1/20" />
                       </Tooltip.Content>
                     </Tooltip.Portal>
                   </Tooltip.Root>
@@ -131,16 +131,16 @@ const EnrolledCard = ({
                           );
                         }}
                       >
-                        <IoMdShareAlt className="text-2xl hover:text-slaty transition duration-300 w-6 h-6" />
+                        <IoMdShareAlt className="text-2xl hover:text-slaty transition duration-300 w-6 h-6 cursor-pointer" />
                       </button>
                     </Tooltip.Trigger>
                     <Tooltip.Portal>
                       <Tooltip.Content
                         side="top"
-                        className="bg-lightSlaty text-slaty px-3 py-1 text-sm rounded-sm shadow-md z-20"
+                        className="bg-brand-slate-1/20 text-slaty px-3 py-1 text-sm rounded-sm shadow-md z-20"
                       >
                         Share
-                        <Tooltip.Arrow className="fill-lightSlaty" />
+                        <Tooltip.Arrow className="fill-brand-slate-1/20" />
                       </Tooltip.Content>
                     </Tooltip.Portal>
                   </Tooltip.Root>

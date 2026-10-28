@@ -85,10 +85,10 @@ const CourseCard = ({
                   <Tooltip.Portal>
                     <Tooltip.Content
                       side="top"
-                      className="bg-lightSlaty text-slaty px-3 py-1 text-sm rounded-sm shadow-md z-20"
+                      className="bg-brand-slate-1/20 text-slaty px-3 py-1 text-sm rounded-sm shadow-md z-20"
                     >
                       Play
-                      <Tooltip.Arrow className="fill-lightSlaty" />
+                      <Tooltip.Arrow className="fill-brand-slate-1/20" />
                     </Tooltip.Content>
                   </Tooltip.Portal>
                 </Tooltip.Root>
@@ -110,10 +110,10 @@ const CourseCard = ({
                     <Tooltip.Portal>
                       <Tooltip.Content
                         side="top"
-                        className="bg-lightSlaty text-slaty px-3 py-1 text-sm rounded-sm shadow-md z-20"
+                        className="bg-brand-slate-1/20 text-slaty px-3 py-1 text-sm rounded-sm shadow-md z-20"
                       >
                         Unmark
-                        <Tooltip.Arrow className="fill-lightSlaty" />
+                        <Tooltip.Arrow className="fill-brand-slate-1/20" />
                       </Tooltip.Content>
                     </Tooltip.Portal>
                   </Tooltip.Root>
@@ -143,10 +143,10 @@ const CourseCard = ({
                     <Tooltip.Portal>
                       <Tooltip.Content
                         side="top"
-                        className="bg-lightSlaty text-slaty px-3 py-1 text-sm rounded-sm shadow-md z-20"
+                        className="bg-brand-slate-1/20 text-slaty px-3 py-1 text-sm rounded-sm shadow-md z-20"
                       >
                         Bookmark
-                        <Tooltip.Arrow className="fill-lightSlaty" />
+                        <Tooltip.Arrow className="fill-brand-slate-1/20" />
                       </Tooltip.Content>
                     </Tooltip.Portal>
                   </Tooltip.Root>
@@ -173,10 +173,10 @@ const CourseCard = ({
                   <Tooltip.Portal>
                     <Tooltip.Content
                       side="top"
-                      className="bg-lightSlaty text-slaty px-3 py-1 text-sm rounded-sm shadow-md z-20"
+                      className="bg-brand-slate-1/20 text-slaty px-3 py-1 text-sm rounded-sm shadow-md z-20"
                     >
                       Share
-                      <Tooltip.Arrow className="fill-lightSlaty" />
+                      <Tooltip.Arrow className="fill-brand-slate-1/20" />
                     </Tooltip.Content>
                   </Tooltip.Portal>
                 </Tooltip.Root>
