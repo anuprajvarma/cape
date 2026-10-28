@@ -74,7 +74,7 @@ export const PlaylistVideosSection = ({
           </Link>
         </div>
         <button
-          className="cursor-pointer px-2 hover:text-white"
+          className="cursor-pointer px-2 text-white hover:text-brand-slate-1"
           onClick={() => setIsOpenMenu(false)}
         >
           X

@@ -17,8 +17,6 @@ import {
 import { CgTranscript } from "react-icons/cg";
 import { PiShareFat } from "react-icons/pi";
 
-// import Linkify from "linkify-react";
-
 import NotesGpt from "@/app/component/NotesGpt";
 import { LoginModal } from "@/app/component/LoginModal";
 import { CourseLinkModal } from "@/app/component/CourseLinkModal";
@@ -31,10 +29,7 @@ import { useCourse } from "@/app/hooks/course";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/app/redux/store";
 import { playlistType2 } from "@/types";
-import {
-  // fetchChapters,
-  fetchPlaylistVideos,
-} from "@/app/utils/frontendApiCalls";
+import { fetchPlaylistVideos } from "@/app/utils/frontendApiCalls";
 import { handleChapterActions } from "@/app/utils/backendApiCalls";
 import { setIsOpen } from "@/app/redux/slices/LoginModalSlice";
 import {
@@ -44,17 +39,9 @@ import {
 import { setCourseLinkModal } from "@/app/redux/slices/CourseLinkModal";
 import { setCourseLink } from "@/app/redux/slices/CourseLink";
 
-// const options = {
-//   target: "_blank",
-//   rel: "noopener noreferrer",
-//   className: () => "text-blue-600 underline prose",
-// };
-
 export default function Course() {
   const { params } = useSessionsDetails();
   const { id, videoId } = params;
-  //   const router = useRouter();
-  // const session = useSession();
   const { router, session } = useSessionsDetails();
   const dispatch = useDispatch<AppDispatch>();
   const [transcript, setTranscript] = useState<TranscriptPeriod[]>([]);
@@ -77,8 +64,6 @@ export default function Course() {
 
   const handlePrevious = () => {
     if (isFirstVideo) return;
-
-    // setPosition((prev) => prev - 1);
     router.push(
       `/course/${id}/${PlaylistVideos[position - 2].snippet.resourceId.videoId}`,
     );
@@ -86,8 +71,6 @@ export default function Course() {
 
   const handleNext = () => {
     if (isLastVideo) return;
-
-    // setPosition((prev) => prev + 1);
     router.push(
       `/course/${id}/${PlaylistVideos[position].snippet.resourceId.videoId}`,
     );
@@ -176,19 +159,6 @@ export default function Course() {
   //   chapters();
   // }, [transcript]);
 
-  // const lines = videoDescription
-  //   ?.split("\n")
-  //   .map((line) => line.trim())
-  //   .filter((line) => line.length > 0);
-
-  // useEffect(() => {
-  //   if (actualId && playlistLengths) {
-  //     const percentage =
-  //       (100 * completedChapters.length) / Number(playlistLengths);
-  //     setPrecentage(Math.round(percentage));
-  //   }
-  // }, [actualId, playlistLengths, completedChapters.length]);
-
   return (
     <>
       <CourseLinkModal />
@@ -209,29 +179,18 @@ export default function Course() {
           <div className="w-3/5 flex justify-between px-2">
             <div className="flex gap-3 items-center justify-center">
               <Bars3BottomRightIcon
-                className="w-8 h-8 cursor-pointer"
+                className="w-8 h-8 cursor-pointer text-white hover:text-brand-slate-1 transition duration-500"
                 onClick={() => setIsOpenMenu(true)}
               />
               <p className="font-semibold">
                 {position}. {videoTitle}
               </p>
             </div>
-            {/* <div className="bg-white/10 w-[2rem] backdrop-blur-2xl rounded-lg flex gap-1 py-1 px-2 items-center justify-center">
-              <input type="checkbox" className="w-6 h-6" />
-            </div> */}
-            {/* <div className="flex items-center">
-              <input
-                type="checkbox"
-                className={`w-5 h-5 accent-blue-600 rounded cursor-pointer`}
-                // checked={isChecked}
-                // onChange={(e) => checkBoxHandler(e.target.checked)}
-              />
-            </div> */}
             <div className="flex items-center">
               <input
                 type="checkbox"
                 className={`w-5 h-5 ${
-                  isChecked ? "accent-blue-600" : "accent-white"
+                  isChecked ? "accent-brand-slate-1" : "accent-white"
                 } rounded cursor-pointer`}
                 checked={isChecked}
                 onChange={(e) => checkBoxHandler(e.target.checked)}
@@ -251,7 +210,7 @@ export default function Course() {
                   ),
                 );
               }}
-              className="w-7 h-7 cursor-pointer hover:text-white"
+              className="w-7 h-7 cursor-pointer text-white hover:text-brand-slate-1 transiton duration-500"
             />
           </div>
         </div>
@@ -278,41 +237,41 @@ export default function Course() {
                 />
               </DisclosurePanel>
             </Disclosure>
-            <div className="w-full p-2 flex justify-between">
-              <div className="bg-white/5 backdrop-blur-2xl rounded-lg border border-white/5 flex gap-2 p-2">
+            <div className="w-full px-2 flex justify-between">
+              <div className="flex gap-4 bg-white/5 backdrop-blur-2xl border border-white/5 rounded-xl p-2">
                 <button
                   onClick={() => setChapterOpen(true)}
-                  className={`${chapterOpen && "bg-white/5 backdrop-blur-2xl"} rounded-lg flex gap-1 py-1 px-2 items-center cursor-pointer hover:bg-white/5 hover:backdrop-blur-2xl`}
+                  className={`${chapterOpen && "bg-white/5 backdrop-blur-2xl"} border border-brand-slate-1/20 rounded-lg flex gap-1 py-1 px-2 items-center cursor-pointer hover:bg-white/5 hover:backdrop-blur-2xl text-sm`}
                 >
                   <CgTranscript className="w-5 h-5" />
                   <p>Transcripts</p>
                 </button>
                 <button
                   onClick={() => setChapterOpen(false)}
-                  className={`${chapterOpen === false && "bg-white/5 backdrop-blur-2xl"} rounded-lg flex gap-1 py-1 px-2 items-center cursor-pointer hover:bg-white/5 hover:backdrop-blur-2xl`}
+                  className={`${chapterOpen === false && "bg-white/5 backdrop-blur-2xl"} border border-brand-slate-1/20 rounded-lg flex gap-1 py-1 px-2 items-center cursor-pointer hover:bg-white/5 hover:backdrop-blur-2xl text-sm`}
                 >
                   <BookOpenIcon className="w-5 h-5" />
                   <p>Chapters</p>
                 </button>
               </div>
-              <div className="flex gap-4 items-center justify-center">
+              <div className="flex gap-2 items-center justify-center">
                 {position !== undefined && (
                   <>
                     <ArrowLeftIcon
                       onClick={handlePrevious}
-                      className={`h-6 w-6 ${
+                      className={`h-5 w-5 text-white hover:text-brand-slate-1 font-bold ${
                         isFirstVideo
                           ? "cursor-not-allowed opacity-40"
-                          : "cursor-pointer hover:text-blue-500"
+                          : "cursor-pointer"
                       }`}
                     />
 
                     <ArrowRightIcon
                       onClick={handleNext}
-                      className={`h-6 w-6 ${
+                      className={`h-5 w-5 text-white hover:text-brand-slate-1 font-bold ${
                         isLastVideo
                           ? "cursor-not-allowed opacity-40"
-                          : "cursor-pointer hover:text-blue-500"
+                          : "cursor-pointer"
                       }`}
                     />
                   </>
@@ -335,29 +294,16 @@ export default function Course() {
                     );
                   })
                 ) : (
-                  <div className="px-2 w-full h-full overflow-y-auto flex flex-col gap-4 justify-center items-center">
-                    <p>Video have no caption</p>
+                  <div className="px-2 w-full h-full overflow-y-auto flex flex-col gap-4 justify-center items-center text-lg">
+                    <p>This video have no caption</p>
                   </div>
                 )}
               </div>
             ) : (
-              <div className="px-2 w-full h-full overflow-y-auto flex flex-col gap-4 justify-center items-center">
+              <div className="px-2 w-full h-full overflow-y-auto flex flex-col gap-4 justify-center items-center text-lg">
                 <p>This feature is not added right now try after some time</p>
               </div>
             )}
-            {/* <Disclosure as="div" className="" defaultOpen={false}>
-              <DisclosureButton className="group flex w-full items-center text-md justify-between px-1 sm:px-2 rounded-lg">
-                <span>Description</span>
-                <ChevronDownIcon className="size-5 fill-slaty group-data-hover:fill-white/50 group-data-open:rotate-180" />
-              </DisclosureButton>
-              <DisclosurePanel className="mt-2 text-sm/5 text-slaty px-1 sm:px-2">
-                {lines?.map((line, idx) => (
-                  <p key={idx}>
-                    <Linkify options={options}>{line}.</Linkify>
-                  </p>
-                ))}
-              </DisclosurePanel>
-            </Disclosure> */}
           </div>
 
           <div className="w-240 h-full border border-brand-slate-1/20 rounded-xl hidden lg:flex flex-col">
@@ -366,12 +312,6 @@ export default function Course() {
               videoId={videoId as string}
               videoTitle={videoTitle}
             />
-            {/* <PlaylistVideosSection
-              id={id}
-              videoId={videoId}
-              completedChapters={completedChapters}
-              mobile={true}
-            /> */}
           </div>
         </div>
       </div>

@@ -340,7 +340,6 @@ export const handleChapterActions = async ({
             credentials: "include",
           });
         } catch (error) {
-          console.log(error);
           toast.error(`${error}`, {
             hideProgressBar: true,
           });
