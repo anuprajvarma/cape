@@ -68,15 +68,100 @@ const Header = () => {
 
   return (
     <div className="w-full mt-4 flex justify-center fixed top-0 z-50">
-      <div className="flex gap-4 font-medium items-center bg-white/5 backdrop-blur-2xl rounded-[20px] border border-white/5 px-5 py-1">
+      <div className="w-full sm:hidden flex justify-end px-5">
+        {isOpenMenu ? (
+          <div className="fixed flex sm:hidden flex-col gap-2 justify-between h-screen w-6/12 right-0 -top-2 mt-2 p-4 text-lg border-l border-brand-slate-1/15 shadow-lg bg-brand-slate-1/12 backdrop-blur-2xl transition duration-500">
+            <div className="flex flex-col gap-8">
+              <div className="flex justify-between">
+                <button
+                  className="font-semibold text-2xl"
+                  onClick={() => setIsOpenMenu(false)}
+                >
+                  X
+                </button>
+              </div>
+              <button
+                onClick={() => {
+                  setIsOpenMenu(false);
+                  router.push("/");
+                }}
+                className={`cursor-pointer hover:text-darkRed transition duration-300 font-semibold text-2xl ${
+                  path === "/" ? "text-white" : ""
+                }`}
+              >
+                Home
+              </button>
+              <button
+                onClick={() => {
+                  setIsOpenMenu(false);
+                  router.push("/courses");
+                }}
+                className={`cursor-pointer hover:text-darkRed transition duration-300 font-semibold text-2xl ${
+                  path === "/courses" ? "text-white" : ""
+                }`}
+              >
+                Courses
+              </button>
+              <button
+                onClick={() => {
+                  setIsOpenMenu(false);
+                  router.push("/bookmark");
+                }}
+                className={`cursor-pointer hover:text-darkRed transition duration-300 font-semibold text-2xl ${
+                  path === "/bookmark" ? "text-white" : ""
+                }`}
+              >
+                Bookmark
+              </button>
+              <button
+                onClick={() => {
+                  setIsOpenMenu(false);
+                  router.push("/dashboard");
+                }}
+                className={`cursor-pointer hover:text-darkRed transition duration-300 font-semibold text-2xl ${
+                  path === "/dashboard" ? "text-white" : ""
+                }`}
+              >
+                Dashboard
+              </button>
+            </div>
+            {isLogin && (
+              <div className="flex items-center justify-between">
+                <div className="relative w-8 h-8">
+                  <Image
+                    src={(user?.imageUrl as string) || "/code.jpg"}
+                    alt="Profile"
+                    quality={100}
+                    fill
+                    style={{ objectFit: "cover" }}
+                    className="rounded-full border border-slaty/30 transition duration-300 hover:border-slaty/50"
+                  />
+                </div>
+                <button
+                  onClick={handleSignout}
+                  className="text-xl font-semibold text-red-500 py-1 px-2 border border-red-500 rounded-lg"
+                >
+                  Log out
+                </button>
+              </div>
+            )}
+          </div>
+        ) : (
+          <IoMenu
+            onClick={() => setIsOpenMenu(!isOpenMenu)}
+            className="sm:hidden flex text-3xl"
+          />
+        )}
+      </div>
+      <div className="sm:flex hidden gap-4 font-medium items-center bg-white/5 backdrop-blur-2xl rounded-[20px] border border-white/5 px-5 py-1">
         <div className="flex gap-12">
           <Link
             href="/"
-            className="font-bold cursor-pointer text-xl sm:text-2xl flex gap-2 items-center"
+            className="flex font-bold cursor-pointer text-xl sm:text-2xl gap-2 items-center"
           >
             <SiSololearn className="text-[#FFFFFF] w-4 h-4" />
           </Link>
-          <div className="sm:flex hidden gap-8 justify-between text-[13px] font-medium sm:text-md  text-[#B4B2B3]">
+          <div className="flex gap-8 justify-between text-[13px] font-medium sm:text-md  text-brand-slate-1">
             <Link
               href="/courses"
               className={`cursor-pointer hover:text-darkRed transition duration-300 hover:text-white py-2 px-3 ${
@@ -112,26 +197,21 @@ const Header = () => {
         <div ref={inputRef}>
           {isLogin ? (
             <div className="relative">
-              <div className="justify-center items-center w-8 h-2 sm:flex hidden">
-                <button
-                  onClick={() => {
-                    setIsOpen(!isOpen);
-                  }}
-                  className="flex items-center justify-center rounded-full overflow-hidden focus:outline-hidden"
-                >
-                  <Image
-                    src={(user?.imageUrl as string) || "/code.jpg"}
-                    alt="Profile"
-                    quality={100}
-                    sizes="20px"
-                    fill
-                    style={{ objectFit: "cover" }}
-                    className="rounded-full border border-slaty/30 transition duration-300 hover:border-slaty/50"
-                  />
-                </button>
-              </div>
-              <button onClick={() => setIsOpenMenu(!isOpenMenu)}>
-                <IoMenu className="sm:hidden flex text-3xl" />
+              <button
+                onClick={() => {
+                  setIsOpen(!isOpen);
+                }}
+                className="items-center w-8 h-8 flex justify-center rounded-full overflow-hidden focus:outline-hidden"
+              >
+                <Image
+                  src={(user?.imageUrl as string) || "/code.jpg"}
+                  alt="Profile"
+                  quality={100}
+                  sizes="20px"
+                  fill
+                  style={{ objectFit: "cover" }}
+                  className="rounded-full border border-slaty/30 transition duration-300 hover:border-slaty/50"
+                />
               </button>
 
               {isOpen && (
@@ -160,89 +240,6 @@ const Header = () => {
               <button onClick={() => setIsOpenMenu(!isOpenMenu)}>
                 <IoMenu className="sm:hidden flex text-3xl" />
               </button>
-            </div>
-          )}
-
-          {isOpenMenu && (
-            <div className="fixed flex flex-col gap-2 justify-between h-screen w-6/12 right-0 -top-2 mt-2 p-4 text-lg border-l border-lightSlaty shadow-lg bg-mediumSlaty transition duration-300">
-              <div className="flex flex-col gap-8">
-                <div className="flex justify-between">
-                  <button
-                    className="font-semibold text-2xl"
-                    onClick={() => setIsOpenMenu(false)}
-                  >
-                    X
-                  </button>
-                  <SiSololearn
-                    onClick={() => setIsOpenMenu(false)}
-                    className="text-lightBlue w-6 h-6"
-                  />
-                </div>
-                <button
-                  onClick={() => {
-                    setIsOpenMenu(false);
-                    router.push("/");
-                  }}
-                  className={`cursor-pointer hover:text-darkRed transition duration-300 font-semibold text-2xl ${
-                    path === "/" ? "text-white" : ""
-                  }`}
-                >
-                  Home
-                </button>
-                <button
-                  onClick={() => {
-                    setIsOpenMenu(false);
-                    router.push("/courses");
-                  }}
-                  className={`cursor-pointer hover:text-darkRed transition duration-300 font-semibold text-2xl ${
-                    path === "/courses" ? "text-white" : ""
-                  }`}
-                >
-                  Courses
-                </button>
-                <button
-                  onClick={() => {
-                    setIsOpenMenu(false);
-                    router.push("/bookmark");
-                  }}
-                  className={`cursor-pointer hover:text-darkRed transition duration-300 font-semibold text-2xl ${
-                    path === "/bookmark" ? "text-white" : ""
-                  }`}
-                >
-                  Bookmark
-                </button>
-                <button
-                  onClick={() => {
-                    setIsOpenMenu(false);
-                    router.push("/dashboard");
-                  }}
-                  className={`cursor-pointer hover:text-darkRed transition duration-300 font-semibold text-2xl ${
-                    path === "/dashboard" ? "text-white" : ""
-                  }`}
-                >
-                  Dashboard
-                </button>
-              </div>
-              {isLogin && (
-                <div className="flex items-center justify-between">
-                  <div className="relative w-8 h-8">
-                    <Image
-                      src={(user?.imageUrl as string) || "/code.jpg"}
-                      alt="Profile"
-                      quality={100}
-                      fill
-                      style={{ objectFit: "cover" }}
-                      className="rounded-full border border-slaty/30 transition duration-300 hover:border-slaty/50"
-                    />
-                  </div>
-                  <button
-                    onClick={handleSignout}
-                    className="text-xl font-semibold text-red-500 py-1 px-2 border border-red-500 rounded-lg"
-                  >
-                    Log out
-                  </button>
-                </div>
-              )}
             </div>
           )}
         </div>
