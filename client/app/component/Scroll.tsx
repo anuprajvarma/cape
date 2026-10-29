@@ -54,20 +54,20 @@ function StackCard({
           scale,
           transformOrigin: "center",
         }}
-        className="flex h-120 w-full items-center justify-center
+        className="flex sm:h-120 w-full items-center justify-center
       overflow-hidden rounded-[20px] border border-white/5
       bg-white/5 text-center text-white shadow-2xl
       backdrop-blur-2xl"
       >
-        <div className="flex h-full w-full">
-          <div className="flex w-1/2 items-center">
+        <div className="flex sm:flex-row flex-col w-full h-full">
+          <div className="flex w-full sm:w-1/2 items-center">
             <div className="w-full px-12 text-start">
               <p className="text-3xl font-semibold">{section.title}</p>
               <p>{section.description}</p>
             </div>
           </div>
 
-          <div className="w-1/2 p-2">
+          <div className="w-full sm:w-1/2 p-2">
             <Image
               src={coursepic}
               alt="Course preview"

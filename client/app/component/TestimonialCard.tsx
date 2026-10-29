@@ -9,7 +9,7 @@ import course from "../../public/courses.png";
 
 export default function MotionMarquee() {
   return (
-    <div className="flex w-full items-center overflow-hidden">
+    <div className="flex w-full items-center overflow-hidden px-4">
       <motion.div
         className="flex w-max shrink-0 gap-16"
         animate={{ x: ["0%", "-40%"] }}

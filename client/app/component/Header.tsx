@@ -68,11 +68,11 @@ const Header = () => {
 
   return (
     <div className="w-full mt-4 flex justify-center fixed top-0 z-50">
-      <div className="w-full sm:hidden flex justify-end px-5">
+      <div className="w-full sm:hidden flex justify-end px-4">
         {isOpenMenu ? (
-          <div className="fixed flex sm:hidden flex-col gap-2 justify-between h-screen w-6/12 right-0 -top-2 mt-2 p-4 text-lg border-l border-brand-slate-1/15 shadow-lg bg-brand-slate-1/12 backdrop-blur-2xl transition duration-500">
+          <div className="fixed flex sm:hidden flex-col gap-2 justify-between h-screen w-full right-0 -top-2 mt-2 p-4 text-lg border-l border-brand-slate-1/15 shadow-lg bg-brand-slate-1/12 backdrop-blur-2xl transition duration-500">
             <div className="flex flex-col gap-8">
-              <div className="flex justify-between">
+              <div className="flex justify-end">
                 <button
                   className="font-semibold text-2xl"
                   onClick={() => setIsOpenMenu(false)}
@@ -126,8 +126,8 @@ const Header = () => {
               </button>
             </div>
             {isLogin && (
-              <div className="flex items-center justify-between">
-                <div className="relative w-8 h-8">
+              <div className="flex w-full items-center justify-between">
+                <div className="relative w-12 h-12">
                   <Image
                     src={(user?.imageUrl as string) || "/code.jpg"}
                     alt="Profile"
@@ -139,7 +139,7 @@ const Header = () => {
                 </div>
                 <button
                   onClick={handleSignout}
-                  className="text-xl font-semibold text-red-500 py-1 px-2 border border-red-500 rounded-lg"
+                  className="text-xl font-semibold text-white py-1 px-2 border bg-red-900 border-red-900 rounded-lg"
                 >
                   Log out
                 </button>
@@ -147,10 +147,18 @@ const Header = () => {
             )}
           </div>
         ) : (
-          <IoMenu
-            onClick={() => setIsOpenMenu(!isOpenMenu)}
-            className="sm:hidden flex text-3xl"
-          />
+          <div className="flex w-full h-full justify-between">
+            <Link
+              href="/"
+              className="flex font-bold cursor-pointer text-xl sm:text-2xl gap-2 items-center"
+            >
+              <SiSololearn className="text-[#FFFFFF] w-5 h-5" />
+            </Link>
+            <IoMenu
+              onClick={() => setIsOpenMenu(!isOpenMenu)}
+              className="sm:hidden flex text-3xl"
+            />
+          </div>
         )}
       </div>
       <div className="sm:flex hidden gap-4 font-medium items-center bg-white/5 backdrop-blur-2xl rounded-[20px] border border-white/5 px-5 py-1">
