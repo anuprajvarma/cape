@@ -14,7 +14,7 @@ export const ChatbotSection = ({ id }: ChatbotSectionPropType) => {
   return (
     <div className="w-full flex flex-col h-full">
       {temporaryChatData?.length > 0 ? (
-        <div className="w-full h-11/12 rounded-sm overflow-y-auto px-4">
+        <div className="w-full h-200 md:h-11/12 rounded-sm overflow-y-auto px-4">
           {temporaryChatData?.map((msg, i) => (
             <div key={i} className="pt-8">
               <div className="flex w-full justify-end">
@@ -136,7 +136,7 @@ export const ChatbotSection = ({ id }: ChatbotSectionPropType) => {
             }
           }}
           onChange={(e) => setInput(e.target.value)}
-          className="flex-1 px-4 py-3 rounded-3xl bg-lightSlaty focus:outline-hidden border border-brand-slate-1/30 text-white placeholder-brand-slate-1"
+          className="flex-1 px-4 py-2 xl:py-3 rounded-3xl bg-lightSlaty focus:outline-hidden border border-brand-slate-1/30 text-white placeholder-brand-slate-1"
           placeholder="Ask anything..."
         />
       </div>

@@ -1,13 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-
-import {
-  Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
-} from "@headlessui/react";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import {
   BookOpenIcon,
   Bars3BottomRightIcon,
@@ -20,7 +13,6 @@ import { PiShareFat } from "react-icons/pi";
 import NotesGpt from "@/app/component/NotesGpt";
 import { LoginModal } from "@/app/component/LoginModal";
 import { CourseLinkModal } from "@/app/component/CourseLinkModal";
-import { PlayVideoSection } from "@/app/component/PlayVideo";
 import { PlaylistVideosSection } from "@/app/component/PlaylistVideosSection";
 
 import { useSessionsDetails } from "@/app/hooks/sesionAndRouterDetail";
@@ -163,12 +155,13 @@ export default function Course() {
     <>
       <CourseLinkModal />
       <LoginModal />
-      <div className="w-full relative px-2 flex flex-col justify-center text-slaty h-screen">
+      <div className="w-full relative px-2 flex flex-col justify-center text-slaty h-full md:h-screen">
         {openMenu && (
-          <div className="absolute z-50 h-full w-120 left-0 bg-white/5 backdrop-blur-2xl border border-white/5">
+          <div className="absolute z-50 h-full w-full lg:w-4/12 left-0 bg-white/5 backdrop-blur-2xl border border-white/5">
             <PlaylistVideosSection
               id={id}
               videoId={videoId}
+              playlistLengths={playlistLengths}
               setIsOpenMenu={setIsOpenMenu}
               completedChapters={completedChapters}
               mobile={true}
@@ -176,7 +169,7 @@ export default function Course() {
           </div>
         )}
         <div className="w-full flex justify-between gap-2 py-4">
-          <div className="w-3/5 flex justify-between px-2">
+          <div className=" w-full md:w-3/5 flex justify-between px-2">
             <div className="flex gap-3 items-center justify-center">
               <Bars3BottomRightIcon
                 className="w-8 h-8 cursor-pointer text-white hover:text-brand-slate-1 transition duration-500"
@@ -197,7 +190,7 @@ export default function Course() {
               />
             </div>
           </div>
-          <div className="w-2/5 flex justify-between items-center text-brand-slate-1">
+          <div className="w-2/5 hidden md:flex justify-between items-center text-brand-slate-1">
             <p>
               Completed - {completedChapters.length}/{playlistLengths}
             </p>
@@ -215,29 +208,22 @@ export default function Course() {
           </div>
         </div>
         <div className="w-full flex justify-between gap-2 h-11/12">
-          <div className="w-full flex flex-col gap-4">
-            <PlayVideoSection
-              id={id}
-              videoTitle={videoTitle}
-              videoId={videoId}
-              completedChapters={completedChapters}
+          <div className="w-full md:w-7/12 h-full flex flex-col gap-4">
+            <iframe
+              src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
+              className="rounded-lg w-full aspect-video"
+              allowFullScreen
+              allow="autoplay; encrypted-media"
+              title="YouTube video player"
             />
-            <Disclosure as="div" className="lg:hidden" defaultOpen={false}>
-              <DisclosureButton className="group flex w-full bg-mediumSlaty p-1 sm:p-2 rounded-lg items-center text-md border border-lightSlaty justify-between">
-                <span>Playlists</span>
-                <ChevronDownIcon className="size-5 fill-slaty group-data-hover:fill-white/50 group-data-open:rotate-180" />
-              </DisclosureButton>
-              <DisclosurePanel className="mt-2 text-sm/5 text-slaty">
-                <PlaylistVideosSection
-                  id={id}
-                  videoId={videoId}
-                  setIsOpenMenu={setIsOpenMenu}
-                  completedChapters={completedChapters}
-                  mobile={false}
-                />
-              </DisclosurePanel>
-            </Disclosure>
-            <div className="w-full px-2 flex justify-between">
+            <div className="w-full border border-brand-slate-1/20 rounded-xl md:hidden flex flex-col">
+              <NotesGpt
+                id={id as string}
+                videoId={videoId as string}
+                videoTitle={videoTitle}
+              />
+            </div>
+            <div className="w-full px-2 hidden md:flex justify-between">
               <div className="flex gap-4 bg-white/5 backdrop-blur-2xl border border-white/5 rounded-xl p-2">
                 <button
                   onClick={() => setChapterOpen(true)}
@@ -279,7 +265,7 @@ export default function Course() {
               </div>
             </div>
             {chapterOpen ? (
-              <div className="px-2 w-full h-full overflow-y-auto flex flex-col gap-4">
+              <div className="px-2 w-full h-full overflow-y-auto hidden md:flex flex-col gap-4">
                 {transcript.length > 0 ? (
                   transcript?.map((data, index) => {
                     return (
@@ -300,13 +286,13 @@ export default function Course() {
                 )}
               </div>
             ) : (
-              <div className="px-2 w-full h-full overflow-y-auto flex flex-col gap-4 justify-center items-center text-lg">
+              <div className="px-2 w-full h-full overflow-y-auto hidden md:flex flex-col gap-4 justify-center items-center text-lg">
                 <p>This feature is not added right now try after some time</p>
               </div>
             )}
           </div>
 
-          <div className="w-240 h-full border border-brand-slate-1/20 rounded-xl hidden lg:flex flex-col">
+          <div className="w-5/12 h-full border border-brand-slate-1/20 rounded-xl hidden md:flex flex-col">
             <NotesGpt
               id={id as string}
               videoId={videoId as string}
