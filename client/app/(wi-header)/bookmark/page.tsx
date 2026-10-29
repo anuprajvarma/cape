@@ -22,9 +22,9 @@ export default function Bookmark() {
   return (
     <>
       <CourseLinkModal />
-      <div className="w-full h-[90vh] -z-20 py-8 px-4 text-black flex justify-center mt-16">
+      <div className="w-full h-full -z-20 py-8 px-4 text-black flex justify-center mt-16">
         <div className="w-full h-full flex flex-col items-center gap-12">
-          <div className="flex flex-wrap gap-8 h-full justify-center items-center">
+          <div className="flex flex-wrap gap-8 h-full justify-center">
             {bookmarkCoursePlaylist.length > 0 ? (
               bookmarkCoursePlaylist?.map((data, index) => {
                 if (!hasMounted) return null;

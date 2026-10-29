@@ -1,4 +1,4 @@
-import { ToastContainer } from "react-toastify";
+import Toaster from "@/app/component/Toaster";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function RootLayout({
@@ -9,7 +9,7 @@ export default function RootLayout({
   return (
     <>
       {children}
-      <ToastContainer position="top-center" autoClose={3000} />
+      <Toaster />
     </>
   );
 }
