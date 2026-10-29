@@ -37,7 +37,7 @@ const EnrolledCard = ({
 
   return (
     <div className="flex justify-center lg:justify-between gap-8">
-      <div className="flex flex-col sm:flex-row w-full sm:w-148 md:w-208 min-h-48 bg-brand-slate-2/15 backdrop-blur-3xl rounded-3xl p-4 text-white gap-4 border border-brand-slate-1/15">
+      <div className="flex flex-col sm:flex-row w-full sm:w-148 md:w-208 min-h-48 p-4 text-white gap-4 bg-brand-slate-2/15 backdrop-blur-3xl border border-brand-slate-1/20 rounded-3xl">
         <div className="flex w-full sm:w-[20rem] h-42 relative rounded-3xl">
           <Image
             src={thumbnail || "/code.jpg"}
@@ -150,7 +150,7 @@ const EnrolledCard = ({
           </div>
         </div>
       </div>
-      <div className="w-100 bg-mediumSlaty  border-lightSlaty hidden lg:flex flex-col gap-3 justify-center items-center bg-brand-slate-2/15 backdrop-blur-3xl rounded-3xl border border-brand-slate-1/15 text-white">
+      <div className="w-100 bg-mediumSlaty  border-lightSlaty hidden lg:flex flex-col gap-3 justify-center items-center bg-brand-slate-2/15 backdrop-blur-3xl border border-brand-slate-1/20 rounded-3xl text-white">
         <CircularProgressbar
           value={precentage}
           text={`${precentage}%`}
