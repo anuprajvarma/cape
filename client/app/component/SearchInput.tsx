@@ -1,17 +1,17 @@
 import { Mic } from "lucide-react";
 import { motion } from "framer-motion";
-import { IoSearch } from "react-icons/io5";
+// import { IoSearch } from "react-icons/io5";
 import { useState } from "react";
 import useClickOutside from "../utils/outsideClick";
 import { SearchInputPropType } from "@/types";
-import { saveSearchTopic } from "../utils/backendApiCalls";
+// import { saveSearchTopic } from "../utils/backendApiCalls";
 import VoiceSearchHandle from "./VoiceSearchHandle";
 
 const SearchInput = ({
   showSuggestions,
   suggestionsArray,
   searchQuery,
-  topic,
+  // topic,
   setShowSuggestions,
   setTopic,
   setSearchQuery,
@@ -44,7 +44,7 @@ const SearchInput = ({
 
   return (
     <div className="w-full flex justify-center sticky top-20 z-50 mb-10 mt-15">
-      <div className="relative w-5/12 h-full px-4 bg-white/5 backdrop-blur-2xl border border-brand-slate-1/20 rounded-[20px] text-brand-slate-1">
+      <div className="relative w-[20rem] sm:w-120 h-full px-4 bg-white/5 backdrop-blur-2xl border border-brand-slate-1/20 rounded-[20px] text-brand-slate-1">
         <div className="flex w-full h-12">
           <div className="relative flex flex-col w-full h-full">
             <input
@@ -57,8 +57,7 @@ const SearchInput = ({
             />
           </div>
 
-          {/* Search button */}
-          <button
+          {/* <button
             onClick={async () => {
               if (searchQuery === "") {
                 setTopic(topic);
@@ -70,7 +69,7 @@ const SearchInput = ({
             className="h-full px-3 py-3 rounded-r-[15px] bg-lightSlaty  duration-300 transition"
           >
             <IoSearch className="text-xl text-brand-blue cursor-pointer" />
-          </button>
+          </button> */}
           <VoiceSearchHandle
             setSearchQuery={setSearchQuery}
             setIsRecording={setIsRecording}

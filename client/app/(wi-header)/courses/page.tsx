@@ -38,7 +38,7 @@ export default function Courses() {
           />
           <LoginModal />
           <div className="overflow-y-auto flex-1 min-h-0 pt-6">
-            <div className="flex flex-wrap items-center justify-center gap-8">
+            <div className="flex flex-wrap items-center justify-center gap-4">
               {playlists.length > 0 ? (
                 playlists.map((data, index) => {
                   const id = data.id?.playlistId;
