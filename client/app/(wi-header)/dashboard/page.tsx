@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   DndContext,
   MouseSensor,
@@ -9,7 +9,6 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
-import { isMobile } from "react-device-detect";
 import {
   SortableContext,
   verticalListSortingStrategy,
@@ -19,7 +18,6 @@ import { SortEnrolledCourses } from "../../component/SortEnrolledCourses";
 import { useDashboard } from "../../hooks/dashboard";
 
 const Dashboard: React.FC = () => {
-  const [hasMounted, setHasMounted] = useState<boolean>(false);
   const [getDataCheck, setGetDataCheck] = useState<boolean>(false);
   const { handleDragEnd, enrolledCoursePlaylist, checkDataExist, dataLoading } =
     useDashboard({ getDataCheck });
@@ -32,19 +30,13 @@ const Dashboard: React.FC = () => {
     activationConstraint: { delay: 200, tolerance: 5 },
   });
 
-  const sensors = useSensors(isMobile ? touchSensor : mouseSensor);
-
-  useEffect(() => {
-    setHasMounted(true);
-  }, []);
-
-  if (!hasMounted) return null;
+  const sensors = useSensors(mouseSensor, touchSensor);
 
   return (
     <>
       <CourseLinkModal />
-      <div className="w-full h-[90vh] py-8 px-4 text-black flex justify-center mt-16">
-        <div className="w-280 h-full flex flex-col gap-12">
+      <div className="w-full h-full py-8 px-4 text-black flex justify-center mt-16">
+        <div className="w-280 h-full flex flex-col gap-8 items-center justify-center">
           <DndContext
             sensors={sensors}
             collisionDetection={closestCenter}
@@ -65,7 +57,7 @@ const Dashboard: React.FC = () => {
                   />
                 ))
               ) : checkDataExist ? (
-                <p className="text-xl text-center text-slaty">
+                <p className="text-xl text-center text-brand-slate-1">
                   You have not enrolled in any courses.
                 </p>
               ) : dataLoading ? (

@@ -210,15 +210,15 @@ const Header = () => {
                   sizes="20px"
                   fill
                   style={{ objectFit: "cover" }}
-                  className="rounded-full border border-slaty/30 transition duration-300 hover:border-slaty/50"
+                  className="rounded-full border border-slaty/30 transition duration-300 hover:border-slaty/50 cursor-pointer"
                 />
               </button>
 
               {isOpen && (
-                <div className="absolute right-0 mt-2 border border-lightSlaty shadow-lg bg-mediumSlaty rounded-lg transition duration-300">
+                <div className="absolute right-0 mt-2 border border-brand-slate-1/20 shadow-lg bg-brand-slate-1/15 hover:bg-brand-slate-1/30 cursor-pointer rounded-lg transition duration-300">
                   <button
                     onClick={handleSignout}
-                    className="w-full text-left px-4 py-2 rounded-sm text-lightYellow"
+                    className="w-full text-left px-4 py-2 rounded-sm cursor-pointer"
                   >
                     Logout
                   </button>
