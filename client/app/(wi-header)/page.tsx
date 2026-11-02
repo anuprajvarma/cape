@@ -16,10 +16,10 @@ export default function Page() {
       <ScoreSection />
       <Testomonials />
       <div className="w-full my-20 flex items-center justify-center">
-        <div className="w-11/12 md:w-9/12 h-60 bg-white/10 backdrop-blur-2xl rounded-[20px] border border-white/5 flex justify-center items-center">
-          <div className="w-6/12 flex flex-col justify-center items-center gap-4">
+        <div className="w-11/12 md:w-9/12 h-40 sm:h-60 bg-white/10 backdrop-blur-2xl rounded-[20px] border border-white/5 flex justify-center items-center">
+          <div className="lg:w-7/12 xl:w-6/12 flex flex-col justify-center items-center gap-4">
             <div className="w-full flex flex-col justify-center items-center">
-              <p className="text-4xl font-semibold">
+              <p className="sm:text-4xl font-semibold">
                 Learn smarter, faster, easier
               </p>
               <p className="text-sm">Join over 100+ people learning smarter</p>

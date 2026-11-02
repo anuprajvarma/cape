@@ -148,12 +148,15 @@ const Header = () => {
           </div>
         ) : (
           <div className="flex w-full h-full justify-between">
-            <Link
-              href="/"
-              className="flex font-bold cursor-pointer text-xl sm:text-2xl gap-2 items-center"
-            >
-              <SiSololearn className="text-[#FFFFFF] w-5 h-5" />
-            </Link>
+            <div className="">
+              <Link
+                href="/"
+                className="flex cursor-pointer gap-2 font-semibold items-center justify-center text-xl"
+              >
+                <SiSololearn className="text-[#FFFFFF] w-5 h-5" />
+                <h2>Cape</h2>
+              </Link>
+            </div>
             <IoMenu
               onClick={() => setIsOpenMenu(!isOpenMenu)}
               className="sm:hidden flex text-3xl"

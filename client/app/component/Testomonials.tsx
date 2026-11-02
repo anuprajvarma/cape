@@ -7,9 +7,11 @@ export default function Testomonials() {
   //   const items = Array.from({ length: 10 }, (_, i) => `Item ${i + 1}`);
   return (
     <div className="w-full flex justify-center items-center mt-20">
-      <div className="flex w-11/12 md:w-9/12 flex-col gap-20">
+      <div className="flex w-full lg:w-9/12 flex-col gap-10 sm:gap-20">
         <div className="w-full flex justify-center">
-          <p className="text-5xl font-bold text-white">What people says</p>
+          <p className="text-3xl sm:text-5xl font-bold text-white">
+            What people says
+          </p>
         </div>
         <MotionMarquee />
       </div>

@@ -10,10 +10,10 @@ import * as Tooltip from "@radix-ui/react-tooltip";
 
 const NavBar = () => {
   return (
-    <div className="w-full py-4 px-4 border-t border-slaty/30 flex justify-center z-20">
+    <div className="w-full py-4 px-4 border-t border-brand-slate-1/30 flex justify-center z-20">
       <div className="w-280 flex justify-between">
         <div className="flex flex-col gap-2">
-          <p className="text-white text-xl">Connect with me</p>
+          <p className="text-white text-md sm:text-xl">Connect with me</p>
           <div className="flex gap-2 text-slaty/60">
             <Tooltip.Provider delayDuration={0}>
               <Tooltip.Root>
@@ -96,9 +96,9 @@ const NavBar = () => {
           </div>
         </div>
         <div className="flex flex-col items-center gap-2">
-          <p className="text-white text-xl">Contribute</p>
+          <p className="text-white text-md sm:text-xl">Contribute</p>
           <div className="flex gap-2 items-center text-slaty/60">
-            <p>Cape</p>
+            <p className="text-white text-md sm:text-xl">Cape</p>
             <Tooltip.Provider delayDuration={0}>
               <Tooltip.Root>
                 <Tooltip.Trigger asChild>
