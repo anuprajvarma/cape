@@ -95,6 +95,48 @@ export const fetchQuizzes = async ({ videoTitle }: { videoTitle: string }) => {
   }
 };
 
+export const fetchPlaylistDetails = async ({
+  playlistId,
+}: {
+  playlistId: string;
+}) => {
+  if (!apikey) {
+    throw new Error("YouTube API key is missing");
+  }
+
+  const url = new URL("https://www.googleapis.com/youtube/v3/playlists");
+
+  url.search = new URLSearchParams({
+    part: "snippet",
+    id: playlistId,
+    key: apikey,
+  }).toString();
+
+  const res = await fetch(url.toString());
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.error?.message || "Failed to fetch playlist");
+  }
+
+  if (!data.items?.length) {
+    throw new Error("Playlist not found");
+  }
+
+  const snippet = data.items[0].snippet;
+
+  return {
+    channelTitle: snippet.channelTitle,
+    thumbnail:
+      snippet.thumbnails.maxres?.url ||
+      snippet.thumbnails.high?.url ||
+      snippet.thumbnails.medium?.url ||
+      snippet.thumbnails.default?.url,
+    title: snippet.title,
+    description: snippet.description,
+  };
+};
+
 // export const fetchChapters = async ({
 //   transcript,
 // }: {

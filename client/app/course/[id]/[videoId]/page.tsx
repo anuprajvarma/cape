@@ -16,14 +16,11 @@ import { CourseLinkModal } from "@/app/component/CourseLinkModal";
 import { PlaylistVideosSection } from "@/app/component/PlaylistVideosSection";
 
 import { useSessionsDetails } from "@/app/hooks/sesionAndRouterDetail";
-import { setCheckBox } from "../../../redux/slices/checkboxSlice";
 import { useCourse } from "@/app/hooks/course";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/app/redux/store";
 import { playlistType2 } from "@/types";
 import { fetchPlaylistVideos } from "@/app/utils/frontendApiCalls";
-import { handleChapterActions } from "@/app/utils/backendApiCalls";
-import { setIsOpen } from "@/app/redux/slices/LoginModalSlice";
 import {
   groupTranscriptByPeriod,
   TranscriptPeriod,
@@ -34,11 +31,10 @@ import { setCourseLink } from "@/app/redux/slices/CourseLink";
 export default function Course() {
   const { params } = useSessionsDetails();
   const { id, videoId } = params;
-  const { router, session } = useSessionsDetails();
+  const { router } = useSessionsDetails();
   const dispatch = useDispatch<AppDispatch>();
   const [transcript, setTranscript] = useState<TranscriptPeriod[]>([]);
-  const checkboxTrack = useSelector((state: RootState) => state.checkbox);
-  const { completedChapters, videoTitle } = useCourse({
+  const { completedChapters, videoTitle, fetchPlaylistDetail } = useCourse({
     id,
     videoId,
   });
@@ -98,25 +94,25 @@ export default function Course() {
     playlist();
   }, [id, videoId]);
 
-  const checkBoxHandler = async (e: boolean) => {
-    if (session.status === "authenticated") {
-      await handleChapterActions({
-        isCompleted: e,
-        email: session.data?.user?.email ?? "",
-        playlistId: id,
-        videoId: videoId,
-        title: videoTitle,
-        channelTitle: "afasfd",
-        thumbnails: "afdasdf",
-        description: "random",
-        bookmark: true,
-        indexOrder: 0,
-      });
-      dispatch(setCheckBox(!checkboxTrack));
-    } else {
-      dispatch(setIsOpen(true));
-    }
-  };
+  // const checkBoxHandler = async (e: boolean) => {
+  //   if (session.status === "authenticated") {
+  //     await handleChapterActions({
+  //       isCompleted: e,
+  //       email: session.data?.user?.email ?? "",
+  //       playlistId: id,
+  //       videoId: videoId,
+  //       title: videoTitle,
+  //       channelTitle: "afasfd",
+  //       thumbnails: "afdasdf",
+  //       description: "random",
+  //       bookmark: true,
+  //       indexOrder: 0,
+  //     });
+  //     dispatch(setCheckBox(!checkboxTrack));
+  //   } else {
+  //     dispatch(setIsOpen(true));
+  //   }
+  // };
 
   useEffect(() => {
     const fetchVideoTranscript = async (videoId: string) => {
@@ -186,7 +182,7 @@ export default function Course() {
                   isChecked ? "accent-brand-slate-1" : "accent-white"
                 } rounded cursor-pointer`}
                 checked={isChecked}
-                onChange={(e) => checkBoxHandler(e.target.checked)}
+                onChange={(e) => fetchPlaylistDetail(e.target.checked)}
               />
             </div>
           </div>

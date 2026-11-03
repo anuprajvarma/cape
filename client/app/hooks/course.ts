@@ -4,11 +4,15 @@ import { useSessionsDetails } from "./sesionAndRouterDetail";
 import { useEffect, useState } from "react";
 import {
   fetchfirstVideoIdOfPlaylist,
+  fetchPlaylistDetails,
   fetchVideoDetail,
   PlaylistLength,
 } from "../utils/frontendApiCalls";
 import { fetchMultipleTypeData } from "../utils/backendApiCalls";
 import { setPlayListLength } from "@/app/redux/slices/PlaylistLengthSlice";
+import { handleChapterActions } from "@/app/utils/backendApiCalls";
+import { setIsOpen } from "@/app/redux/slices/LoginModalSlice";
+import { setCheckBox } from "../redux/slices/checkboxSlice";
 
 export const useCourse = ({
   id,
@@ -73,5 +77,36 @@ export const useCourse = ({
     };
     getChapterData();
   }, [session.data?.user, id, checkboxTrack]);
-  return { completedChapters, videoTitle, videoDescription };
+
+  const fetchPlaylistDetail = async (e: boolean) => {
+    if (typeof id === "string") {
+      const playlistDetails = await fetchPlaylistDetails({ playlistId: id });
+      console.log(playlistDetails.channelTitle);
+      console.log(playlistDetails.thumbnail);
+      if (session.status === "authenticated") {
+        await handleChapterActions({
+          isCompleted: e,
+          email: session.data?.user?.email ?? "",
+          playlistId: id,
+          videoId: videoId,
+          title: videoTitle,
+          channelTitle: playlistDetails.channelTitle,
+          thumbnails: playlistDetails.thumbnail,
+          description: playlistDetails.description,
+          bookmark: true,
+          indexOrder: 0,
+        });
+        dispatch(setCheckBox(!checkboxTrack));
+      } else {
+        dispatch(setIsOpen(true));
+      }
+    }
+  };
+
+  return {
+    completedChapters,
+    videoTitle,
+    videoDescription,
+    fetchPlaylistDetail,
+  };
 };

@@ -1,8 +1,7 @@
-import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
+import { Dialog, DialogPanel } from "@headlessui/react";
 import React from "react";
 import { FaArrowRight } from "react-icons/fa";
 import { signIn } from "next-auth/react";
-import { FaXmark } from "react-icons/fa6";
 import { AppDispatch, RootState } from "../redux/store";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsOpen } from "../redux/slices/LoginModalSlice";
