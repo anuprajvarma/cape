@@ -24,7 +24,7 @@ export default function Bookmark() {
       <CourseLinkModal />
       <div className="w-full h-full -z-20 py-8 px-4 text-black flex justify-center mt-16">
         <div className="w-full h-full flex flex-col items-center gap-12">
-          <div className="flex flex-wrap gap-8 h-full justify-center">
+          <div className="w-full grid grid-flow-row grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-center gap-6">
             {bookmarkCoursePlaylist.length > 0 ? (
               bookmarkCoursePlaylist?.map((data, index) => {
                 if (!hasMounted) return null;
