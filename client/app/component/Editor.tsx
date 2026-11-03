@@ -54,7 +54,7 @@ const Editor = ({ email, playlistId }: EditorPropType) => {
   };
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-[30rem] md:h-full flex justify-center items-center rounded-4xl p-1">
       {session.status === "authenticated" ? (
         <BlockNoteView
           className="w-full editor-wrapper"
@@ -63,7 +63,7 @@ const Editor = ({ email, playlistId }: EditorPropType) => {
           onChange={saveNote}
         />
       ) : (
-        <p className="w-full text-center">
+        <p className="text-center sm:text-xl text-md">
           After SignIn you can use notes editor
         </p>
       )}

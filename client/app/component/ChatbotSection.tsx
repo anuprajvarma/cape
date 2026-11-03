@@ -12,9 +12,9 @@ export const ChatbotSection = ({ id }: ChatbotSectionPropType) => {
   console.log("temporaryChatData " + temporaryChatData);
 
   return (
-    <div className="w-full flex flex-col h-full">
+    <div className="w-full h-[30rem] md:h-[90%] flex flex-col">
       {temporaryChatData?.length > 0 ? (
-        <div className="w-full h-200 md:h-11/12 rounded-sm overflow-y-auto px-4">
+        <div className="w-full h-[88%] md:h-full rounded-sm overflow-y-auto px-4">
           {temporaryChatData?.map((msg, i) => (
             <div key={i} className="pt-8">
               <div className="flex w-full justify-end">
@@ -122,12 +122,12 @@ export const ChatbotSection = ({ id }: ChatbotSectionPropType) => {
           ))}
         </div>
       ) : (
-        <div className="w-full h-11/12 flex flex-col justify-center items-center gap-4">
-          <div>What&apos;s the agenda today ?</div>
+        <div className="w-full h-full flex justify-center items-center sm:text-xl text-md">
+          <p>What&apos;s the agenda today ?</p>
         </div>
       )}
 
-      <div className="flex gap-2 px-4">
+      <div className="flex gap-2 px-4 absolute bottom-4 w-full">
         <input
           value={input}
           onKeyDown={(e) => {

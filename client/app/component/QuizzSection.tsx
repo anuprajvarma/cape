@@ -58,7 +58,7 @@ export const QuizzSection = ({
     <>
       {quizzcheck &&
         (DbScore !== "" || Completed === 10 ? (
-          <div className="w-full h-200 md:h-full flex flex-col justify-center items-center">
+          <div className="w-full h-[30rem] md:h-full flex flex-col justify-center items-center">
             <p className="sm:px-12 py-2 text-xl text-brand-slate-1">
               Congratulations! You have completed the test
             </p>
@@ -70,7 +70,7 @@ export const QuizzSection = ({
         ) : quizz.length > 0 ? (
           <div
             ref={quizScrollRef}
-            className="sm:px-4 sm:py-2 w-full md:h-full h-200 prose prose-lg prose-headings:my-0 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-a:text-blue-600 prose-a:hover:underline max-w-none overflow-auto scrollbar-hide relative"
+            className="sm:px-4 sm:py-2 w-full h-[30rem] md:h-full prose prose-lg prose-headings:my-0 prose-p:my-0 prose-li:my-0 prose-hr:my-6 prose-a:text-blue-600 prose-a:hover:underline max-w-none overflow-auto scrollbar-hide relative"
           >
             <div
               className={`sticky top-0 z-50 flex justify-end text-white transition-all  duration-300 ${
@@ -118,13 +118,13 @@ export const QuizzSection = ({
             ))}
           </div>
         ) : dataFetching ? (
-          <div className="w-full h-200 md:h-full flex flex-col justify-center items-center gap-4">
+          <div className="w-full h-[30rem] md:h-full flex flex-col justify-center items-center gap-4">
             <div className="px-4 py-1.5 hover:bg-slaty/10 rounded-lg cursor-pointer hover:bg-white/20 hover:backdrop-blur-2xl text-brand-slate-1 hover:text-white transition duration-500 border border-brand-slate-1/20">
               loading...
             </div>
           </div>
         ) : (
-          <div className="w-full h-200 md:h-full flex flex-col justify-center items-center gap-4">
+          <div className="w-full h-[30rem] md:h-full flex flex-col justify-center items-center gap-4">
             <button
               className="px-4 py-1.5 hover:bg-slaty/10 rounded-lg cursor-pointer hover:bg-white/20 hover:backdrop-blur-2xl text-brand-slate-1 hover:text-white transition duration-500 border border-brand-slate-1/20"
               onClick={quizzHandler}

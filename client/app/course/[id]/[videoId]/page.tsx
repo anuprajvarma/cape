@@ -169,13 +169,13 @@ export default function Course() {
           </div>
         )}
         <div className="w-full flex justify-between gap-2 py-4">
-          <div className=" w-full md:w-3/5 flex justify-between px-2">
-            <div className="flex gap-3 items-center justify-center">
+          <div className=" w-full md:w-3/5 flex justify-between sm:px-2">
+            <div className="flex gap-1 sm:gap-3 items-center justify-center">
               <Bars3BottomRightIcon
-                className="w-8 h-8 cursor-pointer text-white hover:text-brand-slate-1 transition duration-500"
+                className="sm:w-8 sm:h-8 w-6 h-6 cursor-pointer text-white hover:text-brand-slate-1 transition duration-500"
                 onClick={() => setIsOpenMenu(true)}
               />
-              <p className="font-semibold">
+              <p className="font-semibold text-sm sm:text-lg line-clamp-1">
                 {position}. {videoTitle}
               </p>
             </div>
@@ -216,7 +216,7 @@ export default function Course() {
               allow="autoplay; encrypted-media"
               title="YouTube video player"
             />
-            <div className="w-full border border-brand-slate-1/20 rounded-xl md:hidden flex flex-col">
+            <div className="w-full h-7/12 border border-brand-slate-1/20 rounded-3xl md:hidden flex flex-col relative">
               <NotesGpt
                 id={id as string}
                 videoId={videoId as string}
@@ -291,8 +291,7 @@ export default function Course() {
               </div>
             )}
           </div>
-
-          <div className="w-5/12 h-full border border-brand-slate-1/20 rounded-xl hidden md:flex flex-col">
+          <div className="rounded-3xl h-full w-5/12 min-h-7/12 max-h-full border border-brand-slate-1/20 hidden md:flex flex-col relative">
             <NotesGpt
               id={id as string}
               videoId={videoId as string}
