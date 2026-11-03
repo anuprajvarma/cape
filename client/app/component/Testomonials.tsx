@@ -7,7 +7,7 @@ export default function Testomonials() {
   //   const items = Array.from({ length: 10 }, (_, i) => `Item ${i + 1}`);
   return (
     <div className="w-full flex justify-center items-center mt-20 px-4">
-      <div className="flex w-full sm:w-[40rem] md:w-[50rem] lg:w-[60rem] xl:w-280 flex-col gap-10 sm:gap-20">
+      <div className="flex w-full sm:w-160 md:w-200 lg:w-240 xl:w-280 flex-col gap-10 sm:gap-20">
         <div className="w-full flex justify-center">
           <p className="text-3xl sm:text-5xl font-bold text-white">
             What people says

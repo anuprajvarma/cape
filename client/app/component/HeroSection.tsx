@@ -46,7 +46,7 @@ export default function HeroSection() {
     <>
       <LoginModal />
       <div className="w-full h-full pt-16 px-4 text-black flex justify-center mt-12 sm:mt-20">
-        <div className="w-full sm:w-[40rem] md:w-[50rem] lg:w-[60rem] xl:w-280 h-full">
+        <div className="w-full sm:w-160 md:w-200 lg:w-240 xl:w-280 h-full">
           <div className="w-full flex flex-col justify-between gap-10">
             <div className="w-full flex flex-col items-center gap-6 sm:gap-10">
               <div className="w-full flex flex-col gap-3 sm:gap-6 text-white text-center">

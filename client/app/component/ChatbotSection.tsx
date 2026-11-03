@@ -12,7 +12,7 @@ export const ChatbotSection = ({ id }: ChatbotSectionPropType) => {
   console.log("temporaryChatData " + temporaryChatData);
 
   return (
-    <div className="w-full h-[30rem] md:h-[90%] flex flex-col">
+    <div className="w-full h-120 md:h-[90%] flex flex-col">
       {temporaryChatData?.length > 0 ? (
         <div className="w-full h-[88%] md:h-full rounded-sm overflow-y-auto px-4">
           {temporaryChatData?.map((msg, i) => (
