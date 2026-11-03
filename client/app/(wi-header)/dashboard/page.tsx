@@ -35,7 +35,7 @@ const Dashboard: React.FC = () => {
   return (
     <>
       <CourseLinkModal />
-      <div className="w-full h-full py-8 px-4 text-black flex justify-center mt-16">
+      <div className="w-full h-screen py-8 px-4 text-black flex justify-center pt-16 sm:pt-28">
         <div className="w-280 h-full flex flex-col gap-8 items-center justify-center">
           <DndContext
             sensors={sensors}

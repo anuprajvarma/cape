@@ -22,11 +22,11 @@ export default function Bookmark() {
   return (
     <>
       <CourseLinkModal />
-      <div className="w-full h-full -z-20 py-8 px-4 text-black flex justify-center mt-16">
-        <div className="w-full h-full flex flex-col items-center gap-12">
-          <div className="w-full grid grid-flow-row grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-center gap-6">
-            {bookmarkCoursePlaylist.length > 0 ? (
-              bookmarkCoursePlaylist?.map((data, index) => {
+      <div className="w-full h-screen -z-20 py-8 px-4 text-black flex justify-center pt-16 sm:pt-28">
+        <div className="w-full h-full flex flex-col items-center justify-center gap-12">
+          {bookmarkCoursePlaylist.length > 0 ? (
+            <div className="w-full h-full grid grid-flow-row grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-center gap-6">
+              {bookmarkCoursePlaylist?.map((data, index) => {
                 if (!hasMounted) return null;
 
                 return (
@@ -43,21 +43,19 @@ export default function Bookmark() {
                     key={index}
                   />
                 );
-              })
-            ) : checkDataExist ? (
-              <p className="text-xl text-brand-slate-1">
-                You did not bookmark any courses
-              </p>
-            ) : dataLoading ? (
-              <p className="text-xl text-center text-slaty">Loading...</p>
-            ) : (
-              <div className="h-full w-full flex justify-center items-center">
-                <p className="text-xl text-center text-brand-slate-1">
-                  You are not Sign in
-                </p>
-              </div>
-            )}
-          </div>
+              })}
+            </div>
+          ) : checkDataExist ? (
+            <p className="text-xl text-brand-slate-1">
+              You did not bookmark any courses
+            </p>
+          ) : dataLoading ? (
+            <p className="text-xl text-center text-slaty">Loading...</p>
+          ) : (
+            <p className="text-xl text-center text-brand-slate-1">
+              You are not Sign in
+            </p>
+          )}
         </div>
       </div>
     </>
