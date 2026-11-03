@@ -36,9 +36,9 @@ const EnrolledCard = ({
   } = useEnrolledCardLogic({ playlistId, getDataCheck, setGetDataCheck });
 
   return (
-    <div className="flex justify-center lg:justify-between gap-8">
-      <div className="flex flex-col sm:flex-row w-full sm:w-148 md:w-208 min-h-48 p-4 text-white gap-4 bg-brand-slate-2/15 backdrop-blur-3xl border border-brand-slate-1/20 rounded-3xl">
-        <div className="flex w-full sm:w-[20rem] h-42 relative rounded-3xl">
+    <div className="flex w-full justify-center lg:justify-between gap-8">
+      <div className="flex flex-col sm:flex-row w-full lg:w-8/12 p-4 text-white gap-4 bg-brand-slate-2/15 backdrop-blur-3xl border border-brand-slate-1/20 rounded-3xl items-center">
+        <div className="flex w-full aspect-video relative rounded-3xl">
           <Image
             src={thumbnail || "/code.jpg"}
             alt="playlist thumbnail"
@@ -47,13 +47,13 @@ const EnrolledCard = ({
             className="rounded-3xl object-cover"
           />
         </div>
-        <div className="flex sm:w-lg flex-col px-2 py-8 gap-8">
-          <div className="flex flex-col gap-2">
-            <p className="text-lg text-white line-clamp-2 font-semibold">
+        <div className="flex w-full flex-col px-2 py-4 gap-2">
+          <div className="flex flex-col gap-4">
+            <p className="text-md sm:text-lg text-white line-clamp-2 font-semibold">
               {title}
             </p>
             <div className="flex justify-between text-sm text-slaty/80">
-              <div className="flex gap-2 items-center justify-center">
+              <div className="flex gap-2 items-center justify-center text-sm sm:text-md">
                 <p>{channelTitle}</p>
               </div>
               <div className="flex gap-2 items-center justify-center">
@@ -63,7 +63,7 @@ const EnrolledCard = ({
           </div>
           <div className="flex flex-col gap-2 items-end text-slaty/80">
             <div className="flex gap-2 justify-between lg:justify-end w-full">
-              <div className=" flex lg:hidden gap-2 font-medium text-slaty/90">
+              <div className=" flex lg:hidden gap-2 font-medium text-slaty/90 text-sm sm:text-md">
                 <p className="text-slaty">Completed -</p>
                 <div>
                   {playlistChapters && (
@@ -150,7 +150,7 @@ const EnrolledCard = ({
           </div>
         </div>
       </div>
-      <div className="w-100 bg-mediumSlaty  border-lightSlaty hidden lg:flex flex-col gap-3 justify-center items-center bg-brand-slate-2/15 backdrop-blur-3xl border border-brand-slate-1/20 rounded-3xl text-white">
+      <div className="w-4/12 bg-mediumSlaty  border-lightSlaty hidden lg:flex flex-col gap-3 justify-center items-center bg-brand-slate-2/15 backdrop-blur-3xl border border-brand-slate-1/20 rounded-3xl text-white">
         <CircularProgressbar
           value={precentage}
           text={`${precentage}%`}

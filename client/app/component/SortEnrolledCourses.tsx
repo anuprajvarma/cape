@@ -23,7 +23,13 @@ export const SortEnrolledCourses = ({
   };
 
   return (
-    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
+    <div
+      className="w-full"
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
+    >
       <EnrolledCard
         title={data.title}
         channelTitle={data.channelTitle}
