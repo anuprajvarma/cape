@@ -37,8 +37,8 @@ export default function Courses() {
             setSearchQuery={setSearchQuery}
           />
           <LoginModal />
-          <div className="overflow-y-auto flex-1 min-h-0 pt-6">
-            <div className="flex flex-wrap items-center justify-center gap-4">
+          <div className="flex w-full items-center justify-center">
+            <div className="w-full grid grid-flow-row grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-center gap-6">
               {playlists.length > 0 ? (
                 playlists.map((data, index) => {
                   const id = data.id?.playlistId;

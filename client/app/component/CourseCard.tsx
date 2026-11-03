@@ -34,14 +34,15 @@ const CourseCard = ({
 
   return (
     <>
-      <div className="p-2 flex w-80 lg:w-96 h-80 flex-col gap-1 bg-brand-slate-2/15 backdrop-blur-3xl border border-brand-slate-1/20 rounded-3xl">
-        <div className="h-40 lg:h-52 w-full relative overflow-hidden rounded-3xl ">
+      <div className="p-2 flex w-full h-full flex-col gap-1 bg-brand-slate-2/15 backdrop-blur-3xl border border-brand-slate-1/20 rounded-3xl">
+        <div className="relative w-full aspect-video overflow-hidden rounded-3xl">
           <Image
             src={thumbnails || "/code.jpg"}
             alt="playlist thumbnail"
             quality={100}
             fill
             className="object-cover"
+            sizes="100vw"
           />
         </div>
         <div className="flex flex-col gap-2 py-2 px-3 rounded-3xl">
