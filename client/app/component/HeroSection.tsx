@@ -45,8 +45,8 @@ export default function HeroSection() {
   return (
     <>
       <LoginModal />
-      <div className="w-full pt-16 px-4 text-black flex justify-center mt-12 sm:mt-20">
-        <div className="w-280">
+      <div className="w-full h-full pt-16 px-4 text-black flex justify-center mt-12 sm:mt-20">
+        <div className="w-full sm:w-[40rem] md:w-[50rem] lg:w-[60rem] xl:w-280 h-full">
           <div className="w-full flex flex-col justify-between gap-10">
             <div className="w-full flex flex-col items-center gap-6 sm:gap-10">
               <div className="w-full flex flex-col gap-3 sm:gap-6 text-white text-center">
@@ -108,13 +108,13 @@ export default function HeroSection() {
                 <p className="text-brand-slate-1">Loved by 100+ learners</p>
               </div>
             </div>
-            <div className="w-full flex items-center justify-center">
-              <div className="w-full h-80 lg:w-240 lg:h-140 sm:h-120 rounded-lg flex">
+            <div className="w-full h-full flex items-center justify-center">
+              <div className="w-full h-full rounded-2xl flex">
                 <iframe
                   title="Intro Video"
                   ref={iframeRef}
-                  src="https://www.youtube.com/embed/deDrrPWWGW0?enablejsapi=1"
-                  className="rounded-lg w-full"
+                  src="https://www.youtube.com/embed/YU-RrDdyx34?enablejsapi=1"
+                  className="rounded-2xl w-full aspect-video"
                   allow="autoplay; encrypted-media"
                   allowFullScreen
                 />

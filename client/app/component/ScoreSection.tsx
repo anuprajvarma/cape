@@ -6,8 +6,8 @@ import ScrollStack from "./Scroll";
 export default function ScoreSection() {
   return (
     <>
-      <div className="w-full flex flex-col items-center justify-center py-4">
-        <div className="w-11/12 md:w-9/12 mt-40">
+      <div className="w-full flex flex-col items-center justify-center px-4">
+        <div className="w-full sm:w-[40rem] md:w-[50rem] lg:w-[60rem] xl:w-280 mt-40">
           <ScrollStack />
         </div>
       </div>
