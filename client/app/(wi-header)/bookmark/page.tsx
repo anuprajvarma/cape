@@ -22,7 +22,7 @@ export default function Bookmark() {
   return (
     <>
       <CourseLinkModal />
-      <div className="w-full h-screen -z-20 py-8 px-4 text-black flex justify-center pt-16 sm:pt-28">
+      <div className="w-full h-screen -z-20 py-8 px-4 text-black flex justify-center pt-16 sm:pt-24">
         <div className="w-full h-full flex flex-col items-center justify-center gap-12">
           {bookmarkCoursePlaylist.length > 0 ? (
             <div className="w-full h-full grid grid-flow-row grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 items-center gap-6">
@@ -50,7 +50,7 @@ export default function Bookmark() {
               You did not bookmark any courses
             </p>
           ) : dataLoading ? (
-            <p className="text-xl text-center text-slaty">Loading...</p>
+            <p className="text-xl text-center text-brand-slate-1">Loading...</p>
           ) : (
             <p className="text-xl text-center text-brand-slate-1">
               You are not Sign in

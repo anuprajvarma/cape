@@ -35,8 +35,8 @@ const Dashboard: React.FC = () => {
   return (
     <>
       <CourseLinkModal />
-      <div className="w-full h-screen py-8 px-4 text-black flex justify-center pt-16 sm:pt-28">
-        <div className="w-280 h-full flex flex-col gap-8 items-center justify-center">
+      <div className="w-full h-screen overflow-y-auto py-8 px-4 text-black flex justify-center pt-16 sm:pt-24">
+        <div className="w-280 h-full flex flex-col gap-8">
           <DndContext
             sensors={sensors}
             collisionDetection={closestCenter}
@@ -63,7 +63,7 @@ const Dashboard: React.FC = () => {
               ) : dataLoading ? (
                 <p className="text-xl text-center text-slaty">Loading...</p>
               ) : (
-                <div className="h-full w-full flex justify-center items-center">
+                <div className="w-full h-full flex justify-center items-center">
                   <p className="text-xl text-center text-brand-slate-1">
                     You are not Sign in
                   </p>

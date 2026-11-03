@@ -35,6 +35,8 @@ const EnrolledCard = ({
     precentage,
   } = useEnrolledCardLogic({ playlistId, getDataCheck, setGetDataCheck });
 
+  console.log("Thumbnail URL:", thumbnail);
+
   return (
     <div className="flex w-full justify-center lg:justify-between gap-8">
       <div className="flex flex-col sm:flex-row w-full lg:w-8/12 p-4 text-white gap-4 bg-brand-slate-2/15 backdrop-blur-3xl border border-brand-slate-1/20 rounded-3xl items-center">
